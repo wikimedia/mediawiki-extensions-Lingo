@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Provides hover-over tool tips on articles from words defined on the Terminology page.
  * For more info see http://mediawiki.org/wiki/Extension:Lingo
  *
  * @defgroup Lingo
@@ -14,8 +15,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 define( 'LINGO_VERSION', '0.1' );
-
-
 
 $wgExtensionCredits[ 'parserhook' ][ ] = array(
 	'path' => __FILE__,
@@ -75,9 +74,10 @@ function lingoParser ( &$parser, &$text ) {
 	$min = min( array_map( 'strlen', array_keys( $terms ) ) );
 
 	//Parse HTML from page
-	$doc = new DOMDocument();
-	$text = '<html><meta http-equiv="content-type" content="charset=utf-8"/>' . $text . "</html>";
-	@$doc -> loadHTML( $text );
+//	$doc = new DOMDocument();
+//	$doc -> loadHTML( $text );
+	$doc = @DOMDocument::loadHTML( $text );
+
 	//Find all text in HTML.
 	$xpath = new DOMXpath( $doc );
 	$elements = $xpath -> query( "//*[text()!=' ']/text()" );
@@ -126,7 +126,14 @@ function lingoParser ( &$parser, &$text ) {
 	}
 
 	if ( $changed ) {
-		$text = $doc -> saveHTML();
+
+		$body = $xpath -> query( '/html/body' );
+
+		$text = '';
+		foreach ( $body -> item( 0 ) -> childNodes as $child ) {
+			$text .= $doc -> saveXML( $child );
+		}
+
 	}
 
 	return true;
