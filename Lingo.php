@@ -74,9 +74,10 @@ function lingoParser ( &$parser, &$text ) {
 	$min = min( array_map( 'strlen', array_keys( $terms ) ) );
 
 	//Parse HTML from page
-//	$doc = new DOMDocument();
-//	$doc -> loadHTML( $text );
-	$doc = @DOMDocument::loadHTML( $text );
+	// FIXME: this works in PHP 5.3.3. What about 5.1?
+	wfSuppressWarnings();
+	$doc = DOMDocument::loadHTML( '<html><meta http-equiv="content-type" content="charset=utf-8"/>' . $text . '</html>' );
+	wfRestoreWarnings();
 
 	//Find all text in HTML.
 	$xpath = new DOMXpath( $doc );
@@ -91,7 +92,7 @@ function lingoParser ( &$parser, &$text ) {
 			continue;
 
 		//Split node text into words, putting offset and text into $offsets[0] array
-		preg_match_all( "/\b[^\b\s\.,;:]+/", $el -> nodeValue, $offsets, PREG_OFFSET_CAPTURE );
+		preg_match_all( "/[^\s\.,;:]+/", $el -> nodeValue, $offsets, PREG_OFFSET_CAPTURE );
 
 		//Search and replace words in reverse order (from end of string backwards),
 		//This way we don't mess up the offsets of the words as we iterate
@@ -102,17 +103,17 @@ function lingoParser ( &$parser, &$text ) {
 			if ( !is_numeric( $offset[ 0 ] ) && isset( $terms[ $offset[ 0 ] ] ) ) { //Word matches, replace with appropriate span tag
 				$changed = true;
 
-				$tip = htmlentities( $terms[ $offset[ 0 ] ] );
+				$tip = htmlentities( $terms[ $offset[ 0 ] ], ENT_COMPAT, 'UTF-8' );
 
 				$beforeMatchNode = $doc -> createTextNode( substr( $el -> nodeValue, 0, $offset[ 1 ] ) );
 				$afterMatchNode = $doc -> createTextNode( substr( $el -> nodeValue, $offset[ 1 ] + strlen( $offset[ 0 ] ), strlen( $el -> nodeValue ) - 1 ) );
 
 				//Wrap abbreviation in <span> tags
-				$span = @$doc -> createElement( 'span', $offset[ 0 ] );
+				$span = $doc -> createElement( 'span', $offset[ 0 ] );
 				$span -> setAttribute( 'class', "tooltip_abbr" );
 
 				//Wrap definition in <span> tags, hidden
-				$spanTip = @$doc -> createElement( 'span', $tip );
+				$spanTip = $doc -> createElement( 'span', $tip );
 				$spanTip -> setAttribute( 'class', "tooltip_hide" );
 
 				$el -> parentNode -> insertBefore( $beforeMatchNode, $el );
