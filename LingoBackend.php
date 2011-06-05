@@ -28,7 +28,7 @@ abstract class LingoBackend {
 
 	/**
 	 *
-	 * @return Boolean true, if a next element is available
+	 * @return the next element or null
 	 */
 	abstract public function next();
 

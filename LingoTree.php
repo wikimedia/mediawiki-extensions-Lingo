@@ -26,8 +26,8 @@ if ( !defined( 'LINGO_VERSION' ) ) {
 class LingoTree {
 
 	private $mTree = array();
-	private $mDefinition = null;
-	private $mMinLength = -1;
+	private $mList = array();
+	private $mMinLength = 1000;
 
 	/**
 	 * Adds a string to the Lingo Tree
@@ -38,49 +38,50 @@ class LingoTree {
 			return;
 		}
 
-		$matches;
-		preg_match_all( '/[[:alpha:]]+|[^[:alpha:]]/u', $term, $matches );
+		if ( isset( $this->mList[$term] ) ) { // term exists, store 2nd definition
 
-		$this->addElement( $matches[0], $term, $definition );
+			$this->mList[$term][-1]->addDefinition( $definition );
 
-		if ( $this->mMinLength > -1 ) {
-			$this->mMinLength = min( array( $this->mMinLength, strlen( $term ) ) );
 		} else {
-			$this->mMinLength = strlen( $term );
+
+			$matches;
+			preg_match_all( '/[[:alpha:]]+|[^[:alpha:]]/u', $term, $matches );
+
+			$this->mList[$term] = $this->addElement( $matches[0], $term, $definition );
+
+			$this->mMinLength = min( array($this->mMinLength, strlen( $term )) );
 		}
 	}
 
 	/**
-	 * Recursively adds an element to the Lingo Tree
+	 * Adds an element to the Lingo Tree
 	 *
 	 * @param array $path
 	 * @param <type> $index
+	 * @return Array the tree node the element was stored in
 	 */
-	protected function addElement( Array &$path, &$term, &$definition ) {
-		// end of path, store description; end of recursion
-		if ( $path == null ) {
-			$this -> addDefinition( $term, $definition );
-		} else {
-			$step = array_shift( $path );
+	protected function &addElement( Array &$path, &$term, &$definition ) {
 
-			if ( !array_key_exists( $step, $this->mTree ) ) {
-				$this->mTree[$step] = new LingoTree();
+		$tree = &$this->mTree;
+
+		// end of path, store description; end of recursion
+		while ( $step = array_shift( $path ) ) {
+
+			if ( !isset( $tree[$step] ) ) {
+				$tree[$step] = array();
 			}
 
-			$this->mTree[$step]->addElement( $path, $term, $definition );
-		}
-	}
+			$tree = &$tree[$step];
 
-	/**
-	 * Adds a defintion to the treenodes list of definitions
-	 * @param <type> $definition
-	 */
-	protected function addDefinition( &$term, &$definition ) {
-		if ( $this->mDefinition ) {
-			$this->mDefinition->addDefinition( $definition );
-		} else {
-			$this->mDefinition = new LingoElement( $term, $definition );
 		}
+
+		if ( isset( $tree[-1] ) ) {
+			$tree[-1]->addDefinition( $definition );
+		} else {
+			$tree[-1] = new LingoElement( $term, $definition );
+		}
+
+		return $tree;
 	}
 
 	function getMinTermLength() {
@@ -99,7 +100,7 @@ class LingoTree {
 
 			// Did we find the start of a term?
 			if ( array_key_exists( $currLex, $this->mTree ) ) {
-				list( $lastindex, $definition ) = $this->mTree[$currLex]->findNextTermNoSkip( $lexemes, $index, $countLexemes );
+				list( $lastindex, $definition ) = $this->findNextTermNoSkip( $this->mTree[$currLex], $lexemes, $index, $countLexemes );
 			}
 
 			// this will increase the index even if we found something;
@@ -109,19 +110,19 @@ class LingoTree {
 
 		wfProfileOut( __METHOD__ );
 		if ( $definition ) {
-			return array( $index - $start - 1, $lastindex - $index + 2, $definition );
+			return array($index - $start - 1, $lastindex - $index + 2, $definition);
 		} else {
-			return array( $index - $start, 0, null );
+			return array($index - $start, 0, null);
 		}
 	}
 
-	function findNextTermNoSkip( &$lexemes, $index, $countLexemes ) {
+	function findNextTermNoSkip( Array &$tree, &$lexemes, $index, $countLexemes ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[$index + 1][0], $this->mTree ) ) {
-			$ret = $this->mTree[$currLex]->findNextTermNoSkip( $lexemes, $index + 1, $countLexemes );
+		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[$index + 1][0], $tree ) ) {
+			$ret = $this->findNextTermNoSkip( $tree[$currLex], $lexemes, $index + 1, $countLexemes );
 		} else {
-			$ret = array( $index, &$this->mDefinition );
+			$ret = array($index, &$tree[-1]);
 		}
 		wfProfileOut( __METHOD__ );
 		return $ret;

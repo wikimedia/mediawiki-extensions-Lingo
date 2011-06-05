@@ -95,16 +95,8 @@ class LingoParser {
 		$backend = &$this->mLingoBackend;
 
 		// assemble the result array
-		$this->mLingoArray = array();
 		while ( $elementData = $backend->next() ) {
-
-			if ( array_key_exists( ( $term = $elementData[LingoElement::ELEMENT_TERM] ), $this->mLingoArray ) ) {
-				$this->mLingoArray[$term]->addDefinition( $elementData );
-			} else {
-				$this->mLingoArray[$term] = new LingoElement( $term, $elementData );
-			}
-
-			$this->mLingoTree->addTerm( $term, $elementData );
+			$this->mLingoTree->addTerm( $elementData[LingoElement::ELEMENT_TERM], $elementData );
 		}
 
 		wfProfileOut( __METHOD__ );
