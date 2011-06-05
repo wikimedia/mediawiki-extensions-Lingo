@@ -51,7 +51,9 @@ class LingoElement {
 			$span->setAttribute( 'class', 'tooltip' );
 
 			// Wrap term in <span> tag, hidden
-			$spanTerm = $doc->createElement( 'span', $this->mTerm );
+			wfSuppressWarnings();
+			$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+			wfRestoreWarnings();
 			$spanTerm->setAttribute( 'class', 'tooltip_abbr' );
 
 			// Wrap definition in two <span> tags
@@ -62,7 +64,9 @@ class LingoElement {
 			$spanDefinitionInner->setAttribute( 'class', 'tooltip_tip' );
 
 			foreach ( $this->mDefinitions as $definition ) {
+				wfSuppressWarnings();
 				$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) . ' ' );
+				wfRestoreWarnings();
 				if ( $definition[self::ELEMENT_LINK] ) {
 					$linkedTitle = Title::newFromText( $definition[self::ELEMENT_LINK] );
 					if ( $linkedTitle ) {
@@ -80,7 +84,6 @@ class LingoElement {
 			$spanDefinitionOuter->appendChild( $spanDefinitionInner );
 
 			$this->mFullDefinition = $span;
-
 		}
 
 		return $this->mFullDefinition->cloneNode( true );
