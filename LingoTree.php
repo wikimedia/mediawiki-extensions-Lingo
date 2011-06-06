@@ -39,15 +39,14 @@ class LingoTree {
 		}
 
 		if ( isset( $this->mList[$term] ) ) { // term exists, store 2nd definition
-
-			$this->mList[$term][-1]->addDefinition( $definition );
-
+			$this->mList[$term]->addDefinition( $definition );
 		} else {
 
 			$matches;
 			preg_match_all( '/[[:alpha:]]+|[^[:alpha:]]/u', $term, $matches );
 
-			$this->mList[$term] = $this->addElement( $matches[0], $term, $definition );
+			$elt = $this->addElement( $matches[0], $term, $definition );
+			$this->mList[$term] = &$elt[-1];
 
 			$this->mMinLength = min( array($this->mMinLength, strlen( $term )) );
 		}
@@ -56,8 +55,9 @@ class LingoTree {
 	/**
 	 * Adds an element to the Lingo Tree
 	 *
-	 * @param array $path
-	 * @param <type> $index
+	 * @param array $path An array containing the constituing lexemes of the term
+	 * @param String $term
+	 * @param String $definition
 	 * @return Array the tree node the element was stored in
 	 */
 	protected function &addElement( Array &$path, &$term, &$definition ) {
@@ -72,7 +72,6 @@ class LingoTree {
 			}
 
 			$tree = &$tree[$step];
-
 		}
 
 		if ( isset( $tree[-1] ) ) {
@@ -86,6 +85,10 @@ class LingoTree {
 
 	function getMinTermLength() {
 		return $this->mMinLength;
+	}
+
+	function getTermList() {
+		return $this->mList;
 	}
 
 	function findNextTerm( &$lexemes, $index, $countLexemes ) {

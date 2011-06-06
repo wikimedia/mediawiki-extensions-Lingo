@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provides hover-over tool tips on articles from words defined on the
  * Terminology page.
@@ -18,10 +19,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 define( 'LINGO_VERSION', '0.2 alpha' );
 
-$wgExtensionCredits[ 'parserhook' ][ ] = array(
+$wgExtensionCredits['parserhook'][] = array(
 	'path' => __FILE__,
 	'name' => 'Lingo',
-	'author' => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]' ),
+	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
 	'description' => 'Provides hover-over tool tips on articles from words defined on the [[Terminology]] page',
 	'version' => LINGO_VERSION,
@@ -29,6 +30,8 @@ $wgExtensionCredits[ 'parserhook' ][ ] = array(
 
 // server-local path to this file
 $wgexLingoDir = dirname( __FILE__ );
+
+// set LingoBasicBackend as the backend to access the glossary
 $wgexLingoBackend = 'LingoBasicBackend';
 
 // register message file

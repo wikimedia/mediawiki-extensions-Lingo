@@ -39,8 +39,12 @@ class LingoBasicBackend extends LingoBackend {
 	}
 
 	/**
+	 * This function returns the next element. The element is an array of four
+	 * strings: Term, Definition, Link, Source. For the LingoBasicBackend Link
+	 * and Source are set to null. If there is no next element the function
+	 * returns null.
 	 *
-	 * @return Boolean true, if a next element is available
+	 * @return Array the next element or null
 	 */
 	public function next() {
 

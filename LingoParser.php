@@ -22,14 +22,14 @@ if ( !defined( 'LINGO_VERSION' ) ) {
  */
 class LingoParser {
 
-	private $mLingoArray = null;
 	private $mLingoTree = null;
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
 
-	public function __construct() {
+	public function __construct( LingoMessageLog &$messages = null ) {
 		global $wgexLingoBackend;
-		$this->mLingoBackend = new $wgexLingoBackend( new LingoMessageLog() );
+
+		$this->mLingoBackend = new $wgexLingoBackend( $messages );
 	}
 
 	/**
@@ -56,17 +56,17 @@ class LingoParser {
 	 *
 	 * @return Array an array mapping terms (keys) to descriptions (values)
 	 */
-	function getLingoArray( LingoMessageLog &$messages = null ) {
+	function getLingoArray() {
 		wfProfileIn( __METHOD__ );
 
 		// build glossary array only once per request
-		if ( !$this->mLingoArray ) {
-			$this->buildLingo( $messages );
+		if ( !$this->mLingoTree ) {
+			$this->buildLingo();
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->mLingoArray;
+		return $this->mLingoTree->getTermList();
 	}
 
 	/**
@@ -74,12 +74,12 @@ class LingoParser {
 	 *
 	 * @return LingoTree a LingoTree mapping terms (keys) to descriptions (values)
 	 */
-	function getLingoTree( LingoMessageLog &$messages = null ) {
+	function getLingoTree() {
 		wfProfileIn( __METHOD__ );
 
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
-			$this->buildLingo( $messages );
+			$this->buildLingo();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -87,7 +87,7 @@ class LingoParser {
 		return $this->mLingoTree;
 	}
 
-	protected function buildLingo( LingoMessageLog &$messages = null ) {
+	protected function buildLingo() {
 		wfProfileIn( __METHOD__ );
 
 		$this->mLingoTree = new LingoTree();

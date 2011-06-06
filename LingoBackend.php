@@ -23,14 +23,19 @@ abstract class LingoBackend {
 	public function __construct( LingoMessageLog &$messages = null ) {
 
 		$this->mMessageLog = $messages;
+	}
 
+	public function getMessageLog() {
+		return $this->mMessageLog;
 	}
 
 	/**
+	 * This function returns the next element. The element is an array of four
+	 * strings: Term, Definition, Link, Source. If there is no next element the
+	 * function returns null.
 	 *
 	 * @return the next element or null
 	 */
 	abstract public function next();
-
 }
 
