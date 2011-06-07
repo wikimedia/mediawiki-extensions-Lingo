@@ -22,36 +22,32 @@ if ( !defined( 'LINGO_VERSION' ) ) {
 class LingoMessageLog {
 
 	private $mMessages = array();
-	private $parser = null;
+	private $mParser = null;
 
 	const MESSAGE_ERROR = 1;
 	const MESSAGE_WARNING = 2;
 	const MESSAGE_NOTICE = 3;
 
 	function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
-		$this->mMessages[] = array( $message, $severity );
+		$this->mMessages[] = array($message, $severity);
 	}
 
 	function addError( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_ERROR );
+		$this->mMessages[] = array($message, self::MESSAGE_ERROR);
 	}
 
 	function addWarning( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_WARNING );
+		$this->mMessages[] = array($message, self::MESSAGE_WARNING);
 	}
 
 	function addNotice( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_NOTICE );
+		$this->mMessages[] = array($message, self::MESSAGE_NOTICE);
 	}
 
 	function getMessagesFormatted( $severity = self::MESSAGE_WARNING, $header = null ) {
 		global $wgTitle, $wgUser;
 
 		$ret = '';
-
-		if ( $header == null ) {
-			$header = wfMsg( 'semanticglossary-messageheader' );
-		}
 
 		foreach ( $this->mMessages as $message ) {
 			if ( $message[1] <= $severity ) {
@@ -60,12 +56,18 @@ class LingoMessageLog {
 		}
 
 		if ( $ret != '' ) {
-			if ( !$this->parser ) {
+			if ( !$this->mParser ) {
 				$parser = new Parser();
 			}
 
-			$ret = Html::rawElement( 'div', array( 'class' => 'messages' ),
-					Html::rawElement( 'div', array( 'class' => 'heading' ), $header ) .
+			if ( $header == null ) {
+				$header = '';
+			} elseif ( $header != '' ) {
+				$header = Html::rawElement( 'div', array('class' => 'heading'), $header );
+			}
+
+			$ret = Html::rawElement( 'div', array('class' => 'messages'),
+					$header .
 					$parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) )->getText()
 			);
 		}

@@ -119,7 +119,7 @@ class LingoElement {
 			global $wgScriptPath;
 
 			$linkimage = $doc->createElement( 'img' );
-			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/SemanticLingo/skins/linkicon.png' );
+			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/Lingo/skins/linkicon.png' );
 
 			self::$mLinkTemplate = $doc->createElement( 'a' );
 			self::$mLinkTemplate->appendChild( $linkimage );
