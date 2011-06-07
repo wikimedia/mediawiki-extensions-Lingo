@@ -35,7 +35,7 @@ $wgexLingoDir = dirname( __FILE__ );
 $wgexLingoBackend = 'LingoBasicBackend';
 
 // register message file
-// $wgExtensionMessagesFiles['Lingo'] = $dir . '/Lingo.i18n.php';
+$wgExtensionMessagesFiles['Lingo'] = $wgexLingoDir . '/Lingo.i18n.php';
 // $wgExtensionMessagesFiles['LingoAlias'] = $dir . '/Lingo.alias.php';
 
 // register class files with the Autoloader
