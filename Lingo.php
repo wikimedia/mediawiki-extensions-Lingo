@@ -24,7 +24,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Lingo',
 	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
 	'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
-	'description' => 'Provides hover-over tool tips on articles from words defined on the [[Terminology]] page',
+	'descriptionmsg' => 'lingo-desc',
 	'version' => LINGO_VERSION,
 );
 
