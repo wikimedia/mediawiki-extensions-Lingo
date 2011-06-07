@@ -20,7 +20,7 @@ class LingoBasicBackend extends LingoBackend {
 
 	protected $mArticleLines = array();
 
-	public function __construct( LingoMessageLog &$messages ) {
+	public function __construct( LingoMessageLog &$messages = null ) {
 
 		parent::__construct( $messages );
 
@@ -28,7 +28,7 @@ class LingoBasicBackend extends LingoBackend {
 		$rev = Revision::newFromTitle( Title::makeTitle( null, 'Terminology' ) );
 
 		if ( !$rev ) {
-			$messages->addWarning( '[[Terminology]] does not exist.' );
+			$this->getMessageLog()->addWarning( '[[Terminology]] does not exist.' );
 			return false;
 		}
 

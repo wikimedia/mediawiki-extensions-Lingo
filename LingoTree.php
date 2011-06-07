@@ -17,9 +17,18 @@ if ( !defined( 'LINGO_VERSION' ) ) {
  *
  * Vocabulary:
  * Term - The term as a normal string
- * Definition - Its definition object
+ * Definition - Its definition (any object)
  * Element - An element (leaf) in the glossary tree
  * Path - The path in the tree to the leaf representing a term
+ *
+ * The glossary is organized as a tree (nested arrays) where the path to the
+ * definition of a term is the lexemes of the term followed by -1 as the end
+ * marker.
+ *
+ * Example:
+ * The path to the definition of the term "foo bar baz" would be
+ * 'foo'.' '.'bar'.' '.'baz'.'-1'. It could thus be accessed as
+ * $mTree['foo'][' ']['bar'][' ']['baz'][-1]
  *
  * @ingroup Lingo
  */

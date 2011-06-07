@@ -22,7 +22,11 @@ abstract class LingoBackend {
 
 	public function __construct( LingoMessageLog &$messages = null ) {
 
-		$this->mMessageLog = $messages;
+		if ( !$messages ) {
+			$this->mMessageLog = new LingoMessageLog();
+		} else {
+			$this->mMessageLog = $messages;
+		}
 	}
 
 	public function getMessageLog() {

@@ -53,9 +53,8 @@ $wgHooks['ParserAfterTidy'][] = 'LingoParser::parse';
 // register resource modules with the Resource Loader
 $wgResourceModules['ext.Lingo'] = array(
 	// JavaScript and CSS styles. To combine multiple file, just list them as an array.
-	// 'scripts' => 'js/ext.myExtension.js',
-	'styles' => 'css/Lingo.css',
-
+	// 'scripts' => 'libs/ext.myExtension.js',
+	'styles' => 'skins/Lingo.css',
 	// When your module is loaded, these messages will be available to mediaWiki.msg()
 	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
 

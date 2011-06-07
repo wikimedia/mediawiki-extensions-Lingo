@@ -52,7 +52,15 @@ class LingoParser {
 	}
 
 	/**
-	 * Returns the list of terms applicable in the current context
+	 * 
+	 * @return LingoBackend the backend used by the parser 
+	 */
+	public function getBackend() {
+		return $this->mLingoBackend;
+	}
+
+	/**
+	 * Returns the list of terms in the glossary
 	 *
 	 * @return Array an array mapping terms (keys) to descriptions (values)
 	 */
@@ -70,7 +78,7 @@ class LingoParser {
 	}
 
 	/**
-	 * Returns the list of terms applicable in the current context
+	 * Returns the list of terms in the glossary as a LingoTree
 	 *
 	 * @return LingoTree a LingoTree mapping terms (keys) to descriptions (values)
 	 */
@@ -259,19 +267,22 @@ class LingoParser {
 	protected function loadModules( &$parser ) {
 		global $wgOut, $wgScriptPath;
 
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			if ( !is_null( $parser ) ) {
-				$parser->getOutput()->addModules( 'ext.Lingo' );
-			} else {
-				$wgOut->addModules( 'ext.Lingo' );
-			}
+		// FIXME: Modules loaded by the ResourceLoader only work on JS-enabled
+		// browsers. This doesn't make any sense for CSS-only modules that don't
+		// need any JS. -> Use ResourceLoader if and when Bug 29308 gets fixed.
+//		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+//			if ( !is_null( $parser ) ) {
+//				$parser->getOutput()->addModules( 'ext.Lingo' );
+//			} else {
+//				$wgOut->addModules( 'ext.Lingo' );
+//			}
+//		} else {
+		if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
+			$parser->getOutput()->addHeadItem( '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />', 'ext.Lingo.css' );
 		} else {
-			if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
-				$parser->getOutput()->addHeadItem( '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />', 'ext.Lingo.css' );
-			} else {
-				$wgOut->addHeadItem( 'ext.Lingo.css', '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />' );
-			}
+			$wgOut->addHeadItem( 'ext.Lingo.css', '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />' );
 		}
+//		}
 	}
 
 }
