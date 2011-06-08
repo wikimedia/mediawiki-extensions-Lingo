@@ -87,7 +87,7 @@ function fnLingoSetCredits() {
 		'name' => 'Lingo',
 		'author' => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]' ),
 		'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
-		'descriptionmsg' => array('lingo-desc', $wgexLingoPage?$wgexLingoPage:  wfMsg( 'lingo-terminologypagename' )),
+		'descriptionmsg' => array('lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' )),
 		'version' => LINGO_VERSION,
 	);
 
