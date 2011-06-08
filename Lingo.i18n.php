@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'lingo-desc' => 'Provides hover-over tool tips on pages from words defined on the [[$1]] page',
 	'lingo-terminologypagename' => 'Terminology',
 	'lingo-noterminologypage' => '[[$1]] does not exist.',
+	'lingo-terminologypagenotlocal' => '[[$1]] is not a local page.',
 
 );
 

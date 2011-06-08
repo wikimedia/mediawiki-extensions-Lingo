@@ -29,7 +29,13 @@ class LingoBasicBackend extends LingoBackend {
 		parent::__construct( $messages );
 
 		// Get Terminology page
-		$rev = Revision::newFromTitle( Title::makeTitle( null, $page ) );
+		$title = Title::newFromText( $page );
+		if ( $title->getInterwiki() ) {
+			$this->getMessageLog()->addError( wfMsgReal( 'lingo-terminologypagenotlocal', array($page) ) );
+			return false;
+		}
+
+		$rev = Revision::newFromTitle( $title );
 		if ( !$rev ) {
 			$this->getMessageLog()->addWarning( wfMsgReal( 'lingo-noterminologypage', array($page) ) );
 			return false;

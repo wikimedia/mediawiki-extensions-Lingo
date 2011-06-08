@@ -30,14 +30,22 @@ class LingoMessageLog {
 
 	function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
 		$this->mMessages[] = array($message, $severity);
+
+		// log errors and warnings in debug log
+		if ( $severity == self::MESSAGE_WARNING ||
+			$severity == self::MESSAGE_ERROR ) {
+			wfDebug( $message );
+		}
 	}
 
 	function addError( $message ) {
 		$this->mMessages[] = array($message, self::MESSAGE_ERROR);
+		wfDebug( "Error: $message\n" );
 	}
 
 	function addWarning( $message ) {
 		$this->mMessages[] = array($message, self::MESSAGE_WARNING);
+		wfDebug( "Warning: $message\n" );
 	}
 
 	function addNotice( $message ) {
