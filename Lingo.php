@@ -19,39 +19,39 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 define( 'LINGO_VERSION', '0.2 alpha' );
 
-$wgExtensionCredits['parserhook'][] = array(
-	'path' => __FILE__,
-	'name' => 'Lingo',
-	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
-	'descriptionmsg' => 'lingo-desc',
-	'version' => LINGO_VERSION,
-);
-
-// server-local path to this file
-$wgexLingoDir = dirname( __FILE__ );
+// set defaults for settings
 
 // set LingoBasicBackend as the backend to access the glossary
 $wgexLingoBackend = 'LingoBasicBackend';
 
-// register message file
-$wgExtensionMessagesFiles['Lingo'] = $wgexLingoDir . '/Lingo.i18n.php';
-// $wgExtensionMessagesFiles['LingoAlias'] = $dir . '/Lingo.alias.php';
+// set default for Terminology page (null = take from i18n)
+$wgexLingoPage = null;
 
+
+// server-local path to this file
+$dir = dirname( __FILE__ );
+
+// register message file
+$wgExtensionMessagesFiles[ 'Lingo' ] = $dir . '/Lingo.i18n.php';
+// $wgExtensionMessagesFiles['LingoAlias'] = $dir . '/Lingo.alias.php';
 // register class files with the Autoloader
 // $wgAutoloadClasses['LingoSettings'] = $dir . '/LingoSettings.php';
-$wgAutoloadClasses['LingoParser'] = $wgexLingoDir . '/LingoParser.php';
-$wgAutoloadClasses['LingoTree'] = $wgexLingoDir . '/LingoTree.php';
-$wgAutoloadClasses['LingoElement'] = $wgexLingoDir . '/LingoElement.php';
-$wgAutoloadClasses['LingoBackend'] = $wgexLingoDir . '/LingoBackend.php';
-$wgAutoloadClasses['LingoBasicBackend'] = $wgexLingoDir . '/LingoBasicBackend.php';
-$wgAutoloadClasses['LingoMessageLog'] = $wgexLingoDir . '/LingoMessageLog.php';
+$wgAutoloadClasses[ 'LingoParser' ] = $dir . '/LingoParser.php';
+$wgAutoloadClasses[ 'LingoTree' ] = $dir . '/LingoTree.php';
+$wgAutoloadClasses[ 'LingoElement' ] = $dir . '/LingoElement.php';
+$wgAutoloadClasses[ 'LingoBackend' ] = $dir . '/LingoBackend.php';
+$wgAutoloadClasses[ 'LingoBasicBackend' ] = $dir . '/LingoBasicBackend.php';
+$wgAutoloadClasses[ 'LingoMessageLog' ] = $dir . '/LingoMessageLog.php';
 // $wgAutoloadClasses['SpecialLingoBrowser'] = $dir . '/SpecialLingoBrowser.php';
 
-$wgHooks['ParserAfterTidy'][] = 'LingoParser::parse';
+unset ($dir);
+
+$wgHooks[ 'SpecialVersionExtensionTypes' ][ ] = 'fnLingoSetCredits';
+//$wgExtensionFunctions[ ] = 'fnLingoInit';
+$wgHooks[ 'ParserAfterTidy' ][ ] = 'LingoParser::parse';
 
 // register resource modules with the Resource Loader
-$wgResourceModules['ext.Lingo'] = array(
+$wgResourceModules[ 'ext.Lingo' ] = array(
 	// JavaScript and CSS styles. To combine multiple file, just list them as an array.
 	// 'scripts' => 'libs/ext.myExtension.js',
 	'styles' => 'skins/Lingo.css',
@@ -69,3 +69,27 @@ $wgResourceModules['ext.Lingo'] = array(
 	'remoteExtPath' => 'Lingo'
 );
 
+/**
+ * Deferred setting of extension credits
+ * 
+ * Setting of extension credits has to be deferred to the
+ * SpecialVersionExtensionTypes hook as it uses variable $wgexLingoPage (which
+ * might be set only after inclusion of the extension in LocalSettings) and
+ * function wfMsg not available before.
+ * 
+ * @return Boolean Always true.
+ */
+function fnLingoSetCredits() {
+	
+	global $wgExtensionCredits, $wgexLingoPage;
+	$wgExtensionCredits[ 'parserhook' ][ ] = array(
+		'path' => __FILE__,
+		'name' => 'Lingo',
+		'author' => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]' ),
+		'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
+		'descriptionmsg' => array('lingo-desc', $wgexLingoPage?$wgexLingoPage:wfMsg('lingo-terminologypage')),
+		'version' => LINGO_VERSION,
+	);
+
+	return true;
+}
