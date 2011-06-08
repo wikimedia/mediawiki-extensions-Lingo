@@ -22,13 +22,16 @@ class LingoBasicBackend extends LingoBackend {
 
 	public function __construct( LingoMessageLog &$messages = null ) {
 
+		global $wgexLingoPage;
+
+		$page = $wgexLingoPage ? $wgexLingoPage : wfMsg( 'lingo-terminologypagename' );
+
 		parent::__construct( $messages );
 
 		// Get Terminology page
-		$rev = Revision::newFromTitle( Title::makeTitle( null, 'Terminology' ) );
-
+		$rev = Revision::newFromTitle( Title::makeTitle( null, $page ) );
 		if ( !$rev ) {
-			$this->getMessageLog()->addWarning( '[[Terminology]] does not exist.' );
+			$this->getMessageLog()->addWarning( wfMsgReal( 'lingo-noterminologypage', array($page) ) );
 			return false;
 		}
 
