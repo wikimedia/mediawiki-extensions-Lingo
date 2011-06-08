@@ -31,13 +31,13 @@ class LingoBasicBackend extends LingoBackend {
 		// Get Terminology page
 		$title = Title::newFromText( $page );
 		if ( $title->getInterwiki() ) {
-			$this->getMessageLog()->addError( wfMsgReplaceArgs( wfMsgForContent( 'lingo-terminologypagenotlocal' ), array($page) ) );
+			$this->getMessageLog()->addError( wfMsgForContent( 'lingo-terminologypagenotlocal' , array($page) ) );
 			return false;
 		}
 
 		$rev = Revision::newFromTitle( $title );
 		if ( !$rev ) {
-			$this->getMessageLog()->addWarning( wfMsgReplaceArgs( wfMsgForContent( 'lingo-noterminologypage' ), array($page) ) );
+			$this->getMessageLog()->addWarning( wfMsgForContent( 'lingo-noterminologypage' , array($page) ) );
 			return false;
 		}
 
