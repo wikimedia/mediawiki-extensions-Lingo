@@ -1,10 +1,6 @@
 jQuery(function ($){
 	
-	var tooltips = $(".tooltip");
-	//	var tooltip_wrapper = tooltip.find(".tooltip_tipwrapper");
-	//	var tooltip_tip = tooltip_wrapper.find(".tooltip_tip");
-	
-	tooltips
+	$(".tooltip")
 	.mouseenter(function(){
 
 		var tip = $(this);
@@ -19,7 +15,6 @@ jQuery(function ($){
 
 		wrapper
 		.css({
-			//			'visibility': 'hidden',
 			'visibility': 'visible',
 			'display': 'block',
 			'width': '10000000px'
@@ -47,12 +42,7 @@ jQuery(function ($){
 
 		tipdef.width( maxAvailableWidth );
 
-		//		tipdef.css({
-		//			'position': 'fixed',
-		//			'top': '0px',
-		//			'left': '0px'
-		//		});
-		//	if constrained to the window width, i.e.
+		// height if constrained to the window width, i.e.
 		// the minimum width necessary if the full window width were available
 		var heightAtMaxWidth = tipdef.height();
 
@@ -85,14 +75,14 @@ jQuery(function ($){
 
 			// if it is too large anyway, just set max available width and be
 			// done with it
-				wrapper.css({
-					'width': maxAvailableWidth + 'px',
-					'padding-left': '10px',
-					'left': '0px',
-					'top': '0px',
-					'padding-bottom': '0px',
-					'padding-top' : (tip.outerHeight() + 5 ) +'px'
-				});
+			wrapper.css({
+				'width': maxAvailableWidth + 'px',
+				'padding-left': '10px',
+				'left': '0px',
+				'top': '0px',
+				'padding-bottom': '0px',
+				'padding-top' : (tip.outerHeight() + 5 ) +'px'
+			});
 
 		} else {
 
@@ -143,7 +133,7 @@ jQuery(function ($){
 			if ( placeAbove ) {
 				wrapper.css({
 					'top': ( - tipdef.outerHeight() - 5) + 'px',
-					'padding-bottom': '10px',
+					'padding-bottom': (tip.outerHeight() + 5 ) +'px',
 					'padding-top' : '0px'
 				});
 
@@ -166,7 +156,6 @@ jQuery(function ($){
 		
 		wrapper
 		.css({
-			//			'width': '100%',
 			'height': 'auto',
 			'visibility': 'visible',
 			'display': 'none'
