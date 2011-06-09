@@ -267,20 +267,36 @@ class LingoParser {
 	protected function loadModules( &$parser ) {
 		global $wgOut, $wgScriptPath;
 
+		// load scripts
+		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+			if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
+				$parser->getOutput()->addModules( 'ext.Lingo.Scripts' );
+			} else {
+				$wgOut->addModules( 'ext.Lingo.Scripts' );
+			}
+		} else {
+			if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
+				$parser->getOutput()->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
+			} else {
+				$wgOut->addHeadItem( 'ext.Lingo.Scripts', "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n" );
+			}
+		}
+
+		// load styles
 		// FIXME: Modules loaded by the ResourceLoader only work on JS-enabled
 		// browsers. This doesn't make any sense for CSS-only modules that don't
 		// need any JS. -> Use ResourceLoader if and when Bug 29308 gets fixed.
 //		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-//			if ( !is_null( $parser ) ) {
-//				$parser->getOutput()->addModules( 'ext.Lingo' );
+//			if ( !is_null( $parser )  && ( $wgOut->isArticle() ) ) {
+//				$parser->getOutput()->addModules( 'ext.Lingo.Styles' );
 //			} else {
-//				$wgOut->addModules( 'ext.Lingo' );
+//				$wgOut->addModules( 'ext.Lingo.Styles' );
 //			}
 //		} else {
 		if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
-			$parser->getOutput()->addHeadItem( '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />', 'ext.Lingo.css' );
+			$parser->getOutput()->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
 		} else {
-			$wgOut->addHeadItem( 'ext.Lingo.css', '<link rel="stylesheet" href="' . $wgScriptPath . '/extensions/Lingo/skins/Lingo.css" />' );
+			$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n" );
 		}
 //		}
 	}

@@ -44,30 +44,29 @@ $wgAutoloadClasses[ 'LingoBasicBackend' ] = $dir . '/LingoBasicBackend.php';
 $wgAutoloadClasses[ 'LingoMessageLog' ] = $dir . '/LingoMessageLog.php';
 // $wgAutoloadClasses['SpecialLingoBrowser'] = $dir . '/SpecialLingoBrowser.php';
 
-unset ($dir);
-
 $wgHooks[ 'SpecialVersionExtensionTypes' ][ ] = 'fnLingoSetCredits';
-//$wgExtensionFunctions[ ] = 'fnLingoInit';
 $wgHooks[ 'ParserAfterTidy' ][ ] = 'LingoParser::parse';
 
 // register resource modules with the Resource Loader
-$wgResourceModules[ 'ext.Lingo' ] = array(
-	// JavaScript and CSS styles. To combine multiple file, just list them as an array.
+$wgResourceModules[ 'ext.Lingo.Styles' ] = array(
+	'localBasePath' => $dir,
+	'remoteExtPath' => 'Lingo',
 	// 'scripts' => 'libs/ext.myExtension.js',
 	'styles' => 'skins/Lingo.css',
-	// When your module is loaded, these messages will be available to mediaWiki.msg()
 	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
-
-	// If your scripts need code from other modules, list their identifiers as dependencies
-	// and ResourceLoader will make sure they're loaded before you.
-	// You don't need to manually list 'mediawiki' or 'jquery', which are always loaded.
 	// 'dependencies' => array( 'jquery.ui.datepicker' ),
-
-	// ResourceLoader needs to know where your files are; specify your
-	// subdir relative to "extensions" or $wgExtensionAssetsPath
-	'localBasePath' => dirname( __FILE__ ),
-	'remoteExtPath' => 'Lingo'
 );
+
+$wgResourceModules[ 'ext.Lingo.Scripts' ] = array(
+	'localBasePath' => $dir,
+	'remoteExtPath' => 'Lingo',
+	'scripts' => 'libs/Lingo.js',
+	// 'styles' => 'skins/Lingo.css',
+	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
+	// 'dependencies' => array( 'jquery.ui.datepicker' ),
+);
+
+unset ($dir);
 
 /**
  * Deferred setting of extension credits
