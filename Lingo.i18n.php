@@ -22,6 +22,17 @@ $messages['qqq'] = array(
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
 );
 
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+ * @author EugeneZelenko
+ * @author Wizardist
+ */
+$messages['be-tarask'] = array(
+	'lingo-desc' => 'Паказвае падказкі да словаў, вызначаных на старонцы [[$1]]',
+	'lingo-terminologypagename' => 'Тэрміналёгія',
+	'lingo-noterminologypage' => 'Старонка «$1» не існуе.',
+	'lingo-terminologypagenotlocal' => 'Старонка «$1» не зьяўляецца лякальнай.',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
