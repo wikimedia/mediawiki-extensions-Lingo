@@ -166,7 +166,11 @@ jQuery(function ($){
 	
 	.mouseleave(function(){
 		$(".tooltip_tipwrapper", this).fadeOut(200);
-	});
+	})
 	
-
+	.find(".tooltip_tip")
+	.mouseleave(function(){
+		$(this).parent().parent().mouseleave();
+	})
+	
 });
