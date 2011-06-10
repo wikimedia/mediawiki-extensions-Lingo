@@ -37,7 +37,7 @@ $messages['be-tarask'] = array(
  * @author Kghbln
  */
 $messages['de'] = array(
-	'lingo-desc' => 'Ermöglicht Informationstexte die eingeblendet werden, sobald man mit der Maus über einen auf der Seite [[$1]] hinterlegten Begriff führt',
+	'lingo-desc' => 'Ermöglicht Informationstexte, die eingeblendet werden, sobald man die Maus über einen auf der Seite [[$1]] hinterlegten Begriff führt',
 	'lingo-terminologypagename' => 'Glossar',
 	'lingo-noterminologypage' => 'Seite „$1“ ist nicht vorhanden.',
 	'lingo-terminologypagenotlocal' => 'Seite „$1“ befindet sich nicht auf diesem Wiki.',
@@ -47,7 +47,7 @@ $messages['de'] = array(
  * @author Sherbrooke
  */
 $messages['fr'] = array(
-	'lingo-desc' => 'Dans les pages, affiche une info-bulle si le mot est défini dans la page de [[Terminology|Terminologie]].',
+	'lingo-desc' => 'Dans les pages, affiche une info-bulle si le mot est défini dans la page de [[$1]].',
 );
 
 /** Galician (Galego)
@@ -64,7 +64,7 @@ $messages['gl'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'lingo-desc' => 'Овозможува описи при лебдење над алатките на страниците (од зборови со утврдени значења на страницата [[Terminology|Терминологија]])',
+	'lingo-desc' => 'Овозможува описи при лебдење над алатките на страниците (од зборови со утврдени значења на страницата [[$1]])',
 	'lingo-terminologypagename' => 'Терминологија',
 	'lingo-noterminologypage' => 'Страницата „$1“ не постои.',
 	'lingo-terminologypagenotlocal' => 'Страницата „$1“ не е локална страница.',
@@ -84,7 +84,7 @@ $messages['nl'] = array(
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
-	'lingo-desc' => 'Permite que a passagem do ponteiro do rato sobre palavras nas páginas, resulte no aparecimento de uma legenda. As palavras são definidas na página [[Terminology]].',
+	'lingo-desc' => 'Permite que a passagem do ponteiro do rato sobre palavras nas páginas, resulte no aparecimento de uma legenda. As palavras são definidas na página [[$1]].',
 	'lingo-terminologypagename' => 'Terminology',
 	'lingo-noterminologypage' => "A página '$1' não existe.",
 	'lingo-terminologypagenotlocal' => "A página '$1' não é uma página local.",
@@ -94,6 +94,6 @@ $messages['pt'] = array(
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
-	'lingo-desc' => 'Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[Terminology]]',
+	'lingo-desc' => 'Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[$1]]',
 );
 
