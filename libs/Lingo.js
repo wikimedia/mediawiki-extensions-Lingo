@@ -1,15 +1,22 @@
 jQuery(function ($){
 	
 	$(".tooltip")
-	.mouseenter(function(){
+	.mouseenter(function( event ){
+
+		event.stopImmediatePropagation();
 
 		var tip = $(this);
 		var wrapper = tip.find(".tooltip_tipwrapper");
 		var tipdef = wrapper.find(".tooltip_tip");
 
-		var maxAvailableWidth = window.innerWidth - 15; // -15 for scrollbar
+		if ( wrapper.css("display") == "block" ) {
+			return;
+		}
+
+		var termLineHeight = tip.outerHeight() + 5;
+		var maxAvailableWidth = $(window).width();
 		var maxAvailableHeightAbove = tip.offset().top - $(window).scrollTop() - 5;
-		var maxAvailableHeightBelow = window.innerHeight - (tip.offset().top - $(window).scrollTop()) - tip.outerHeight() - 5 - 15;  // -15 for scrollbar
+		var maxAvailableHeightBelow = $(window).height() - (tip.offset().top - $(window).scrollTop()) - termLineHeight;
 
 		var maxWidthWithoutBreak = maxAvailableWidth / 3;
 
@@ -39,6 +46,8 @@ jQuery(function ($){
 		maxAvailableHeightAbove -= borderWidth;
 		maxAvailableHeightBelow -= borderWidth;
 		maxWidthWithoutBreak -= borderWidth;
+
+		var maxAvailableWidthRight = maxAvailableWidth - (tip.offset().left - $(window).scrollLeft() );
 
 		tipdef.width( maxAvailableWidth );
 
@@ -77,11 +86,11 @@ jQuery(function ($){
 			// done with it
 			wrapper.css({
 				'width': maxAvailableWidth + 'px',
-				'padding-left': '10px',
-				'left': '0px',
+				'padding-left': '0px',
+				'left': (maxAvailableWidthRight - maxAvailableWidth) +'px',
 				'top': '0px',
 				'padding-bottom': '0px',
-				'padding-top' : (tip.outerHeight() + 5 ) +'px'
+				'padding-top' : termLineHeight +'px'
 			});
 
 		} else {
@@ -109,8 +118,6 @@ jQuery(function ($){
 
 			wrapper.height(tipdef.height());
 			
-			var maxAvailableWidthRight = window.innerWidth - (tip.offset().left - $(window).scrollLeft() ) - borderWidth;
-
 			if ( maxAvailableWidthRight - 10 >= width ) {
 				// will not bump into right window border
 				wrapper.css({
@@ -121,8 +128,7 @@ jQuery(function ($){
 
 			} else {
 				// will bump into right window border
-				var left = maxAvailableWidthRight - width - borderWidth;
-				wrapper.width(width);
+				var left = maxAvailableWidthRight - width;
 				wrapper.css({
 					'width': width + 'px',
 					'padding-left': '0px',
@@ -133,7 +139,7 @@ jQuery(function ($){
 			if ( placeAbove ) {
 				wrapper.css({
 					'top': ( - tipdef.outerHeight() - 5) + 'px',
-					'padding-bottom': (tip.outerHeight() + 5 ) +'px',
+					'padding-bottom': termLineHeight +'px',
 					'padding-top' : '0px'
 				});
 
@@ -142,7 +148,7 @@ jQuery(function ($){
 					//					'position': 'absolute',
 					'top': '0px',
 					'padding-bottom': '0px',
-					'padding-top' : (tip.outerHeight() + 5 ) +'px'
+					'padding-top' : termLineHeight +'px'
 				});
 			}
 
@@ -164,13 +170,20 @@ jQuery(function ($){
 		.fadeIn(200);
 	})
 	
-	.mouseleave(function(){
-		$(".tooltip_tipwrapper", this).fadeOut(200);
+	.mouseleave( function( event ){
+		event.stopImmediatePropagation();
+
+		$(this).find(".tooltip_tipwrapper").fadeOut(200);
 	})
-	
+
+	.find(".tooltip_tipwrapper")
+	.css( "display", "none" )
+
 	.find(".tooltip_tip")
-	.mouseleave(function(){
-		$(this).parent().parent().mouseleave();
+	.mouseleave( function( event ){
+		event.stopImmediatePropagation();
+
+		$(this).parent().fadeOut(200);
 	})
 	
 });
