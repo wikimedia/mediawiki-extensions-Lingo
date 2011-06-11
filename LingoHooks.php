@@ -18,21 +18,14 @@ if ( !defined( 'LINGO_VERSION' ) ) {
  */
 class LingoHooks {
 
-	static function setup( &$parser ) {
-		# Set a function hook associating the "noglossary" with fnLingoNoGlossary
-		MagicWord::getDoubleUnderscoreArray()->add( 'nolingo' );
-		return true;
-	}
-
 	static function setMagicWords( &$magicWords, $langCode ) {
-		# Add the magic word
-		$magicWords['nolingo'] = array( 0, '__nolingo__' );
+		$magicWords['noglossary'] = array( 0, '__NOGLOSSARY__', '__' . wfMsgGetKey( 'lingo-noglossary', true, $langCode ) . '__' );
 		return true;
 	}
 
 	static function parse( &$parser, &$text ) {
 
-		if ( !isset( $parser->mDoubleUnderscores['nolingo'] ) ) {
+		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) ) {
 			LingoParser::parse( $parser, $text );
 		}
 

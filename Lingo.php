@@ -47,7 +47,7 @@ $wgAutoloadClasses['LingoMessageLog'] = $dir . '/LingoMessageLog.php';
 // register hook handlers
 $wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set credits
 $wgHooks['ParserAfterTidy'][] = 'LingoHooks::parse'; // parse page
-$wgHooks['ParserFirstCallInit'][] = 'LingoHooks::setup'; // do late setup
+//$wgHooks['ParserFirstCallInit'][] = 'LingoHooks::setup'; // do late setup
 $wgHooks['LanguageGetMagic'][] = 'LingoHooks::setMagicWords'; // set magic words
 
 // register resource modules with the Resource Loader
@@ -68,6 +68,8 @@ $wgResourceModules['ext.Lingo.Scripts'] = array(
 	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
 	// 'dependencies' => array( 'jquery.ui.datepicker' ),
 );
+
+MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';
 
 unset( $dir );
 

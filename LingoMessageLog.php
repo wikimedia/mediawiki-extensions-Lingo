@@ -75,9 +75,13 @@ class LingoMessageLog {
 			}
 
 			$ret = Html::rawElement( 'div', array('class' => 'messages'),
-					$header .
-					$parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) )->getText()
+					$header . "\n" .
+					$ret
 			);
+			
+			$ret = $parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) );
+		} else {
+			$ret = null;
 		}
 
 		return $ret;

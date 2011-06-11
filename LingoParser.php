@@ -265,19 +265,20 @@ class LingoParser {
 	}
 
 	protected function loadModules( &$parser ) {
-		global $wgOut, $wgScriptPath;
+		global $wgOut, $wgScriptPath, $wgParser;
 
 		// load scripts
 		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
-				$parser->getOutput()->addModules( 'ext.Lingo.Scripts' );
-			} else {
+			$parser->getOutput()->addModules( 'ext.Lingo.Scripts' );
+			if ( !$wgOut->isArticle() ) {
 				$wgOut->addModules( 'ext.Lingo.Scripts' );
 			}
 		} else {
-			if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
-				$parser->getOutput()->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
-			} else {
+			global $wgStylePath;
+			$parser->getOutput()->addHeadItem( "<script src='$wgStylePath/common/jquery.min.js'></script>\n", 'ext.Lingo.jq' );
+			$parser->getOutput()->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
+			if ( !$wgOut->isArticle() ) {
+				$wgOut->addHeadItem( 'ext.Lingo.jq', "<script src='$wgStylePath/common/jquery.min.js'></script>\n" );
 				$wgOut->addHeadItem( 'ext.Lingo.Scripts', "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n" );
 			}
 		}
@@ -287,15 +288,13 @@ class LingoParser {
 		// browsers. This doesn't make any sense for CSS-only modules that don't
 		// need any JS. -> Use ResourceLoader if and when Bug 29308 gets fixed.
 //		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-//			if ( !is_null( $parser )  && ( $wgOut->isArticle() ) ) {
-//				$parser->getOutput()->addModules( 'ext.Lingo.Styles' );
-//			} else {
+//			$parser->getOutput()->addModules( 'ext.Lingo.Styles' );
+//			if ( !$wgOut->isArticle() ) {
 //				$wgOut->addModules( 'ext.Lingo.Styles' );
 //			}
 //		} else {
-		if ( !is_null( $parser ) && ( $wgOut->isArticle() ) ) {
-			$parser->getOutput()->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
-		} else {
+		$parser->getOutput()->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
+		if ( !$wgOut->isArticle() ) {
 			$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n" );
 		}
 //		}
