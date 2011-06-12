@@ -151,7 +151,7 @@ class LingoParser {
 		wfSuppressWarnings();
 
 		$doc = DOMDocument::loadHTML(
-				'<html><meta http-equiv="content-type" content="charset=utf-8"/>' . $text . '</html>'
+				'<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>'
 		);
 
 		wfRestoreWarnings();
@@ -251,12 +251,14 @@ class LingoParser {
 		if ( $changedDoc ) {
 			$body = $xpath->query( '/html/body' );
 
-			$text = '';
-			foreach ( $body->item( 0 )->childNodes as $child ) {
-				$text .= $doc->saveXML( $child );
-			}
+			if ( $body->length > 0 ) {
+				$text = '';
+				foreach ( $body->item( 0 )->childNodes as $child ) {
+					$text .= $doc->saveXML( $child );
+				}
 
-			$this->loadModules( $parser );
+				$this->loadModules( $parser );
+			}
 		}
 
 		wfProfileOut( __METHOD__ );
