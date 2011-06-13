@@ -13,14 +13,12 @@ $messages['en'] = array(
 	'lingo-terminologypagename' => 'Terminology',
 	'lingo-noterminologypage' => "Page '$1' does not exist.",
 	'lingo-terminologypagenotlocal' => "Page '$1' is not a local page.",
-	'lingo-noglossary' => 'NOGLOSSARY',
 );
 
 /** Message documentation (Message documentation) */
 $messages['qqq'] = array(
 	'lingo-desc' => '{{desc}}',
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
-	'lingo-noglossary' => 'The magic word which will suppress the application of the glossary for a page.',
 );
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
@@ -42,7 +40,6 @@ $messages['de'] = array(
 	'lingo-terminologypagename' => 'Glossar',
 	'lingo-noterminologypage' => 'Seite „$1“ ist nicht vorhanden.',
 	'lingo-terminologypagenotlocal' => 'Seite „$1“ befindet sich nicht auf diesem Wiki.',
-	'lingo-noglossary' => 'KEIN_GLOSSAR',
 );
 
 /** French (Français)

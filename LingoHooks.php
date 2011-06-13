@@ -18,11 +18,6 @@ if ( !defined( 'LINGO_VERSION' ) ) {
  */
 class LingoHooks {
 
-	static function setMagicWords( &$magicWords, $langCode ) {
-		$magicWords['noglossary'] = array( 0, '__NOGLOSSARY__', '__' . wfMsgGetKey( 'lingo-noglossary', true, $langCode ) . '__' );
-		return true;
-	}
-
 	static function parse( &$parser, &$text ) {
 
 		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) ) {
@@ -33,9 +28,9 @@ class LingoHooks {
 	}
 
 	/**
-	 * Deferred setting of extension credits
+	 * Deferred setting of description in extension credits
 	 *
-	 * Setting of extension credits has to be deferred to the
+	 * Setting of description in extension credits has to be deferred to the
 	 * SpecialVersionExtensionTypes hook as it uses variable $wgexLingoPage (which
 	 * might be set only after inclusion of the extension in LocalSettings) and
 	 * function wfMsg not available before.
@@ -45,14 +40,8 @@ class LingoHooks {
 	static function setCredits() {
 
 		global $wgExtensionCredits, $wgexLingoPage;
-		$wgExtensionCredits['parserhook'][] = array(
-			'path' => __FILE__,
-			'name' => 'Lingo',
-			'author' => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]' ),
-			'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
-			'descriptionmsg' => array( 'lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' ) ),
-			'version' => LINGO_VERSION,
-		);
+		$wgExtensionCredits['parserhook']['lingo']['description'] =
+			wfMsg( 'lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' ) );
 
 		return true;
 	}

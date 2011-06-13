@@ -28,12 +28,26 @@ $wgexLingoBackend = 'LingoBasicBackend';
 // set default for Terminology page (null = take from i18n)
 $wgexLingoPage = null;
 
+// set if glossary terms are to be marked up once or always
+$wgexLingoDisplayOnce = false;
+
+
+// set extension credits
+// (no description here, will be set later)
+$wgExtensionCredits['parserhook']['lingo'] = array(
+	'path' => __FILE__,
+	'name' => 'Lingo',
+	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
+	'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
+	'version' => LINGO_VERSION,
+);
 
 // server-local path to this file
 $dir = dirname( __FILE__ );
 
-// register message file
+// register message files
 $wgExtensionMessagesFiles['Lingo'] = $dir . '/Lingo.i18n.php';
+$wgExtensionMessagesFiles['LingoMagic'] = $dir . '/Lingo.i18n.magic.php';
 
 // register class files with the Autoloader
 $wgAutoloadClasses['LingoHooks'] = $dir . '/LingoHooks.php';
@@ -47,8 +61,6 @@ $wgAutoloadClasses['LingoMessageLog'] = $dir . '/LingoMessageLog.php';
 // register hook handlers
 $wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set credits
 $wgHooks['ParserAfterTidy'][] = 'LingoHooks::parse'; // parse page
-//$wgHooks['ParserFirstCallInit'][] = 'LingoHooks::setup'; // do late setup
-$wgHooks['LanguageGetMagic'][] = 'LingoHooks::setMagicWords'; // set magic words
 
 // register resource modules with the Resource Loader
 $wgResourceModules['ext.Lingo.Styles'] = array(

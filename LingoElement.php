@@ -27,6 +27,8 @@ class LingoElement {
 	private $mFullDefinition = null;
 	private $mDefinitions = array();
 	private $mTerm = null;
+	private $mHasBeenDisplayed = false;
+
 	static private $mLinkTemplate = null;
 
 	public function __construct( &$term, &$definition = null ) {
@@ -43,6 +45,14 @@ class LingoElement {
 	}
 
 	public function getFullDefinition( DOMDocument &$doc ) {
+
+		global $wgexLingoDisplayOnce;
+
+		// return textnode if
+		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
+			return $doc->createTextNode($this->mTerm);
+		}
+		
 		// only create if not yet created
 		if ( $this->mFullDefinition == null || $this->mFullDefinition->ownerDocument !== $doc ) {
 
@@ -84,6 +94,7 @@ class LingoElement {
 			$spanDefinitionOuter->appendChild( $spanDefinitionInner );
 
 			$this->mFullDefinition = $span;
+			$this->mHasBeenDisplayed = true;
 		}
 
 		return $this->mFullDefinition->cloneNode( true );
