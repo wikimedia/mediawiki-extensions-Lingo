@@ -20,7 +20,18 @@ class LingoHooks {
 
 	static function parse( &$parser, &$text ) {
 
-		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) ) {
+		global $wgexLingoUseNamespaces;
+
+		$title = $parser->getTitle();
+
+		// parse if
+		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) && // __NOGLOSSARY__ not present and
+			(
+			!$title || // title not set or
+			!isset( $wgexLingoUseNamespaces[$title->getNamespace()] ) || // namespace not explicitly forbidden or
+			$wgexLingoUseNamespaces[$title->getNamespace()] // namespace explicitly allowed
+			)
+		) { 
 			LingoParser::parse( $parser, $text );
 		}
 

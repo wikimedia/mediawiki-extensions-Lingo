@@ -31,6 +31,16 @@ $wgexLingoPage = null;
 // set if glossary terms are to be marked up once or always
 $wgexLingoDisplayOnce = false;
 
+// set namespaces to be marked up;
+// namespaces to be ignored have to be included in this array and set to false
+// anything not in this array (or in this array and set to true) will be marked up
+$wgexLingoUseNamespaces = array(
+//	NS_MEDIA            => true,
+//	NS_SPECIAL          => true,
+//	NS_TALK             => false,
+//  ...
+);
+
 
 // set extension credits
 // (no description here, will be set later)
