@@ -47,6 +47,9 @@ $messages['de'] = array(
  */
 $messages['fr'] = array(
 	'lingo-desc' => 'Dans les pages, affiche une info-bulle si le mot est défini dans la page de [[$1]].',
+	'lingo-terminologypagename' => 'Terminologie',
+	'lingo-noterminologypage' => "Page « $1 » n'existe pas.",
+	'lingo-terminologypagenotlocal' => "Page « $1 » n'est pas une page locale.",
 );
 
 /** Galician (Galego)
