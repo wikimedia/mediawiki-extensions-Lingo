@@ -73,13 +73,14 @@ $messages['mk'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Siebrand
  * @author Tjcool007
  */
 $messages['nl'] = array(
-	'lingo-desc' => "Zorgt voor tooltips op pagina's voor woorden gedefiniëerd op [[$1]].",
+	'lingo-desc' => "Zorgt voor tooltips op pagina's voor woorden gedefinieerd op [[$1]].",
 	'lingo-terminologypagename' => 'Terminologie',
-	'lingo-noterminologypage' => "De pagina '$1' bestaat niet.",
-	'lingo-terminologypagenotlocal' => "De pagina '$1' is geen lokale pagina.",
+	'lingo-noterminologypage' => 'De pagina "$1" bestaat niet.',
+	'lingo-terminologypagenotlocal' => 'De pagina "$1" is geen lokale pagina.',
 );
 
 /** Portuguese (Português)
