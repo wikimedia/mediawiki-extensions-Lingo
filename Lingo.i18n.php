@@ -62,6 +62,16 @@ $messages['gl'] = array(
 	'lingo-terminologypagenotlocal' => 'A páxina "$1" non é unha páxina local.',
 );
 
+/** Hebrew (עברית)
+ * @author Amire80
+ */
+$messages['he'] = array(
+	'lingo-desc' => 'כלי לתצוגה רמזים צצים בדפים לפי מילים שמוגדרות בדף [[$1]]',
+	'lingo-terminologypagename' => 'מינוח',
+	'lingo-noterminologypage' => 'הדף "$1" אניו קיים.',
+	'lingo-terminologypagenotlocal' => 'הדם "$1" אינו דף מקומי.',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
