@@ -72,6 +72,13 @@ $messages['he'] = array(
 	'lingo-terminologypagenotlocal' => 'הדם "$1" אינו דף מקומי.',
 );
 
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'lingo-terminologypagename' => 'Terminologia',
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
