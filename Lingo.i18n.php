@@ -76,7 +76,10 @@ $messages['he'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
+	'lingo-desc' => 'Monstra, al passage del cursor del mus, quadros de information super paginas de parolas definite in le pagina [[$1]]',
 	'lingo-terminologypagename' => 'Terminologia',
+	'lingo-noterminologypage' => 'Le pagina "$1" non existe.',
+	'lingo-terminologypagenotlocal' => 'Le pagina "$1" non es un pagina local.',
 );
 
 /** Macedonian (Македонски)
