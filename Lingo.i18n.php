@@ -120,3 +120,11 @@ $messages['ru'] = array(
 	'lingo-desc' => 'Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[$1]]',
 );
 
+/** Swedish (Svenska)
+ * @author WikiPhoenix
+ */
+$messages['sv'] = array(
+	'lingo-noterminologypage' => 'Sidan "$1" finns inte',
+	'lingo-terminologypagenotlocal' => 'Sidan "$1" är inte en lokal sida.',
+);
+
