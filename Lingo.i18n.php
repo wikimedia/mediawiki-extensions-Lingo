@@ -52,6 +52,15 @@ $messages['fr'] = array(
 	'lingo-terminologypagenotlocal' => "Page « $1 » n'est pas une page locale.",
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'lingo-terminologypagename' => 'Tèrminologia',
+	'lingo-noterminologypage' => 'Pâge « $1 » ègziste pas.',
+	'lingo-terminologypagenotlocal' => 'Pâge « $1 » est pas una pâge locala.',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
