@@ -101,6 +101,16 @@ $messages['mk'] = array(
 	'lingo-terminologypagenotlocal' => 'Страницата „$1“ не е локална страница.',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'lingo-desc' => 'Menyediakan petua-petua alatan secara hover pada laman-laman daripada kata-kata yang ditakrifkan di laman [[$1]]',
+	'lingo-terminologypagename' => 'Peristilahan',
+	'lingo-noterminologypage' => 'Laman "$1" tidak wujud.',
+	'lingo-terminologypagenotlocal' => 'Laman "$1" bukan laman tempatan.',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tjcool007
