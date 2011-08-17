@@ -91,6 +91,16 @@ $messages['ia'] = array(
 	'lingo-terminologypagenotlocal' => 'Le pagina "$1" non es un pagina local.',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'lingo-desc' => "Erlaabt et 'Tool Tips' ze weisen, wann ee mat der Maus iwwer Wierder fiert déi op der [[$1]]-Säit definéiert sinn",
+	'lingo-terminologypagename' => 'Terminologie',
+	'lingo-noterminologypage' => "Säit '$1' gëtt et net.",
+	'lingo-terminologypagenotlocal' => "Säit '$1' gëtt et op dëser Wiki net.",
+);
+
 /** Macedonian (Македонски)
  * @author Bjankuloski06
  */
