@@ -132,6 +132,13 @@ $messages['nl'] = array(
 	'lingo-terminologypagenotlocal' => 'De pagina "$1" is geen lokale pagina.',
 );
 
+/** Polish (Polski)
+ * @author Woytecr
+ */
+$messages['pl'] = array(
+	'lingo-noterminologypage' => 'Strona "$1" nie istnieje.',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
