@@ -91,6 +91,16 @@ $messages['ia'] = array(
 	'lingo-terminologypagenotlocal' => 'Le pagina "$1" non es un pagina local.',
 );
 
+/** Japanese (日本語)
+ * @author Schu
+ */
+$messages['ja'] = array(
+	'lingo-desc' => '[[$1]] ページに定義された用語から、ページ上にヒントを表示する hover-over ツールを提供します。',
+	'lingo-terminologypagename' => 'Terminology',
+	'lingo-noterminologypage' => '"$1" ページが存在しません。',
+	'lingo-terminologypagenotlocal' => '" $1 "ページはローカルページではありません。',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
