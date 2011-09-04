@@ -143,10 +143,11 @@ $messages['nl'] = array(
 );
 
 /** Polish (Polski)
+ * @author Sp5uhe
  * @author Woytecr
  */
 $messages['pl'] = array(
-	'lingo-noterminologypage' => 'Strona "$1" nie istnieje.',
+	'lingo-noterminologypage' => 'Strona „$1“ nie istnieje.',
 );
 
 /** Portuguese (Português)
