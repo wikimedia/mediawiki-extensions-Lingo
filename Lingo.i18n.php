@@ -171,6 +171,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'lingo-terminologypagename' => 'Terminologi',
 	'lingo-noterminologypage' => 'Sidan "$1" finns inte',
 	'lingo-terminologypagenotlocal' => 'Sidan "$1" är inte en lokal sida.',
 );
