@@ -32,6 +32,13 @@ $messages['be-tarask'] = array(
 	'lingo-terminologypagenotlocal' => 'Старонка «$1» не зьяўляецца лякальнай.',
 );
 
+/** Breton (Brezhoneg)
+ * @author Y-M D
+ */
+$messages['br'] = array(
+	'lingo-terminologypagename' => 'Termenadurezh',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
