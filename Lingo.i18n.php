@@ -74,7 +74,7 @@ $messages['frp'] = array(
 $messages['gl'] = array(
 	'lingo-desc' => 'Proporciona consellos nas páxinas ao pasar o rato por riba das palabras definidas na páxina "[[$1]]"',
 	'lingo-terminologypagename' => 'Terminoloxía',
-	'lingo-noterminologypage' => 'Non existe a páxina "$1".',
+	'lingo-noterminologypage' => 'A páxina "$1" non existe.',
 	'lingo-terminologypagenotlocal' => 'A páxina "$1" non é unha páxina local.',
 );
 
