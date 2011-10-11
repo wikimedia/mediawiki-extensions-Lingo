@@ -74,7 +74,7 @@ class LingoTree {
 		$tree = &$this->mTree;
 
 		// end of path, store description; end of recursion
-		while ( $step = array_shift( $path ) ) {
+		while ( ($step = array_shift( $path )) !== null ) {
 
 			if ( !isset( $tree[$step] ) ) {
 				$tree[$step] = array();
