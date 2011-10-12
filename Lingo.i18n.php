@@ -168,12 +168,13 @@ $messages['pt'] = array(
 );
 
 /** Russian (Русский)
+ * @author Adata80
  * @author Askarmuk
  * @author Александр Сигачёв
  */
 $messages['ru'] = array(
 	'lingo-desc' => 'Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[$1]]',
-	'lingo-terminologypagename' => ' Список терминов',
+	'lingo-terminologypagename' => 'Терминология',
 	'lingo-noterminologypage' => 'Страница "$1" не существует.',
 	'lingo-terminologypagenotlocal' => 'Страница "$1" не является локальной.',
 );
