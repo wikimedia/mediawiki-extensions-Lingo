@@ -25,6 +25,9 @@ class LingoParser {
 	private $mLingoTree = null;
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
+	
+	// The RegEx to split a chunk of text into words
+	public static $regex = '/[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 
 	public function __construct( LingoMessageLog &$messages = null ) {
 		global $wgexLingoBackend;
@@ -179,7 +182,7 @@ class LingoParser {
 			wfProfileIn( __METHOD__ . ' 3 lexer' );
 			$matches = array();
 			preg_match_all(
-				'/[[:alpha:]]+|[^[:alpha:]]/u',
+				self::$regex,
 				$el->nodeValue,
 				$matches,
 				PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER

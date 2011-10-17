@@ -52,7 +52,7 @@ class LingoTree {
 		} else {
 
 			$matches;
-			preg_match_all( '/[[:alpha:]]+|[^[:alpha:]]/u', $term, $matches );
+			preg_match_all( LingoParser::$regex, $term, $matches );
 
 			$elt = $this->addElement( $matches[0], $term, $definition );
 			$this->mList[$term] = &$elt[-1];
