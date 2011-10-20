@@ -43,8 +43,7 @@ class LingoBasicBackend extends LingoBackend {
 
 		$content = $rev->getText();
 
-		$term = array();
-		$this->mArticleLines = explode( "\n", $content );
+		$this->mArticleLines = array_reverse(explode( "\n", $content ));
 	}
 
 	/**
@@ -58,26 +57,37 @@ class LingoBasicBackend extends LingoBackend {
 	public function next() {
 
 		$ret = null;
+		static $term = null;
+		static $definition = null;
 
 		// find next valid line (yes, the assignation is intended)
 		while ( ( $ret == null ) && ( $entry = each( $this->mArticleLines ) ) ) {
 
-			if ( empty( $entry[1] ) || $entry[1][0] !== ';' ) {
+			if ( empty( $entry[1] ) || ($entry[1][0] !== ';' && $entry[1][0] !== ':')) {
 				continue;
 			}
 
-			$terms = explode( ':', $entry[1], 2 );
+			$chunks = explode( ':', $entry[1], 2 );
 
-			if ( count( $terms ) < 2 ) {
-				continue; // Invalid syntax
+			// found a new term?
+			if ( $chunks[0] ) {
+				$term = trim( substr( $chunks[0], 1 ) );
+			}
+			
+			// found a new definition?
+			if ( count ( $chunks ) == 2 ) {
+				$definition = trim( $chunks[1] );
 			}
 
-			$ret = array(
-				LingoElement::ELEMENT_TERM => trim( substr( $terms[0], 1 ) ),
-				LingoElement::ELEMENT_DEFINITION => trim( $terms[1] ),
-				LingoElement::ELEMENT_LINK => null,
-				LingoElement::ELEMENT_SOURCE => null
-			);
+			if ( $term !== null ) {
+				$ret = array(
+					LingoElement::ELEMENT_TERM => $term,
+					LingoElement::ELEMENT_DEFINITION => $definition,
+					LingoElement::ELEMENT_LINK => null,
+					LingoElement::ELEMENT_SOURCE => null
+				);
+			}
+
 		}
 
 		return $ret;
