@@ -48,6 +48,8 @@ class LingoElement {
 
 		global $wgexLingoDisplayOnce;
 
+		wfProfileIn( __METHOD__ );
+		
 		// return textnode if
 		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
 			return $doc->createTextNode($this->mTerm);
@@ -75,7 +77,7 @@ class LingoElement {
 
 			foreach ( $this->mDefinitions as $definition ) {
 				wfSuppressWarnings();
-				$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) . ' ' );
+				$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) );
 				wfRestoreWarnings();
 				if ( $definition[self::ELEMENT_LINK] ) {
 					$linkedTitle = Title::newFromText( $definition[self::ELEMENT_LINK] );
@@ -97,6 +99,8 @@ class LingoElement {
 			$this->mHasBeenDisplayed = true;
 		}
 
+		wfProfileOut( __METHOD__ );
+		
 		return $this->mFullDefinition->cloneNode( true );
 	}
 

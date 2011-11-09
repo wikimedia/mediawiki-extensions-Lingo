@@ -56,6 +56,8 @@ class LingoBasicBackend extends LingoBackend {
 	 */
 	public function next() {
 
+		wfProfileIn( __METHOD__ );
+		
 		$ret = null;
 		static $term = null;
 		static $definition = null;
@@ -90,6 +92,8 @@ class LingoBasicBackend extends LingoBackend {
 
 		}
 
+		wfProfileOut( __METHOD__ );
+		
 		return $ret;
 	}
 
