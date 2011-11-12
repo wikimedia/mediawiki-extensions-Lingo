@@ -33,10 +33,13 @@ $messages['be-tarask'] = array(
 );
 
 /** Breton (Brezhoneg)
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'lingo-terminologypagename' => 'Termenadurezh',
+	'lingo-noterminologypage' => 'N\'eus ket eus ar bajenn "$1".',
+	'lingo-terminologypagenotlocal' => 'N\'eus ket ur bajenn lec\'hel eus "$1".',
 );
 
 /** German (Deutsch)
