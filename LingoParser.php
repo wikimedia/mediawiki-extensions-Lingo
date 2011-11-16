@@ -252,16 +252,8 @@ class LingoParser {
 		}
 
 		if ( $changedDoc ) {
-			$body = $xpath->query( '/html/body' );
-
-			if ( $body->length > 0 ) {
-				$text = '';
-				foreach ( $body->item( 0 )->childNodes as $child ) {
-					$text .= $doc->saveXML( $child );
-				}
-
-				$this->loadModules( $parser );
-			}
+			$this->loadModules( $parser );
+			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
 		}
 
 		wfProfileOut( __METHOD__ );
