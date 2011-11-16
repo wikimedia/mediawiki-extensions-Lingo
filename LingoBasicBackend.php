@@ -59,7 +59,7 @@ class LingoBasicBackend extends LingoBackend {
 		wfProfileIn( __METHOD__ );
 		
 		$ret = null;
-		static $term = null;
+		$term = null;
 		static $definition = null;
 
 		// find next valid line (yes, the assignation is intended)
@@ -72,10 +72,10 @@ class LingoBasicBackend extends LingoBackend {
 			$chunks = explode( ':', $entry[1], 2 );
 
 			// found a new term?
-			if ( $chunks[0] ) {
+			if ( count( $chunks ) >= 1 && strlen( $chunks[0] ) >= 1 ) {
 				$term = trim( substr( $chunks[0], 1 ) );
 			}
-			
+
 			// found a new definition?
 			if ( count ( $chunks ) == 2 ) {
 				$definition = trim( $chunks[1] );
