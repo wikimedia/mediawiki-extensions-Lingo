@@ -91,6 +91,16 @@ $messages['he'] = array(
 	'lingo-terminologypagenotlocal' => 'הדם "$1" אינו דף מקומי.',
 );
 
+/** Upper Sorbian (Hornjoserbsce)
+ * @author Michawiki
+ */
+$messages['hsb'] = array(
+	'lingo-desc' => 'Zwobraznja pomocne teksty, hdyž kursor myše nad słowom steji, kotrež je na stronje [[$1]] definowane.',
+	'lingo-terminologypagename' => 'Terminologija',
+	'lingo-noterminologypage' => 'Strona "$1" njeeksistuje',
+	'lingo-terminologypagenotlocal' => 'Strona "$1" lokalna strona njeje.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
