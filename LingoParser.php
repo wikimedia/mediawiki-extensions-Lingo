@@ -253,6 +253,8 @@ class LingoParser {
 
 		if ( $changedDoc ) {
 			$this->loadModules( $parser );
+			
+			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
 		}
 

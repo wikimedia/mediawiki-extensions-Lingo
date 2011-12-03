@@ -9,7 +9,7 @@
  * @author Barry Coughlan
  * @copyright 2010 Barry Coughlan
  * @author Stephan Gambke
- * @version 0.2.1
+ * @version 0.3
  * @licence GNU General Public Licence 2.0 or later
  * @see http://www.mediawiki.org/wiki/Extension:Lingo Documentation
  */
@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 }
 
-define( 'LINGO_VERSION', '0.2.1' );
+define( 'LINGO_VERSION', '0.3' );
 
 
 // set defaults for settings

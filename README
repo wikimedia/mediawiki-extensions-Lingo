@@ -2,8 +2,6 @@ Lingo is a glossary extension to MediaWiki, that lets you define abbreviations
 and their definitions on a wiki page. It displays these definitions whenever an
 abbreviation is hovered over in an article.
 
-The extension is still in early stages, so please report bugs.
-
 See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 
 
@@ -70,4 +68,3 @@ is currently maintained by Stephan Gambke.
 Comments, questions and suggestions should be sent or posted to:
 * the Lingo discussion page: http://www.mediawiki.org/wiki/Extension_talk:Lingo
 * the maintainer: http://www.mediawiki.org/wiki/Special:EmailUser/F.trott
-

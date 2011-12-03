@@ -13,11 +13,20 @@ if ( !defined( 'LINGO_VERSION' ) ) {
 
 /**
  * The LingoHooks class.
+ * 
+ * It contains the hook handlers of the extension
  *
  * @ingroup Lingo
  */
 class LingoHooks {
 
+	/**
+	 * Hooks into ParserAfterTidy.
+	 * 
+	 * @param Parser $parser
+	 * @param String $text
+	 * @return Boolean 
+	 */
 	static function parse( &$parser, &$text ) {
 
 		global $wgexLingoUseNamespaces;
