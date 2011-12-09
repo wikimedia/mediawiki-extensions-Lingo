@@ -101,6 +101,16 @@ $messages['hsb'] = array(
 	'lingo-terminologypagenotlocal' => 'Strona "$1" lokalna strona njeje.',
 );
 
+/** Hungarian (Magyar)
+ * @author Dj
+ */
+$messages['hu'] = array(
+	'lingo-desc' => 'Kis információs ablakot jelenít meg a  [[$1]] lapon definiált szavakra, amennyiben az egérrel a szó fölé állunk',
+	'lingo-terminologypagename' => 'Terminológia',
+	'lingo-noterminologypage' => '„$1” lap nem létezik.',
+	'lingo-terminologypagenotlocal' => '„$1” nem helyi lap.',
+);
+
 /** Interlingua (Interlingua)
  * @author McDutchie
  */
