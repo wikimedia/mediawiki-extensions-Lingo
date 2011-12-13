@@ -48,7 +48,7 @@ $wgExtensionCredits['parserhook']['lingo'] = array(
 	'path' => __FILE__,
 	'name' => 'Lingo',
 	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
-	'url' => 'http://www.mediawiki.org/wiki/Extension:Lingo',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:Lingo',
 	'version' => LINGO_VERSION,
 );
 
