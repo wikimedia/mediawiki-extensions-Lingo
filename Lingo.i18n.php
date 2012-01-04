@@ -21,6 +21,16 @@ $messages['qqq'] = array(
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'lingo-desc' => 'Ufre gabitos nes páxines al pasar el mur per riba de les pallabres definíes na páxina [[$1]]',
+	'lingo-terminologypagename' => 'Terminoloxía',
+	'lingo-noterminologypage' => 'La páxina «$1» nun esiste.',
+	'lingo-terminologypagenotlocal' => 'La páxina «$1» nun ye una páxina llocal.',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
