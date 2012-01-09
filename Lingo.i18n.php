@@ -190,6 +190,16 @@ $messages['pl'] = array(
 	'lingo-noterminologypage' => 'Strona „$1“ nie istnieje.',
 );
 
+/** Piedmontese (Piemontèis)
+ * @author Dragonòt
+ */
+$messages['pms'] = array(
+	'lingo-desc' => 'A dà ij sugeriment hover-over dzora a le pagine da paròle definìe dzora a la pagina [[$1]]',
+	'lingo-terminologypagename' => 'Terminologìa',
+	'lingo-noterminologypage' => 'La pàgina "$1" a esist pa.',
+	'lingo-terminologypagenotlocal' => 'La pagina "$1" a l\'é pa na pagina local.',
+);
+
 /** Portuguese (Português)
  * @author Hamilton Abreu
  */
