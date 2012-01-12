@@ -191,13 +191,14 @@ $messages['pl'] = array(
 );
 
 /** Piedmontese (Piemontèis)
+ * @author Borichèt
  * @author Dragonòt
  */
 $messages['pms'] = array(
-	'lingo-desc' => 'A dà ij sugeriment hover-over dzora a le pagine da paròle definìe dzora a la pagina [[$1]]',
+	'lingo-desc' => 'A dà dij sugeriment an na gòla dzora a le pàgine da paròle definìe dzora a la pàgina ëd [[$1]]',
 	'lingo-terminologypagename' => 'Terminologìa',
 	'lingo-noterminologypage' => 'La pàgina "$1" a esist pa.',
-	'lingo-terminologypagenotlocal' => 'La pagina "$1" a l\'é pa na pagina local.',
+	'lingo-terminologypagenotlocal' => "La pàgina «$1» a l'é pa na pàgina local.",
 );
 
 /** Portuguese (Português)
