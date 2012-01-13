@@ -62,6 +62,16 @@ $messages['de'] = array(
 	'lingo-terminologypagenotlocal' => 'Seite „$1“ befindet sich nicht auf diesem Wiki.',
 );
 
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'lingo-desc' => 'Zwobraznja pomocne teksty, gaž kursor myšy stoj nad słowom, kótarež jo na boku [[$1]] definěrowane.',
+	'lingo-terminologypagename' => 'Terminologija',
+	'lingo-noterminologypage' => 'Bok "$1" njeeksistěrujo.',
+	'lingo-terminologypagenotlocal' => 'Bok "$1" njejo lokalny bok.',
+);
+
 /** French (Français)
  * @author Sherbrooke
  */
