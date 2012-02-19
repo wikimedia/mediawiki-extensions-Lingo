@@ -193,11 +193,15 @@ $messages['nl'] = array(
 );
 
 /** Polish (Polski)
+ * @author BeginaFelicysym
  * @author Sp5uhe
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'lingo-desc' => 'Wyświetla dymki na stronach po najechaniu na wyraz zdefiniowany na stronie [[$1]]',
+	'lingo-terminologypagename' => 'Terminologia',
 	'lingo-noterminologypage' => 'Strona „$1“ nie istnieje.',
+	'lingo-terminologypagenotlocal' => 'Strona "$1" nie jest stroną lokalną.',
 );
 
 /** Piedmontese (Piemontèis)
