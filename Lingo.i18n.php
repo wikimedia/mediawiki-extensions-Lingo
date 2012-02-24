@@ -72,6 +72,16 @@ $messages['dsb'] = array(
 	'lingo-terminologypagenotlocal' => 'Bok "$1" njejo lokalny bok.',
 );
 
+/** Spanish (Español)
+ * @author Armando-Martin
+ */
+$messages['es'] = array(
+	'lingo-desc' => 'Proporciona consejos en las páginas al pasar el ratón por encima de las palabras definidas en la página "[[$1]]"',
+	'lingo-terminologypagename' => 'Terminología',
+	'lingo-noterminologypage' => 'La página "$1" no existe.',
+	'lingo-terminologypagenotlocal' => 'La página "$1" no es una página local.',
+);
+
 /** French (Français)
  * @author Sherbrooke
  */
