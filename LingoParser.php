@@ -25,7 +25,7 @@ class LingoParser {
 	private $mLingoTree = null;
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
-	
+
 	// The RegEx to split a chunk of text into words
 	public static $regex = '/[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 
@@ -55,8 +55,8 @@ class LingoParser {
 	}
 
 	/**
-	 * 
-	 * @return LingoBackend the backend used by the parser 
+	 *
+	 * @return LingoBackend the backend used by the parser
 	 */
 	public function getBackend() {
 		return $this->mLingoBackend;
@@ -253,7 +253,7 @@ class LingoParser {
 
 		if ( $changedDoc ) {
 			$this->loadModules( $parser );
-			
+
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
 		}
@@ -266,16 +266,20 @@ class LingoParser {
 	protected function loadModules( &$parser ) {
 		global $wgOut, $wgScriptPath, $wgParser;
 
+		$parserOutput = $parser->getOutput();
+
 		// load scripts
 		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$parser->getOutput()->addModules( 'ext.Lingo.Scripts' );
+			$parserOutput->addModules( 'ext.Lingo.Scripts' );
+
 			if ( !$wgOut->isArticle() ) {
 				$wgOut->addModules( 'ext.Lingo.Scripts' );
 			}
 		} else {
 			global $wgStylePath;
-			$parser->getOutput()->addHeadItem( "<script src='$wgStylePath/common/jquery.min.js'></script>\n", 'ext.Lingo.jq' );
-			$parser->getOutput()->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
+			$parserOutput->addHeadItem( "<script src='$wgStylePath/common/jquery.min.js'></script>\n", 'ext.Lingo.jq' );
+			$parserOutput->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
+
 			if ( !$wgOut->isArticle() ) {
 				$wgOut->addHeadItem( 'ext.Lingo.jq', "<script src='$wgStylePath/common/jquery.min.js'></script>\n" );
 				$wgOut->addHeadItem( 'ext.Lingo.Scripts', "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n" );
@@ -283,20 +287,17 @@ class LingoParser {
 		}
 
 		// load styles
-		// FIXME: Modules loaded by the ResourceLoader only work on JS-enabled
-		// browsers. This doesn't make any sense for CSS-only modules that don't
-		// need any JS. -> Use ResourceLoader if and when Bug 29308 gets fixed.
-//		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-//			$parser->getOutput()->addModules( 'ext.Lingo.Styles' );
-//			if ( !$wgOut->isArticle() ) {
-//				$wgOut->addModules( 'ext.Lingo.Styles' );
-//			}
-//		} else {
-		$parser->getOutput()->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
-		if ( !$wgOut->isArticle() ) {
-			$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n" );
+		if ( method_exists( $parserOutput, 'addModuleStyles') ) {
+			$parserOutput->addModuleStyles( 'ext.Lingo.Styles' );
+			if ( !$wgOut->isArticle() ) {
+				$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
+			}
+		} else {
+			$parserOutput->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
+			if ( !$wgOut->isArticle() ) {
+				$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n" );
+			}
 		}
-//		}
 	}
 
 }

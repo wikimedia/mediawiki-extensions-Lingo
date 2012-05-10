@@ -1,5 +1,5 @@
 jQuery(function ($){
-	
+
 	$(".tooltip")
 	.mouseenter(function( event ){
 
@@ -11,6 +11,10 @@ jQuery(function ($){
 
 		if ( wrapper.css("display") == "block" ) {
 			return;
+		}
+
+		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
+			tip.css('z-index', 3);
 		}
 
 		var termLineHeight = tip.outerHeight() + 5;
@@ -26,8 +30,8 @@ jQuery(function ($){
 			'display': 'block',
 			'width': '10000000px'
 		});
-	
-		
+
+
 		tipdef.css({
 			'position': 'fixed',
 			'width': 'auto',
@@ -117,7 +121,7 @@ jQuery(function ($){
 			}
 
 			wrapper.height(tipdef.height());
-			
+
 			if ( maxAvailableWidthRight - 10 >= width ) {
 				// will not bump into right window border
 				wrapper.css({
@@ -159,19 +163,23 @@ jQuery(function ($){
 			'position': 'relative'
 		});
 
-		
+
 		wrapper
 		.css({
 			'height': 'auto',
 			'visibility': 'visible',
 			'display': 'none'
 		})
-		
+
 		.fadeIn(200);
 	})
-	
+
 	.mouseleave( function( event ){
 		event.stopImmediatePropagation();
+
+		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
+			$(this).css('z-index', 1);
+		}
 
 		$(this).find(".tooltip_tipwrapper").fadeOut(200);
 	})
@@ -183,7 +191,11 @@ jQuery(function ($){
 	.mouseleave( function( event ){
 		event.stopImmediatePropagation();
 
+		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
+			$(this).parent().parent().css('z-index', 1);
+		}
+
 		$(this).parent().fadeOut(200);
 	})
-	
+
 });
