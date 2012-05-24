@@ -153,12 +153,13 @@ $messages['ia'] = array(
 
 /** Japanese (日本語)
  * @author Schu
+ * @author Shirayuki
  */
 $messages['ja'] = array(
-	'lingo-desc' => '[[$1]] ページに定義された用語から、ページ上にヒントを表示する hover-over ツールを提供します。',
+	'lingo-desc' => '[[$1]] ページに定義された用語から、ページ上にヒントを表示する hover-over ツールを提供する',
 	'lingo-terminologypagename' => 'Terminology',
-	'lingo-noterminologypage' => '"$1" ページが存在しません。',
-	'lingo-terminologypagenotlocal' => '" $1 "ページはローカルページではありません。',
+	'lingo-noterminologypage' => 'ページ「$1」は存在しません。',
+	'lingo-terminologypagenotlocal' => 'ページ「$1」はローカルページではありません。',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
