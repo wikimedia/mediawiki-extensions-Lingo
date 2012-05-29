@@ -97,5 +97,35 @@ class LingoBasicBackend extends LingoBackend {
 		return $ret;
 	}
 
+	/**
+	 * Initiates the purging of the cache when the Terminology page was saved or purged.
+	 *
+	 * @param Page $wikipage
+	 * @return Bool
+	 */
+	public static function purgeCache( &$wikipage ) {
+
+		global $wgexLingoPage;
+		$page = $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' );
+
+		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $page ) ) {
+
+			LingoParser::purgeCache();
+		}
+
+		return true;
+	}
+
+	/**
+	 * The basic backend is cache-enabled so this function returns true.
+	 * 
+	 * Actual caching is done by the parser, the backend just calls
+	 * LingoParser::purgeCache when necessary. 
+	 * 
+	 * @return boolean 
+	 */
+	public function useCache() {
+		return true;
+	}
 }
 
