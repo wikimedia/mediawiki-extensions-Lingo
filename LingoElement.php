@@ -49,58 +49,107 @@ class LingoElement {
 		global $wgexLingoDisplayOnce;
 
 		wfProfileIn( __METHOD__ );
-		
+
 		// return textnode if
 		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
 			return $doc->createTextNode($this->mTerm);
 		}
-		
+
 		// only create if not yet created
 		if ( $this->mFullDefinition == null || $this->mFullDefinition->ownerDocument !== $doc ) {
 
-			// Wrap term and definition in <span> tags
-			$span = $doc->createElement( 'span' );
-			$span->setAttribute( 'class', 'tooltip' );
+			// if there is only one link available, just insert the link
+			if ( count( $this->mDefinitions ) === 1
+				&& !is_string( $this->mDefinitions[0][self::ELEMENT_DEFINITION] )
+				&& is_string( $this->mDefinitions[0][self::ELEMENT_LINK] ) ) {
 
-			// Wrap term in <span> tag, hidden
-			wfSuppressWarnings();
-			$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
-			wfRestoreWarnings();
-			$spanTerm->setAttribute( 'class', 'tooltip_abbr' );
+				// create Title object for target page
+				$target = Title::newFromText( $this->mDefinitions[0][self::ELEMENT_LINK] );
 
-			// Wrap definition in two <span> tags
-			$spanDefinitionOuter = $doc->createElement( 'span' );
-			$spanDefinitionOuter->setAttribute( 'class', 'tooltip_tipwrapper' );
+				// create link element
+				$link = $doc->createElement( 'a', $this->mDefinitions[0][self::ELEMENT_TERM] );
 
-			$spanDefinitionInner = $doc->createElement( 'span' );
-			$spanDefinitionInner->setAttribute( 'class', 'tooltip_tip' );
+				// set the link target
+				$link->setAttribute( 'href', $target->getLinkUrl() );
 
-			foreach ( $this->mDefinitions as $definition ) {
-				wfSuppressWarnings();
-				$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) );
-				wfRestoreWarnings();
-				if ( $definition[self::ELEMENT_LINK] ) {
-					$linkedTitle = Title::newFromText( $definition[self::ELEMENT_LINK] );
-					if ( $linkedTitle ) {
-						$link = $this->getLinkTemplate( $doc );
-						$link->setAttribute( 'href', $linkedTitle->getFullURL() );
-						$element->appendChild( $link );
-					}
+				// figure out the classes for the link
+				// TODO: should this be more elaborate? See Linker::linkAttribs
+				// Cleanest would probably be to use Linker::link and parse it
+				// back into a DOMElement, but we are in a somewhat time-critical
+				// part here.
+				$classes = '';
+
+				if ( !$target->isKnown() ) {
+					$classes .= 'new ';
 				}
-				$spanDefinitionInner->appendChild( $element );
+
+				if ( $target->isExternal() ) {
+					$classes .= 'extiw';
+				}
+
+				if ( $classes !== '' ) {
+					$link->setAttribute( 'class', $classes );
+				}
+
+				// Get a title attribute
+				if ( $target->getPrefixedText() == '' ) {
+					// A link like [[#Foo]].  This used to mean an empty title
+					// attribute, but that's silly.  Just don't output a title.
+				} elseif ( $target->isKnown() ) {
+					$link->setAttribute( 'title', $target->getPrefixedText() );
+				} else {
+					$link->setAttribute( 'title', wfMsg( 'red-link-title', $target->getPrefixedText() ) );
+				}
+
+				$this->mFullDefinition = $link;
+
+			} else { // else insert the complete tooltip
+
+				// Wrap term and definition in <span> tags
+				$span = $doc->createElement( 'span' );
+				$span->setAttribute( 'class', 'tooltip' );
+
+				// Wrap term in <span> tag, hidden
+				wfSuppressWarnings();
+				$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+				wfRestoreWarnings();
+				$spanTerm->setAttribute( 'class', 'tooltip_abbr' );
+
+				// Wrap definition in two <span> tags
+				$spanDefinitionOuter = $doc->createElement( 'span' );
+				$spanDefinitionOuter->setAttribute( 'class', 'tooltip_tipwrapper' );
+
+				$spanDefinitionInner = $doc->createElement( 'span' );
+				$spanDefinitionInner->setAttribute( 'class', 'tooltip_tip' );
+
+				foreach ( $this->mDefinitions as $definition ) {
+					wfSuppressWarnings();
+					$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) );
+					wfRestoreWarnings();
+					if ( $definition[self::ELEMENT_LINK] ) {
+						$linkedTitle = Title::newFromText( $definition[self::ELEMENT_LINK] );
+						if ( $linkedTitle ) {
+							$link = $this->getLinkTemplate( $doc );
+							$link->setAttribute( 'href', $linkedTitle->getFullURL() );
+							$element->appendChild( $link );
+						}
+					}
+					$spanDefinitionInner->appendChild( $element );
+				}
+
+				// insert term and definition
+				$span->appendChild( $spanTerm );
+				$span->appendChild( $spanDefinitionOuter );
+				$spanDefinitionOuter->appendChild( $spanDefinitionInner );
+
+				$this->mFullDefinition = $span;
 			}
 
-			// insert term and definition
-			$span->appendChild( $spanTerm );
-			$span->appendChild( $spanDefinitionOuter );
-			$spanDefinitionOuter->appendChild( $spanDefinitionInner );
-
-			$this->mFullDefinition = $span;
 			$this->mHasBeenDisplayed = true;
 		}
 
 		wfProfileOut( __METHOD__ );
-		
+
 		return $this->mFullDefinition->cloneNode( true );
 	}
 
