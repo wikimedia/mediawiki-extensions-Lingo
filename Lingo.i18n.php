@@ -151,6 +151,14 @@ $messages['ia'] = array(
 	'lingo-terminologypagenotlocal' => 'Le pagina "$1" non es un pagina local.',
 );
 
+/** Italian (italiano)
+ * @author Beta16
+ */
+$messages['it'] = array(
+	'lingo-noterminologypage' => 'La pagina "$1" non esiste.',
+	'lingo-terminologypagenotlocal' => 'La pagina "$1" non è una pagina locale.',
+);
+
 /** Japanese (日本語)
  * @author Schu
  * @author Shirayuki
