@@ -155,6 +155,8 @@ $messages['ia'] = array(
  * @author Beta16
  */
 $messages['it'] = array(
+	'lingo-desc' => 'Fornisce suggerimenti al passaggio del mouse per le parole definite alla pagina [[$1]]',
+	'lingo-terminologypagename' => 'Terminologia',
 	'lingo-noterminologypage' => 'La pagina "$1" non esiste.',
 	'lingo-terminologypagenotlocal' => 'La pagina "$1" non è una pagina locale.',
 );
