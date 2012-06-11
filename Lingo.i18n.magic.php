@@ -28,7 +28,12 @@ $magicWords['eo'] = array(
 	'noglossary' => array( 0, '__NEDIFINO__' ),
 );
 
-/** Macedonian (Македонски) */
+/** Korean (한국어) */
+$magicWords['ko'] = array(
+	'noglossary' => array( 0, '__용어집없음__' ),
+);
+
+/** Macedonian (македонски) */
 $magicWords['mk'] = array(
 	'noglossary' => array( 0, '__БЕЗПОИМНИК__' ),
 );
@@ -43,7 +48,7 @@ $magicWords['nl'] = array(
 	'noglossary' => array( 0, '___GEENWOORDENLIJST__' ),
 );
 
-/** Serbian (Latin script) (‪Srpski (latinica)‬) */
+/** Serbian (Latin script) (‪srpski (latinica)‬) */
 $magicWords['sr-el'] = array(
 	'noglossary' => array( 0, '__BEZREČNIKA__', '__BEZ_REČNIKA__' ),
 );
