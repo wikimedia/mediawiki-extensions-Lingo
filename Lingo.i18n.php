@@ -21,7 +21,7 @@ $messages['qqq'] = array(
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
 );
 
-/** Asturian (Asturianu)
+/** Asturian (asturianu)
  * @author Xuacu
  */
 $messages['ast'] = array(
@@ -42,7 +42,7 @@ $messages['be-tarask'] = array(
 	'lingo-terminologypagenotlocal' => 'Старонка «$1» не зьяўляецца лякальнай.',
 );
 
-/** Breton (Brezhoneg)
+/** Breton (brezhoneg)
  * @author Fulup
  * @author Y-M D
  */
@@ -72,7 +72,7 @@ $messages['dsb'] = array(
 	'lingo-terminologypagenotlocal' => 'Bok "$1" njejo lokalny bok.',
 );
 
-/** Spanish (Español)
+/** Spanish (español)
  * @author Armando-Martin
  */
 $messages['es'] = array(
@@ -82,7 +82,7 @@ $messages['es'] = array(
 	'lingo-terminologypagenotlocal' => 'La página "$1" no es una página local.',
 );
 
-/** French (Français)
+/** French (français)
  * @author Sherbrooke
  */
 $messages['fr'] = array(
@@ -92,7 +92,7 @@ $messages['fr'] = array(
 	'lingo-terminologypagenotlocal' => "Page « $1 » n'est pas une page locale.",
 );
 
-/** Franco-Provençal (Arpetan)
+/** Franco-Provençal (arpetan)
  * @author ChrisPtDe
  */
 $messages['frp'] = array(
@@ -131,7 +131,7 @@ $messages['hsb'] = array(
 	'lingo-terminologypagenotlocal' => 'Strona "$1" lokalna strona njeje.',
 );
 
-/** Hungarian (Magyar)
+/** Hungarian (magyar)
  * @author Dj
  */
 $messages['hu'] = array(
@@ -141,7 +141,7 @@ $messages['hu'] = array(
 	'lingo-terminologypagenotlocal' => '„$1” nem helyi lap.',
 );
 
-/** Interlingua (Interlingua)
+/** Interlingua (interlingua)
  * @author McDutchie
  */
 $messages['ia'] = array(
@@ -182,7 +182,7 @@ $messages['lb'] = array(
 	'lingo-terminologypagenotlocal' => "Säit '$1' gëtt et op dëser Wiki net.",
 );
 
-/** Macedonian (Македонски)
+/** Macedonian (македонски)
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
@@ -213,7 +213,7 @@ $messages['nl'] = array(
 	'lingo-terminologypagenotlocal' => 'De pagina "$1" is geen lokale pagina.',
 );
 
-/** Polish (Polski)
+/** Polish (polski)
  * @author BeginaFelicysym
  * @author Sp5uhe
  * @author Woytecr
@@ -236,7 +236,7 @@ $messages['pms'] = array(
 	'lingo-terminologypagenotlocal' => "La pàgina «$1» a l'é pa na pàgina local.",
 );
 
-/** Portuguese (Português)
+/** Portuguese (português)
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
@@ -246,7 +246,7 @@ $messages['pt'] = array(
 	'lingo-terminologypagenotlocal' => "A página '$1' não é uma página local.",
 );
 
-/** Russian (Русский)
+/** Russian (русский)
  * @author Adata80
  * @author Askarmuk
  * @author Александр Сигачёв
@@ -258,7 +258,7 @@ $messages['ru'] = array(
 	'lingo-terminologypagenotlocal' => 'Страница "$1" не является локальной.',
 );
 
-/** Swedish (Svenska)
+/** Swedish (svenska)
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
