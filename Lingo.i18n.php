@@ -31,7 +31,7 @@ $messages['ast'] = array(
 	'lingo-terminologypagenotlocal' => 'La páxina «$1» nun ye una páxina llocal.',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Wizardist
  */
@@ -62,7 +62,7 @@ $messages['de'] = array(
 	'lingo-terminologypagenotlocal' => 'Seite „$1“ befindet sich nicht auf diesem Wiki.',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -101,7 +101,7 @@ $messages['frp'] = array(
 	'lingo-terminologypagenotlocal' => 'Pâge « $1 » est pas una pâge locala.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -121,7 +121,7 @@ $messages['he'] = array(
 	'lingo-terminologypagenotlocal' => 'הדם "$1" אינו דף מקומי.',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
