@@ -17,7 +17,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 }
 
-define( 'LINGO_VERSION', '0.3' );
+define( 'LINGO_VERSION', '0.4 alpha' );
 
 
 // set defaults for settings
@@ -41,6 +41,8 @@ $wgexLingoUseNamespaces = array(
 //  ...
 );
 
+// set default cache type (null = use main cache)
+$wgexLingoCacheType = null;
 
 // set extension credits
 // (no description here, will be set later)
@@ -71,6 +73,9 @@ $wgAutoloadClasses['LingoMessageLog'] = $dir . '/LingoMessageLog.php';
 // register hook handlers
 $wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set credits
 $wgHooks['ParserAfterTidy'][] = 'LingoHooks::parse'; // parse page
+
+$wgHooks['ArticlePurge'][] = 'LingoBasicBackend::purgeCache';
+$wgHooks['ArticleSave'][] = 'LingoBasicBackend::purgeCache';
 
 // register resource modules with the Resource Loader
 $wgResourceModules['ext.Lingo.Styles'] = array(

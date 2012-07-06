@@ -90,7 +90,34 @@ class LingoParser {
 
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
-			$this->buildLingo();
+
+			// use cache if enabled
+			if ( $this->mLingoBackend->useCache() ) {
+
+				// Try cache first
+				global $wgexLingoCacheType;
+				$cache = ($wgexLingoCacheType !== null)?  wfGetCache( $wgexLingoCacheType ):wfGetMainCache();
+				$cachekey = wfMemcKey( 'ext', 'lingo', 'lingotree' );
+				$cachedLingoTree = $cache->get( $cachekey );
+
+				// cache hit?
+				if ( $cachedLingoTree !== false && $cachedLingoTree !== null ) {
+
+					wfDebug( "Cache hit: Got lingo tree from cache.\n" );
+					$this->mLingoTree = &$cachedLingoTree;
+
+				} else {
+
+					wfDebug( "Cache miss: Lingo tree not found in cache.\n" );
+					$this->mLingoTree =& $this->buildLingo();
+					$cache->set( $cachekey, $this->mLingoTree );
+					wfDebug( "Cached lingo tree.\n" );
+				}
+			} else {
+				wfDebug( "Caching of lingo tree disabled.\n" );
+				$this->mLingoTree =& $this->buildLingo();
+			}
+
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -98,19 +125,19 @@ class LingoParser {
 		return $this->mLingoTree;
 	}
 
-	protected function buildLingo() {
+	protected function &buildLingo() {
 		wfProfileIn( __METHOD__ );
 
-		$this->mLingoTree = new LingoTree();
-
+		$lingoTree = new LingoTree();
 		$backend = &$this->mLingoBackend;
 
 		// assemble the result array
 		while ( $elementData = $backend->next() ) {
-			$this->mLingoTree->addTerm( $elementData[LingoElement::ELEMENT_TERM], $elementData );
+			$lingoTree->addTerm( $elementData[LingoElement::ELEMENT_TERM], $elementData );
 		}
 
 		wfProfileOut( __METHOD__ );
+		return $lingoTree;
 	}
 
 	/**
@@ -300,5 +327,15 @@ class LingoParser {
 		}
 	}
 
+	/**
+	 * Purges the lingo tree from the cache.
+	 */
+	public static function purgeCache () {
+
+		global $wgexLingoCacheType;
+		$cache = ($wgexLingoCacheType !== null)?  wfGetCache( $wgexLingoCacheType ):wfGetMainCache();
+		$cache->delete( wfMemcKey( 'ext', 'lingo', 'lingotree' ) );
+
+	}
 }
 
