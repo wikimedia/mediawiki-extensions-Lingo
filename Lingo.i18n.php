@@ -267,3 +267,13 @@ $messages['sv'] = array(
 	'lingo-terminologypagenotlocal' => 'Sidan "$1" är inte en lokal sida.',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lingo-desc' => 'Nagbibigay ng mga payo sa kasangkapang pang-ibabaw na pag-aligid-aligid sa ibabaw ng mga pahina mula sa mga salitang binigyan ng kahulugan sa pahinang [[$1]]',
+	'lingo-terminologypagename' => 'Terminolohiya',
+	'lingo-noterminologypage' => 'Hindi umiiral ang pahinang "$1".',
+	'lingo-terminologypagenotlocal' => 'Ang pahinang "$1" ay hindi isang katutubong pahina.',
+);
+
