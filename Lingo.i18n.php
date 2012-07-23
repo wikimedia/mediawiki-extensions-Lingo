@@ -172,6 +172,16 @@ $messages['ja'] = array(
 	'lingo-terminologypagenotlocal' => 'ページ「$1」はローカルページではありません。',
 );
 
+/** Colognian (Ripoarisch)
+ * @author Purodha
+ */
+$messages['ksh'] = array(
+	'lingo-desc' => 'Zeisch Täxschtöckelscher met Henwiese aan, wam_mer met dem Kompjuter singer Muus övver Wööter jeiht, di en dä Sigg [[$1]] enjedraare sin.',
+	'lingo-terminologypagename' => 'Wööterlėß',
+	'lingo-noterminologypage' => 'Di Sigg „$1“ jidd_et nit.',
+	'lingo-terminologypagenotlocal' => 'Di Sigg „$1“ es nit heh em Wiki.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
