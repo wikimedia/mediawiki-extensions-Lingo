@@ -62,6 +62,13 @@ $messages['de'] = array(
 	'lingo-terminologypagenotlocal' => 'Seite „$1“ befindet sich nicht auf diesem Wiki.',
 );
 
+/** Zazaki (Zazaki)
+ * @author Erdemaslancan
+ */
+$messages['diq'] = array(
+	'lingo-terminologypagename' => 'Terminolociye',
+);
+
 /** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */

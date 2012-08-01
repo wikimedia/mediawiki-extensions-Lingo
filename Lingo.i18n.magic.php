@@ -23,6 +23,11 @@ $magicWords['de'] = array(
 	'noglossary' => array( 0, '__KEINGLOSSAR__', '__KEIN_GLOSSAR__' ),
 );
 
+/** Zazaki (Zazaki) */
+$magicWords['diq'] = array(
+	'noglossary' => array( 0, 'QISEBENDÇINİYO' ),
+);
+
 /** Esperanto (Esperanto) */
 $magicWords['eo'] = array(
 	'noglossary' => array( 0, '__NEDIFINO__' ),
