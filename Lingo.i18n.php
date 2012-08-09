@@ -263,6 +263,15 @@ $messages['pt'] = array(
 	'lingo-terminologypagenotlocal' => "A página '$1' não é uma página local.",
 );
 
+/** Romanian (română)
+ * @author Stelistcristi
+ */
+$messages['ro'] = array(
+	'lingo-terminologypagename' => 'Terminologie',
+	'lingo-noterminologypage' => 'Pagina „$1” nu există.',
+	'lingo-terminologypagenotlocal' => 'Pagina „$1” nu este o pagină locală.',
+);
+
 /** Russian (русский)
  * @author Adata80
  * @author Askarmuk
