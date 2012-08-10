@@ -179,6 +179,13 @@ $messages['ja'] = array(
 	'lingo-terminologypagenotlocal' => 'ページ「$1」はローカルページではありません。',
 );
 
+/** Georgian (ქართული)
+ * @author David1010
+ */
+$messages['ka'] = array(
+	'lingo-terminologypagename' => 'ტერმინოლოგია',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
