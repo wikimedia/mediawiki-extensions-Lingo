@@ -291,6 +291,13 @@ $messages['ru'] = array(
 	'lingo-terminologypagenotlocal' => 'Страница "$1" не является локальной.',
 );
 
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'lingo-terminologypagename' => 'පාරිභාෂිකය',
+);
+
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
@@ -298,6 +305,13 @@ $messages['sv'] = array(
 	'lingo-terminologypagename' => 'Terminologi',
 	'lingo-noterminologypage' => 'Sidan "$1" finns inte',
 	'lingo-terminologypagenotlocal' => 'Sidan "$1" är inte en lokal sida.',
+);
+
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'lingo-noterminologypage' => '"$1" పేజీ లేనే లేదు.',
 );
 
 /** Tagalog (Tagalog)
