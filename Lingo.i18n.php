@@ -307,6 +307,13 @@ $messages['sv'] = array(
 	'lingo-terminologypagenotlocal' => 'Sidan "$1" är inte en lokal sida.',
 );
 
+/** Tamil (தமிழ்)
+ * @author Karthi.dr
+ */
+$messages['ta'] = array(
+	'lingo-terminologypagename' => 'கலைச்சொல் தொகுதி',
+);
+
 /** Telugu (తెలుగు)
  * @author Veeven
  */
