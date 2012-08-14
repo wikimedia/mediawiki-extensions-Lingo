@@ -309,9 +309,11 @@ $messages['sv'] = array(
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
+ * @author மதனாஹரன்
  */
 $messages['ta'] = array(
 	'lingo-terminologypagename' => 'கலைச்சொல் தொகுதி',
+	'lingo-noterminologypage' => 'பக்கம் "$1" காணப்படவில்லை.',
 );
 
 /** Telugu (తెలుగు)
