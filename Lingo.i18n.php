@@ -333,3 +333,10 @@ $messages['tl'] = array(
 	'lingo-terminologypagenotlocal' => 'Ang pahinang "$1" ay hindi isang katutubong pahina.',
 );
 
+/** Urdu (اردو)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['ur'] = array(
+	'lingo-terminologypagename' => 'اصطلاح',
+);
+
