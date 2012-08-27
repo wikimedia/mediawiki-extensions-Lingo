@@ -57,3 +57,8 @@ $magicWords['nl'] = array(
 $magicWords['sr-el'] = array(
 	'noglossary' => array( 0, '__BEZREČNIKA__', '__BEZ_REČNIKA__' ),
 );
+
+/** Turkish (Türkçe) */
+$magicWords['tr'] = array(
+	'noglossary' => array( 0, '__SÖZLÜKYOK__' ),
+);
