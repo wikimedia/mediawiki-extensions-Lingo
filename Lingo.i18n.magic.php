@@ -43,6 +43,11 @@ $magicWords['mk'] = array(
 	'noglossary' => array( 0, '__БЕЗПОИМНИК__' ),
 );
 
+/** Malayalam (മലയാളം) */
+$magicWords['ml'] = array(
+	'noglossary' => array( 0, '__ചുരുക്കംവേണ്ട__' ),
+);
+
 /** Nedersaksisch (Nedersaksisch) */
 $magicWords['nds-nl'] = array(
 	'noglossary' => array( 0, '__GIEN_GLOSSARIUM__' ),
