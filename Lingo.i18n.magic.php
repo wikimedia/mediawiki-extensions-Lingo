@@ -58,7 +58,7 @@ $magicWords['nl'] = array(
 	'noglossary' => array( 0, '___GEENWOORDENLIJST__' ),
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬) */
+/** Serbian (Latin script) (srpski (latinica)‎) */
 $magicWords['sr-el'] = array(
 	'noglossary' => array( 0, '__BEZREČNIKA__', '__BEZ_REČNIKA__' ),
 );
