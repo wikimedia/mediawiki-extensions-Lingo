@@ -31,7 +31,7 @@ $messages['ast'] = array(
 	'lingo-terminologypagenotlocal' => 'La páxina «$1» nun ye una páxina llocal.',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Wizardist
  */
