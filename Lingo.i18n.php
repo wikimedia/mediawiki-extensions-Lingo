@@ -15,7 +15,8 @@ $messages['en'] = array(
 	'lingo-terminologypagenotlocal' => 'Page "$1" is not a local page.',
 );
 
-/** Message documentation (Message documentation) */
+/** Message documentation (Message documentation)
+ */
 $messages['qqq'] = array(
 	'lingo-desc' => '{{desc}}',
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
@@ -339,4 +340,3 @@ $messages['tl'] = array(
 $messages['ur'] = array(
 	'lingo-terminologypagename' => 'اصطلاح',
 );
-
