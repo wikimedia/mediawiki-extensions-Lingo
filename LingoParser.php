@@ -27,7 +27,7 @@ class LingoParser {
 	private static $parserSingleton = null;
 
 	// The RegEx to split a chunk of text into words
-	public static $regex = '/[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
+	public static $regex = null;
 
 	public function __construct( LingoMessageLog &$messages = null ) {
 		global $wgexLingoBackend;
@@ -45,6 +45,7 @@ class LingoParser {
 		wfProfileIn( __METHOD__ );
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
+			self::$regex = '/' . preg_quote( $parser->uniqPrefix(), '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 
 		self::$parserSingleton->realParse( $parser, $text );
@@ -291,7 +292,7 @@ class LingoParser {
 	}
 
 	protected function loadModules( &$parser ) {
-		global $wgOut, $wgScriptPath, $wgParser;
+		global $wgOut, $wgScriptPath;
 
 		$parserOutput = $parser->getOutput();
 

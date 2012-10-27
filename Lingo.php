@@ -72,7 +72,7 @@ $wgAutoloadClasses['LingoMessageLog'] = $dir . '/LingoMessageLog.php';
 
 // register hook handlers
 $wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set credits
-$wgHooks['ParserAfterTidy'][] = 'LingoHooks::parse'; // parse page
+$wgHooks['ParserAfterParse'][] = 'LingoHooks::parse'; // parse page
 
 $wgHooks['ArticlePurge'][] = 'LingoBasicBackend::purgeCache';
 $wgHooks['ArticleSave'][] = 'LingoBasicBackend::purgeCache';
