@@ -340,3 +340,12 @@ $messages['tl'] = array(
 $messages['ur'] = array(
 	'lingo-terminologypagename' => 'اصطلاح',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Yfdyh000
+ */
+$messages['zh-hans'] = array(
+	'lingo-terminologypagename' => '术语',
+	'lingo-noterminologypage' => '页面“$1”不存在。',
+	'lingo-terminologypagenotlocal' => '“$1”不是本地页面。',
+);
