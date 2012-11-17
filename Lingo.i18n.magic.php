@@ -33,6 +33,11 @@ $magicWords['eo'] = array(
 	'noglossary' => array( 0, '__NEDIFINO__' ),
 );
 
+/** Italian (italiano) */
+$magicWords['it'] = array(
+	'noglossary' => array( 0, '__NOGLOSSARIO__' ),
+);
+
 /** Korean (한국어) */
 $magicWords['ko'] = array(
 	'noglossary' => array( 0, '__용어집없음__' ),
