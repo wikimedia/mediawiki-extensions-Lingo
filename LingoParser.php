@@ -181,7 +181,8 @@ class LingoParser {
 		wfProfileIn( __METHOD__ . ' 1 loadHTML' );
 		wfSuppressWarnings();
 
-		$doc = DOMDocument::loadHTML(
+		$doc = new DOMDocument();
+		$doc->loadHTML(
 				'<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>'
 		);
 

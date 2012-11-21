@@ -1,201 +1,221 @@
-jQuery(function ($){
+/**
+ * Javascript handler for the Lingo extension
+ *
+ * @author Stephan Gambke
+ */
 
-	$(".tooltip")
-	.mouseenter(function( event ){
+/*global jQuery, mediaWiki */
+/*global confirm */
 
-		event.stopImmediatePropagation();
+( function ( $, mw ) {
 
-		var tip = $(this);
-		var wrapper = tip.find(".tooltip_tipwrapper");
-		var tipdef = wrapper.find(".tooltip_tip");
+	'use strict';
 
-		if ( wrapper.css("display") == "block" ) {
-			return;
-		}
+	$( function ( $ ){
 
-		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
-			tip.css('z-index', 3);
-		}
+		$( '.tooltip' )
+		.mouseenter( function ( event ){
 
-		var termLineHeight = tip.outerHeight() + 5;
-		var maxAvailableWidth = $(window).width();
-		var maxAvailableHeightAbove = tip.offset().top - $(window).scrollTop() - 5;
-		var maxAvailableHeightBelow = $(window).height() - (tip.offset().top - $(window).scrollTop()) - termLineHeight;
+			event.stopImmediatePropagation();
 
-		var maxWidthWithoutBreak = maxAvailableWidth / 3;
+			var tip = $( this );
+			var wrapper = tip.find( '.tooltip_tipwrapper' );
+			var tipdef = wrapper.find( '.tooltip_tip' );
 
-		wrapper
-		.css({
-			'visibility': 'visible',
-			'display': 'block',
-			'width': '10000000px'
-		});
-
-
-		tipdef.css({
-			'position': 'fixed',
-			'width': 'auto',
-			'top': '0px',
-			'left': '0px'
-		});
-
-		// natural width is the width without any constraints
-		var naturalWidth = tipdef.width();
-		// natural height is the height without any constraints
-		var naturalHeight = tipdef.height();
-
-		var borderWidth = tipdef.outerWidth() - naturalWidth;
-
-		maxAvailableWidth -= borderWidth;
-		maxAvailableHeightAbove -= borderWidth;
-		maxAvailableHeightBelow -= borderWidth;
-		maxWidthWithoutBreak -= borderWidth;
-
-		var maxAvailableWidthRight = maxAvailableWidth - (tip.offset().left - $(window).scrollLeft() );
-
-		tipdef.width( maxAvailableWidth );
-
-		// height if constrained to the window width, i.e.
-		// the minimum width necessary if the full window width were available
-		var heightAtMaxWidth = tipdef.height();
-
-		// The tooltip will be placed above the term if it does fit above, but
-		// not below. If it is to high for either, it will be put below at
-		// maximum width so at least the first part is visible.
-		if ( heightAtMaxWidth > maxAvailableHeightBelow ) {
-			// will not fit below
-
-			if ( heightAtMaxWidth > maxAvailableHeightAbove ) {
-				// will neither fit above nor below
-				var placeAbove = false;
-				var tooLarge = true;
-				var maxAvailableHeight = maxAvailableHeightBelow;
-
-			} else {
-				// will fit above
-				var placeAbove = true;
-				var tooLarge = false;
-				var maxAvailableHeight = maxAvailableHeightAbove;
+			if ( wrapper.css( 'display' ) === 'block' ) {
+				return;
 			}
-		} else {
-			// will fit below
-			var placeAbove = false;
-			var tooLarge = false;
-			var maxAvailableHeight = maxAvailableHeightBelow;
-		}
 
-		if ( tooLarge ) {
+			if( $.browser.msie && $.browser.version.substr( 0, 1 ) <= 7 ) {
+				tip.css( 'z-index', 3 );
+			}
 
-			// if it is too large anyway, just set max available width and be
-			// done with it
-			wrapper.css({
-				'width': maxAvailableWidth + 'px',
-				'padding-left': '0px',
-				'left': (maxAvailableWidthRight - maxAvailableWidth) +'px',
+			var termLineHeight = tip.outerHeight() + 5;
+			var maxAvailableWidth = $( window ).width();
+			var maxAvailableHeightAbove = tip.offset().top - $( window ).scrollTop() - 5;
+			var maxAvailableHeightBelow = $( window ).height() - ( tip.offset().top - $( window ).scrollTop() ) - termLineHeight;
+
+			var maxWidthWithoutBreak = maxAvailableWidth / 3;
+
+			wrapper
+			.css( {
+				'visibility': 'visible',
+				'display': 'block',
+				'width': '10000000px'
+			} );
+
+
+			tipdef.css( {
+				'position': 'fixed',
+				'width': 'auto',
 				'top': '0px',
-				'padding-bottom': '0px',
-				'padding-top' : termLineHeight +'px'
-			});
+				'left': '0px'
+			} );
 
-		} else {
+			// natural width is the width without any constraints
+			var naturalWidth = tipdef.width();
+			// natural height is the height without any constraints
+			var naturalHeight = tipdef.height();
 
-			if ( naturalWidth > maxWidthWithoutBreak ) {
+			var borderWidth = tipdef.outerWidth() - naturalWidth;
 
-				var width = Math.max( Math.sqrt( 5 * naturalWidth * naturalHeight ), maxWidthWithoutBreak );
-				width = Math.min( width, maxAvailableWidth );
+			maxAvailableWidth -= borderWidth;
+			maxAvailableHeightAbove -= borderWidth;
+			maxAvailableHeightBelow -= borderWidth;
+			maxWidthWithoutBreak -= borderWidth;
 
+			var maxAvailableWidthRight = maxAvailableWidth - ( tip.offset().left - $( window ).scrollLeft() );
+
+			tipdef.width( maxAvailableWidth );
+
+			// height if constrained to the window width, i.e.
+			// the minimum width necessary if the full window width were available
+			var heightAtMaxWidth = tipdef.height();
+
+			var placeAbove = true;
+			var tooLarge = false;
+			var maxAvailableHeight = maxAvailableHeightAbove;
+
+			// The tooltip will be placed above the term if it does fit above, but
+			// not below. If it is to high for either, it will be put below at
+			// maximum width so at least the first part is visible.
+			if ( heightAtMaxWidth > maxAvailableHeightBelow ) {
+				// will not fit below
+
+				if ( heightAtMaxWidth > maxAvailableHeightAbove ) {
+					// will neither fit above nor below
+					placeAbove = false;
+					tooLarge = true;
+					maxAvailableHeight = maxAvailableHeightBelow;
+
+				} else {
+					// will fit above
+					placeAbove = true;
+					tooLarge = false;
+					maxAvailableHeight = maxAvailableHeightAbove;
+				}
 			} else {
-
-				var width = naturalWidth;
-
+				// will fit below
+				placeAbove = false;
+				tooLarge = false;
+				maxAvailableHeight = maxAvailableHeightBelow;
 			}
 
-			tipdef.width( width );
+			if ( tooLarge ) {
 
-			var rounds = 0;
-
-			while ( tipdef.height() > maxAvailableHeight && rounds < 5 ) {
-				width = Math.min (width * ( tipdef.height() / maxAvailableHeight ), maxAvailableWidth);
-				tipdef.width ( width );
-				rounds++;
-			}
-
-			wrapper.height(tipdef.height());
-
-			if ( maxAvailableWidthRight - 10 >= width ) {
-				// will not bump into right window border
-				wrapper.css({
-					'width': (width + 10) + 'px',
-					'padding-left': '10px',
-					'left': '0px'
-				});
-
-			} else {
-				// will bump into right window border
-				var left = maxAvailableWidthRight - width;
-				wrapper.css({
-					'width': width + 'px',
+				// if it is too large anyway, just set max available width and be
+				// done with it
+				wrapper.css( {
+					'width': maxAvailableWidth + 'px',
 					'padding-left': '0px',
-					'left': left + 'px'
-				});
-			}
-
-			if ( placeAbove ) {
-				wrapper.css({
-					'top': ( - tipdef.outerHeight() - 5) + 'px',
-					'padding-bottom': termLineHeight +'px',
-					'padding-top' : '0px'
-				});
-
-			} else {
-				wrapper.css({
-					//					'position': 'absolute',
+					'left': ( maxAvailableWidthRight - maxAvailableWidth ) + 'px',
 					'top': '0px',
 					'padding-bottom': '0px',
-					'padding-top' : termLineHeight +'px'
-				});
+					'padding-top' : termLineHeight + 'px'
+				} );
+
+			} else {
+
+				var width;
+
+				if ( naturalWidth > maxWidthWithoutBreak ) {
+
+					width = Math.max( Math.sqrt( 5 * naturalWidth * naturalHeight ), maxWidthWithoutBreak );
+					width = Math.min( width, maxAvailableWidth );
+
+				} else {
+
+					width = naturalWidth;
+
+				}
+
+				tipdef.width( width );
+
+				var rounds = 0;
+
+				while ( tipdef.height() > maxAvailableHeight && rounds < 5 ) {
+					width = Math.min ( width * ( tipdef.height() / maxAvailableHeight ), maxAvailableWidth );
+					tipdef.width ( width );
+					rounds++;
+				}
+
+				wrapper.height( tipdef.height() );
+
+				if ( maxAvailableWidthRight - 10 >= width ) {
+					// will not bump into right window border
+					wrapper.css( {
+						'width': ( width + 10 ) + 'px',
+						'padding-left': '10px',
+						'left': '0px'
+					} );
+
+				} else {
+					// will bump into right window border
+					var left = maxAvailableWidthRight - width;
+					wrapper.css( {
+						'width': width + 'px',
+						'padding-left': '0px',
+						'left': left + 'px'
+					} );
+				}
+
+				if ( placeAbove ) {
+					wrapper.css( {
+						'top': ( - tipdef.outerHeight() - 5 ) + 'px',
+						'padding-bottom': termLineHeight + 'px',
+						'padding-top' : '0px'
+					} );
+
+				} else {
+					wrapper.css( {
+						//					'position': 'absolute',
+						'top': '0px',
+						'padding-bottom': '0px',
+						'padding-top' : termLineHeight + 'px'
+					} );
+				}
+
+
 			}
 
-
-		}
-
-		tipdef.css({
-			'position': 'relative'
-		});
+			tipdef.css( {
+				'position': 'relative'
+			} );
 
 
-		wrapper
-		.css({
-			'height': 'auto',
-			'visibility': 'visible',
-			'display': 'none'
-		})
+			wrapper
+			.css( {
+				'height': 'auto',
+				'visibility': 'visible',
+				'display': 'none'
+			} )
 
-		.fadeIn(200);
-	})
+			.fadeIn( 200 );
+		} )
 
-	.mouseleave( function( event ){
-		event.stopImmediatePropagation();
+		.mouseleave( function ( event ){
+			event.stopImmediatePropagation();
 
-		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
-			$(this).css('z-index', 1);
-		}
+			if( jQuery.browser.msie && jQuery.browser.version.substr( 0, 1 ) <= 7 ) {
+				$( this ).css( 'z-index', 1 );
+			}
 
-		$(this).find(".tooltip_tipwrapper").fadeOut(200);
-	})
+			$( this ).find( '.tooltip_tipwrapper' ).fadeOut( 200 );
+		} )
 
-	.find(".tooltip_tipwrapper")
-	.css( "display", "none" )
+		.find( '.tooltip_tipwrapper' )
+		.css( 'display', 'none' )
 
-	.find(".tooltip_tip")
-	.mouseleave( function( event ){
-		event.stopImmediatePropagation();
+		.find( '.tooltip_tip' )
+		.mouseleave( function ( event ){
+			event.stopImmediatePropagation();
 
-		if( jQuery.browser.msie && jQuery.browser.version.substr(0, 1) <= 7 ) {
-			$(this).parent().parent().css('z-index', 1);
-		}
+			if( jQuery.browser.msie && jQuery.browser.version.substr( 0, 1 ) <= 7 ) {
+				$( this ).parent().parent().css( 'z-index', 1 );
+			}
 
-		$(this).parent().fadeOut(200);
-	})
+			$( this ).parent().fadeOut( 200 );
+		} );
 
-});
+	} );
+}( jQuery, mediaWiki ) );

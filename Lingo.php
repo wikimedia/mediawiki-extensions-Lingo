@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Provides hover-over tool tips on articles from words defined on the
  * Terminology page.
@@ -9,7 +8,7 @@
  * @author Barry Coughlan
  * @copyright 2010 Barry Coughlan
  * @author Stephan Gambke
- * @version 0.3
+ * @version 0.4
  * @licence GNU General Public Licence 2.0 or later
  * @see http://www.mediawiki.org/wiki/Extension:Lingo Documentation
  */
@@ -17,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 }
 
-define( 'LINGO_VERSION', '0.4 alpha' );
+define( 'LINGO_VERSION', '0.4' );
 
 
 // set defaults for settings
