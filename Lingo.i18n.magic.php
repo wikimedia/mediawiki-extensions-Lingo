@@ -53,7 +53,7 @@ $magicWords['ml'] = array(
 	'noglossary' => array( 0, '__ചുരുക്കംവേണ്ട__' ),
 );
 
-/** Nedersaksisch (Nedersaksisch) */
+/** Nedersaksies (Nedersaksies) */
 $magicWords['nds-nl'] = array(
 	'noglossary' => array( 0, '__GIEN_GLOSSARIUM__' ),
 );
