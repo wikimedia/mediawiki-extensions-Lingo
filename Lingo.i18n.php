@@ -90,6 +90,15 @@ $messages['es'] = array(
 	'lingo-terminologypagenotlocal' => 'La página "$1" no es una página local.',
 );
 
+/** Finnish (suomi)
+ * @author Nedergard
+ */
+$messages['fi'] = array(
+	'lingo-terminologypagename' => 'Sanasto',
+	'lingo-noterminologypage' => 'Sivua ”$1” ei ole.',
+	'lingo-terminologypagenotlocal' => 'Sivu "$1" ei ole paikallista sivu.',
+);
+
 /** French (français)
  * @author Sherbrooke
  */
