@@ -92,11 +92,12 @@ $messages['es'] = array(
 
 /** Finnish (suomi)
  * @author Nedergard
+ * @author Nike
  */
 $messages['fi'] = array(
 	'lingo-terminologypagename' => 'Sanasto',
 	'lingo-noterminologypage' => 'Sivua ”$1” ei ole.',
-	'lingo-terminologypagenotlocal' => 'Sivu "$1" ei ole paikallista sivu.',
+	'lingo-terminologypagenotlocal' => 'Sivu ”$1” ei ole paikallinen sivu.',
 );
 
 /** French (français)
