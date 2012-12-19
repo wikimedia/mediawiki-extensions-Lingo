@@ -16,9 +16,10 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'lingo-desc' => '{{desc}}',
+	'lingo-desc' => '{{desc|name=Lingo|url=http://www.mediawiki.org/wiki/Extension:Lingo}}',
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
 );
 
