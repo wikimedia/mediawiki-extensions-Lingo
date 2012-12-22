@@ -54,6 +54,14 @@ $messages['br'] = array(
 	'lingo-terminologypagenotlocal' => 'N\'eus ket ur bajenn lec\'hel eus "$1".',
 );
 
+/** Czech (česky)
+ * @author Vks
+ */
+$messages['cs'] = array(
+	'lingo-terminologypagename' => 'Terminologie',
+	'lingo-noterminologypage' => 'Stránka „$1“ neexistuje.',
+);
+
 /** German (Deutsch)
  * @author Kghbln
  */
@@ -89,6 +97,21 @@ $messages['es'] = array(
 	'lingo-terminologypagename' => 'Terminología',
 	'lingo-noterminologypage' => 'La página "$1" no existe.',
 	'lingo-terminologypagenotlocal' => 'La página "$1" no es una página local.',
+);
+
+/** Estonian (eesti)
+ * @author Avjoska
+ */
+$messages['et'] = array(
+	'lingo-terminologypagename' => 'Terminoloogia',
+	'lingo-noterminologypage' => 'Lehekülge "$1" ei ole.',
+);
+
+/** Persian (فارسی)
+ * @author Mjbmr
+ */
+$messages['fa'] = array(
+	'lingo-noterminologypage' => 'صفحهٔ «$1» وجود ندارد.',
 );
 
 /** Finnish (suomi)
@@ -168,6 +191,13 @@ $messages['ia'] = array(
 	'lingo-terminologypagename' => 'Terminologia',
 	'lingo-noterminologypage' => 'Le pagina "$1" non existe.',
 	'lingo-terminologypagenotlocal' => 'Le pagina "$1" non es un pagina local.',
+);
+
+/** Indonesian (Bahasa Indonesia)
+ * @author Farras
+ */
+$messages['id'] = array(
+	'lingo-terminologypagename' => 'Terminologi',
 );
 
 /** Italian (italiano)
@@ -343,6 +373,17 @@ $messages['tl'] = array(
 	'lingo-terminologypagename' => 'Terminolohiya',
 	'lingo-noterminologypage' => 'Hindi umiiral ang pahinang "$1".',
 	'lingo-terminologypagenotlocal' => 'Ang pahinang "$1" ay hindi isang katutubong pahina.',
+);
+
+/** Ukrainian (українська)
+ * @author Base
+ * @author Steve.rusyn
+ */
+$messages['uk'] = array(
+	'lingo-desc' => 'Показує вспливаючі підказки при наведенні на слова, що вказані на сторінці [[$1]]',
+	'lingo-terminologypagename' => 'Термінологія',
+	'lingo-noterminologypage' => 'Сторінка «$1» не існує.',
+	'lingo-terminologypagenotlocal' => 'Сторінка «$1» не є локальною.',
 );
 
 /** Urdu (اردو)
