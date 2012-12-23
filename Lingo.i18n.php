@@ -248,6 +248,13 @@ $messages['lb'] = array(
 	'lingo-terminologypagenotlocal' => "Säit '$1' gëtt et op dëser Wiki net.",
 );
 
+/** Lithuanian (lietuvių)
+ * @author Eitvys200
+ */
+$messages['lt'] = array(
+	'lingo-terminologypagename' => 'Terminologija',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
