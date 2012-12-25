@@ -345,6 +345,8 @@ $messages['ru'] = array(
  */
 $messages['si'] = array(
 	'lingo-terminologypagename' => 'පාරිභාෂිකය',
+	'lingo-noterminologypage' => '"$1" පිටුව නොපවතී.',
+	'lingo-terminologypagenotlocal' => '"$1" පිටුව ප්‍රාදේශීය පිටුවක් නොවේ.',
 );
 
 /** Swedish (svenska)
