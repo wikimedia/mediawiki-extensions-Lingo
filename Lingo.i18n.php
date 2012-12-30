@@ -271,7 +271,7 @@ $messages['mk'] = array(
 $messages['ms'] = array(
 	'lingo-desc' => 'Menyediakan petua-petua alatan secara hover pada laman-laman daripada kata-kata yang ditakrifkan di laman [[$1]]',
 	'lingo-terminologypagename' => 'Peristilahan',
-	'lingo-noterminologypage' => 'Laman "$1" tidak wujud.',
+	'lingo-noterminologypage' => 'Halaman "$1" tidak wujud.',
 	'lingo-terminologypagenotlocal' => 'Laman "$1" bukan laman tempatan.',
 );
 
@@ -326,6 +326,15 @@ $messages['ro'] = array(
 	'lingo-terminologypagename' => 'Terminologie',
 	'lingo-noterminologypage' => 'Pagina „$1” nu există.',
 	'lingo-terminologypagenotlocal' => 'Pagina „$1” nu este o pagină locală.',
+);
+
+/** tarandíne (tarandíne)
+ * @author Joetaras
+ */
+$messages['roa-tara'] = array(
+	'lingo-terminologypagename' => 'Terminologgije',
+	'lingo-noterminologypage' => 'Pàgene "$1" non g\'esiste.',
+	'lingo-terminologypagenotlocal' => 'Pàgene "$1" non g\'è \'na pàgene locale.',
 );
 
 /** Russian (русский)
