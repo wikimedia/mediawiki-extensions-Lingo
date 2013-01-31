@@ -54,6 +54,14 @@ $messages['br'] = array(
 	'lingo-terminologypagenotlocal' => 'N\'eus ket ur bajenn lec\'hel eus "$1".',
 );
 
+/** Catalan (català)
+ * @author Pitort
+ */
+$messages['ca'] = array(
+	'lingo-terminologypagename' => 'Terminologia',
+	'lingo-noterminologypage' => 'La pàgina "$1" no existeix.',
+);
+
 /** Czech (česky)
  * @author Vks
  */
