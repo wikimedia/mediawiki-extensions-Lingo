@@ -340,6 +340,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'lingo-desc' => 'Dèje le suggereminde sus a le pàggene da le parole definite sus a [[$1]] pàgene',
 	'lingo-terminologypagename' => 'Terminologgije',
 	'lingo-noterminologypage' => 'Pàgene "$1" non g\'esiste.',
 	'lingo-terminologypagenotlocal' => 'Pàgene "$1" non g\'è \'na pàgene locale.',
