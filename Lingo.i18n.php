@@ -234,6 +234,8 @@ $messages['ja'] = array(
  */
 $messages['ka'] = array(
 	'lingo-terminologypagename' => 'ტერმინოლოგია',
+	'lingo-noterminologypage' => 'გვერდი „$1“ არ არსებობს.',
+	'lingo-terminologypagenotlocal' => 'გვერდი „$1“ არ არის ადგილობრივი გვერდი.',
 );
 
 /** Colognian (Ripoarisch)
