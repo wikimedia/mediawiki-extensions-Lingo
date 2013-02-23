@@ -238,6 +238,16 @@ $messages['ka'] = array(
 	'lingo-terminologypagenotlocal' => 'გვერდი „$1“ არ არის ადგილობრივი გვერდი.',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'lingo-desc' => '[[$1]] 문서에 정의한 낱말에서 문서에 마우스 오버 도구 팁을 제공합니다',
+	'lingo-terminologypagename' => '술어',
+	'lingo-noterminologypage' => '"$1" 문서가 존재하지 않습니다.',
+	'lingo-terminologypagenotlocal' => '"$1" 문서는 로컬 문서가 아닙니다.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
