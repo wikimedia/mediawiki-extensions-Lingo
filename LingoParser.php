@@ -45,6 +45,9 @@ class LingoParser {
 		wfProfileIn( __METHOD__ );
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
+
+			// The RegEx to split a chunk of text into words
+			// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
 			self::$regex = '/' . preg_quote( $parser->uniqPrefix(), '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 

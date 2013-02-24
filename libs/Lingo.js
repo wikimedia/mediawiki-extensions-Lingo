@@ -161,7 +161,7 @@
 
 				if ( placeAbove ) {
 					wrapper.css( {
-						'top': ( - tipdef.outerHeight() - 5 ) + 'px',
+						'top': ( -tipdef.outerHeight() - 5 ) + 'px',
 						'padding-bottom': termLineHeight + 'px',
 						'padding-top' : '0px'
 					} );
@@ -196,7 +196,7 @@
 		.mouseleave( function ( event ){
 			event.stopImmediatePropagation();
 
-			if( jQuery.browser.msie && jQuery.browser.version.substr( 0, 1 ) <= 7 ) {
+			if( $.browser.msie && $.browser.version.substr( 0, 1 ) <= 7 ) {
 				$( this ).css( 'z-index', 1 );
 			}
 
@@ -210,7 +210,7 @@
 		.mouseleave( function ( event ){
 			event.stopImmediatePropagation();
 
-			if( jQuery.browser.msie && jQuery.browser.version.substr( 0, 1 ) <= 7 ) {
+			if( $.browser.msie && $.browser.version.substr( 0, 1 ) <= 7 ) {
 				$( this ).parent().parent().css( 'z-index', 1 );
 			}
 
