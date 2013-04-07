@@ -74,7 +74,7 @@ $wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set cr
 
 if ( version_compare( $wgVersion, '1.20', 'lt' ) ) {
 	// ParserAfterParse only available from 1.20 onwards
-	$wgHooks['InternalParseBeforeLinks'][] = 'LingoHooks::parse'; // parse page
+	$wgHooks['ParserBeforeTidy'][] = 'LingoHooks::parse'; // parse page
 } else {
 	$wgHooks['ParserAfterParse'][] = 'LingoHooks::parse'; // parse page
 }
