@@ -8,7 +8,7 @@
  * @author Barry Coughlan
  * @copyright 2010 Barry Coughlan
  * @author Stephan Gambke
- * @version 0.4.2
+ * @version 0.4.3 alpha
  * @licence GNU General Public Licence 2.0 or later
  * @see http://www.mediawiki.org/wiki/Extension:Lingo Documentation
  */
@@ -16,7 +16,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 }
 
-define( 'LINGO_VERSION', '0.4.2' );
+define( 'LINGO_VERSION', '0.4.3 alpha' );
 
 
 // set defaults for settings
@@ -86,19 +86,13 @@ $wgHooks['ArticleSave'][] = 'LingoBasicBackend::purgeCache';
 $wgResourceModules['ext.Lingo.Styles'] = array(
 	'localBasePath' => $dir,
 	'remoteExtPath' => 'Lingo',
-	// 'scripts' => 'libs/ext.myExtension.js',
 	'styles' => 'skins/Lingo.css',
-	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
-	// 'dependencies' => array( 'jquery.ui.datepicker' ),
 );
 
 $wgResourceModules['ext.Lingo.Scripts'] = array(
 	'localBasePath' => $dir,
 	'remoteExtPath' => 'Lingo',
 	'scripts' => 'libs/Lingo.js',
-	// 'styles' => 'skins/Lingo.css',
-	// 'messages' => array( 'myextension-hello-world', 'myextension-goodbye-world' ),
-	// 'dependencies' => array( 'jquery.ui.datepicker' ),
 );
 
 MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';

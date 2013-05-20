@@ -22,7 +22,7 @@ class LingoBasicBackend extends LingoBackend {
 
 	public function __construct( LingoMessageLog &$messages = null ) {
 
-		global $wgexLingoPage;
+		global $wgexLingoPage, $wgRequest;
 
 		$page = $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' );
 
@@ -35,13 +35,25 @@ class LingoBasicBackend extends LingoBackend {
 			return false;
 		}
 
-		$rev = Revision::newFromTitle( $title );
-		if ( !$rev ) {
-			$this->getMessageLog()->addWarning( wfMsgForContent( 'lingo-noterminologypage' , $page ) );
-			return false;
-		}
+		// FIXME: This is a hack special-casing the submitting of the terminology
+		// page itself. In this case the Revision is not up to date when we get
+		// here, i.e. $rev->getText() would return outdated Test.
+		// This hack takes the text directly out of the data from the web request.
+		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
+				&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID() ) {
 
-		$content = $rev->getText();
+			$content = $wgRequest->getVal( 'wpTextbox1' );
+
+		} else {
+
+			$rev = Revision::newFromTitle( $title );
+			if ( !$rev ) {
+				$this->getMessageLog()->addWarning( wfMsgForContent( 'lingo-noterminologypage', $page ) );
+				return false;
+			}
+
+			$content = $rev->getText();
+		}
 
 		$this->mArticleLines = array_reverse(explode( "\n", $content ));
 	}
