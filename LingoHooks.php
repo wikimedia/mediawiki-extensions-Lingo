@@ -66,5 +66,26 @@ class LingoHooks {
 		return true;
 	}
 
+	/**
+	 * Creates tag hook(s)
+	 */
+	public static function registerTags(Parser $parser) {
+		$parser->setHook( 'noglossary',  'LingoHooks::noglossaryTagRenderer');
+		return true;
+	}
+
+	/**
+	 * Sets hook on 'noglossary' tag
+	 * @static
+	 * @param $input
+	 * @param array $args
+	 * @param Parser $parser
+	 * @param PPFrame $frame
+	 * @return string
+	 */
+	public static function noglossaryTagRenderer( $input, array $args, Parser $parser, PPFrame $frame ) {
+		$output = $parser->recursiveTagParse( $input, $frame );
+		return '<span class="noglossary">'.$output.'</span>';
+	}
 }
 

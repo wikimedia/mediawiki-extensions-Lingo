@@ -81,6 +81,7 @@ if ( version_compare( $wgVersion, '1.20', 'lt' ) ) {
 
 $wgHooks['ArticlePurge'][] = 'LingoBasicBackend::purgeCache';
 $wgHooks['ArticleSave'][] = 'LingoBasicBackend::purgeCache';
+$wgHooks['ParserFirstCallInit'][] = 'LingoHooks::registerTags';
 
 // register resource modules with the Resource Loader
 $wgResourceModules['ext.Lingo.Styles'] = array(

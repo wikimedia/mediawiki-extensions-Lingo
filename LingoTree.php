@@ -106,7 +106,7 @@ class LingoTree {
 		$start = $lastindex = $index;
 		$definition = null;
 
-		// skip until ther start of a term is found
+		// skip until the start of a term is found
 		while ( $index < $countLexemes && !$definition ) {
 			$currLex = &$lexemes[$index][0];
 
