@@ -112,6 +112,7 @@ class LingoElement {
 				// Wrap term in <span> tag, hidden
 				wfSuppressWarnings();
 				$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+
 				wfRestoreWarnings();
 				$spanTerm->setAttribute( 'class', 'tooltip_abbr' );
 
