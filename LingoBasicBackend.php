@@ -45,8 +45,7 @@ class LingoBasicBackend extends LingoBackend {
 			$content = $wgRequest->getVal( 'wpTextbox1' );
 
 		} else {
-
-			$rev = Revision::newFromTitle( $title );
+			$rev = $this->getRevision( $title );
 			if ( !$rev ) {
 				$this->getMessageLog()->addWarning( wfMsgForContent( 'lingo-noterminologypage', $page ) );
 				return false;
@@ -115,7 +114,30 @@ class LingoBasicBackend extends LingoBackend {
 
 		wfProfileOut( __METHOD__ );
 		
-		return array_pop($ret);;
+		return array_pop($ret);
+	}
+
+	/**
+	 * Returns revision of the terms page.
+	 *
+	 * @param Title $title
+	 * @return Revision
+	 */
+	public function getRevision( $title )
+	{
+		global $wgexLingoEnableApprovedRevs;
+
+		if ( $wgexLingoEnableApprovedRevs ) {
+
+			if ( defined( 'APPROVED_REVS_VERSION' ) ) {
+				$rev_id = ApprovedRevs::getApprovedRevID( $title );
+				return Revision::newFromId( $rev_id );
+			} else {
+				wfDebug( 'Support for ApprovedRevs is enabled in Lingo. But ApprovedRevs was not found.\n' );
+			}
+		}
+
+		return Revision::newFromTitle( $title );
 	}
 
 	/**

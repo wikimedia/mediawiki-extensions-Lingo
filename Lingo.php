@@ -43,6 +43,9 @@ $wgexLingoUseNamespaces = array(
 // set default cache type (null = use main cache)
 $wgexLingoCacheType = null;
 
+// use ApprovedRevs extension
+$wgexLingoEnableApprovedRevs = false;
+
 // set extension credits
 // (no description here, will be set later)
 $wgExtensionCredits['parserhook']['lingo'] = array(
