@@ -19,7 +19,9 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'lingo-desc' => '{{desc|name=Lingo|url=http://www.mediawiki.org/wiki/Extension:Lingo}}',
+	'lingo-desc' => '{{desc|name=Lingo|url=http://www.mediawiki.org/wiki/Extension:Lingo}}
+Parameters:
+* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|Lingo-terminologypagename}}',
 	'lingo-terminologypagename' => 'Name of the page where the terms and definitions of the glossary are stored',
 	'lingo-noterminologypage' => 'Used as warning. Parameters:
 * $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}
