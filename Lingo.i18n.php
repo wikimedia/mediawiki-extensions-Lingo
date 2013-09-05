@@ -340,13 +340,24 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (português)
+ * @author Cainamarques
  * @author Hamilton Abreu
  */
 $messages['pt'] = array(
 	'lingo-desc' => 'Permite que a passagem do ponteiro do rato sobre palavras nas páginas, resulte no aparecimento de uma legenda. As palavras são definidas na página [[$1]].',
-	'lingo-terminologypagename' => 'Terminology',
-	'lingo-noterminologypage' => "A página '$1' não existe.",
-	'lingo-terminologypagenotlocal' => "A página '$1' não é uma página local.",
+	'lingo-terminologypagename' => 'Terminologia',
+	'lingo-noterminologypage' => 'A página "$1" não existe.',
+	'lingo-terminologypagenotlocal' => 'A página "$1" não é uma página local.',
+);
+
+/** Brazilian Portuguese (português do Brasil)
+ * @author Cainamarques
+ */
+$messages['pt-br'] = array(
+	'lingo-desc' => 'Fornece a exibição de legendas na passagem do cursor sobre palavras definidas na página [[$1]]',
+	'lingo-terminologypagename' => 'Terminologia',
+	'lingo-noterminologypage' => 'Página "$1" não existe.',
+	'lingo-terminologypagenotlocal' => 'A página "$1" não é uma página local.',
 );
 
 /** Romanian (română)
