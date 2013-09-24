@@ -23,6 +23,7 @@ class LingoElement {
 	const ELEMENT_DEFINITION = 1;
 	const ELEMENT_SOURCE = 2;
 	const ELEMENT_LINK = 3;
+	const ELEMENT_STYLE = 4;
 
 	private $mFullDefinition = null;
 	private $mDefinitions = array();
@@ -71,7 +72,7 @@ class LingoElement {
 
 				// set the link target
 				$link->setAttribute( 'href', $target->getLinkUrl() );
-
+				
 				// figure out the classes for the link
 				// TODO: should this be more elaborate? See Linker::linkAttribs
 				// Cleanest would probably be to use Linker::link and parse it
@@ -84,8 +85,11 @@ class LingoElement {
 				}
 
 				if ( $target->isExternal() ) {
-					$classes .= 'extiw';
+					$classes .= 'extiw ';
 				}
+
+				// set style
+				$classes .= $this->mDefinitions[0][self::ELEMENT_STYLE];
 
 				if ( $classes !== '' ) {
 					$link->setAttribute( 'class', $classes );
@@ -107,7 +111,7 @@ class LingoElement {
 
 				// Wrap term and definition in <span> tags
 				$span = $doc->createElement( 'span' );
-				$span->setAttribute( 'class', 'tooltip' );
+				$span->setAttribute( 'class', 'tooltip ' . $this->mDefinitions[0][self::ELEMENT_STYLE] );
 
 				// Wrap term in <span> tag, hidden
 				wfSuppressWarnings();
@@ -172,6 +176,10 @@ class LingoElement {
 
 	public function getLink( &$key ) {
 		return $this->mDefinitions[$key][self::ELEMENT_LINK];
+	}
+
+	public function getStyle( &$key ) {
+		return $this->mDefinitions[$key][self::ELEMENT_STYLE];
 	}
 
 	public function next() {
