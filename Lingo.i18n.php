@@ -438,6 +438,7 @@ $messages['tl'] = array(
 /** Ukrainian (українська)
  * @author Base
  * @author Steve.rusyn
+ * @author SteveR
  */
 $messages['uk'] = array(
 	'lingo-desc' => 'Показує вспливаючі підказки при наведенні на слова, що вказані на сторінці [[$1]]',
