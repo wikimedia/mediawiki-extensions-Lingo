@@ -72,7 +72,7 @@ $messages['ca'] = array(
 	'lingo-noterminologypage' => 'La pàgina "$1" no existeix.',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Vks
  */
 $messages['cs'] = array(
