@@ -161,6 +161,13 @@ $messages['frp'] = array(
 	'lingo-terminologypagenotlocal' => 'Pâge « $1 » est pas una pâge locala.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Kening Aldgilles
+ */
+$messages['fy'] = array(
+	'lingo-terminologypagename' => 'Terminology',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
