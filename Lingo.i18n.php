@@ -126,10 +126,13 @@ $messages['et'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Armin1392
  * @author Mjbmr
  */
 $messages['fa'] = array(
+	'lingo-terminologypagename' => 'اصطلاح‌شناسی',
 	'lingo-noterminologypage' => 'صفحهٔ «$1» وجود ندارد.',
+	'lingo-terminologypagenotlocal' => 'صفحهٔ "$1" یک صفحهٔ داخلی نیست.',
 );
 
 /** Finnish (suomi)
