@@ -130,6 +130,7 @@ $messages['et'] = array(
  * @author Mjbmr
  */
 $messages['fa'] = array(
+	'lingo-desc' => 'فراهم کردن نکات اتمام توقف ابزار در صفحات از کلمات تعریف شده در صفحهٔ [[$1]]',
 	'lingo-terminologypagename' => 'اصطلاح‌شناسی',
 	'lingo-noterminologypage' => 'صفحهٔ «$1» وجود ندارد.',
 	'lingo-terminologypagenotlocal' => 'صفحهٔ "$1" یک صفحهٔ داخلی نیست.',
