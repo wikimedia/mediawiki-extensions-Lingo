@@ -18,6 +18,11 @@ $magicWords['ar'] = array(
 	'noglossary' => array( 0, '__لا_قاموس__' ),
 );
 
+/** Egyptian Spoken Arabic (مصرى) */
+$magicWords['arz'] = array(
+	'noglossary' => array( 0, '__من_غير_قاموس__' ),
+);
+
 /** German (Deutsch) */
 $magicWords['de'] = array(
 	'noglossary' => array( 0, '__KEINGLOSSAR__', '__KEIN_GLOSSAR__' ),
