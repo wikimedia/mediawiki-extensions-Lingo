@@ -82,3 +82,8 @@ $magicWords['sr-el'] = array(
 $magicWords['tr'] = array(
 	'noglossary' => array( 0, '__SÖZLÜKYOK__' ),
 );
+
+/** Simplified Chinese (中文（简体）‎) */
+$magicWords['zh-hans'] = array(
+	'noglossary' => array( 0, '__无词汇表__' ),
+);
