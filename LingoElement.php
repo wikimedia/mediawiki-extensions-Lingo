@@ -25,6 +25,8 @@ class LingoElement {
 	const ELEMENT_LINK = 3;
 	const ELEMENT_STYLE = 4;
 
+	const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
+
 	private $mFullDefinition = null;
 	private $mDefinitions = array();
 	private $mTerm = null;
@@ -42,7 +44,7 @@ class LingoElement {
 	}
 
 	public function addDefinition( &$definition ) {
-		$this->mDefinitions[] = $definition;
+		$this->mDefinitions[] = array_pad( $definition, self::ELEMENT_FIELDCOUNT, null );
 	}
 
 	public function getFullDefinition( DOMDocument &$doc ) {
@@ -72,7 +74,7 @@ class LingoElement {
 
 				// set the link target
 				$link->setAttribute( 'href', $target->getLinkUrl() );
-				
+
 				// figure out the classes for the link
 				// TODO: should this be more elaborate? See Linker::linkAttribs
 				// Cleanest would probably be to use Linker::link and parse it
@@ -111,7 +113,7 @@ class LingoElement {
 
 				// Wrap term and definition in <span> tags
 				$span = $doc->createElement( 'span' );
-				$span->setAttribute( 'class', 'tooltip ' . $this->mDefinitions[0][self::ELEMENT_STYLE] );
+				$span->setAttribute( 'class', 'lingo-tooltip ' . $this->mDefinitions[0][self::ELEMENT_STYLE] );
 
 				// Wrap term in <span> tag, hidden
 				wfSuppressWarnings();

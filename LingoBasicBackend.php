@@ -55,6 +55,11 @@ class LingoBasicBackend extends LingoBackend {
 
 		}
 
+		$parser  = new Parser;
+		// expand templates and variables in the text, producing valid, static wikitext
+		// have to use a new anonymous user to avoid any leakage as Lingo is caching only one user-independant glossary
+		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
+
 		$this->mArticleLines = array_reverse(explode( "\n", $content ));
 	}
 
@@ -113,7 +118,7 @@ class LingoBasicBackend extends LingoBackend {
 		}
 
 		wfProfileOut( __METHOD__ );
-		
+
 		return array_pop($ret);
 	}
 
@@ -161,14 +166,13 @@ class LingoBasicBackend extends LingoBackend {
 
 	/**
 	 * The basic backend is cache-enabled so this function returns true.
-	 * 
+	 *
 	 * Actual caching is done by the parser, the backend just calls
-	 * LingoParser::purgeCache when necessary. 
-	 * 
-	 * @return boolean 
+	 * LingoParser::purgeCache when necessary.
+	 *
+	 * @return boolean
 	 */
 	public function useCache() {
 		return true;
 	}
 }
-
