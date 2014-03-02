@@ -120,14 +120,11 @@ class LingoElement {
 				$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
 
 				wfRestoreWarnings();
-				$spanTerm->setAttribute( 'class', 'tooltip_abbr' );
+				$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
 
-				// Wrap definition in two <span> tags
-				$spanDefinitionOuter = $doc->createElement( 'span' );
-				$spanDefinitionOuter->setAttribute( 'class', 'tooltip_tipwrapper' );
-
-				$spanDefinitionInner = $doc->createElement( 'span' );
-				$spanDefinitionInner->setAttribute( 'class', 'tooltip_tip' );
+				// Wrap definition in a <span> tag
+				$spanDefinition = $doc->createElement( 'span' );
+				$spanDefinition->setAttribute( 'class', 'mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 
 				foreach ( $this->mDefinitions as $definition ) {
 					wfSuppressWarnings();
@@ -141,13 +138,12 @@ class LingoElement {
 							$element->appendChild( $link );
 						}
 					}
-					$spanDefinitionInner->appendChild( $element );
+					$spanDefinition->appendChild( $element );
 				}
 
 				// insert term and definition
 				$span->appendChild( $spanTerm );
-				$span->appendChild( $spanDefinitionOuter );
-				$spanDefinitionOuter->appendChild( $spanDefinitionInner );
+				$span->appendChild( $spanDefinition );
 
 				$this->mFullDefinition = $span;
 			}

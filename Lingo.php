@@ -97,7 +97,17 @@ $wgResourceModules['ext.Lingo.Scripts'] = array(
 	'localBasePath' => $dir,
 	'remoteExtPath' => 'Lingo',
 	'scripts' => 'libs/Lingo.js',
+	'dependencies' => 'ext.jquery.qtip',
 );
+
+$wgResourceModules['ext.jquery.qtip'] = array(
+		'localBasePath' => $dir,
+		'remoteExtPath' => 'Lingo',
+		'scripts' => 'libs/jquery.qtip.js',
+		'styles' => 'skins/jquery.qtip.css',
+);
+
+
 
 MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';
 

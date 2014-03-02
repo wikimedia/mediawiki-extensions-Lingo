@@ -1,64 +1,54 @@
 /*
-* Stylesheet for the markup of glossary terms in wiki pages.
-*/
+ * Stylesheet for the markup of glossary terms in wiki pages.
+ */
 
 .mw-lingo-tooltip {
-	display: inline;
+	/*display: inline;*/
 	position: relative;
-	cursor: help;
+	/*cursor: help;*/
 }
 
-.mw-lingo-tooltip .tooltip_abbr {
-    border-bottom: 1px dotted #bbf;
+.mw-lingo-tooltip-abbr {
+	border-bottom: 1px dotted #bbbbff;
+	cursor:        default;
 }
 
-.mw-lingo-tooltip .tooltip_tipwrapper {
-    display: none;
-
-	position: absolute;
-	top: 0;
-	left: 0;
-
-	height: 3em;
-	width: 23em;
-
-	font-weight: normal;
-	font-size: small;
-	line-height: 1.2em;
-
-	z-index: 2;
+.mw-lingo-tooltip-abbr:hover {
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
-.mw-lingo-tooltip .tooltip_tip {
-	display: block;
+.mw-lingo-tooltip-tip {
+	display:               none;
 
-	position: absolute;
-	top: 1.5em;
-	left: 2em;
+	/* qtip-default */
+	border-width:          1px;
+	border-style:          solid;
 
-	width: 20em;
+	/* qtip shadow */
+	-webkit-box-shadow:    1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow:       1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+	box-shadow:            1px 1px 3px 1px rgba(0, 0, 0, 0.15);
 
-	padding: 0.5em;
-	margin: 0;
+	/* qtip light */
+	background-color:      white;
+	border-color:          #e2e2e2;
+	color:                 #454545;
 
-	background-color: #F9F9F9;
-	border: 1px solid #aaa;
-
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-
-	-webkit-box-shadow: 3px 3px 3px #888;
-	box-shadow: 3px 3px 3px	#888;
+	/* qtip rounded */
+	-moz-border-radius:    5px;
+	-webkit-border-radius: 5px;
+	border-radius:         5px;
 }
 
-.tooltip_tip span {
-	display: block;
-}
+/* Style for JS disabled browsers*/
+.mw-lingo-tooltip:hover .mw-lingo-tooltip-tip {
+	display:   block;
 
-.mw-lingo-tooltip:hover .tooltip_abbr {
-    background-color:rgba(0,0,0,0.1);
-}
+	position:  absolute;
+	top:       1.5em;
+	left:      0;
 
-.mw-lingo-tooltip:hover .tooltip_tipwrapper {
-    display: block;
+	padding:   5px 9px;
+	z-index:   15000;
+	font-size: smaller;
 }
