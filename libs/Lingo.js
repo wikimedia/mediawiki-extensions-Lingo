@@ -13,7 +13,7 @@
 
 	$( function ( $ ){
 
-		$( '.tooltip' )
+		$( '.mw-lingo-tooltip' )
 		.mouseenter( function ( event ){
 
 			event.stopImmediatePropagation();

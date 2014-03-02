@@ -113,7 +113,7 @@ class LingoElement {
 
 				// Wrap term and definition in <span> tags
 				$span = $doc->createElement( 'span' );
-				$span->setAttribute( 'class', 'lingo-tooltip ' . $this->mDefinitions[0][self::ELEMENT_STYLE] );
+				$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[0][self::ELEMENT_STYLE] );
 
 				// Wrap term in <span> tag, hidden
 				wfSuppressWarnings();
