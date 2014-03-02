@@ -4,112 +4,124 @@
  * Terminology page.
  *
  * @file
- * @defgroup Lingo
- * @author Barry Coughlan
+ * @defgroup  Lingo
+ * @author    Barry Coughlan
  * @copyright 2010 Barry Coughlan
- * @author Stephan Gambke
- * @version 0.4.3 alpha
- * @licence GNU General Public Licence 2.0 or later
- * @see http://www.mediawiki.org/wiki/Extension:Lingo Documentation
+ * @author    Stephan Gambke
+ * @version   0.4.3 alpha
+ * @licence   GNU General Public Licence 2.0 or later
+ * @see       http://www.mediawiki.org/wiki/Extension:Lingo Documentation
  */
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
-}
-
-define( 'LINGO_VERSION', '0.4.3 alpha' );
 
 
-// set defaults for settings
+call_user_func( function () {
 
-// set the backend to access the glossary
-$wgexLingoBackend = 'LingoBasicBackend';
+	if ( !defined( 'MEDIAWIKI' ) ) {
+		die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
+	}
 
-// set default for Terminology page (null = take from i18n)
-$wgexLingoPage = null;
+	define( 'LINGO_VERSION', '0.4.3 alpha' );
 
-// set if glossary terms are to be marked up once or always
-$wgexLingoDisplayOnce = false;
+	// set defaults for settings
 
-// set namespaces to be marked up;
-// namespaces to be ignored have to be included in this array and set to false
-// anything not in this array (or in this array and set to true) will be marked up
-$wgexLingoUseNamespaces = array(
-//	NS_MEDIA            => true,
-//	NS_SPECIAL          => true,
-//	NS_TALK             => false,
-//  ...
-);
-
-// set default cache type (null = use main cache)
-$wgexLingoCacheType = null;
-
-// use ApprovedRevs extension
-$wgexLingoEnableApprovedRevs = false;
-
-// set extension credits
-// (no description here, will be set later)
-$wgExtensionCredits['parserhook']['lingo'] = array(
-	'path' => __FILE__,
-	'name' => 'Lingo',
-	'author' => array('Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]'),
-	'url' => 'https://www.mediawiki.org/wiki/Extension:Lingo',
-	'version' => LINGO_VERSION,
-);
-
-// server-local path to this file
-$dir = dirname( __FILE__ );
-
-// register message files
-$wgExtensionMessagesFiles['Lingo'] = $dir . '/Lingo.i18n.php';
-$wgExtensionMessagesFiles['LingoMagic'] = $dir . '/Lingo.i18n.magic.php';
-
-// register class files with the Autoloader
-$wgAutoloadClasses['LingoHooks'] = $dir . '/LingoHooks.php';
-$wgAutoloadClasses['LingoParser'] = $dir . '/LingoParser.php';
-$wgAutoloadClasses['LingoTree'] = $dir . '/LingoTree.php';
-$wgAutoloadClasses['LingoElement'] = $dir . '/LingoElement.php';
-$wgAutoloadClasses['LingoBackend'] = $dir . '/LingoBackend.php';
-$wgAutoloadClasses['LingoBasicBackend'] = $dir . '/LingoBasicBackend.php';
-$wgAutoloadClasses['LingoMessageLog'] = $dir . '/LingoMessageLog.php';
-
-// register hook handlers
-$wgHooks['SpecialVersionExtensionTypes'][] = 'LingoHooks::setCredits'; // set credits
-
-if ( version_compare( $wgVersion, '1.20', 'lt' ) ) {
-	// ParserAfterParse only available from 1.20 onwards
-	$wgHooks['ParserBeforeTidy'][] = 'LingoHooks::parse'; // parse page
-} else {
-	$wgHooks['ParserAfterParse'][] = 'LingoHooks::parse'; // parse page
-}
-
-$wgHooks['ArticlePurge'][] = 'LingoBasicBackend::purgeCache';
-$wgHooks['ArticleSave'][] = 'LingoBasicBackend::purgeCache';
-$wgHooks['ParserFirstCallInit'][] = 'LingoHooks::registerTags';
-
-// register resource modules with the Resource Loader
-$wgResourceModules['ext.Lingo.Styles'] = array(
-	'localBasePath' => $dir,
-	'remoteExtPath' => 'Lingo',
-	'styles' => 'skins/Lingo.css',
-);
-
-$wgResourceModules['ext.Lingo.Scripts'] = array(
-	'localBasePath' => $dir,
-	'remoteExtPath' => 'Lingo',
-	'scripts' => 'libs/Lingo.js',
-	'dependencies' => 'ext.jquery.qtip',
-);
-
-$wgResourceModules['ext.jquery.qtip'] = array(
-		'localBasePath' => $dir,
-		'remoteExtPath' => 'Lingo',
-		'scripts' => 'libs/jquery.qtip.js',
-		'styles' => 'skins/jquery.qtip.css',
-);
+	$GLOBALS[ 'wgexLingoBackend' ]            = 'LingoBasicBackend'; // set the backend to access the glossary
+	$GLOBALS[ 'wgexLingoPage' ]               = null; // set default for Terminology page (null = take from i18n)
+	$GLOBALS[ 'wgexLingoDisplayOnce' ]        = false; // set if glossary terms are to be marked up once or always
+	$GLOBALS[ 'wgexLingoCacheType' ]          = null; // set default cache type (null = use main cache)
+	$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = false; // use ApprovedRevs extension
 
 
+	// set namespaces to be marked up;
+	// namespaces to be ignored have to be included in this array and set to false
+	// anything not in this array (or in this array and set to true) will be marked up
+	$GLOBALS[ 'wgexLingoUseNamespaces' ] = array(
+//		NS_MEDIA            => true,
+//		NS_SPECIAL          => true,
+//		NS_TALK             => false,
+//	  ...
+	);
 
-MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';
+	// set extension credits
+	// (no description here, it will be set later)
+	$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ 'lingo' ] = array(
+			'path'    => __FILE__,
+			'name'    => 'Lingo',
+			'author'  => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]', '...' ),
+			'url'     => 'https://www.mediawiki.org/wiki/Extension:Lingo',
+			'version' => LINGO_VERSION,
+	);
 
-unset( $dir );
+	// server-local path to this file
+	$dir = dirname( __FILE__ );
 
+	// register message files
+	$messageFiles = array(
+			'Lingo'      => $dir . '/Lingo.i18n.php',
+			'LingoMagic' => $dir . '/Lingo.i18n.magic.php',
+	);
+
+	$GLOBALS[ 'wgExtensionMessagesFiles' ] = array_merge( $GLOBALS[ 'wgExtensionMessagesFiles' ], $messageFiles );
+
+	// register class files with the Autoloader
+	$autoloadClasses = array(
+			'LingoHooks'        => $dir . '/LingoHooks.php',
+			'LingoParser'       => $dir . '/LingoParser.php',
+			'LingoTree'         => $dir . '/LingoTree.php',
+			'LingoElement'      => $dir . '/LingoElement.php',
+			'LingoBackend'      => $dir . '/LingoBackend.php',
+			'LingoBasicBackend' => $dir . '/LingoBasicBackend.php',
+			'LingoMessageLog'   => $dir . '/LingoMessageLog.php',
+	);
+
+	$GLOBALS[ 'wgAutoloadClasses' ] = array_merge( $GLOBALS[ 'wgAutoloadClasses' ], $autoloadClasses );
+
+	// register hook handlers
+	$hooks = array(
+			'SpecialVersionExtensionTypes' => array( 'LingoHooks::setCredits' ), // set credits
+			'ParserFirstCallInit'          => array( 'LingoHooks::registerTags' ),
+			'ArticlePurge'                 => array( 'LingoBasicBackend::purgeCache' ),
+			'ArticleSave'                  => array( 'LingoBasicBackend::purgeCache' ),
+	);
+
+	$GLOBALS[ 'wgHooks' ] = array_merge_recursive( $GLOBALS[ 'wgHooks' ], $hooks );
+
+	if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.20', 'lt' ) ) {
+		// ParserAfterParse only available from 1.20 onwards
+		$GLOBALS[ 'wgHooks' ][ 'ParserBeforeTidy' ][ ] = 'LingoHooks::parse'; // parse page
+	} else {
+		$GLOBALS[ 'wgHooks' ][ 'ParserAfterParse' ][ ] = 'LingoHooks::parse'; // parse page
+	}
+
+
+	// register resource modules with the Resource Loader
+	$resourceModules = array(
+			'ext.Lingo.Styles'  => array(
+					'localBasePath' => $dir,
+					'remoteExtPath' => 'Lingo',
+					'styles'        => 'skins/Lingo.css',
+			),
+
+			'ext.Lingo.Scripts' => array(
+					'localBasePath' => $dir,
+					'remoteExtPath' => 'Lingo',
+					'scripts'       => 'libs/Lingo.js',
+					'dependencies'  => 'ext.jquery.qtip',
+			),
+
+			'ext.jquery.qtip'   => array(
+					'localBasePath' => $dir,
+					'remoteExtPath' => 'Lingo',
+					'scripts'       => 'libs/jquery.qtip.js',
+					'styles'        => 'skins/jquery.qtip.css',
+			),
+
+	);
+
+	$GLOBALS[ 'wgResourceModules' ] = array_merge( $GLOBALS[ 'wgResourceModules' ], $resourceModules );
+
+
+	MagicWord::$mDoubleUnderscoreIDs[ ] = 'noglossary';
+
+	unset( $dir );
+
+} );

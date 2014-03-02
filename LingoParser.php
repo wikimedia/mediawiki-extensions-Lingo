@@ -180,7 +180,6 @@ class LingoParser {
 		}
 
 		// Parse HTML from page
-		// @todo FIXME: this works in PHP 5.3.3. What about 5.1?
 		wfProfileIn( __METHOD__ . ' 1 loadHTML' );
 		wfSuppressWarnings();
 
