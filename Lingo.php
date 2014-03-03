@@ -20,7 +20,7 @@ call_user_func( function () {
 		die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 	}
 
-	define( 'LINGO_VERSION', '1.0.0' );
+	define( 'LINGO_VERSION', '1.0.1' );
 
 	// set defaults for settings
 
