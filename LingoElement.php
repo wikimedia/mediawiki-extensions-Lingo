@@ -128,7 +128,8 @@ class LingoElement {
 
 				foreach ( $this->mDefinitions as $definition ) {
 					wfSuppressWarnings();
-					$element = $doc->createElement( 'div', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) );
+					$element = $doc->createElement( 'span', htmlentities( $definition[self::ELEMENT_DEFINITION], ENT_COMPAT, 'UTF-8' ) );
+					$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 					wfRestoreWarnings();
 					if ( $definition[self::ELEMENT_LINK] ) {
 						$linkedTitle = Title::newFromText( $definition[self::ELEMENT_LINK] );
