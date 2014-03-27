@@ -154,7 +154,7 @@ class LingoBasicBackend extends LingoBackend {
 	public static function purgeCache( &$wikipage ) {
 
 		global $wgexLingoPage;
-		$page = $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' );
+		$page = $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
 
 		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $page ) ) {
 
