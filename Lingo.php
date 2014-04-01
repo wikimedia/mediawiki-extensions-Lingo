@@ -20,7 +20,7 @@ call_user_func( function () {
 		die( 'This file is part of a MediaWiki extension, it is not a valid entry point.' );
 	}
 
-	define( 'LINGO_VERSION', '1.1.1-dev' );
+	define( 'LINGO_VERSION', '1.2.0-dev' );
 
 	// set defaults for settings
 
@@ -60,6 +60,7 @@ call_user_func( function () {
 			'LingoMagic' => $dir . '/Lingo.i18n.magic.php',
 	);
 
+	$GLOBALS['wgMessagesDirs']['Lingo'] = __DIR__ . "/i18n";
 	$GLOBALS[ 'wgExtensionMessagesFiles' ] = array_merge( $GLOBALS[ 'wgExtensionMessagesFiles' ], $messageFiles );
 
 	// register class files with the Autoloader

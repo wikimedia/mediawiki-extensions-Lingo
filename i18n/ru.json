@@ -1,0 +1,13 @@
+{
+    "@metadata": {
+        "authors": [
+            "Adata80",
+            "Askarmuk",
+            "Александр Сигачёв"
+        ]
+    },
+    "lingo-desc": "Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[$1]]",
+    "lingo-terminologypagename": "Терминология",
+    "lingo-noterminologypage": "Страница \"$1\" не существует.",
+    "lingo-terminologypagenotlocal": "Страница \"$1\" не является локальной."
+}
