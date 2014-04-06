@@ -1,9 +1,11 @@
 {
     "@metadata": {
         "authors": [
-            "WikiPhoenix"
+            "WikiPhoenix",
+            "Ainali"
         ]
     },
+    "lingo-desc": "Tillhandahåller verktygstips på sidor när muspekaren förs över ord definierade på sidan [[$1]].",
     "lingo-terminologypagename": "Terminologi",
     "lingo-noterminologypage": "Sidan \"$1\" finns inte",
     "lingo-terminologypagenotlocal": "Sidan \"$1\" är inte en lokal sida."
