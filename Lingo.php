@@ -8,7 +8,7 @@
  * @author    Barry Coughlan
  * @copyright 2010 Barry Coughlan
  * @author    Stephan Gambke
- * @version   1.1.1-dev
+ * @version   1.2.0-dev
  * @licence   GNU General Public Licence 2.0 or later
  * @see       http://www.mediawiki.org/wiki/Extension:Lingo Documentation
  */
@@ -82,17 +82,10 @@ call_user_func( function () {
 			'ParserFirstCallInit'          => array( 'LingoHooks::registerTags' ),
 			'ArticlePurge'                 => array( 'LingoBasicBackend::purgeCache' ),
 			'ArticleSave'                  => array( 'LingoBasicBackend::purgeCache' ),
+			'ParserAfterParse'             => array( 'LingoHooks::parse' ),
 	);
 
 	$GLOBALS[ 'wgHooks' ] = array_merge_recursive( $GLOBALS[ 'wgHooks' ], $hooks );
-
-	if ( version_compare( $GLOBALS[ 'wgVersion' ], '1.20', 'lt' ) ) {
-		// ParserAfterParse only available from 1.20 onwards
-		$GLOBALS[ 'wgHooks' ][ 'ParserBeforeTidy' ][ ] = 'LingoHooks::parse'; // parse page
-	} else {
-		$GLOBALS[ 'wgHooks' ][ 'ParserAfterParse' ][ ] = 'LingoHooks::parse'; // parse page
-	}
-
 
 	// register resource modules with the Resource Loader
 	$resourceModules = array(

@@ -21,7 +21,7 @@ if ( !defined( 'LINGO_VERSION' ) ) {
 class LingoHooks {
 
 	/**
-	 * Hooks into ParserAfterTidy.
+	 * Hooks into ParserAfterParse.
 	 * 
 	 * @param Parser $parser
 	 * @param String $text

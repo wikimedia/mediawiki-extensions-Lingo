@@ -51,7 +51,7 @@ class LingoTree {
 			$this->mList[$term]->addDefinition( $definition );
 		} else {
 
-			$matches;
+			$matches = array();
 			preg_match_all( LingoParser::$regex, $term, $matches );
 
 			$elt = $this->addElement( $matches[0], $term, $definition );
