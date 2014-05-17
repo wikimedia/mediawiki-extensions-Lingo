@@ -28,7 +28,7 @@
 					delay: 300
 				},
 				style   : {
-					classes: tooltip.attr( 'class' ),
+					classes: tooltip.attr( 'class' ) + ' qtip-shadow',
 					def    : false
 				}
 
