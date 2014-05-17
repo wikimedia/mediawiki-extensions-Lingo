@@ -37,10 +37,15 @@ class LingoHooks {
 		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) && // __NOGLOSSARY__ not present and
 			(
 			!$title || // title not set or
-			!isset( $wgexLingoUseNamespaces[$title->getNamespace()] ) || // namespace not explicitly forbidden or
+			!isset( $wgexLingoUseNamespaces[ $title->getNamespace() ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
 			$wgexLingoUseNamespaces[$title->getNamespace()] // namespace explicitly allowed
 			)
-		) { 
+		) {
+
+			// unstrip strip items of the 'general' group
+			// this will be done again by parse when this hook returns, but it should not hurt to do this twice
+			// Only problem is with other hook handlers that might not expect strip items to be unstripped already
+			$text = $parser->mStripState->unstripGeneral( $text );
 			LingoParser::parse( $parser, $text );
 		}
 
