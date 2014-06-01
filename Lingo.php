@@ -78,7 +78,7 @@ call_user_func( function () {
 
 	// register hook handlers
 	$hooks = array(
-			'SpecialVersionExtensionTypes' => array( 'LingoHooks::setCredits' ), // set credits
+			'ExtensionTypes' => array( 'LingoHooks::setCredits' ), // set credits
 			'ParserFirstCallInit'          => array( 'LingoHooks::registerTags' ),
 			'ArticlePurge'                 => array( 'LingoBasicBackend::purgeCache' ),
 			'ArticleSave'                  => array( 'LingoBasicBackend::purgeCache' ),

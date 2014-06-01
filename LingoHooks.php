@@ -60,9 +60,10 @@ class LingoHooks {
 	 * might be set only after inclusion of the extension in LocalSettings) and
 	 * function wfMsg not available before.
 	 *
+	 * @param array $extensionTypes
 	 * @return Boolean Always true.
 	 */
-	static function setCredits() {
+	static function setCredits( &$extensionTypes ) {
 
 		global $wgExtensionCredits, $wgexLingoPage;
 		$wgExtensionCredits['parserhook']['lingo']['description'] =
