@@ -44,11 +44,16 @@ call_user_func( function () {
 	// set extension credits
 	// (no description here, it will be set later)
 	$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ 'lingo' ] = array(
-			'path'    => __FILE__,
-			'name'    => 'Lingo',
-			'author'  => array( 'Barry Coughlan', '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]', '...' ),
-			'url'     => 'https://www.mediawiki.org/wiki/Extension:Lingo',
-			'version' => LINGO_VERSION,
+			'path'         => __FILE__,
+			'name'         => 'Lingo',
+			'author'       => array(
+				 'Barry Coughlan',
+				 '[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]',
+				 '...'
+				 ),
+			'url'          => 'https://www.mediawiki.org/wiki/Extension:Lingo',
+			'version'      => LINGO_VERSION,
+			'license-name' => 'GPL-2.0+'
 	);
 
 	// server-local path to this file
