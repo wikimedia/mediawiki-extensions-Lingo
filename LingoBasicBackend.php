@@ -24,14 +24,14 @@ class LingoBasicBackend extends LingoBackend {
 
 		global $wgexLingoPage, $wgRequest;
 
-		$page = $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' );
+		$page = $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
 
 		parent::__construct( $messages );
 
 		// Get Terminology page
 		$title = Title::newFromText( $page );
 		if ( $title->getInterwiki() ) {
-			$this->getMessageLog()->addError( wfMsgForContent( 'lingo-terminologypagenotlocal' , $page ) );
+			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal' , $page )->inContentLanguage()->text() );
 			return false;
 		}
 
@@ -47,7 +47,7 @@ class LingoBasicBackend extends LingoBackend {
 		} else {
 			$rev = $this->getRevision( $title );
 			if ( !$rev ) {
-				$this->getMessageLog()->addWarning( wfMsgForContent( 'lingo-noterminologypage', $page ) );
+				$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $page )->inContentLanguage()->text() );
 				return false;
 			}
 

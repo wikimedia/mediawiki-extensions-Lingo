@@ -104,7 +104,7 @@ class LingoElement {
 				} elseif ( $target->isKnown() ) {
 					$link->setAttribute( 'title', $target->getPrefixedText() );
 				} else {
-					$link->setAttribute( 'title', wfMsg( 'red-link-title', $target->getPrefixedText() ) );
+					$link->setAttribute( 'title', wfMessage( 'red-link-title', $target->getPrefixedText() )->text() );
 				}
 
 				$this->mFullDefinition = $link;

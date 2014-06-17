@@ -58,7 +58,7 @@ class LingoHooks {
 	 * Setting of description in extension credits has to be deferred to the
 	 * SpecialVersionExtensionTypes hook as it uses variable $wgexLingoPage (which
 	 * might be set only after inclusion of the extension in LocalSettings) and
-	 * function wfMsg not available before.
+	 * function wfMessage not available before.
 	 *
 	 * @param array $extensionTypes
 	 * @return Boolean Always true.
@@ -67,7 +67,7 @@ class LingoHooks {
 
 		global $wgExtensionCredits, $wgexLingoPage;
 		$wgExtensionCredits['parserhook']['lingo']['description'] =
-			wfMsg( 'lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMsgForContent( 'lingo-terminologypagename' ) );
+			wfMessage( 'lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
 
 		return true;
 	}
