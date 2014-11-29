@@ -23,6 +23,10 @@ if ( !defined( 'LINGO_VERSION' ) ) {
 class LingoParser {
 
 	private $mLingoTree = null;
+
+	/**
+	 * @var LingoBackend
+	 */
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
 
@@ -160,10 +164,10 @@ class LingoParser {
 
 		$action = $wgRequest->getVal( 'action', 'view' );
 
-		if ( $text == null ||
-			$text == '' ||
-			$action == 'edit' ||
-			$action == 'ajax' ||
+		if ( $text === null ||
+			$text === '' ||
+			$action === 'edit' ||
+			$action === 'ajax' ||
 			isset( $_POST['wpPreview'] )
 		) {
 
@@ -183,10 +187,8 @@ class LingoParser {
 		wfProfileIn( __METHOD__ . ' 1 loadHTML' );
 		wfSuppressWarnings();
 
-		$doc = new DOMDocument();
-		$doc->loadHTML(
-				'<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>'
-		);
+		$doc = new DOMDocument('1.0','utf-8');
+		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
 		wfRestoreWarnings();
 		wfProfileOut( __METHOD__ . ' 1 loadHTML' );
