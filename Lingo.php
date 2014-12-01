@@ -69,13 +69,13 @@ call_user_func( function () {
 
 	// register class files with the Autoloader
 	$autoloadClasses = array(
-			'LingoHooks'        => $dir . '/LingoHooks.php',
-			'LingoParser'       => $dir . '/LingoParser.php',
-			'LingoTree'         => $dir . '/LingoTree.php',
-			'LingoElement'      => $dir . '/LingoElement.php',
-			'LingoBackend'      => $dir . '/LingoBackend.php',
-			'LingoBasicBackend' => $dir . '/LingoBasicBackend.php',
-			'LingoMessageLog'   => $dir . '/LingoMessageLog.php',
+			'LingoHooks'        => $dir . '/src/LingoHooks.php',
+			'LingoParser'       => $dir . '/src/LingoParser.php',
+			'LingoTree'         => $dir . '/src/LingoTree.php',
+			'LingoElement'      => $dir . '/src/LingoElement.php',
+			'LingoBackend'      => $dir . '/src/LingoBackend.php',
+			'LingoBasicBackend' => $dir . '/src/LingoBasicBackend.php',
+			'LingoMessageLog'   => $dir . '/src/LingoMessageLog.php',
 	);
 
 	$GLOBALS[ 'wgAutoloadClasses' ] = array_merge( $GLOBALS[ 'wgAutoloadClasses' ], $autoloadClasses );
@@ -96,7 +96,7 @@ call_user_func( function () {
 			'ext.Lingo.Styles'  => array(
 					'localBasePath' => $dir,
 					'remoteExtPath' => 'Lingo',
-					'styles'        => 'skins/Lingo.css',
+					'styles'        => 'styles/Lingo.css',
 			),
 
 			'ext.Lingo.Scripts' => array(
@@ -110,7 +110,7 @@ call_user_func( function () {
 					'localBasePath' => $dir,
 					'remoteExtPath' => 'Lingo',
 					'scripts'       => 'libs/jquery.qtip.js',
-					'styles'        => 'skins/jquery.qtip.css',
+					'styles'        => 'styles/jquery.qtip.css',
 			),
 
 	);

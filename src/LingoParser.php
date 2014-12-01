@@ -326,9 +326,9 @@ class LingoParser {
 				$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
 			}
 		} else {
-			$parserOutput->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n", 'ext.Lingo.Styles' );
+			$parserOutput->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/styles/Lingo.css' />\n", 'ext.Lingo.Styles' );
 			if ( !$wgOut->isArticle() ) {
-				$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/skins/Lingo.css' />\n" );
+				$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/styles/Lingo.css' />\n" );
 			}
 		}
 	}
