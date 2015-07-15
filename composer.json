@@ -22,7 +22,7 @@
 		"wiki": "https://www.mediawiki.org/wiki/Extension:Lingo",
 		"forum": "https://www.mediawiki.org/wiki/Extension_talk:Lingo",
 		"source": "https://git.wikimedia.org/tree/mediawiki%2Fextensions%2FLingo",
-		"issues": "https://bugzilla.wikimedia.org/buglist.cgi?component=Lingo&product=MediaWiki%20extensions",
+		"issues": "https://phabricator.wikimedia.org/tag/mediawiki-extensions-lingo/",
 		"irc": "irc://irc.freenode.org/mediawiki"
 	},
 	"require"    : {
