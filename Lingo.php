@@ -96,6 +96,7 @@ call_user_func( function () {
 			'ext.Lingo.Styles'  => array(
 					'localBasePath' => $dir,
 					'remoteExtPath' => 'Lingo',
+					'position'	=> 'top',
 					'styles'        => 'styles/Lingo.css',
 			),
 
