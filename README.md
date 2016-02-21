@@ -12,16 +12,16 @@ See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 ## Requirements
 
 - PHP 5.3.2 or later
-- MediaWiki 1.20 or later
+- MediaWiki 1.25 or later
 
 ## Installation
 
-The recommended way to install this skin is by using [Composer][composer]. Just add the following to the MediaWiki `composer.json` file and run the `php composer.phar install/update` command.
+The recommended way to install this extension is by using [Composer][composer]. Just add the following to the MediaWiki `composer.json` file and run the `php composer.phar install/update` command.
 
 ```json
 {
 	"require": {
-		"mediawiki/lingo": "~1.2"
+		"mediawiki/lingo": "~2.0"
 	}
 }
 ```

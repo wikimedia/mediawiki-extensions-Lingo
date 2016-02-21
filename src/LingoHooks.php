@@ -7,13 +7,10 @@
  * @file
  * @ingroup Lingo
  */
-if ( !defined( 'LINGO_VERSION' ) ) {
-	die( 'This file is part of the Lingo extension, it is not a valid entry point.' );
-}
 
 /**
  * The LingoHooks class.
- * 
+ *
  * It contains the hook handlers of the extension
  *
  * @ingroup Lingo
@@ -22,10 +19,10 @@ class LingoHooks {
 
 	/**
 	 * Hooks into ParserAfterParse.
-	 * 
+	 *
 	 * @param Parser $parser
 	 * @param String $text
-	 * @return Boolean 
+	 * @return Boolean
 	 */
 	static function parse( &$parser, &$text ) {
 
@@ -53,26 +50,6 @@ class LingoHooks {
 	}
 
 	/**
-	 * Deferred setting of description in extension credits
-	 *
-	 * Setting of description in extension credits has to be deferred to the
-	 * SpecialVersionExtensionTypes hook as it uses variable $wgexLingoPage (which
-	 * might be set only after inclusion of the extension in LocalSettings) and
-	 * function wfMessage not available before.
-	 *
-	 * @param array $extensionTypes
-	 * @return Boolean Always true.
-	 */
-	static function setCredits( &$extensionTypes ) {
-
-		global $wgExtensionCredits, $wgexLingoPage;
-		$wgExtensionCredits['parserhook']['lingo']['description'] =
-			wfMessage( 'lingo-desc', $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
-
-		return true;
-	}
-
-	/**
 	 * Creates tag hook(s)
 	 */
 	public static function registerTags(Parser $parser) {
@@ -92,6 +69,23 @@ class LingoHooks {
 	public static function noglossaryTagRenderer( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$output = $parser->recursiveTagParse( $input, $frame );
 		return '<span class="noglossary">'.$output.'</span>';
+	}
+
+	/**
+	 * Deferred settings
+	 * - registration of _NOGLOSSARY_ magic word
+	 * - extension description shown on Special:Version
+	 *
+	 */
+	public static function initExtension() {
+		MagicWord::$mDoubleUnderscoreIDs[ ] = 'noglossary';
+
+		foreach ( $GLOBALS['wgExtensionCredits']['parserhook'] as $index => $description ) {
+			if ($GLOBALS['wgExtensionCredits']['parserhook'][$index]['name'] === 'Lingo') {
+				$GLOBALS['wgExtensionCredits']['parserhook'][$index]['description'] =
+					wfMessage( 'lingo-desc', $GLOBALS['wgexLingoPage'] ? $GLOBALS['wgexLingoPage'] : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
+			}
+		}
 	}
 }
 

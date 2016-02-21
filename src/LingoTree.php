@@ -8,9 +8,6 @@
  * @file
  * @ingroup Lingo
  */
-if ( !defined( 'LINGO_VERSION' ) ) {
-	die( 'This file is part of the Lingo extension, it is not a valid entry point.' );
-}
 
 /**
  * The LingoTree class.

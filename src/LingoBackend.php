@@ -7,9 +7,6 @@
  * @file
  * @ingroup Lingo
  */
-if ( !defined( 'LINGO_VERSION' ) ) {
-	die( 'This file is part of the Lingo extension, it is not a valid entry point.' );
-}
 
 /**
  * The LingoBackend class.
@@ -35,16 +32,16 @@ abstract class LingoBackend {
 
 	/**
 	 * This function returns true if the backend is cache-enabled.
-	 * 
+	 *
 	 * Actual caching is done by the parser, but to be cache-enabled the backend
-	 * has to call LingoParser::purgeCache when necessary. 
-	 * 
-	 * @return boolean 
+	 * has to call LingoParser::purgeCache when necessary.
+	 *
+	 * @return boolean
 	 */
 	public function useCache() {
 		return false;
 	}
-	
+
 	/**
 	 * This function returns the next element. The element is an array of four
 	 * strings: Term, Definition, Link, Source. If there is no next element the

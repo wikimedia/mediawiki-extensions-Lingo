@@ -8,9 +8,6 @@
  * @file
  * @ingroup Lingo
  */
-if ( !defined( 'LINGO_VERSION' ) ) {
-	die( 'This file is part of the Lingo extension, it is not a valid entry point.' );
-}
 
 /**
  * This class holds messages (errors, warnings, notices) for Lingo
@@ -78,7 +75,7 @@ class LingoMessageLog {
 					$header . "\n" .
 					$ret
 			);
-			
+
 			$ret = $parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) );
 		} else {
 			$ret = null;
