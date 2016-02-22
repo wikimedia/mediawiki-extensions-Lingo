@@ -57,7 +57,7 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"LingoMagic": "Lingo.i18n.magic.php"
+		"LingoMagic": "src/Lingo.i18n.magic.php"
 	},
 	"AutoloadClasses": {
 		"LingoHooks": "/src/LingoHooks.php",
