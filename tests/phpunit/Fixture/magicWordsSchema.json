@@ -1,0 +1,30 @@
+{
+	"title": "Magic Words Schema",
+	"$schema": "http://json-schema.org/schema#",
+
+	"definitions": {
+		"magic word": {
+			"type": "array",
+			"items": [
+				{ "type": "number" },
+				{ "type": "string" }
+			],
+			"additionalItems": { "type": "string" }
+		},
+
+		"set of magic words": {
+			"type": "object",
+			"properties": {
+				"noglossary": { "$ref": "#/definitions/magic word" }
+			},
+			"additionalProperties": false
+		}
+	},
+
+	"type": "object",
+	"properties": {
+		"en": { "$ref": "#/definitions/set of magic words" }
+	},
+	"additionalProperties": { "$ref": "#/definitions/set of magic words" },
+	"required": "en"
+}

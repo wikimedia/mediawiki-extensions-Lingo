@@ -27,7 +27,8 @@
 	},
 	"require"    : {
 		"php"    : ">=5.3.2",
-		"ext-dom": "*"
+		"ext-dom": "*",
+		"justinrainbow/json-schema": "~1.0"
 	},
 	"suggest": {
 		"mediawiki/semantic-glossary": "Alternative back-end that retrieves terms and definitions from a Semantic MediaWiki store"
