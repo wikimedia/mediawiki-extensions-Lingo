@@ -60,7 +60,7 @@ class LingoBasicBackend extends LingoBackend {
 		$title = Title::newFromText( $page );
 		if ( $title->getInterwiki() ) {
 			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $page )->inContentLanguage()->text() );
-			return false;
+			return;
 		}
 
 		// FIXME: This is a hack special-casing the submitting of the terminology

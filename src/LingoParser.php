@@ -64,18 +64,6 @@ class LingoParser {
 	}
 
 	/**
-	 * @param Parser $parser
-	 * @return string
-	 */
-	private static function uniqPrefix( Parser &$parser ) {
-		if ( defined( "Parser::MARKER_PREFIX" ) ) {
-			return Parser::MARKER_PREFIX;
-		} else {
-			return $parser->uniqPrefix();
-		}
-	}
-
-	/**
 	 *
 	 * @param Parser $parser
 	 * @param string $text
@@ -88,7 +76,7 @@ class LingoParser {
 
 			// The RegEx to split a chunk of text into words
 			// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
-			self::$regex = '/' . preg_quote( self::uniqPrefix( $parser ), '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
+			self::$regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 
 		self::$parserSingleton->realParse( $parser, $text );
