@@ -96,6 +96,8 @@ cd extensions/Lingo
 if [ "$MW" == "master" ]
 then
 	php ../../tests/phpunit/phpunit.php --group extensions-lingo -c phpunit.xml.dist --coverage-clover=coverage.clover
+
+	set +e
 	uploadCoverageReport
 else
 	php ../../tests/phpunit/phpunit.php --group extensions-lingo -c phpunit.xml.dist
