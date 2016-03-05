@@ -60,6 +60,7 @@ function installExtensionViaComposerOnMediaWikiRoot {
 	fi
 
 	composer remove --dev --update-with-dependencies 'phpunit/phpunit'
+	composer require 'composer/installer=>1.0.12'
 	composer require 'phpunit/phpunit=~4.0' 'mediawiki/lingo=@dev' --prefer-source
 
 	cd extensions/Lingo
