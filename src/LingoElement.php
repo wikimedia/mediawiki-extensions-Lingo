@@ -49,6 +49,11 @@ class LingoElement {
 
 	static private $mLinkTemplate = null;
 
+	/**
+	 * LingoElement constructor.
+	 * @param $term
+	 * @param $definition
+	 */
 	public function __construct( &$term, &$definition = null ) {
 
 		$this->mTerm = $term;
@@ -58,19 +63,24 @@ class LingoElement {
 		}
 	}
 
+	/**
+	 * @param $definition
+	 */
 	public function addDefinition( &$definition ) {
 		$this->mDefinitions[] = array_pad( $definition, self::ELEMENT_FIELDCOUNT, null );
 	}
 
+	/**
+	 * @param DOMDocument $doc
+	 * @return DOMNode|DOMText
+	 */
 	public function getFullDefinition( DOMDocument &$doc ) {
 
 		global $wgexLingoDisplayOnce;
 
-		wfProfileIn( __METHOD__ );
-
 		// return textnode if
 		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
-			return $doc->createTextNode($this->mTerm);
+			return $doc->createTextNode( $this->mTerm );
 		}
 
 		// only create if not yet created
@@ -78,8 +88,9 @@ class LingoElement {
 
 			// if there is only one link available, just insert the link
 			if ( count( $this->mDefinitions ) === 1
-				&& !is_string( $this->mDefinitions[0][self::ELEMENT_DEFINITION] )
-				&& is_string( $this->mDefinitions[0][self::ELEMENT_LINK] ) ) {
+				&& !is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_DEFINITION ] )
+				&& is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )
+			) {
 
 				$this->mFullDefinition = $this->getFullDefinitionAsLink( $doc );
 
@@ -91,39 +102,64 @@ class LingoElement {
 			$this->mHasBeenDisplayed = true;
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $this->mFullDefinition->cloneNode( true );
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getCurrentKey() {
 		return key( $this->mDefinitions );
 	}
 
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
 	public function getTerm( $key ) {
-		return $this->mDefinitions[$key][self::ELEMENT_TERM];
+		return $this->mDefinitions[ $key ][ self::ELEMENT_TERM ];
 	}
 
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
 	public function getSource( &$key ) {
-		return $this->mDefinitions[$key][self::ELEMENT_SOURCE];
+		return $this->mDefinitions[ $key ][ self::ELEMENT_SOURCE ];
 	}
 
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
 	public function getDefinition( &$key ) {
-		return $this->mDefinitions[$key][self::ELEMENT_DEFINITION];
+		return $this->mDefinitions[ $key ][ self::ELEMENT_DEFINITION ];
 	}
 
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
 	public function getLink( &$key ) {
-		return $this->mDefinitions[$key][self::ELEMENT_LINK];
+		return $this->mDefinitions[ $key ][ self::ELEMENT_LINK ];
 	}
 
+	/**
+	 * @param $key
+	 * @return mixed
+	 */
 	public function getStyle( &$key ) {
-		return $this->mDefinitions[$key][self::ELEMENT_STYLE];
+		return $this->mDefinitions[ $key ][ self::ELEMENT_STYLE ];
 	}
 
 	public function next() {
 		next( $this->mDefinitions );
 	}
 
+	/**
+	 * @param DOMDocument $doc
+	 * @return DOMNode
+	 */
 	private function getLinkTemplate( DOMDocument &$doc ) {
 		// create template if it does not yet exist
 		if ( !self::$mLinkTemplate || ( self::$mLinkTemplate->ownerDocument !== $doc ) ) {

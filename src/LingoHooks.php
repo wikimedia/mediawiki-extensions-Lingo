@@ -42,18 +42,18 @@ class LingoHooks {
 	 * @param String $text
 	 * @return Boolean
 	 */
-	static function parse( &$parser, &$text ) {
+	public static function parse( &$parser, &$text ) {
 
 		global $wgexLingoUseNamespaces;
 
 		$title = $parser->getTitle();
 
 		// parse if
-		if ( !isset( $parser->mDoubleUnderscores['noglossary'] ) && // __NOGLOSSARY__ not present and
+		if ( !isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) && // __NOGLOSSARY__ not present and
 			(
-			!$title || // title not set or
-			!isset( $wgexLingoUseNamespaces[ $title->getNamespace() ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
-			$wgexLingoUseNamespaces[$title->getNamespace()] // namespace explicitly allowed
+				!$title || // title not set or
+				!isset( $wgexLingoUseNamespaces[ $title->getNamespace() ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
+				$wgexLingoUseNamespaces[ $title->getNamespace() ] // namespace explicitly allowed
 			)
 		) {
 
@@ -70,8 +70,8 @@ class LingoHooks {
 	/**
 	 * Creates tag hook(s)
 	 */
-	public static function registerTags(Parser $parser) {
-		$parser->setHook( 'noglossary',  'LingoHooks::noglossaryTagRenderer');
+	public static function registerTags( Parser $parser ) {
+		$parser->setHook( 'noglossary', 'LingoHooks::noglossaryTagRenderer' );
 		return true;
 	}
 
@@ -86,22 +86,21 @@ class LingoHooks {
 	 */
 	public static function noglossaryTagRenderer( $input, array $args, Parser $parser, PPFrame $frame ) {
 		$output = $parser->recursiveTagParse( $input, $frame );
-		return '<span class="noglossary">'.$output.'</span>';
+		return '<span class="noglossary">' . $output . '</span>';
 	}
 
 	/**
 	 * Deferred settings
 	 * - registration of _NOGLOSSARY_ magic word
 	 * - extension description shown on Special:Version
-	 *
 	 */
 	public static function initExtension() {
-		MagicWord::$mDoubleUnderscoreIDs[ ] = 'noglossary';
+		MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';
 
-		foreach ( $GLOBALS['wgExtensionCredits']['parserhook'] as $index => $description ) {
-			if ($GLOBALS['wgExtensionCredits']['parserhook'][$index]['name'] === 'Lingo') {
-				$GLOBALS['wgExtensionCredits']['parserhook'][$index]['description'] =
-					wfMessage( 'lingo-desc', $GLOBALS['wgexLingoPage'] ? $GLOBALS['wgexLingoPage'] : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
+		foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
+			if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
+				$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] =
+					wfMessage( 'lingo-desc', $GLOBALS[ 'wgexLingoPage' ] ? $GLOBALS[ 'wgexLingoPage' ] : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
 			}
 		}
 	}

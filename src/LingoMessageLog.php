@@ -43,38 +43,57 @@ class LingoMessageLog {
 	const MESSAGE_WARNING = 2;
 	const MESSAGE_NOTICE = 3;
 
-	function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
-		$this->mMessages[] = array($message, $severity);
+	/**
+	 * @param $message
+	 * @param int $severity
+	 */
+	public function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
+		$this->mMessages[] = array( $message, $severity );
 
 		// log errors and warnings in debug log
 		if ( $severity == self::MESSAGE_WARNING ||
-			$severity == self::MESSAGE_ERROR ) {
+			$severity == self::MESSAGE_ERROR
+		) {
 			wfDebug( $message );
 		}
 	}
 
-	function addError( $message ) {
-		$this->mMessages[] = array($message, self::MESSAGE_ERROR);
+	/**
+	 * @param $message
+	 */
+	public function addError( $message ) {
+		$this->mMessages[] = array( $message, self::MESSAGE_ERROR );
 		wfDebug( "Error: $message\n" );
 	}
 
-	function addWarning( $message ) {
-		$this->mMessages[] = array($message, self::MESSAGE_WARNING);
+	/**
+	 * @param $message
+	 */
+	public function addWarning( $message ) {
+		$this->mMessages[] = array( $message, self::MESSAGE_WARNING );
 		wfDebug( "Warning: $message\n" );
 	}
 
-	function addNotice( $message ) {
-		$this->mMessages[] = array($message, self::MESSAGE_NOTICE);
+	/**
+	 * @param $message
+	 */
+	public function addNotice( $message ) {
+		$this->mMessages[] = array( $message, self::MESSAGE_NOTICE );
 	}
 
-	function getMessagesFormatted( $severity = self::MESSAGE_WARNING, $header = null ) {
+	/**
+	 * @param int $severity
+	 * @param null $header
+	 * @return null|string
+	 */
+	public function getMessagesFormatted( $severity = self::MESSAGE_WARNING, $header = null ) {
 		global $wgTitle, $wgUser;
 
 		$ret = '';
 
 		foreach ( $this->mMessages as $message ) {
-			if ( $message[1] <= $severity ) {
-				$ret .= '* ' . $message[0] . "\n";
+			if ( $message[ 1 ] <= $severity ) {
+				$ret .= '* ' . $message[ 0 ] . "\n";
 			}
 		}
 
@@ -86,16 +105,19 @@ class LingoMessageLog {
 			if ( $header == null ) {
 				$header = '';
 			} elseif ( $header != '' ) {
-				$header = Html::rawElement( 'div', array('class' => 'heading'), $header );
+				$header = Html::rawElement( 'div', array( 'class' => 'heading' ), $header );
 			}
 
-			$ret = Html::rawElement( 'div', array('class' => 'messages'),
-					$header . "\n" .
-					$ret
+			$ret = Html::rawElement( 'div', array( 'class' => 'messages' ),
+				$header . "\n" .
+				$ret
 			);
 
+			// FIXME: Variable 'parser' might have not been defined
+			// FIXME: $parser->parse returns ParserOutput, not String
 			$ret = $parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) );
 		} else {
+			// FIXME: Should probably return '' (and throw an error if necessary)
 			$ret = null;
 		}
 

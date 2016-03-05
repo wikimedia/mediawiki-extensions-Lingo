@@ -48,14 +48,22 @@ class LingoParser {
 	// The RegEx to split a chunk of text into words
 	public static $regex = null;
 
+	/**
+	 * LingoParser constructor.
+	 * @param LingoMessageLog|null $messages
+	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
 		global $wgexLingoBackend;
 
 		$this->mLingoBackend = new $wgexLingoBackend( $messages );
 	}
 
-	private static function uniqPrefix( Parser &$parser) {
-		if ( defined("Parser::MARKER_PREFIX" )) {
+	/**
+	 * @param Parser $parser
+	 * @return string
+	 */
+	private static function uniqPrefix( Parser &$parser ) {
+		if ( defined( "Parser::MARKER_PREFIX" ) ) {
 			return Parser::MARKER_PREFIX;
 		} else {
 			return $parser->uniqPrefix();
@@ -68,19 +76,17 @@ class LingoParser {
 	 * @param string $text
 	 * @return Boolean
 	 */
-	static function parse( Parser &$parser, &$text ) {
-		wfProfileIn( __METHOD__ );
+	public static function parse( Parser &$parser, &$text ) {
+
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
 
 			// The RegEx to split a chunk of text into words
 			// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
-			self::$regex = '/' . preg_quote( self::uniqPrefix($parser), '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
+			self::$regex = '/' . preg_quote( self::uniqPrefix( $parser ), '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 
 		self::$parserSingleton->realParse( $parser, $text );
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
@@ -98,15 +104,12 @@ class LingoParser {
 	 *
 	 * @return Array an array mapping terms (keys) to descriptions (values)
 	 */
-	function getLingoArray() {
-		wfProfileIn( __METHOD__ );
+	public function getLingoArray() {
 
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
 			$this->buildLingo();
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $this->mLingoTree->getTermList();
 	}
@@ -116,8 +119,7 @@ class LingoParser {
 	 *
 	 * @return LingoTree a LingoTree mapping terms (keys) to descriptions (values)
 	 */
-	function getLingoTree() {
-		wfProfileIn( __METHOD__ );
+	public function getLingoTree() {
 
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
@@ -127,7 +129,7 @@ class LingoParser {
 
 				// Try cache first
 				global $wgexLingoCacheType;
-				$cache = ($wgexLingoCacheType !== null)?  wfGetCache( $wgexLingoCacheType ):wfGetMainCache();
+				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 				$cachekey = wfMemcKey( 'ext', 'lingo', 'lingotree' );
 				$cachedLingoTree = $cache->get( $cachekey );
 
@@ -151,23 +153,19 @@ class LingoParser {
 
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $this->mLingoTree;
 	}
 
 	protected function &buildLingo() {
-		wfProfileIn( __METHOD__ );
 
 		$lingoTree = new LingoTree();
 		$backend = &$this->mLingoBackend;
 
 		// assemble the result array
 		while ( $elementData = $backend->next() ) {
-			$lingoTree->addTerm( $elementData[LingoElement::ELEMENT_TERM], $elementData );
+			$lingoTree->addTerm( $elementData[ LingoElement::ELEMENT_TERM ], $elementData );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $lingoTree;
 	}
 
@@ -183,18 +181,15 @@ class LingoParser {
 	protected function realParse( &$parser, &$text ) {
 		global $wgRequest;
 
-		wfProfileIn( __METHOD__ );
-
 		$action = $wgRequest->getVal( 'action', 'view' );
 
 		if ( $text === null ||
 			$text === '' ||
 			$action === 'edit' ||
 			$action === 'ajax' ||
-			isset( $_POST['wpPreview'] )
+			isset( $_POST[ 'wpPreview' ] )
 		) {
 
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -202,27 +197,22 @@ class LingoParser {
 		$glossary = $this->getLingoTree();
 
 		if ( $glossary == null ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		// Parse HTML from page
-		wfProfileIn( __METHOD__ . ' 1 loadHTML' );
 		wfSuppressWarnings();
 
-		$doc = new DOMDocument('1.0','utf-8');
+		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
 		wfRestoreWarnings();
-		wfProfileOut( __METHOD__ . ' 1 loadHTML' );
 
-		wfProfileIn( __METHOD__ . ' 2 xpath' );
 		// Find all text in HTML.
 		$xpath = new DOMXpath( $doc );
 		$elements = $xpath->query(
-				"//*[not(ancestor-or-self::*[@class='noglossary'] or ancestor-or-self::a)][text()!=' ']/text()"
+			"//*[not(ancestor-or-self::*[@class='noglossary'] or ancestor-or-self::a)][text()!=' ']/text()"
 		);
-		wfProfileOut( __METHOD__ . ' 2 xpath' );
 
 		// Iterate all HTML text matches
 		$nb = $elements->length;
@@ -235,7 +225,6 @@ class LingoParser {
 				continue;
 			}
 
-			wfProfileIn( __METHOD__ . ' 3 lexer' );
 			$matches = array();
 			preg_match_all(
 				self::$regex,
@@ -243,32 +232,28 @@ class LingoParser {
 				$matches,
 				PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER
 			);
-			wfProfileOut( __METHOD__ . ' 3 lexer' );
 
-			if ( count( $matches ) == 0 || count( $matches[0] ) == 0 ) {
+			if ( count( $matches ) == 0 || count( $matches[ 0 ] ) == 0 ) {
 				continue;
 			}
 
-			$lexemes = &$matches[0];
+			$lexemes = &$matches[ 0 ];
 			$countLexemes = count( $lexemes );
 			$parent = &$el->parentNode;
 			$index = 0;
 			$changedElem = false;
 
 			while ( $index < $countLexemes ) {
-				wfProfileIn( __METHOD__ . ' 4 findNextTerm' );
 				list( $skipped, $used, $definition ) =
 					$glossary->findNextTerm( $lexemes, $index, $countLexemes );
-				wfProfileOut( __METHOD__ . ' 4 findNextTerm' );
 
-				wfProfileIn( __METHOD__ . ' 5 insert' );
 				if ( $used > 0 ) { // found a term
 					if ( $skipped > 0 ) { // skipped some text, insert it as is
 						$parent->insertBefore(
 							$doc->createTextNode(
 								substr( $el->nodeValue,
-									$currLexIndex = $lexemes[$index][1],
-									$lexemes[$index + $skipped][1] - $currLexIndex )
+									$currLexIndex = $lexemes[ $index ][ 1 ],
+									$lexemes[ $index + $skipped ][ 1 ] - $currLexIndex )
 							),
 							$el
 						);
@@ -285,18 +270,16 @@ class LingoParser {
 					if ( $changedElem ) {
 						$parent->insertBefore(
 							$doc->createTextNode(
-								substr( $el->nodeValue, $lexemes[$index][1] )
+								substr( $el->nodeValue, $lexemes[ $index ][ 1 ] )
 							),
 							$el
 						);
 					} else {
-						wfProfileOut( __METHOD__ . ' 5 insert' );
 						// In principle superfluous, the loop would run out
 						// anyway. Might save a bit of time.
 						break;
 					}
 				}
-				wfProfileOut( __METHOD__ . ' 5 insert' );
 
 				$index += $used + $skipped;
 			}
@@ -314,11 +297,12 @@ class LingoParser {
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return true;
 	}
 
+	/**
+	 * @param $parser
+	 */
 	protected function loadModules( &$parser ) {
 		global $wgOut, $wgScriptPath;
 
@@ -343,7 +327,7 @@ class LingoParser {
 		}
 
 		// load styles
-		if ( method_exists( $parserOutput, 'addModuleStyles') ) {
+		if ( method_exists( $parserOutput, 'addModuleStyles' ) ) {
 			$parserOutput->addModuleStyles( 'ext.Lingo.Styles' );
 			if ( !$wgOut->isArticle() ) {
 				$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
@@ -359,10 +343,10 @@ class LingoParser {
 	/**
 	 * Purges the lingo tree from the cache.
 	 */
-	public static function purgeCache () {
+	public static function purgeCache() {
 
 		global $wgexLingoCacheType;
-		$cache = ($wgexLingoCacheType !== null)?  wfGetCache( $wgexLingoCacheType ):wfGetMainCache();
+		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 		$cache->delete( wfMemcKey( 'ext', 'lingo', 'lingotree' ) );
 
 	}

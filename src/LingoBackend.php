@@ -35,6 +35,10 @@ abstract class LingoBackend {
 
 	protected $mMessageLog;
 
+	/**
+	 * LingoBackend constructor.
+	 * @param LingoMessageLog|null $messages
+	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
 
 		if ( !$messages ) {
@@ -44,6 +48,9 @@ abstract class LingoBackend {
 		}
 	}
 
+	/**
+	 * @return LingoMessageLog
+	 */
 	public function getMessageLog() {
 		return $this->mMessageLog;
 	}
@@ -65,7 +72,7 @@ abstract class LingoBackend {
 	 * strings: Term, Definition, Link, Source. If there is no next element the
 	 * function returns null.
 	 *
-	 * @return the next element or null
+	 * @return LingoElement | null
 	 */
 	abstract public function next();
 }

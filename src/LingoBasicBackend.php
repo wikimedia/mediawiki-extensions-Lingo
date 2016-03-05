@@ -35,6 +35,10 @@ class LingoBasicBackend extends LingoBackend {
 
 	protected $mArticleLines = array();
 
+	/**
+	 * LingoBasicBackend constructor.
+	 * @param LingoMessageLog|null $messages
+	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
 
 		global $wgexLingoPage, $wgRequest;
@@ -46,7 +50,7 @@ class LingoBasicBackend extends LingoBackend {
 		// Get Terminology page
 		$title = Title::newFromText( $page );
 		if ( $title->getInterwiki() ) {
-			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal' , $page )->inContentLanguage()->text() );
+			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $page )->inContentLanguage()->text() );
 			return false;
 		}
 
@@ -55,7 +59,8 @@ class LingoBasicBackend extends LingoBackend {
 		// here, i.e. $rev->getText() would return outdated Test.
 		// This hack takes the text directly out of the data from the web request.
 		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
-				&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID() ) {
+			&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID()
+		) {
 
 			$content = $wgRequest->getVal( 'wpTextbox1' );
 
@@ -70,12 +75,12 @@ class LingoBasicBackend extends LingoBackend {
 
 		}
 
-		$parser  = new Parser;
+		$parser = new Parser;
 		// expand templates and variables in the text, producing valid, static wikitext
 		// have to use a new anonymous user to avoid any leakage as Lingo is caching only one user-independant glossary
 		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
 
-		$this->mArticleLines = array_reverse(explode( "\n", $content ));
+		$this->mArticleLines = array_reverse( explode( "\n", $content ) );
 	}
 
 	/**
@@ -84,7 +89,7 @@ class LingoBasicBackend extends LingoBackend {
 	 * and Source are set to null. If there is no next element the function
 	 * returns null.
 	 *
-	 * @return Array the next element or null
+	 * @return Array | null
 	 */
 	public function next() {
 
@@ -97,36 +102,36 @@ class LingoBasicBackend extends LingoBackend {
 		// find next valid line (yes, the assignation is intended)
 		while ( ( count( $ret ) == 0 ) && ( $entry = each( $this->mArticleLines ) ) ) {
 
-			if ( empty( $entry[1] ) || ($entry[1][0] !== ';' && $entry[1][0] !== ':')) {
+			if ( empty( $entry[ 1 ] ) || ( $entry[ 1 ][ 0 ] !== ';' && $entry[ 1 ][ 0 ] !== ':' ) ) {
 				continue;
 			}
 
-			$chunks = explode( ':', $entry[1], 2 );
+			$chunks = explode( ':', $entry[ 1 ], 2 );
 
 			// found a new definition?
-			if ( count ( $chunks ) == 2 ) {
+			if ( count( $chunks ) == 2 ) {
 
 				// wipe the data if its a totaly new term definition
-				if ( !empty( $term ) && count( $definitions ) > 0) {
+				if ( !empty( $term ) && count( $definitions ) > 0 ) {
 					$definitions = array();
 					$term = null;
 				}
 
-				$definitions[] = trim( $chunks[1] );
+				$definitions[] = trim( $chunks[ 1 ] );
 			}
 
 			// found a new term?
-			if (count( $chunks ) >= 1 && strlen( $chunks[0] ) >= 1 ) {
-				$term = trim( substr( $chunks[0], 1 ) );
+			if ( count( $chunks ) >= 1 && strlen( $chunks[ 0 ] ) >= 1 ) {
+				$term = trim( substr( $chunks[ 0 ], 1 ) );
 			}
 
 			if ( $term !== null ) {
 				foreach ( $definitions as $definition ) {
 					$ret[] = array(
-						LingoElement::ELEMENT_TERM => $term,
+						LingoElement::ELEMENT_TERM       => $term,
 						LingoElement::ELEMENT_DEFINITION => $definition,
-						LingoElement::ELEMENT_LINK => null,
-						LingoElement::ELEMENT_SOURCE => null
+						LingoElement::ELEMENT_LINK       => null,
+						LingoElement::ELEMENT_SOURCE     => null
 					);
 				}
 			}
@@ -134,7 +139,7 @@ class LingoBasicBackend extends LingoBackend {
 
 		wfProfileOut( __METHOD__ );
 
-		return array_pop($ret);
+		return array_pop( $ret );
 	}
 
 	/**
@@ -143,8 +148,7 @@ class LingoBasicBackend extends LingoBackend {
 	 * @param Title $title
 	 * @return Revision
 	 */
-	public function getRevision( $title )
-	{
+	public function getRevision( $title ) {
 		global $wgexLingoEnableApprovedRevs;
 
 		if ( $wgexLingoEnableApprovedRevs ) {
