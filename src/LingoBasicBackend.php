@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoBackend class
+ * File holding the Extensions\Lingo\LingoBackend class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -25,9 +25,18 @@
  * @file
  * @ingroup Lingo
  */
+namespace Extensions\Lingo;
+
+use ApprovedRevs;
+use Page;
+use Parser;
+use ParserOptions;
+use Revision;
+use Title;
+use User;
 
 /**
- * The LingoBasicBackend class.
+ * The Extensions\Lingo\LingoBasicBackend class.
  *
  * @ingroup Lingo
  */
@@ -36,7 +45,7 @@ class LingoBasicBackend extends LingoBackend {
 	protected $mArticleLines = array();
 
 	/**
-	 * LingoBasicBackend constructor.
+	 * Extensions\Lingo\LingoBasicBackend constructor.
 	 * @param LingoMessageLog|null $messages
 	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
@@ -85,7 +94,7 @@ class LingoBasicBackend extends LingoBackend {
 
 	/**
 	 * This function returns the next element. The element is an array of four
-	 * strings: Term, Definition, Link, Source. For the LingoBasicBackend Link
+	 * strings: Term, Definition, Link, Source. For the Extensions\Lingo\LingoBasicBackend Link
 	 * and Source are set to null. If there is no next element the function
 	 * returns null.
 	 *
@@ -187,7 +196,7 @@ class LingoBasicBackend extends LingoBackend {
 	 * The basic backend is cache-enabled so this function returns true.
 	 *
 	 * Actual caching is done by the parser, the backend just calls
-	 * LingoParser::purgeCache when necessary.
+	 * Extensions\Lingo\LingoParser::purgeCache when necessary.
 	 *
 	 * @return boolean
 	 */

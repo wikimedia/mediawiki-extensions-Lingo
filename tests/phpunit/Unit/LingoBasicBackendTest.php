@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoBasicBackend
+ * @coversDefaultClass \Extensions\Lingo\LingoBasicBackend
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -46,8 +46,8 @@ class LingoBasicBackendTest extends LingoBackendTest {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\LingoBasicBackend',
-			new \LingoBasicBackend()
+			'\Extensions\Lingo\LingoBasicBackend',
+			new \Extensions\Lingo\LingoBasicBackend()
 		);
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoParser class.
+ * File holding the Extensions\Lingo\LingoParser class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,6 +26,11 @@
  * @file
  * @ingroup Lingo
  */
+namespace Extensions\Lingo;
+
+use DOMDocument;
+use DOMXPath;
+use Parser;
 
 /**
  * This class parses the given text and enriches it with definitions for defined
@@ -49,7 +54,7 @@ class LingoParser {
 	public static $regex = null;
 
 	/**
-	 * LingoParser constructor.
+	 * Extensions\Lingo\LingoParser constructor.
 	 * @param LingoMessageLog|null $messages
 	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
@@ -115,9 +120,9 @@ class LingoParser {
 	}
 
 	/**
-	 * Returns the list of terms in the glossary as a LingoTree
+	 * Returns the list of terms in the glossary as a Extensions\Lingo\LingoTree
 	 *
-	 * @return LingoTree a LingoTree mapping terms (keys) to descriptions (values)
+	 * @return LingoTree a Extensions\Lingo\LingoTree mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoTree() {
 
@@ -156,6 +161,9 @@ class LingoParser {
 		return $this->mLingoTree;
 	}
 
+	/**
+	 * @return LingoTree
+	 */
 	protected function &buildLingo() {
 
 		$lingoTree = new LingoTree();

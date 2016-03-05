@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoParser
+ * @coversDefaultClass \Extensions\Lingo\LingoParser
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -46,8 +46,8 @@ class LingoParserTest extends \PHPUnit_Framework_TestCase {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\LingoParser',
-			new \LingoParser()
+			'\Extensions\Lingo\LingoParser',
+			new \Extensions\Lingo\LingoParser()
 		);
 	}
 

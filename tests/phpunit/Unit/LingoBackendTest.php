@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoBackend
+ * @coversDefaultClass \Extensions\Lingo\LingoBackend
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -42,7 +42,7 @@ class LingoBackendTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUseCache() {
 
-		$stub = $this->getMockForAbstractClass( '\LingoBackend' );
+		$stub = $this->getMockForAbstractClass( '\Extensions\Lingo\LingoBackend' );
 
 		$this->assertFalse( $stub->useCache() );
 	}

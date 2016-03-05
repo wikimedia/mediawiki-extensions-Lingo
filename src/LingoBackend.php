@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoBackend class
+ * File holding the Extensions\Lingo\LingoBackend class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,8 +26,10 @@
  * @ingroup Lingo
  */
 
+namespace Extensions\Lingo;
+
 /**
- * The LingoBackend class.
+ * The Extensions\Lingo\LingoBackend class.
  *
  * @ingroup Lingo
  */
@@ -36,7 +38,7 @@ abstract class LingoBackend {
 	protected $mMessageLog;
 
 	/**
-	 * LingoBackend constructor.
+	 * Extensions\Lingo\LingoBackend constructor.
 	 * @param LingoMessageLog|null $messages
 	 */
 	public function __construct( LingoMessageLog &$messages = null ) {
@@ -59,7 +61,7 @@ abstract class LingoBackend {
 	 * This function returns true if the backend is cache-enabled.
 	 *
 	 * Actual caching is done by the parser, but to be cache-enabled the backend
-	 * has to call LingoParser::purgeCache when necessary.
+	 * has to call Extensions\Lingo\LingoParser::purgeCache when necessary.
 	 *
 	 * @return boolean
 	 */

@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoMessageLog
+ * @coversDefaultClass \Extensions\Lingo\LingoMessageLog
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -45,8 +45,8 @@ class LingoMessageLogTest extends \PHPUnit_Framework_TestCase {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\LingoMessageLog',
-			new \LingoMessageLog()
+			'\Extensions\Lingo\LingoMessageLog',
+			new \Extensions\Lingo\LingoMessageLog()
 		);
 	}
 

@@ -44,7 +44,7 @@
 	},
 	"config": {
 		"_prefix": "wgex",
-		"LingoBackend": "LingoBasicBackend",
+		"LingoBackend": "Extensions\\Lingo\\LingoBasicBackend",
 		"LingoPage": null,
 		"LingoDisplayOnce": false,
 		"LingoCacheType": null,
@@ -60,30 +60,30 @@
 		"LingoMagic": "src/Lingo.i18n.magic.php"
 	},
 	"AutoloadClasses": {
-		"LingoHooks": "/src/LingoHooks.php",
-		"LingoParser": "/src/LingoParser.php",
-		"LingoTree": "/src/LingoTree.php",
-		"LingoElement": "/src/LingoElement.php",
-		"LingoBackend": "/src/LingoBackend.php",
-		"LingoBasicBackend": "/src/LingoBasicBackend.php",
-		"LingoMessageLog": "/src/LingoMessageLog.php"
+		"Extensions\\Lingo\\LingoHooks": "/src/LingoHooks.php",
+		"Extensions\\Lingo\\LingoParser": "/src/LingoParser.php",
+		"Extensions\\Lingo\\LingoTree": "/src/LingoTree.php",
+		"Extensions\\Lingo\\LingoElement": "/src/LingoElement.php",
+		"Extensions\\Lingo\\LingoBackend": "/src/LingoBackend.php",
+		"Extensions\\Lingo\\LingoBasicBackend": "/src/LingoBasicBackend.php",
+		"Extensions\\Lingo\\LingoMessageLog": "/src/LingoMessageLog.php"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": [
-			"LingoHooks::registerTags"
+			"Extensions\\Lingo\\LingoHooks::registerTags"
 		],
 		"ArticlePurge": [
-			"LingoBasicBackend::purgeCache"
+			"Extensions\\Lingo\\LingoBasicBackend::purgeCache"
 		],
 		"ArticleSave": [
-			"LingoBasicBackend::purgeCache"
+			"Extensions\\Lingo\\LingoBasicBackend::purgeCache"
 		],
 		"ParserAfterParse": [
-			"LingoHooks::parse"
+			"Extensions\\Lingo\\LingoHooks::parse"
 		]
 	},
 	"ExtensionFunctions": [
-		"LingoHooks::initExtension"
+		"Extensions\\Lingo\\LingoHooks::initExtension"
 	],
 	"manifest_version": 1
 }

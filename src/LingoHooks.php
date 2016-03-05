@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoHooks class
+ * File holding the Extensions\Lingo\LingoHooks class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,8 +26,13 @@
  * @ingroup Lingo
  */
 
+namespace Extensions\Lingo;
+use MagicWord;
+use Parser;
+use PPFrame;
+
 /**
- * The LingoHooks class.
+ * The Extensions\Lingo\LingoHooks class.
  *
  * It contains the hook handlers of the extension
  *
@@ -71,7 +76,7 @@ class LingoHooks {
 	 * Creates tag hook(s)
 	 */
 	public static function registerTags( Parser $parser ) {
-		$parser->setHook( 'noglossary', 'LingoHooks::noglossaryTagRenderer' );
+		$parser->setHook( 'noglossary', 'Extensions\Lingo\LingoHooks::noglossaryTagRenderer' );
 		return true;
 	}
 

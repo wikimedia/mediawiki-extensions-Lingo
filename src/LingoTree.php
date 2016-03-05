@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoTree class
+ * File holding the Extensions\Lingo\LingoTree class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,9 +26,10 @@
  * @file
  * @ingroup Lingo
  */
+namespace Extensions\Lingo;
 
 /**
- * The LingoTree class.
+ * The Extensions\Lingo\LingoTree class.
  *
  * Vocabulary:
  * Term - The term as a normal string

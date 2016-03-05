@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoMessageLog class.
+ * File holding the Extensions\Lingo\LingoMessageLog class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,6 +26,11 @@
  * @file
  * @ingroup Lingo
  */
+
+namespace Extensions\Lingo;
+use Html;
+use Parser;
+use ParserOptions;
 
 /**
  * This class holds messages (errors, warnings, notices) for Lingo

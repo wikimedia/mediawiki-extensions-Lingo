@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoTree
+ * @coversDefaultClass \Extensions\Lingo\LingoTree
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -45,8 +45,8 @@ class LingoTreeTest extends \PHPUnit_Framework_TestCase {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\LingoTree',
-			new \LingoTree()
+			'\Extensions\Lingo\LingoTree',
+			new \Extensions\Lingo\LingoTree()
 		);
 	}
 

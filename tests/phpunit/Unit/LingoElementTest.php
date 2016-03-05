@@ -31,7 +31,7 @@ namespace Extensions\Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \LingoElement
+ * @coversDefaultClass \Extensions\Lingo\LingoElement
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -49,8 +49,8 @@ class LingoElementTest extends \PHPUnit_Framework_TestCase {
 		$description = array( 'someTerm', 'someDescription' );
 
 		$this->assertInstanceOf(
-			'\LingoElement',
-			new \LingoElement($term, $description)
+			'\Extensions\Lingo\LingoElement',
+			new \Extensions\Lingo\LingoElement($term, $description)
 		);
 	}
 

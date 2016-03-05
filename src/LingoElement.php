@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the LingoElement class.
+ * File holding the Extensions\Lingo\LingoElement class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -27,6 +27,14 @@
  * @ingroup Lingo
  */
 
+namespace Extensions\Lingo;
+use DOMDocument;
+use DOMElement;
+use DOMNode;
+use DOMText;
+use MWException;
+use Title;
+
 /**
  * This class represents a term-definition pair.
  * One term may be related to several definitions.
@@ -50,7 +58,7 @@ class LingoElement {
 	static private $mLinkTemplate = null;
 
 	/**
-	 * LingoElement constructor.
+	 * Extensions\Lingo\LingoElement constructor.
 	 * @param $term
 	 * @param $definition
 	 */
