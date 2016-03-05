@@ -1,7 +1,10 @@
 # Lingo
+[![Build Status](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/badges/build.png?b=master)](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/?branch=master)
+[![Dependency Status](https://www.versioneye.com/php/mediawiki:lingo/badge.png)](https://www.versioneye.com/php/mediawiki:lingo)
 [![Latest Stable Version](https://poser.pugx.org/mediawiki/lingo/version.png)](https://packagist.org/packages/mediawiki/lingo)
 [![Packagist download count](https://poser.pugx.org/mediawiki/lingo/d/total.png)](https://packagist.org/packages/mediawiki/lingo)
-[![Dependency Status](https://www.versioneye.com/php/mediawiki:lingo/badge.png)](https://www.versioneye.com/php/mediawiki:lingo)
 
 Lingo is a glossary extension to MediaWiki, that lets you define abbreviations
 and their definitions on a wiki page. It displays these definitions whenever an

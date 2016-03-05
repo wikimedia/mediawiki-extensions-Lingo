@@ -42,11 +42,7 @@ function installMediaWiki {
 
 	cd mw
 
-	## MW 1.25+ installs packages using composer
-	if [ -f composer.json ]
-	then
-		composer install --prefer-source
-	fi
+	composer install --prefer-source
 
 	mysql -e 'create database its_a_mw;'
 	php maintenance/install.php --dbtype $DBTYPE --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan TravisWiki admin
@@ -54,14 +50,7 @@ function installMediaWiki {
 
 function installExtensionViaComposerOnMediaWikiRoot {
 
-	if [ ! -f composer.json ]
-	then
-		composer init
-	fi
-
-	composer remove --dev --update-with-dependencies 'phpunit/phpunit'
-	composer require 'composer/installers=>1.0.12'
-	composer require 'phpunit/phpunit=~4.0' 'mediawiki/lingo=@dev' --prefer-source
+	composer require --prefer-source --dev --update-with-dependencies 'phpunit/phpunit=~4.0' 'mediawiki/lingo=@dev'
 
 	cd extensions/Lingo
 
