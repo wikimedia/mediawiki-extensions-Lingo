@@ -49,13 +49,11 @@ class LingoElement {
 	const ELEMENT_STYLE = 4;
 
 	const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
-
+	static private $mLinkTemplate = null;
 	private $mFullDefinition = null;
 	private $mDefinitions = array();
 	private $mTerm = null;
 	private $mHasBeenDisplayed = false;
-
-	static private $mLinkTemplate = null;
 
 	/**
 	 * Extensions\Lingo\LingoElement constructor.
@@ -86,31 +84,174 @@ class LingoElement {
 
 		global $wgexLingoDisplayOnce;
 
-		// return textnode if
 		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
 			return $doc->createTextNode( $this->mTerm );
 		}
 
+		$this->buildFullDefinition( $doc );
+		$this->mHasBeenDisplayed = true;
+
+		return $this->mFullDefinition->cloneNode( true );
+	}
+
+	/**
+	 * @param DOMDocument $doc
+	 * @return DOMDocument
+	 */
+	private function buildFullDefinition( DOMDocument &$doc ) {
+
 		// only create if not yet created
 		if ( $this->mFullDefinition === null || $this->mFullDefinition->ownerDocument !== $doc ) {
 
-			// if there is only one link available, just insert the link
-			if ( count( $this->mDefinitions ) === 1
-				&& !is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_DEFINITION ] )
-				&& is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )
-			) {
-
+			if ( $this->isSimpleLink() ) {
 				$this->mFullDefinition = $this->getFullDefinitionAsLink( $doc );
-
-			} else { // else insert the complete tooltip
-
+			} else {
 				$this->mFullDefinition = $this->getFullDefinitionAsTooltip( $doc );
 			}
+		}
+	}
 
-			$this->mHasBeenDisplayed = true;
+	/**
+	 * @return bool
+	 */
+	private function isSimpleLink() {
+		return count( $this->mDefinitions ) === 1 &&
+			!is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_DEFINITION ] ) &&
+			is_string( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
+	}
+
+	/**
+	 * @param DOMDocument $doc
+	 *
+	 * @return DOMElement
+	 * @throws MWException
+	 */
+	protected function getFullDefinitionAsLink( DOMDocument &$doc ) {
+
+		// create Title object for target page
+		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
+
+		// create link element
+		$link = $doc->createElement( 'a', $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] );
+
+		// set the link target
+		$link->setAttribute( 'href', $target->getLinkUrl() );
+		$link = $this->addClassAttributeToLink( $target, $link );
+		$link = $this->addTitleAttributeToLink( $target, $link );
+
+		return $link;
+	}
+
+	/**
+	 * @param $target
+	 * @param $link
+	 */
+	protected function &addClassAttributeToLink( $target, &$link ) {
+
+		// TODO: should this be more elaborate? See Linker::linkAttribs
+		// Cleanest would probably be to use Linker::link and parse it
+		// back into a DOMElement, but we are in a somewhat time-critical
+		// part here.
+		$classes = '';
+
+		if ( !$target->isKnown() ) {
+			$classes .= 'new ';
 		}
 
-		return $this->mFullDefinition->cloneNode( true );
+		if ( $target->isExternal() ) {
+			$classes .= 'extiw ';
+		}
+
+		// set style
+		$classes .= $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
+
+		if ( $classes !== '' ) {
+			$link->setAttribute( 'class', $classes );
+		}
+
+		return $link;
+	}
+
+	/**
+	 * @param $target
+	 * @param $link
+	 */
+	protected function &addTitleAttributeToLink( $target, &$link ) {
+
+		if ( $target->getPrefixedText() === '' ) {
+			// A link like [[#Foo]].  This used to mean an empty title
+			// attribute, but that's silly.  Just don't output a title.
+		} elseif ( $target->isKnown() ) {
+			$link->setAttribute( 'title', $target->getPrefixedText() );
+		} else {
+			$link->setAttribute( 'title', wfMessage( 'red-link-title', $target->getPrefixedText() )->text() );
+		}
+
+		return $link;
+	}
+
+	/**
+	 * @param DOMDocument $doc
+	 *
+	 * @return string
+	 * @throws MWException
+	 */
+	protected function getFullDefinitionAsTooltip( DOMDocument &$doc ) {
+
+		// Wrap term and definition in <span> tags
+		$span = $doc->createElement( 'span' );
+		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+
+		// Wrap term in <span> tag, hidden
+		wfSuppressWarnings();
+		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+
+		wfRestoreWarnings();
+		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
+
+		// Wrap definition in a <span> tag
+		$spanDefinition = $doc->createElement( 'span' );
+		$spanDefinition->setAttribute( 'class', 'mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+
+		foreach ( $this->mDefinitions as $definition ) {
+			wfSuppressWarnings();
+			$element = $doc->createElement( 'span', htmlentities( $definition[ self::ELEMENT_DEFINITION ], ENT_COMPAT, 'UTF-8' ) );
+			$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+			wfRestoreWarnings();
+			if ( $definition[ self::ELEMENT_LINK ] ) {
+				$linkedTitle = Title::newFromText( $definition[ self::ELEMENT_LINK ] );
+				if ( $linkedTitle ) {
+					$link = $this->getLinkTemplate( $doc );
+					$link->setAttribute( 'href', $linkedTitle->getFullURL() );
+					$element->appendChild( $link );
+				}
+			}
+			$spanDefinition->appendChild( $element );
+		}
+
+		// insert term and definition
+		$span->appendChild( $spanTerm );
+		$span->appendChild( $spanDefinition );
+		return $span;
+	}
+
+	/**
+	 * @param DOMDocument $doc
+	 * @return DOMNode
+	 */
+	private function getLinkTemplate( DOMDocument &$doc ) {
+		// create template if it does not yet exist
+		if ( !self::$mLinkTemplate || ( self::$mLinkTemplate->ownerDocument !== $doc ) ) {
+			global $wgScriptPath;
+
+			$linkimage = $doc->createElement( 'img' );
+			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/Lingo/styles/linkicon.png' );
+
+			self::$mLinkTemplate = $doc->createElement( 'a' );
+			self::$mLinkTemplate->appendChild( $linkimage );
+		}
+
+		return self::$mLinkTemplate->cloneNode( true );
 	}
 
 	/**
@@ -162,140 +303,6 @@ class LingoElement {
 
 	public function next() {
 		next( $this->mDefinitions );
-	}
-
-	/**
-	 * @param DOMDocument $doc
-	 * @return DOMNode
-	 */
-	private function getLinkTemplate( DOMDocument &$doc ) {
-		// create template if it does not yet exist
-		if ( !self::$mLinkTemplate || ( self::$mLinkTemplate->ownerDocument !== $doc ) ) {
-			global $wgScriptPath;
-
-			$linkimage = $doc->createElement( 'img' );
-			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/Lingo/styles/linkicon.png' );
-
-			self::$mLinkTemplate = $doc->createElement( 'a' );
-			self::$mLinkTemplate->appendChild( $linkimage );
-		}
-
-		return self::$mLinkTemplate->cloneNode( true );
-	}
-
-	/**
-	 * @param DOMDocument $doc
-	 *
-	 * @return DOMElement
-	 * @throws MWException
-	 */
-	protected function getFullDefinitionAsLink( DOMDocument &$doc ) {
-
-		// create Title object for target page
-		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
-
-		// create link element
-		$link = $doc->createElement( 'a', $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] );
-
-		// set the link target
-		$link->setAttribute( 'href', $target->getLinkUrl() );
-		$link = $this->addClassAttributeToLink( $target, $link );
-		$link = $this->addTitleAttributeToLink( $target, $link );
-
-		return $link;
-	}
-
-	/**
-	 * @param DOMDocument $doc
-	 *
-	 * @return string
-	 * @throws MWException
-	 */
-	protected function getFullDefinitionAsTooltip( DOMDocument &$doc ) {
-
-		// Wrap term and definition in <span> tags
-		$span = $doc->createElement( 'span' );
-		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-
-		// Wrap term in <span> tag, hidden
-		wfSuppressWarnings();
-		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
-
-		wfRestoreWarnings();
-		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
-
-		// Wrap definition in a <span> tag
-		$spanDefinition = $doc->createElement( 'span' );
-		$spanDefinition->setAttribute( 'class', 'mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-
-		foreach ( $this->mDefinitions as $definition ) {
-			wfSuppressWarnings();
-			$element = $doc->createElement( 'span', htmlentities( $definition[ self::ELEMENT_DEFINITION ], ENT_COMPAT, 'UTF-8' ) );
-			$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-			wfRestoreWarnings();
-			if ( $definition[ self::ELEMENT_LINK ] ) {
-				$linkedTitle = Title::newFromText( $definition[ self::ELEMENT_LINK ] );
-				if ( $linkedTitle ) {
-					$link = $this->getLinkTemplate( $doc );
-					$link->setAttribute( 'href', $linkedTitle->getFullURL() );
-					$element->appendChild( $link );
-				}
-			}
-			$spanDefinition->appendChild( $element );
-		}
-
-		// insert term and definition
-		$span->appendChild( $spanTerm );
-		$span->appendChild( $spanDefinition );
-		return $span;
-	}
-
-	/**
-	 * @param $target
-	 * @param $link
-	 */
-	protected function &addTitleAttributeToLink( $target, &$link ) {
-
-		if ( $target->getPrefixedText() === '' ) {
-			// A link like [[#Foo]].  This used to mean an empty title
-			// attribute, but that's silly.  Just don't output a title.
-		} elseif ( $target->isKnown() ) {
-			$link->setAttribute( 'title', $target->getPrefixedText() );
-		} else {
-			$link->setAttribute( 'title', wfMessage( 'red-link-title', $target->getPrefixedText() )->text() );
-		}
-
-		return $link;
-	}
-
-	/**
-	 * @param $target
-	 * @param $link
-	 */
-	protected function &addClassAttributeToLink( $target, &$link ) {
-
-		// TODO: should this be more elaborate? See Linker::linkAttribs
-		// Cleanest would probably be to use Linker::link and parse it
-		// back into a DOMElement, but we are in a somewhat time-critical
-		// part here.
-		$classes = '';
-
-		if ( !$target->isKnown() ) {
-			$classes .= 'new ';
-		}
-
-		if ( $target->isExternal() ) {
-			$classes .= 'extiw ';
-		}
-
-		// set style
-		$classes .= $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
-
-		if ( $classes !== '' ) {
-			$link->setAttribute( 'class', $classes );
-		}
-
-		return $link;
 	}
 
 }
