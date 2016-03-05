@@ -44,8 +44,43 @@ function installMediaWiki {
 
 	composer install --prefer-source
 
-	mysql -e 'create database its_a_mw;'
-	php maintenance/install.php --dbtype $DBTYPE --dbuser root --dbname its_a_mw --dbpath $(pwd) --pass nyan TravisWiki admin
+	case "$DBTYPE" in
+	"mysql")
+
+		mysql -e 'create database its_a_mw;'
+		php maintenance/install.php --dbtype $DBTYPE --dbuser root --dbname its_a_mw --pass nyan --scriptpath /TravisWiki TravisWiki admin
+
+		;;
+
+	"postgres")
+
+		# See https://github.com/SemanticMediaWiki/SemanticMediaWiki/issues/458
+		sudo /etc/init.d/postgresql stop
+
+		# Travis@support: Try adding a sleep of a few seconds between starting PostgreSQL
+		# and the first command that accesses PostgreSQL
+		sleep 3
+
+		sudo /etc/init.d/postgresql start
+		sleep 3
+
+		psql -c 'create database its_a_mw;' -U postgres
+		php maintenance/install.php --dbtype $DBTYPE --dbuser postgres --dbname its_a_mw --pass nyan --scriptpath /TravisWiki TravisWiki admin
+
+		;;
+
+	"sqlite")
+
+		php maintenance/install.php --dbtype $DBTYPE --dbuser root  --dbname its_a_mw --dbpath $(pwd) --pass nyan --scriptpath /TravisWiki TravisWiki admin
+
+		;;
+
+	*)
+		echo "$DBTYPE is not a recognized database type."
+		exit 1
+
+	esac
+
 }
 
 function installExtensionViaComposerOnMediaWikiRoot {
