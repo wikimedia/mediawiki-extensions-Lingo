@@ -59,11 +59,8 @@ function installExtensionViaComposerOnMediaWikiRoot {
 		composer init
 	fi
 
-#	composer remove --dev --update-with-dependencies 'phpunit/phpunit'
+	composer remove --dev --update-with-dependencies 'phpunit/phpunit'
 	composer require 'phpunit/phpunit=~4.0' 'mediawiki/lingo=@dev' --prefer-source
-
-	pwd
-	ls -al
 
 	cd extensions/Lingo
 
@@ -89,6 +86,7 @@ function installExtensionViaComposerOnMediaWikiRoot {
 	echo '$wgShowExceptionDetails = true;' >> LocalSettings.php
 	echo '$wgDevelopmentWarnings = true;' >> LocalSettings.php
 	echo "putenv( 'MW_INSTALL_PATH=$(pwd)' );" >> LocalSettings.php
+	echo "wfLoadExtension('Lingo');" >> LocalSettings.php
 
 	php maintenance/update.php --quick
 }
