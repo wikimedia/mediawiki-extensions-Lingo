@@ -94,7 +94,7 @@ function installExtensionViaComposerOnMediaWikiRoot {
 
 function uploadCoverageReport {
 	wget https://scrutinizer-ci.com/ocular.phar
-	php ocular.phar code-coverage:upload --repository='g/wikimedia/mediawiki-lingo' --format=php-clover coverage.clover
+	php ocular.phar code-coverage:upload --repository='g/wikimedia/mediawiki-extensions-lingo' --format=php-clover coverage.clover
 }
 
 composer self-update
