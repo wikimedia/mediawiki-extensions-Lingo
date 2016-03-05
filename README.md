@@ -14,8 +14,8 @@ See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 
 ## Requirements
 
-- PHP 5.3.2 or later
-- MediaWiki 1.25 or later
+- PHP 5.3.3 or later
+- MediaWiki 1.26 or later
 
 ## Installation
 
