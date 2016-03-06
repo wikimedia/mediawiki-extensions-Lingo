@@ -1,5 +1,5 @@
 # Lingo
-[![Build Status](https://travis-ci.org/wikimedia/mediawiki-extensions-Lingo.svg?branch=master)](https://travis-ci.org/wikimedia/mediawiki-extensions-Lingo)
+[![Build Status](https://travis-ci.org/wikimedia/mediawiki-extensions-Lingo.svg?branch=master)](https://travis-ci.org/wikimedia/mediawiki-extensions-Lingo/builds)
 [![Code Coverage](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/?branch=master)
 [![Code Quality](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wikimedia/mediawiki-extensions-Lingo/?branch=master)
 [![Dependency Status](https://www.versioneye.com/php/mediawiki:lingo/badge.png)](https://www.versioneye.com/php/mediawiki:lingo)
@@ -17,17 +17,30 @@ See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 - PHP 5.3.3 or later
 - MediaWiki 1.26 or later
 
-## Installation
+## Installation & Activation
 
-The recommended way to install this extension is by using [Composer][composer]. Just add the following to the MediaWiki `composer.json` file and run the `php composer.phar install/update` command.
+The recommended way to install this extension is by using [Composer][composer].
 
-```json
-{
-	"require": {
-		"mediawiki/lingo": "~2.0"
-	}
-}
-```
+1. Add the following to the MediaWiki `composer.local.json` file
+ ```json
+ {
+ 	"require": {
+ 		"mediawiki/lingo": "~2.0"
+ 	}
+ }
+ ```
+
+2.  Run `php composer.phar update mediawiki/lingo` from the MediaWiki
+    installation directory.
+
+3. Add the following code to your LocalSettings.php:
+ ```php
+ wfLoadExtension('Lingo');
+ ```
+
+## Updating
+
+Run `php composer.phar update mediawiki/lingo` from the MediaWiki installation directory.
 
 ## Customization
 
@@ -45,7 +58,6 @@ The following settings may be used:
 
 If you want to use these settings, just include them in LocalSettings.php AFTER
 the require_once("$IP/extensions/Lingo/Lingo.php");
-
 
 ## Usage
 
