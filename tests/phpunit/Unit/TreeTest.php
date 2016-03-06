@@ -24,29 +24,29 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo\Tests\Unit;
+namespace Lingo\Tests\Unit;
 
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \Extensions\Lingo\LingoMessageLog
+ * @coversDefaultClass \Lingo\Tree
  * @covers ::<private>
  * @covers ::<protected>
  *
  * @ingroup Lingo
  * @ingroup Test
  */
-class LingoMessageLogTest extends \PHPUnit_Framework_TestCase {
+class TreeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 */
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\Extensions\Lingo\LingoMessageLog',
-			new \Extensions\Lingo\LingoMessageLog()
+			'\Lingo\Tree',
+			new \Lingo\Tree()
 		);
 	}
 

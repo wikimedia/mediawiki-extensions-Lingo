@@ -24,33 +24,29 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo\Tests\Unit;
+namespace Lingo\Tests\Unit;
 
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \Extensions\Lingo\LingoElement
+ * @coversDefaultClass \Lingo\MessageLog
  * @covers ::<private>
  * @covers ::<protected>
  *
  * @ingroup Lingo
  * @ingroup Test
  */
-class LingoElementTest extends \PHPUnit_Framework_TestCase {
+class MessageLogTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @covers ::__construct
 	 */
 	public function testCanConstruct() {
 
-		$term = 'someTerm';
-		$description = array( 'someTerm', 'someDescription' );
-
 		$this->assertInstanceOf(
-			'\Extensions\Lingo\LingoElement',
-			new \Extensions\Lingo\LingoElement($term, $description)
+			'\Lingo\MessageLog',
+			new \Lingo\MessageLog()
 		);
 	}
 

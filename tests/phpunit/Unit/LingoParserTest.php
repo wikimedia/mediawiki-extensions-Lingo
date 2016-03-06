@@ -24,14 +24,14 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo\Tests\Unit;
+namespace Lingo\Tests\Unit;
 
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \Extensions\Lingo\LingoParser
+ * @coversDefaultClass \Lingo\LingoParser
  * @covers ::<private>
  * @covers ::<protected>
  *
@@ -46,8 +46,8 @@ class LingoParserTest extends \PHPUnit_Framework_TestCase {
 	public function testCanConstruct() {
 
 		$this->assertInstanceOf(
-			'\Extensions\Lingo\LingoParser',
-			new \Extensions\Lingo\LingoParser()
+			'\Lingo\LingoParser',
+			new \Lingo\LingoParser()
 		);
 	}
 

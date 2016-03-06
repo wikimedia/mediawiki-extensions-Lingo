@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoParser class.
+ * File holding the Lingo\LingoParser class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,7 +26,7 @@
  * @file
  * @ingroup Lingo
  */
-namespace Extensions\Lingo;
+namespace Lingo;
 
 use DOMDocument;
 use DOMXPath;
@@ -45,7 +45,7 @@ class LingoParser {
 	private $mLingoTree = null;
 
 	/**
-	 * @var LingoBackend
+	 * @var Backend
 	 */
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
@@ -54,10 +54,10 @@ class LingoParser {
 	public static $regex = null;
 
 	/**
-	 * Extensions\Lingo\LingoParser constructor.
-	 * @param LingoMessageLog|null $messages
+	 * Lingo\LingoParser constructor.
+	 * @param MessageLog|null $messages
 	 */
-	public function __construct( LingoMessageLog &$messages = null ) {
+	public function __construct( MessageLog &$messages = null ) {
 		global $wgexLingoBackend;
 
 		$this->mLingoBackend = new $wgexLingoBackend( $messages );
@@ -86,7 +86,7 @@ class LingoParser {
 
 	/**
 	 *
-	 * @return LingoBackend the backend used by the parser
+	 * @return Backend the backend used by the parser
 	 */
 	public function getBackend() {
 		return $this->mLingoBackend;
@@ -108,9 +108,9 @@ class LingoParser {
 	}
 
 	/**
-	 * Returns the list of terms in the glossary as a Extensions\Lingo\LingoTree
+	 * Returns the list of terms in the glossary as a Lingo\Tree
 	 *
-	 * @return LingoTree a Extensions\Lingo\LingoTree mapping terms (keys) to descriptions (values)
+	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoTree() {
 
@@ -150,16 +150,16 @@ class LingoParser {
 	}
 
 	/**
-	 * @return LingoTree
+	 * @return Tree
 	 */
 	protected function &buildLingo() {
 
-		$lingoTree = new LingoTree();
+		$lingoTree = new Tree();
 		$backend = &$this->mLingoBackend;
 
 		// assemble the result array
 		while ( $elementData = $backend->next() ) {
-			$lingoTree->addTerm( $elementData[ LingoElement::ELEMENT_TERM ], $elementData );
+			$lingoTree->addTerm( $elementData[ Element::ELEMENT_TERM ], $elementData );
 		}
 
 		return $lingoTree;

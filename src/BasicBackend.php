@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoBackend class
+ * File holding the Lingo\Backend class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -25,7 +25,7 @@
  * @file
  * @ingroup Lingo
  */
-namespace Extensions\Lingo;
+namespace Lingo;
 
 use ApprovedRevs;
 use Page;
@@ -36,19 +36,19 @@ use Title;
 use User;
 
 /**
- * The Extensions\Lingo\LingoBasicBackend class.
+ * The Lingo\BasicBackend class.
  *
  * @ingroup Lingo
  */
-class LingoBasicBackend extends LingoBackend {
+class BasicBackend extends Backend {
 
 	protected $mArticleLines = array();
 
 	/**
-	 * Extensions\Lingo\LingoBasicBackend constructor.
-	 * @param LingoMessageLog|null $messages
+	 * Lingo\BasicBackend constructor.
+	 * @param MessageLog|null $messages
 	 */
-	public function __construct( LingoMessageLog &$messages = null ) {
+	public function __construct( MessageLog &$messages = null ) {
 
 		global $wgexLingoPage, $wgRequest;
 
@@ -94,7 +94,7 @@ class LingoBasicBackend extends LingoBackend {
 
 	/**
 	 * This function returns the next element. The element is an array of four
-	 * strings: Term, Definition, Link, Source. For the Extensions\Lingo\LingoBasicBackend Link
+	 * strings: Term, Definition, Link, Source. For the Lingo\BasicBackend Link
 	 * and Source are set to null. If there is no next element the function
 	 * returns null.
 	 *
@@ -137,10 +137,10 @@ class LingoBasicBackend extends LingoBackend {
 			if ( $term !== null ) {
 				foreach ( $definitions as $definition ) {
 					$ret[] = array(
-						LingoElement::ELEMENT_TERM       => $term,
-						LingoElement::ELEMENT_DEFINITION => $definition,
-						LingoElement::ELEMENT_LINK       => null,
-						LingoElement::ELEMENT_SOURCE     => null
+						Element::ELEMENT_TERM       => $term,
+						Element::ELEMENT_DEFINITION => $definition,
+						Element::ELEMENT_LINK       => null,
+						Element::ELEMENT_SOURCE     => null
 					);
 				}
 			}
@@ -196,7 +196,7 @@ class LingoBasicBackend extends LingoBackend {
 	 * The basic backend is cache-enabled so this function returns true.
 	 *
 	 * Actual caching is done by the parser, the backend just calls
-	 * Extensions\Lingo\LingoParser::purgeCache when necessary.
+	 * Lingo\LingoParser::purgeCache when necessary.
 	 *
 	 * @return boolean
 	 */

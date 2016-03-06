@@ -7,7 +7,7 @@
 		"..."
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Lingo",
-	"@descriptionmsg": "The description message is set by LingoHooks::setCredits().",
+	"@descriptionmsg": "The description message is set by Lingo\\Hooks::setCredits().",
 	"license-name": "GPL-2.0+",
 	"type": "parserhook",
 	"requires": {
@@ -44,7 +44,7 @@
 	},
 	"config": {
 		"_prefix": "wgex",
-		"LingoBackend": "Extensions\\Lingo\\LingoBasicBackend",
+		"LingoBackend": "Lingo\\BasicBackend",
 		"LingoPage": null,
 		"LingoDisplayOnce": false,
 		"LingoCacheType": null,
@@ -60,30 +60,30 @@
 		"LingoMagic": "src/Lingo.i18n.magic.php"
 	},
 	"AutoloadClasses": {
-		"Extensions\\Lingo\\LingoHooks": "/src/LingoHooks.php",
-		"Extensions\\Lingo\\LingoParser": "/src/LingoParser.php",
-		"Extensions\\Lingo\\LingoTree": "/src/LingoTree.php",
-		"Extensions\\Lingo\\LingoElement": "/src/LingoElement.php",
-		"Extensions\\Lingo\\LingoBackend": "/src/LingoBackend.php",
-		"Extensions\\Lingo\\LingoBasicBackend": "/src/LingoBasicBackend.php",
-		"Extensions\\Lingo\\LingoMessageLog": "/src/LingoMessageLog.php"
+		"Lingo\\Hooks": "/src/Hooks.php",
+		"Lingo\\LingoParser": "/src/LingoParser.php",
+		"Lingo\\Tree": "/src/Tree.php",
+		"Lingo\\Element": "/src/Element.php",
+		"Lingo\\Backend": "/src/Backend.php",
+		"Lingo\\BasicBackend": "/src/BasicBackend.php",
+		"Lingo\\MessageLog": "/src/MessageLog.php"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": [
-			"Extensions\\Lingo\\LingoHooks::registerTags"
+			"Lingo\\Hooks::registerTags"
 		],
 		"ArticlePurge": [
-			"Extensions\\Lingo\\LingoBasicBackend::purgeCache"
+			"Lingo\\BasicBackend::purgeCache"
 		],
 		"ArticleSave": [
-			"Extensions\\Lingo\\LingoBasicBackend::purgeCache"
+			"Lingo\\BasicBackend::purgeCache"
 		],
 		"ParserAfterParse": [
-			"Extensions\\Lingo\\LingoHooks::parse"
+			"Lingo\\Hooks::parse"
 		]
 	},
 	"ExtensionFunctions": [
-		"Extensions\\Lingo\\LingoHooks::initExtension"
+		"Lingo\\Hooks::initExtension"
 	],
 	"manifest_version": 1
 }

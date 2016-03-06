@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoElement class.
+ * File holding the Lingo\Element class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -27,7 +27,7 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo;
+namespace Lingo;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
@@ -41,7 +41,7 @@ use Title;
  *
  * @ingroup Lingo
  */
-class LingoElement {
+class Element {
 	const ELEMENT_TERM = 0;
 	const ELEMENT_DEFINITION = 1;
 	const ELEMENT_SOURCE = 2;
@@ -56,7 +56,7 @@ class LingoElement {
 	private $mHasBeenDisplayed = false;
 
 	/**
-	 * Extensions\Lingo\LingoElement constructor.
+	 * Lingo\Element constructor.
 	 * @param $term
 	 * @param $definition
 	 */

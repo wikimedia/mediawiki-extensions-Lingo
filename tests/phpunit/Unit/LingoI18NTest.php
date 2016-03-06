@@ -24,7 +24,7 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo\Tests\Unit;
+namespace Lingo\Tests\Unit;
 
 use JsonSchema\RefResolver;
 use JsonSchema\Uri\UriRetriever;

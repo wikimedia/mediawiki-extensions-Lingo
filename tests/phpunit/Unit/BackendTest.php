@@ -24,31 +24,27 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo\Tests\Unit;
+namespace Lingo\Tests\Unit;
 
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
- * @coversDefaultClass \Extensions\Lingo\LingoBasicBackend
+ * @coversDefaultClass \Lingo\Backend
  * @covers ::<private>
  * @covers ::<protected>
  *
  * @ingroup Lingo
  * @ingroup Test
  */
-class LingoBasicBackendTest extends LingoBackendTest {
+class BackendTest extends \PHPUnit_Framework_TestCase {
 
-	/**
-	 * @covers ::__construct
-	 */
-	public function testCanConstruct() {
+	public function testUseCache() {
 
-		$this->assertInstanceOf(
-			'\Extensions\Lingo\LingoBasicBackend',
-			new \Extensions\Lingo\LingoBasicBackend()
-		);
+		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
+
+		$this->assertFalse( $stub->useCache() );
 	}
 
 }

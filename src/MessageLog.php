@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoMessageLog class.
+ * File holding the Lingo\MessageLog class.
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -27,7 +27,7 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo;
+namespace Lingo;
 use Html;
 use Parser;
 use ParserOptions;
@@ -39,7 +39,7 @@ use ParserOptions;
  *
  * @ingroup Lingo
  */
-class LingoMessageLog {
+class MessageLog {
 
 	private $mMessages = array();
 	private $mParser = null;

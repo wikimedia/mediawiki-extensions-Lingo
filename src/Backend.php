@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoBackend class
+ * File holding the Lingo\Backend class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,32 +26,32 @@
  * @ingroup Lingo
  */
 
-namespace Extensions\Lingo;
+namespace Lingo;
 
 /**
- * The Extensions\Lingo\LingoBackend class.
+ * The Lingo\Backend class.
  *
  * @ingroup Lingo
  */
-abstract class LingoBackend {
+abstract class Backend {
 
 	protected $mMessageLog;
 
 	/**
-	 * Extensions\Lingo\LingoBackend constructor.
-	 * @param LingoMessageLog|null $messages
+	 * Lingo\Backend constructor.
+	 * @param MessageLog|null $messages
 	 */
-	public function __construct( LingoMessageLog &$messages = null ) {
+	public function __construct( MessageLog &$messages = null ) {
 
 		if ( !$messages ) {
-			$this->mMessageLog = new LingoMessageLog();
+			$this->mMessageLog = new MessageLog();
 		} else {
 			$this->mMessageLog = $messages;
 		}
 	}
 
 	/**
-	 * @return LingoMessageLog
+	 * @return MessageLog
 	 */
 	public function getMessageLog() {
 		return $this->mMessageLog;
@@ -61,7 +61,7 @@ abstract class LingoBackend {
 	 * This function returns true if the backend is cache-enabled.
 	 *
 	 * Actual caching is done by the parser, but to be cache-enabled the backend
-	 * has to call Extensions\Lingo\LingoParser::purgeCache when necessary.
+	 * has to call Lingo\LingoParser::purgeCache when necessary.
 	 *
 	 * @return boolean
 	 */
@@ -74,7 +74,7 @@ abstract class LingoBackend {
 	 * strings: Term, Definition, Link, Source. If there is no next element the
 	 * function returns null.
 	 *
-	 * @return LingoElement | null
+	 * @return Element | null
 	 */
 	abstract public function next();
 }

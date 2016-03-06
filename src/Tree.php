@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File holding the Extensions\Lingo\LingoTree class
+ * File holding the Lingo\Tree class
  *
  * This file is part of the MediaWiki extension Lingo.
  *
@@ -26,10 +26,10 @@
  * @file
  * @ingroup Lingo
  */
-namespace Extensions\Lingo;
+namespace Lingo;
 
 /**
- * The Extensions\Lingo\LingoTree class.
+ * The Lingo\Tree class.
  *
  * Vocabulary:
  * Term - The term as a normal string
@@ -48,7 +48,7 @@ namespace Extensions\Lingo;
  *
  * @ingroup Lingo
  */
-class LingoTree {
+class Tree {
 
 	private $mTree = array();
 	private $mList = array();
@@ -102,7 +102,7 @@ class LingoTree {
 		if ( isset( $tree[ -1 ] ) ) {
 			$tree[ -1 ]->addDefinition( $definition );
 		} else {
-			$tree[ -1 ] = new LingoElement( $term, $definition );
+			$tree[ -1 ] = new Element( $term, $definition );
 		}
 
 		return $tree;
