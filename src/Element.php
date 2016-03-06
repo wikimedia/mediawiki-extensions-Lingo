@@ -203,10 +203,10 @@ class Element {
 		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 
 		// Wrap term in <span> tag, hidden
-		wfSuppressWarnings();
+		\MediaWiki\suppressWarnings();
 		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+		\MediaWiki\restoreWarnings();
 
-		wfRestoreWarnings();
 		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
 
 		// Wrap definition in a <span> tag
@@ -214,10 +214,12 @@ class Element {
 		$spanDefinition->setAttribute( 'class', 'mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 
 		foreach ( $this->mDefinitions as $definition ) {
-			wfSuppressWarnings();
+
+			\MediaWiki\suppressWarnings();
 			$element = $doc->createElement( 'span', htmlentities( $definition[ self::ELEMENT_DEFINITION ], ENT_COMPAT, 'UTF-8' ) );
 			$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-			wfRestoreWarnings();
+			\MediaWiki\restoreWarnings();
+
 			if ( $definition[ self::ELEMENT_LINK ] ) {
 				$linkedTitle = Title::newFromText( $definition[ self::ELEMENT_LINK ] );
 				if ( $linkedTitle ) {

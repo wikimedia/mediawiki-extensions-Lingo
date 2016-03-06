@@ -28,6 +28,7 @@
 namespace Lingo;
 
 use ApprovedRevs;
+use ContentHandler;
 use Page;
 use Parser;
 use ParserOptions;
@@ -50,9 +51,9 @@ class BasicBackend extends Backend {
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 
-		global $wgexLingoPage, $wgRequest;
+		global $wgRequest;
 
-		$page = $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
+		$page = self::getLingoPage();
 
 		parent::__construct( $messages );
 
@@ -63,9 +64,9 @@ class BasicBackend extends Backend {
 			return;
 		}
 
-		// FIXME: This is a hack special-casing the submitting of the terminology
+		// This is a hack special-casing the submitting of the terminology
 		// page itself. In this case the Revision is not up to date when we get
-		// here, i.e. $rev->getText() would return outdated Test.
+		// here, i.e. $rev->getText() would return outdated Text.
 		// This hack takes the text directly out of the data from the web request.
 		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
 			&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID()
@@ -77,19 +78,30 @@ class BasicBackend extends Backend {
 			$rev = $this->getRevision( $title );
 			if ( !$rev ) {
 				$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $page )->inContentLanguage()->text() );
-				return false;
+				return;
 			}
 
-			$content = $rev->getText();
+			$content = ContentHandler::getContentText( $rev->getContent() );
 
 		}
 
 		$parser = new Parser;
-		// expand templates and variables in the text, producing valid, static wikitext
-		// have to use a new anonymous user to avoid any leakage as Lingo is caching only one user-independant glossary
+		// expand templates and variables in the text, producing valid, static
+		// wikitext have to use a new anonymous user to avoid any leakage as
+		// Lingo is caching only one user-independent glossary
 		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
 
 		$this->mArticleLines = array_reverse( explode( "\n", $content ) );
+	}
+
+	/**
+	 * @param $wgexLingoPage
+	 * @return string
+	 */
+	private static function getLingoPage() {
+		global $wgexLingoPage;
+
+		return $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
 	}
 
 	/**
@@ -101,8 +113,6 @@ class BasicBackend extends Backend {
 	 * @return Array | null
 	 */
 	public function next() {
-
-		wfProfileIn( __METHOD__ );
 
 		static $term = null;
 		static $definitions = array();
@@ -146,8 +156,6 @@ class BasicBackend extends Backend {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return array_pop( $ret );
 	}
 
@@ -181,8 +189,7 @@ class BasicBackend extends Backend {
 	 */
 	public static function purgeCache( &$wikipage ) {
 
-		global $wgexLingoPage;
-		$page = $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
+		$page = self::getLingoPage();
 
 		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $page ) ) {
 
