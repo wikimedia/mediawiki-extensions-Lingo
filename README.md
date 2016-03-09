@@ -40,7 +40,8 @@ The recommended way to install this extension is by using [Composer][composer].
 
 ## Updating
 
-Run `php composer.phar update mediawiki/lingo` from the MediaWiki installation directory.
+Run `php composer.phar update mediawiki/lingo` from the MediaWiki installation
+directory.
 
 ## Customization
 
@@ -49,15 +50,15 @@ The following settings may be used:
 * `$wgexLingoPage` to specify the name of the terminology page
   Example: `$wgexLingoPage = 'Glossary'`;
 
-* `$wgexLingoDisplayOnce` to specify that each term should be annotated only once
-  per page
+* `$wgexLingoDisplayOnce` to specify that each term should be annotated only
+  once per page
   Example: `$wgexLingoDisplayOnce = true`;
 
-* `$wgexLingoUseNamespaces` to specify what namespaces should or should not be used
+* `$wgexLingoUseNamespaces` to specify what namespaces should or should not be
+  used
   Example: `$wgexLingoUseNamespaces[NS_TALK] = false`;
 
-If you want to use these settings, just include them in LocalSettings.php AFTER
-the require_once("$IP/extensions/Lingo/Lingo.php");
+If you want to use these settings, just include them in LocalSettings.php.
 
 ## Usage
 
@@ -82,8 +83,8 @@ the following syntax:
 ## Reporting bugs
 
 Comments, questions and suggestions should be sent or posted to:
-* the Lingo discussion page: http://www.mediawiki.org/wiki/Extension_talk:Lingo
-* the maintainer: http://www.mediawiki.org/wiki/Special:EmailUser/F.trott
+* the Lingo discussion page: https://www.mediawiki.org/wiki/Extension_talk:Lingo
+* the maintainer: https://www.mediawiki.org/wiki/Special:EmailUser/F.trott
 
 ## Credits
 
