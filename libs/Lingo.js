@@ -25,10 +25,9 @@
  * @ingroup Lingo
  */
 
-/*global jQuery, mediaWiki */
 /*global confirm */
 
-( function ( $, mw ) {
+( function ( $ ) {
 
 	'use strict';
 
@@ -60,4 +59,4 @@
 		} );
 
 	} );
-}( jQuery, mediaWiki ) );
+}( jQuery ) );
