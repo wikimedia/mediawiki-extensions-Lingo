@@ -60,7 +60,7 @@ class LingoParser {
 	public function __construct( MessageLog &$messages = null ) {
 		global $wgexLingoBackend;
 
-		$this->mLingoBackend = new $wgexLingoBackend( $messages );
+		$this->setBackend( new $wgexLingoBackend( $messages ) );
 	}
 
 	/**
@@ -71,6 +71,16 @@ class LingoParser {
 	 */
 	public static function parse( Parser &$parser, &$text ) {
 
+		self::getInstance()->realParse( $parser, $text );
+
+		return true;
+	}
+
+	/**
+	 * @return LingoParser
+	 * @since 2.0.1
+	 */
+	public static function getInstance() {
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
 
@@ -79,9 +89,7 @@ class LingoParser {
 			self::$regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 
-		self::$parserSingleton->realParse( $parser, $text );
-
-		return true;
+		return self::$parserSingleton;
 	}
 
 	/**
@@ -297,7 +305,7 @@ class LingoParser {
 	}
 
 	/**
-	 * @param $parser
+	 * @param Parser $parser
 	 */
 	protected function loadModules( &$parser ) {
 		global $wgOut, $wgScriptPath;
@@ -345,6 +353,14 @@ class LingoParser {
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 		$cache->delete( wfMemcKey( 'ext', 'lingo', 'lingotree' ) );
 
+	}
+
+	/**
+	 * @since 2.0.1
+	 * @param Backend $backend
+	 */
+	public function setBackend( $backend ) {
+		$this->mLingoBackend = $backend;
 	}
 }
 

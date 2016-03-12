@@ -1,6 +1,6 @@
 {
 	"name": "Lingo",
-	"version": "2.0.0",
+	"version": "2.0.1-dev",
 	"author": [
 		"Barry Coughlan",
 		"[http://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
@@ -66,7 +66,8 @@
 		"Lingo\\Element": "/src/Element.php",
 		"Lingo\\Backend": "/src/Backend.php",
 		"Lingo\\BasicBackend": "/src/BasicBackend.php",
-		"Lingo\\MessageLog": "/src/MessageLog.php"
+		"Lingo\\MessageLog": "/src/MessageLog.php",
+		"Lingo\\Tests\\Util\\XmlFileProvider": "/tests/phpunit/Util/XmlFileProvider.php"
 	},
 	"Hooks": {
 		"ParserFirstCallInit": [

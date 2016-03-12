@@ -1,0 +1,20 @@
+<testcase>
+	<text>
+<![CDATA[
+foo
+]]>
+	</text>
+	<expected>
+<![CDATA[
+<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">foo</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">bar</span></span></span>
+]]>
+	</expected>
+	<glossary-entry>
+		<term>foo</term>
+		<definition>bar</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<term>baz</term>
+		<definition>quok</definition>
+	</glossary-entry>
+</testcase>

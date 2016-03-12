@@ -1,5 +1,12 @@
 ## Release Notes
 
+### Lingo 2.0.1
+
+Released on tbd
+
+Changes:
+* Improved test coverage
+
 ### Lingo 2.0.0
 
 Released on 09-Mar-2016
@@ -27,7 +34,7 @@ Changes:
 * Migrate to JSON i18n
 * Remove wfMsg / wfMsgForContent usage
 * Unstrip strip items of 'general' category
-* Swap SpecialVersionExtensionTypes for ExtensionTypes
+* Use ExtensionFunctions instead of SpecialVersionExtensionTypes
 
 ### Lingo 1.1.0
 
