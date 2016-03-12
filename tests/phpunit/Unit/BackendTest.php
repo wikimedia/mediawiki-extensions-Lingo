@@ -47,4 +47,20 @@ class BackendTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse( $stub->useCache() );
 	}
 
+	public function testGetMessageLog() {
+
+		$log = $this->getMock( '\Lingo\MessageLog' );
+		$logRef = &$log;
+
+		$stub = $this->getMockBuilder( '\Lingo\Backend' )
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
+
+		$reflected = new \ReflectionClass( '\Lingo\Backend' );
+		$constructor = $reflected->getConstructor();
+		$constructor->invoke( $stub, $logRef );
+
+		$this->assertEquals( $log, $stub->getMessageLog() );
+	}
+
 }

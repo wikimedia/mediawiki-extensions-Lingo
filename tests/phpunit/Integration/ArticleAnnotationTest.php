@@ -50,6 +50,9 @@ use ReflectionClass;
 class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 
 	public function setup() {
+
+		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+
 	}
 
 	public function tearDown() {
@@ -107,7 +110,9 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 			$json = json_encode( $xml );
 			$decoded = json_decode( $json, TRUE );
 
+			// suppress warnings for non-existant array keys
 			\MediaWiki\suppressWarnings();
+
 			$testCase = array(
 				0 => substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
 				1 => $decoded[ 'text' ],
@@ -116,14 +121,13 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 			);
 
 			if ( array_key_exists( 'term', $decoded[ 'glossary-entry' ] ) ) {
-
-				$testCase[ 2 ][] = array( $decoded[ 'glossary-entry' ][ 'term' ], $decoded[ 'glossary-entry' ][ 'definition' ], $decoded[ 'glossary-entry' ][ 'link' ], $decoded[ 'glossary-entry' ][ 'style' ] );
-
-			} else {
-				foreach ( $decoded[ 'glossary-entry' ] as $entry ) {
-					$testCase[ 2 ][] = array( $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] );
-				}
+				$decoded[ 'glossary-entry' ] = array( $decoded[ 'glossary-entry' ] );
 			}
+
+			foreach ( $decoded[ 'glossary-entry' ] as $entry ) {
+				$testCase[ 2 ][] = array( $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] );
+			}
+
 			\MediaWiki\restoreWarnings();
 
 			$data[] = $testCase;

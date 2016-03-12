@@ -1,8 +1,18 @@
 ## Release Notes
 
-### Lingo 2.0.1
+### Lingo 2.0.2
 
 Released on tbd
+
+Changes:
+
+
+Fixes:
+
+
+### Lingo 2.0.1
+
+Released on 13-Mar-2016
 
 Changes:
 * Improved test coverage
