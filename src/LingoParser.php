@@ -326,34 +326,17 @@ class LingoParser {
 		$parserOutput = $parser->getOutput();
 
 		// load scripts
-		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
-			$parserOutput->addModules( 'ext.Lingo.Scripts' );
+		$parserOutput->addModules( 'ext.Lingo.Scripts' );
 
-			if ( !$wgOut->isArticle() ) {
-				$wgOut->addModules( 'ext.Lingo.Scripts' );
-			}
-		} else {
-			global $wgStylePath;
-			$parserOutput->addHeadItem( "<script src='$wgStylePath/common/jquery.min.js'></script>\n", 'ext.Lingo.jq' );
-			$parserOutput->addHeadItem( "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n", 'ext.Lingo.Scripts' );
-
-			if ( !$wgOut->isArticle() ) {
-				$wgOut->addHeadItem( 'ext.Lingo.jq', "<script src='$wgStylePath/common/jquery.min.js'></script>\n" );
-				$wgOut->addHeadItem( 'ext.Lingo.Scripts', "<script src='$wgScriptPath/extensions/Lingo/libs/Lingo.js'></script>\n" );
-			}
+		if ( !$wgOut->isArticle() ) {
+			$wgOut->addModules( 'ext.Lingo.Scripts' );
 		}
 
 		// load styles
-		if ( method_exists( $parserOutput, 'addModuleStyles' ) ) {
-			$parserOutput->addModuleStyles( 'ext.Lingo.Styles' );
-			if ( !$wgOut->isArticle() ) {
-				$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
-			}
-		} else {
-			$parserOutput->addHeadItem( "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/styles/Lingo.css' />\n", 'ext.Lingo.Styles' );
-			if ( !$wgOut->isArticle() ) {
-				$wgOut->addHeadItem( 'ext.Lingo.Styles', "<link rel='stylesheet' href='$wgScriptPath/extensions/Lingo/styles/Lingo.css' />\n" );
-			}
+		$parserOutput->addModuleStyles( 'ext.Lingo.Styles' );
+
+		if ( !$wgOut->isArticle() ) {
+			$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
 		}
 	}
 

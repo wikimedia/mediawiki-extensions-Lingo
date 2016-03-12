@@ -36,3 +36,7 @@ matrix:
 
 script:
     - bash ./build/travis/script.sh
+
+notifications:
+  email:
+    - s7eph4n@gmail.com
