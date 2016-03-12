@@ -1,0 +1,95 @@
+<!-- Checks correct markup of html text. -->
+<testcase>
+	<text>
+<![CDATA[
+<p>In <a href="/wiki/Publishing" title="Publishing">publishing</a> and <a
+href="/wiki/Graphic_design" title="Graphic design">graphic design</a>, <b>lorem
+ipsum</b> (derived from Latin <i>dolorem ipsum</i>, translated as "pain itself")
+is a <a href="/wiki/Filler_text" title="Filler text">filler text</a> commonly
+used to demonstrate the <a href="/wiki/Graphic" title="Graphic"
+class="mw-redirect">graphic</a> elements of a document or visual presentation.
+Replacing meaningful content with placeholder text allows viewers to focus on
+graphic aspects such as <a href="/wiki/Font" title="Font">font</a>, <a
+href="/wiki/Typography" title="Typography">typography</a>, and <a
+href="/wiki/Page_layout" title="Page layout">page layout</a> without being
+distracted by the content. It also reduces the need for the designer to come up
+with meaningful text, as they can instead use quickly-generated lorem ipsum.</p>
+<p>The lorem ipsum text is typically a scrambled section of <i><a
+href="/wiki/De_finibus_bonorum_et_malorum" title="De finibus bonorum et
+malorum">De finibus bonorum et malorum</a></i>, a 1st-century BC <a
+href="/wiki/Latin" title="Latin">Latin</a> text by <a href="/wiki/Cicero"
+title="Cicero">Cicero</a>, with words altered, added, and removed to make it
+nonsensical, improper Latin.</p> <p>A variation of the ordinary lorem ipsum text
+has been used in <a href="/wiki/Typesetting" title="Typesetting">typesetting</a>
+since the 1960s or earlier, when it was popularized by advertisements for <a
+href="/wiki/Letraset" title="Letraset">Letraset</a> transfer sheets. It was
+introduced to the <a href="/wiki/Information_Age" title="Information
+Age">Information Age</a> in the mid-1980s by <a href="/wiki/Aldus"
+title="Aldus">Aldus Corporation</a>, which employed it in graphics and word
+processing <a href="/wiki/Template_(word_processing)" title="Template (word
+processing)">templates</a> for its <a href="/wiki/Desktop_publishing"
+title="Desktop publishing">desktop publishing</a> program, <a
+href="/wiki/Adobe_PageMaker" title="Adobe PageMaker">PageMaker</a>, for the <a
+href="/wiki/Apple_Macintosh" title="Apple Macintosh" class="mw-redirect">Apple
+Macintosh</a>.<sup id="cite_ref-SDop_1-0" class="reference"><a
+href="#cite_note-SDop-1"><span>[</span>1<span>]</span></a></sup></p>
+]]>
+	</text>
+	<expected>
+<![CDATA[
+<p>In <a href="/wiki/Publishing" title="Publishing">publishing</a> and <a href="/wiki/Graphic_design" title="Graphic design">graphic design</a>, <b>lorem
+ipsum</b> (derived from Latin <i>dolorem ipsum</i>, translated as "pain itself")
+is a <a href="/wiki/Filler_text" title="Filler text">filler text</a> commonly
+used to demonstrate the <a href="/wiki/Graphic" title="Graphic" class="mw-redirect">graphic</a> elements of a document or visual presentation.
+Replacing meaningful content with placeholder text allows viewers to focus on
+graphic aspects such as <a href="/wiki/Font" title="Font">font</a>, <a href="/wiki/Typography" title="Typography">typography</a>, and <a href="/wiki/Page_layout" title="Page layout">page layout</a> without being
+distracted by the content. It also reduces the need for the designer to come up
+with meaningful text, as they can instead use <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">quickly-generated</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">quickly-generated-def</span></span></span> lorem ipsum.</p>
+<p>The lorem ipsum text is typically a scrambled section of <i><a href="/wiki/De_finibus_bonorum_et_malorum" title="De finibus bonorum et
+malorum">De finibus bonorum et malorum</a></i>, a 1st-century BC <a href="/wiki/Latin" title="Latin">Latin</a> text by <a href="/wiki/Cicero" title="Cicero">Cicero</a>, with words altered, added, and removed to make it
+nonsensical, improper Latin.</p> <p>A variation of the ordinary lorem ipsum text
+has been used in <a href="/wiki/Typesetting" title="Typesetting">typesetting</a>
+since the 1960s or earlier, when it was popularized by advertisements for <a href="/wiki/Letraset" title="Letraset">Letraset</a> transfer sheets. It was
+introduced to the <a href="/wiki/Information_Age" title="Information
+Age">Information Age</a> in the <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">mid-1980s</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">mid-1980s-def</span></span></span> by <a href="/wiki/Aldus" title="Aldus">Aldus Corporation</a>, which employed it in graphics and word
+processing <a href="/wiki/Template_(word_processing)" title="Template (word
+processing)">templates</a> for its <a href="/wiki/Desktop_publishing" title="Desktop publishing">desktop publishing</a> program, <a href="/wiki/Adobe_PageMaker" title="Adobe PageMaker">PageMaker</a>, for the <a href="/wiki/Apple_Macintosh" title="Apple Macintosh" class="mw-redirect">Apple
+Macintosh</a>.<sup id="cite_ref-SDop_1-0" class="reference"><a href="#cite_note-SDop-1"><span>[</span>1<span>]</span></a></sup></p>
+]]>
+	</expected>
+	<glossary-entry>
+		<!-- Do not mark up link texts -->
+		<term>publishing</term>
+		<definition>publishing-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Do not mark up attribute values of HTML tags -->
+		<term>layout</term>
+		<definition>layout-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Mark up normal text -->
+		<term>mid-1980s</term>
+		<definition>mid-1980s-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Do not mark up attribute names -->
+		<term>title</term>
+		<definition>title-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Do not mark up html tag names -->
+		<term>sup</term>
+		<definition>sup-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Do not mark up html tags -->
+		<term><![CDATA[<p>]]></term>
+		<definition><![CDATA[<p>]]></definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- Mark up normal text -->
+		<term>quickly-generated</term>
+		<definition>quickly-generated-def</definition>
+	</glossary-entry>
+</testcase>

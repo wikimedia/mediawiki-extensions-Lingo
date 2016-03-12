@@ -1,0 +1,35 @@
+<!-- Checks correct markup of non-latin text. -->
+<testcase>
+	<text>
+<![CDATA[
+Эю элььэефэнд торквюатоз хёз, нэ шэа щольыат рэгяонэ, ан кюм лорэм тамквюам. Прё
+фырре долорэм факилиз но. Ед декам консэквюат дэчырюёжжэ мэль. Квуй ат ыррор
+емпэтюсъ зигнёфэрумквюы, шэа квюод аффэрт альяквюам эи. Мэя мёнём заэпы вокябюч
+эа. Примич пыртенакж вяш эи.
+]]>
+	</text>
+	<expected>
+<![CDATA[
+Эю элььэефэнд <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">торквюатоз</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">торквюатоз-def</span></span></span> хёз, нэ шэа щольыат рэгяонэ, ан кюм лорэм тамквюам. Прё
+фырре долорэм факилиз <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">но</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">но-def</span></span></span>. Ед <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">декам</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">декам-def</span></span></span> консэквюат дэчырюёжжэ мэль. Квуй ат ыррор
+емпэтюсъ зигнёфэрумквюы, шэа квюод аффэрт альяквюам эи. Мэя <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">мёнём</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">мёнём-def</span></span></span> заэпы вокябюч
+эа. Примич пыртенакж вяш эи.
+]]>
+	</expected>
+	<glossary-entry>
+		<term>торквюатоз</term>
+		<definition>торквюатоз-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<term>декам</term>
+		<definition>декам-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<term>мёнём</term>
+		<definition>мёнём-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<term>но</term>
+		<definition>но-def</definition>
+	</glossary-entry>
+</testcase>
