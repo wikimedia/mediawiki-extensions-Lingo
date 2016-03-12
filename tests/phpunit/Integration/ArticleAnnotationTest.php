@@ -30,6 +30,7 @@ use Lingo\Tests\Util\XmlFileProvider;
 
 use Parser;
 use ParserOptions;
+use User;
 
 use PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls;
 use ReflectionClass;
@@ -72,7 +73,7 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 		$parser = new Parser();
 		$parser->startExternalParse(
 			/* Title         */	null,
-			/* ParserOptions */	ParserOptions::newFromAnon(),
+			/* ParserOptions */	ParserOptions::newFromUser( new User() ),
 			/* $outputType = */	Parser::OT_HTML,
 			/* $clearState = */	true
 		);
