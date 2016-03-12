@@ -131,7 +131,7 @@ class LingoParser {
 				// Try cache first
 				global $wgexLingoCacheType;
 				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
-				$cachekey = wfMemcKey( 'ext', 'lingo', 'lingotree' );
+				$cachekey = wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION );
 				$cachedLingoTree = $cache->get( $cachekey );
 
 				// cache hit?

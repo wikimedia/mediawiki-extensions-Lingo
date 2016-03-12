@@ -50,6 +50,8 @@ namespace Lingo;
  */
 class Tree {
 
+	const TREE_VERSION = 2;
+
 	private $mTree = array();
 	private $mList = array();
 	private $mMinLength = 1000;
