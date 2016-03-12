@@ -93,6 +93,13 @@ class LingoParser {
 	}
 
 	/**
+	 * @return string
+	 */
+	private static function getCacheKey() {
+		return wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION );
+	}
+
+	/**
 	 *
 	 * @return Backend the backend used by the parser
 	 */
@@ -131,7 +138,7 @@ class LingoParser {
 				// Try cache first
 				global $wgexLingoCacheType;
 				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
-				$cachekey = wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION );
+				$cachekey = self::getCacheKey();
 				$cachedLingoTree = $cache->get( $cachekey );
 
 				// cache hit?
@@ -140,13 +147,19 @@ class LingoParser {
 					wfDebug( "Cache hit: Got lingo tree from cache.\n" );
 					$this->mLingoTree = &$cachedLingoTree;
 
+					wfDebug( "Re-cached lingo tree.\n" );
 				} else {
 
 					wfDebug( "Cache miss: Lingo tree not found in cache.\n" );
 					$this->mLingoTree =& $this->buildLingo();
-					$cache->set( $cachekey, $this->mLingoTree );
 					wfDebug( "Cached lingo tree.\n" );
 				}
+
+				// Keep for one month
+				// Limiting the cache validity will allow to purge stale cache
+				// entries inserted by older versions after one month
+				$cache->set( $cachekey, $this->mLingoTree, 60 * 60 * 24 * 30 );
+
 			} else {
 				wfDebug( "Caching of lingo tree disabled.\n" );
 				$this->mLingoTree =& $this->buildLingo();
@@ -351,7 +364,7 @@ class LingoParser {
 
 		global $wgexLingoCacheType;
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
-		$cache->delete( wfMemcKey( 'ext', 'lingo', 'lingotree' ) );
+		$cache->delete( self::getCacheKey() );
 
 	}
 

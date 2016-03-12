@@ -7,6 +7,9 @@ Released on tbd
 Changes:
 * Improved test coverage
 
+Fixes:
+* Outdated cache entries are not loaded anymore
+
 ### Lingo 2.0.0
 
 Released on 09-Mar-2016
