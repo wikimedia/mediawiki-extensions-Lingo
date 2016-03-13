@@ -40,14 +40,11 @@ namespace Lingo\Tests\Unit;
  */
 class BackendTest extends \PHPUnit_Framework_TestCase {
 
-	public function testUseCache() {
-
-		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
-
-		$this->assertFalse( $stub->useCache() );
-	}
-
-	public function testGetMessageLog() {
+	/**
+	 * @covers ::__construct
+	 * @covers ::getMessageLog
+	 */
+	public function testGetMessageLog_withLogGivenToConstructor() {
 
 		$log = $this->getMock( '\Lingo\MessageLog' );
 		$logRef = &$log;
@@ -63,4 +60,51 @@ class BackendTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( $log, $stub->getMessageLog() );
 	}
 
+	/**
+	 * @covers ::__construct
+	 * @covers ::getMessageLog
+	 */
+	public function testGetMessageLog_withoutLogGivenToConstructor() {
+
+		$stub = $this->getMockBuilder( '\Lingo\Backend' )
+			->disableOriginalConstructor()
+			->getMockForAbstractClass();
+
+		$reflected = new \ReflectionClass( '\Lingo\Backend' );
+		$constructor = $reflected->getConstructor();
+		$constructor->invoke( $stub );
+
+		$this->assertInstanceOf( '\Lingo\MessageLog', $stub->getMessageLog() );
+	}
+
+	/**
+	 * @covers ::useCache
+	 */
+	public function testUseCache() {
+
+		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
+
+		$this->assertFalse( $stub->useCache() );
+	}
+
+	/**
+	 * @covers ::setLingoParser
+	 * @covers ::getLingoParser
+	 */
+	public function testSetGetLingoParser() {
+		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
+		$parserMock = $this->getMock( '\Lingo\LingoParser' );
+
+		$stub->setLingoParser( $parserMock );
+		$this->assertEquals( $parserMock, $stub->getLingoParser() );
+	}
+
+	/**
+	 * @covers ::setLingoParser
+	 * @covers ::getLingoParser
+	 */
+	public function testGetLingoParser_withoutParserGiven() {
+		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
+		$this->assertInstanceOf( '\Lingo\LingoParser', $stub->getLingoParser() );
+	}
 }

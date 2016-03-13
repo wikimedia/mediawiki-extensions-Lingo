@@ -26,6 +26,8 @@
 
 namespace Lingo\Tests\Unit;
 
+use Lingo\BasicBackend;
+
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
@@ -49,6 +51,57 @@ class BasicBackendTest extends BackendTest {
 			'\Lingo\BasicBackend',
 			new \Lingo\BasicBackend()
 		);
+	}
+
+	/**
+	 * @covers ::purgeCache
+	 */
+	public function testPurgeCache() {
+
+		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
+
+		$title = $this->getMock( 'Title' );
+
+		$wikiPage = $this->getMockBuilder( 'WikiPage')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$lingoParser = $this->getMock( 'Lingo\LingoParser');
+
+		$testObject = $this->getMockBuilder( 'Lingo\BasicBackend' )
+			->setMethods( array( 'getLingoParser') )
+			->getMock();
+
+
+		// Assert that the wikipage is tested against the wgexLingoPage:
+		// $wikipage->getTitle()->getText() === $page
+
+		$wikiPage->expects( $this->once() )
+			->method( 'getTitle' )
+			->willReturn( $title );
+
+		$title->expects( $this->once() )
+			-> method( 'getText' )
+			-> willReturn( 'SomePage' );
+
+		// Assert that purgeGlossaryFromCache is called
+		$lingoParser->expects( $this->once() )
+			->method( 'purgeGlossaryFromCache' );
+
+
+		$testObject->expects( $this->once() )
+			-> method( 'getLingoParser' )
+			-> willReturn( $lingoParser );
+
+		$this->assertTrue( $testObject->purgeCache( $wikiPage ) );
+	}
+
+	/**
+	 * @covers ::useCache
+	 */
+	public function testUseCache() {
+		$backend = new BasicBackend();
+		$this->assertTrue( $backend->useCache() );
 	}
 
 }

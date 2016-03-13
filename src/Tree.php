@@ -70,7 +70,7 @@ class Tree {
 		} else {
 
 			$matches = array();
-			preg_match_all( LingoParser::$regex, $term, $matches );
+			preg_match_all( LingoParser::getInstance()->regex, $term, $matches );
 
 			$elt = $this->addElement( $matches[ 0 ], $term, $definition );
 			$this->mList[ $term ] = &$elt[ -1 ];

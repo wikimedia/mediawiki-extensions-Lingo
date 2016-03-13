@@ -36,6 +36,7 @@ namespace Lingo;
 abstract class Backend {
 
 	protected $mMessageLog;
+	protected $mLingoParser;
 
 	/**
 	 * Lingo\Backend constructor.
@@ -43,18 +44,38 @@ abstract class Backend {
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 
-		if ( !$messages ) {
-			$this->mMessageLog = new MessageLog();
-		} else {
-			$this->mMessageLog = $messages;
-		}
+		$this->mMessageLog = $messages;
 	}
 
 	/**
 	 * @return MessageLog
 	 */
 	public function getMessageLog() {
+
+		if ( !$this->mMessageLog ) {
+			$this->mMessageLog = new MessageLog();
+		}
+
 		return $this->mMessageLog;
+	}
+
+	/**
+	 * @return LingoParser
+	 */
+	public function getLingoParser() {
+
+		if ( !$this->mLingoParser ) {
+			$this->mLingoParser = LingoParser::getInstance();
+		}
+
+		return $this->mLingoParser;
+	}
+
+	/**
+	 * @param LingoParser $mLingoParser
+	 */
+	public function setLingoParser( LingoParser $mLingoParser ) {
+		$this->mLingoParser = $mLingoParser;
 	}
 
 	/**

@@ -90,7 +90,7 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );
 
-		LingoParser::parse( $parser, $text );
+		$lingoParser->parse( $parser, $text );
 
 		$this->assertEquals( $expected, $text );
 

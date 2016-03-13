@@ -29,12 +29,14 @@ namespace Lingo;
 
 use ApprovedRevs;
 use ContentHandler;
+use Hooks;
 use Page;
 use Parser;
 use ParserOptions;
 use Revision;
 use Title;
 use User;
+use WikiPage;
 
 /**
  * The Lingo\BasicBackend class.
@@ -48,59 +50,26 @@ class BasicBackend extends Backend {
 	/**
 	 * Lingo\BasicBackend constructor.
 	 * @param MessageLog|null $messages
+	 * @param LingoParser $lingoParser
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 
-		global $wgRequest;
-
-		$page = self::getLingoPage();
-
 		parent::__construct( $messages );
 
-		// Get Terminology page
-		$title = Title::newFromText( $page );
-		if ( $title->getInterwiki() ) {
-			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $page )->inContentLanguage()->text() );
-			return;
-		}
+		$this->registerHooks();
 
-		// This is a hack special-casing the submitting of the terminology
-		// page itself. In this case the Revision is not up to date when we get
-		// here, i.e. $rev->getText() would return outdated Text.
-		// This hack takes the text directly out of the data from the web request.
-		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
-			&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID()
-		) {
+	}
 
-			$content = $wgRequest->getVal( 'wpTextbox1' );
-
-		} else {
-			$rev = $this->getRevision( $title );
-			if ( !$rev ) {
-				$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $page )->inContentLanguage()->text() );
-				return;
-			}
-
-			$content = ContentHandler::getContentText( $rev->getContent() );
-
-		}
-
-		$parser = new Parser;
-		// expand templates and variables in the text, producing valid, static
-		// wikitext have to use a new anonymous user to avoid any leakage as
-		// Lingo is caching only one user-independent glossary
-		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
-
-		$this->mArticleLines = array_reverse( explode( "\n", $content ) );
+	protected function registerHooks() {
+		Hooks::register( 'ArticlePurge', array( $this, 'purgeCache' ) );
+		Hooks::register( 'ArticleSave', array( $this, 'purgeCache' ) );
 	}
 
 	/**
-	 * @param $wgexLingoPage
 	 * @return string
 	 */
-	private static function getLingoPage() {
+	private function getLingoPage() {
 		global $wgexLingoPage;
-
 		return $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
 	}
 
@@ -117,6 +86,8 @@ class BasicBackend extends Backend {
 		static $term = null;
 		static $definitions = array();
 		static $ret = array();
+
+		$this->setArticleLines();
 
 		// find next valid line (yes, the assignation is intended)
 		while ( ( count( $ret ) == 0 ) && ( $entry = each( $this->mArticleLines ) ) ) {
@@ -184,16 +155,16 @@ class BasicBackend extends Backend {
 	/**
 	 * Initiates the purging of the cache when the Terminology page was saved or purged.
 	 *
-	 * @param Page $wikipage
+	 * @param WikiPage $wikipage
 	 * @return Bool
 	 */
-	public static function purgeCache( &$wikipage ) {
+	public function purgeCache( WikiPage &$wikipage ) {
 
-		$page = self::getLingoPage();
+		$page = $this->getLingoPage();
 
 		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $page ) ) {
 
-			LingoParser::purgeCache();
+			$this->getLingoParser()->purgeGlossaryFromCache();
 		}
 
 		return true;
@@ -209,5 +180,54 @@ class BasicBackend extends Backend {
 	 */
 	public function useCache() {
 		return true;
+	}
+
+	/**
+	 * @throws \MWException
+	 */
+	private function setArticleLines() {
+		global $wgRequest;
+
+		if ( $this->mArticleLines ) {
+			return;
+		}
+
+		$page = $this->getLingoPage();
+
+		// Get Terminology page
+		$title = Title::newFromText( $page );
+		if ( $title->getInterwiki() ) {
+			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $page )->inContentLanguage()->text() );
+			return;
+		}
+
+		// This is a hack special-casing the submitting of the terminology
+		// page itself. In this case the Revision is not up to date when we get
+		// here, i.e. $rev->getText() would return outdated Text.
+		// This hack takes the text directly out of the data from the web request.
+		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
+			&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID()
+		) {
+
+			$content = $wgRequest->getVal( 'wpTextbox1' );
+
+		} else {
+			$rev = $this->getRevision( $title );
+			if ( !$rev ) {
+				$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $page )->inContentLanguage()->text() );
+				return;
+			}
+
+			$content = ContentHandler::getContentText( $rev->getContent() );
+
+		}
+
+		$parser = new Parser;
+		// expand templates and variables in the text, producing valid, static
+		// wikitext have to use a new anonymous user to avoid any leakage as
+		// Lingo is caching only one user-independent glossary
+		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
+
+		$this->mArticleLines = array_reverse( explode( "\n", $content ) );
 	}
 }

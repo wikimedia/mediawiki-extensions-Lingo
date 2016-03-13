@@ -60,6 +60,7 @@
 		"LingoMagic": "src/Lingo.i18n.magic.php"
 	},
 	"AutoloadClasses": {
+		"Lingo\\Lingo": "/src/Lingo.php",
 		"Lingo\\Hooks": "/src/Hooks.php",
 		"Lingo\\LingoParser": "/src/LingoParser.php",
 		"Lingo\\Tree": "/src/Tree.php",
@@ -69,22 +70,6 @@
 		"Lingo\\MessageLog": "/src/MessageLog.php",
 		"Lingo\\Tests\\Util\\XmlFileProvider": "/tests/phpunit/Util/XmlFileProvider.php"
 	},
-	"Hooks": {
-		"ParserFirstCallInit": [
-			"Lingo\\Hooks::registerTags"
-		],
-		"ArticlePurge": [
-			"Lingo\\BasicBackend::purgeCache"
-		],
-		"ArticleSave": [
-			"Lingo\\BasicBackend::purgeCache"
-		],
-		"ParserAfterParse": [
-			"Lingo\\Hooks::parse"
-		]
-	},
-	"ExtensionFunctions": [
-		"Lingo\\Hooks::initExtension"
-	],
+	"callback": "Lingo\\Lingo::initExtension",
 	"manifest_version": 1
 }

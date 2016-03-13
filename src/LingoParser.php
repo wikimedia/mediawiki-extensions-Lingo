@@ -51,16 +51,16 @@ class LingoParser {
 	private static $parserSingleton = null;
 
 	// The RegEx to split a chunk of text into words
-	public static $regex = null;
+	public $regex = null;
 
 	/**
 	 * Lingo\LingoParser constructor.
 	 * @param MessageLog|null $messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
-		global $wgexLingoBackend;
-
-		$this->setBackend( new $wgexLingoBackend( $messages ) );
+		// The RegEx to split a chunk of text into words
+		// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
+		$this->regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 	}
 
 	/**
@@ -69,9 +69,28 @@ class LingoParser {
 	 * @param string $text
 	 * @return Boolean
 	 */
-	public static function parse( Parser &$parser, &$text ) {
+	public function parse( Parser &$parser, &$text ) {
 
-		self::getInstance()->realParse( $parser, $text );
+		global $wgexLingoUseNamespaces;
+
+		$title = $parser->getTitle();
+
+		// parse if
+		if ( !isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) && // __NOGLOSSARY__ not present and
+			(
+				!$title || // title not set or
+				!isset( $wgexLingoUseNamespaces[ $title->getNamespace() ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
+				$wgexLingoUseNamespaces[ $title->getNamespace() ] // namespace explicitly allowed
+			)
+		) {
+
+			// unstrip strip items of the 'general' group
+			// this will be done again by parse when this hook returns, but it should not hurt to do this twice
+			// Only problem is with other hook handlers that might not expect strip items to be unstripped already
+			$text = $parser->mStripState->unstripGeneral( $text );
+			$this->realParse( $parser, $text );
+		}
+
 
 		return true;
 	}
@@ -84,9 +103,6 @@ class LingoParser {
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
 
-			// The RegEx to split a chunk of text into words
-			// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
-			self::$regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 		}
 
 		return self::$parserSingleton;
@@ -96,14 +112,19 @@ class LingoParser {
 	 * @return string
 	 */
 	private static function getCacheKey() {
-		return wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION );
+		return wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( self::getInstance()->getBackend() ) );
 	}
 
 	/**
-	 *
 	 * @return Backend the backend used by the parser
+	 * @throws \MWException
 	 */
 	public function getBackend() {
+
+		if ( $this->mLingoBackend === null ) {
+			throw new \MWException( 'No Lingo backend available!' );
+		}
+
 		return $this->mLingoBackend;
 	}
 
@@ -138,7 +159,7 @@ class LingoParser {
 				// Try cache first
 				global $wgexLingoCacheType;
 				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
-				$cachekey = self::getCacheKey();
+				$cachekey = $this->getCacheKey();
 				$cachedLingoTree = $cache->get( $cachekey );
 
 				// cache hit?
@@ -244,7 +265,7 @@ class LingoParser {
 
 			$matches = array();
 			preg_match_all(
-				self::$regex,
+				$this->regex,
 				$el->nodeValue,
 				$matches,
 				PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER
@@ -342,21 +363,33 @@ class LingoParser {
 
 	/**
 	 * Purges the lingo tree from the cache.
+	 *
+	 * @deprecated 2.0.2
 	 */
 	public static function purgeCache() {
+
+		self::getInstance()->purgeGlossaryFromCache();
+	}
+
+	/**
+	 * Purges the lingo tree from the cache.
+	 *
+	 * @since 2.0.2
+	 */
+	public function purgeGlossaryFromCache() {
 
 		global $wgexLingoCacheType;
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 		$cache->delete( self::getCacheKey() );
-
 	}
 
 	/**
 	 * @since 2.0.1
 	 * @param Backend $backend
 	 */
-	public function setBackend( $backend ) {
+	public function setBackend( Backend $backend ) {
 		$this->mLingoBackend = $backend;
+		$backend->setLingoParser( $this );
 	}
 }
 
