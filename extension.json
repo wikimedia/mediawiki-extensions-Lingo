@@ -61,7 +61,6 @@
 	},
 	"AutoloadClasses": {
 		"Lingo\\Lingo": "/src/Lingo.php",
-		"Lingo\\Hooks": "/src/Hooks.php",
 		"Lingo\\LingoParser": "/src/LingoParser.php",
 		"Lingo\\Tree": "/src/Tree.php",
 		"Lingo\\Element": "/src/Element.php",
