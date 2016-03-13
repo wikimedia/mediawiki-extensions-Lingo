@@ -30,7 +30,6 @@ namespace Lingo;
 use ApprovedRevs;
 use ContentHandler;
 use Hooks;
-use Page;
 use Parser;
 use ParserOptions;
 use Revision;
@@ -45,12 +44,11 @@ use WikiPage;
  */
 class BasicBackend extends Backend {
 
-	protected $mArticleLines = array();
+	protected $mArticleLines = null;
 
 	/**
 	 * Lingo\BasicBackend constructor.
 	 * @param MessageLog|null $messages
-	 * @param LingoParser $lingoParser
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 
@@ -188,7 +186,7 @@ class BasicBackend extends Backend {
 	private function setArticleLines() {
 		global $wgRequest;
 
-		if ( $this->mArticleLines ) {
+		if ( $this->mArticleLines !== null ) {
 			return;
 		}
 

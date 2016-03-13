@@ -77,12 +77,6 @@ class Lingo {
 				}
 
 			}
-
-//			$hookRegistry = new HookRegistry(
-//				ApplicationFactory::getInstance()->getStore()
-//			);
-//
-//			$hookRegistry->register();
 		};
 	}
 
