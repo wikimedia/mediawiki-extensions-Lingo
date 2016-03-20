@@ -71,18 +71,8 @@ class LingoParser {
 	 */
 	public function parse( Parser &$parser, &$text ) {
 
-		global $wgexLingoUseNamespaces;
-
-		$title = $parser->getTitle();
-
 		// parse if
-		if ( !isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) && // __NOGLOSSARY__ not present and
-			(
-				!$title || // title not set or
-				!isset( $wgexLingoUseNamespaces[ $title->getNamespace() ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
-				$wgexLingoUseNamespaces[ $title->getNamespace() ] // namespace explicitly allowed
-			)
-		) {
+		if ( $this->shouldParse( $parser ) ) {
 
 			// unstrip strip items of the 'general' group
 			// this will be done again by parse when this hook returns, but it should not hurt to do this twice
@@ -90,7 +80,6 @@ class LingoParser {
 			$text = $parser->mStripState->unstripGeneral( $text );
 			$this->realParse( $parser, $text );
 		}
-
 
 		return true;
 	}
@@ -390,6 +379,24 @@ class LingoParser {
 	public function setBackend( Backend $backend ) {
 		$this->mLingoBackend = $backend;
 		$backend->setLingoParser( $this );
+	}
+
+	/**
+	 * @param Parser $parser
+	 * @return bool
+	 */
+	protected function shouldParse( Parser &$parser ) {
+		global $wgexLingoUseNamespaces;
+
+		$title = $parser->getTitle();
+		$namespace = $title->getNamespace();
+
+		return !isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) && // __NOGLOSSARY__ not present and
+		(
+			!$title || // title not set (i.e. when text is outside the page content) or
+			!isset( $wgexLingoUseNamespaces[ $namespace ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
+			$wgexLingoUseNamespaces[ $namespace ] // namespace explicitly allowed
+		);
 	}
 }
 
