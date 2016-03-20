@@ -4,6 +4,8 @@
 	},
 	"lingo-desc": "Provides hover-over tool tips on pages from words defined on the [[$1]] page",
 	"lingo-terminologypagename": "Terminology",
-	"lingo-noterminologypage": "Page \"$1\" does not exist.",
-	"lingo-terminologypagenotlocal": "Page \"$1\" is not a local page."
+	"lingo-noterminologypage": "The terminology page \"$1\" does not exist.",
+	"lingo-notatextpage": "The terminology page \"$1\" is not a text page.",
+	"lingo-terminologypagenotlocal": "Page \"$1\" is not a local page.",
+	"lingo-noapprovedrevs": "Support for ApprovedRevs is enabled in Lingo. But ApprovedRevs was not found."
 }

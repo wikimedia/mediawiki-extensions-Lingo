@@ -62,27 +62,27 @@ class BasicBackendTest extends BackendTest {
 
 		$title = $this->getMock( 'Title' );
 
-		$wikiPage = $this->getMockBuilder( 'WikiPage')
+		$wikiPage = $this->getMockBuilder( 'WikiPage' )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$lingoParser = $this->getMock( 'Lingo\LingoParser');
+		$lingoParser = $this->getMock( 'Lingo\LingoParser' );
 
 		$testObject = $this->getMockBuilder( 'Lingo\BasicBackend' )
-			->setMethods( array( 'getLingoParser') )
+			->setMethods( array( 'getLingoParser' ) )
 			->getMock();
 
 
-		// Assert that the wikipage is tested against the wgexLingoPage:
-		// $wikipage->getTitle()->getText() === $page
+		// Assert that the wikipage is tested against the wgexLingoPage, i.e.
+		// that $wikipage->getTitle()->getText() === $page is tested
 
 		$wikiPage->expects( $this->once() )
 			->method( 'getTitle' )
 			->willReturn( $title );
 
 		$title->expects( $this->once() )
-			-> method( 'getText' )
-			-> willReturn( 'SomePage' );
+			->method( 'getText' )
+			->willReturn( 'SomePage' );
 
 		// Assert that purgeGlossaryFromCache is called
 		$lingoParser->expects( $this->once() )
@@ -90,8 +90,8 @@ class BasicBackendTest extends BackendTest {
 
 
 		$testObject->expects( $this->once() )
-			-> method( 'getLingoParser' )
-			-> willReturn( $lingoParser );
+			->method( 'getLingoParser' )
+			->willReturn( $lingoParser );
 
 		$this->assertTrue( $testObject->purgeCache( $wikiPage ) );
 	}
@@ -102,6 +102,283 @@ class BasicBackendTest extends BackendTest {
 	public function testUseCache() {
 		$backend = new BasicBackend();
 		$this->assertTrue( $backend->useCache() );
+	}
+
+	/**
+	 * @covers ::next
+	 * @dataProvider provideForTestNext
+	 */
+	public function testNext( $lingoPageText, $expectedResults ) {
+
+		$backend = $this->getTestObject( $lingoPageText );
+		foreach ( $expectedResults as $expected ) {
+			$this->assertEquals( $expected, $backend->next() );
+		}
+	}
+
+	public function testNext_LingoPageIsInterwiki() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', 'someInterwiki' );
+		$backend->getMessageLog()->expects( $this->once() )
+			->method( 'addError' )
+			->willReturn( null );
+
+		$this->assertNull( $backend->next() );
+	}
+
+	public function testNext_LingoPageWasJustEdited() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'submit' );
+		$this->assertEquals( array( 'JST', 'Just saved text', null, null ), $backend->next() );
+	}
+
+	public function testNext_LingoPageDoesNotExist() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', null, false );
+		$backend->getMessageLog()->expects( $this->once() )
+			->method( 'addWarning' )
+			->willReturn( null );
+
+		$this->assertEquals( null, $backend->next() );
+	}
+
+	public function testNext_LingoPageNotAccessible() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, null );
+		$this->assertEquals( null, $backend->next() );
+	}
+
+	public function testNext_LingoPageIsNotATextPage() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, 'This is not a TextContent object' );
+		$backend->getMessageLog()->expects( $this->once() )
+			->method( 'addError' )
+			->willReturn( null );
+
+		$this->assertEquals( null, $backend->next() );
+	}
+
+	public function testNext_ApprovedRevsEnabledButNotInstalled() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
+		$backend->getMessageLog()->expects( $this->once() )
+			->method( 'addWarning' )
+			->willReturn( null );
+
+		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
+
+		$this->assertEquals( array( 'SOT', 'Some old text', null, null ), $backend->next() );
+	}
+
+	public function testNext_ApprovedRevsEnabledAndInstalled() {
+
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
+
+		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
+		define( 'APPROVED_REVS_VERSION', '42' );
+
+		$this->assertEquals( array( 'SAT', 'Some approved text', null, null ), $backend->next() );
+	}
+
+
+	/**
+	 * @return array
+	 */
+	public function provideForTestNext() {
+		return array(
+
+			// Empty page
+			array(
+				'',
+				array( null )
+			),
+
+			// Simple entries
+			array(
+<<<'TESTTEXT'
+;CIP:Common image point
+;CMP:Common midpoint
+TESTTEXT
+			,
+				array(
+					array( 'CMP', 'Common midpoint', null, null ),
+					array( 'CIP', 'Common image point', null, null ),
+				),
+			),
+
+			// Simple entries with line break
+			array(
+<<<'TESTTEXT'
+;CIP
+:Common image point
+;CMP
+:Common midpoint
+TESTTEXT
+			,
+				array(
+					array( 'CMP', 'Common midpoint', null, null ),
+					array( 'CIP', 'Common image point', null, null ),
+				),
+			),
+
+			// Two terms having the same definition
+			array(
+<<<'TESTTEXT'
+;CIP
+;CMP
+:Common midpoint
+TESTTEXT
+			,
+				array(
+					array( 'CMP', 'Common midpoint', null, null ),
+					array( 'CIP', 'Common midpoint', null, null ),
+				),
+			),
+
+			// One term having two definitions
+			array(
+<<<'TESTTEXT'
+;CIP
+:Common image point
+:Common midpoint
+TESTTEXT
+			,
+				array(
+					array( 'CIP', 'Common image point', null, null ),
+					array( 'CIP', 'Common midpoint', null, null ),
+				),
+			),
+
+			// Two terms sharing two definitions
+			array(
+<<<'TESTTEXT'
+;CIP
+;CMP
+:Common image point
+:Common midpoint
+TESTTEXT
+			,
+				array(
+					array( 'CMP', 'Common image point', null, null ),
+					array( 'CMP', 'Common midpoint', null, null ),
+					array( 'CIP', 'Common image point', null, null ),
+					array( 'CIP', 'Common midpoint', null, null ),
+				),
+			),
+
+			// Mixed entries and noise
+			array(
+<<<'TESTTEXT'
+;CIP:Common image point
+;CMP:Common midpoint
+
+;DIMO
+;DMO
+:Dip move-out
+
+== headline ==
+Sed ut perspiciatis unde; omnis iste natus error: sit voluptatem accusantium...
+
+;NMO:Normal move-out
+TESTTEXT
+			,
+				array(
+					array( 'NMO', 'Normal move-out', null, null ),
+					array( 'DMO', 'Dip move-out', null, null ),
+					array( 'DIMO', 'Dip move-out', null, null ),
+					array( 'CMP', 'Common midpoint', null, null ),
+					array( 'CIP', 'Common image point', null, null ),
+				),
+			),
+
+		);
+	}
+
+	/**
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
+		$messageLog = $this->getMock( 'Lingo\MessageLog' );
+		$messageLogRef =& $messageLog;
+
+		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
+			->disableOriginalConstructor()
+			->setMethods( array(
+				'getLatestRevisionFromTitle',
+				'getApprovedRevisionFromTitle',
+				'getTitleFromText',
+			) )
+			->getMock();
+
+		$reflected = new \ReflectionClass( '\Lingo\BasicBackend' );
+		$constructor = $reflected->getConstructor();
+		$constructor->invoke( $backend, $messageLogRef );
+
+		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
+
+		$lingoPageTitle = $this->getMock( 'Title' );
+		$lingoPageTitle->expects( $this->once() )
+			->method( 'getInterwiki' )
+			->willReturn( $interwiki );
+		$lingoPageTitle->expects( $this->any() )
+			->method( 'getArticleID' )
+			->willReturn( 'Foom' );
+
+		$backend->expects( $this->any() )
+			->method( 'getTitleFromText' )
+			->willReturn( $lingoPageTitle );
+
+		$request = $this->getMock( 'FauxRequest' );
+		$request->expects( $this->any() )
+			->method( 'getVal' )
+			->willReturnMap( array(
+				array( 'action', 'view', $action ), // action = submit
+				array( 'title', null, $lingoPageTitle ), // title = $lingoPageTitle
+				array( 'wpTextbox1', null, ';JST:Just saved text' )
+			) );
+
+		$GLOBALS[ 'wgRequest' ] = $request;
+
+		unset( $GLOBALS[ 'wgexLingoEnableApprovedRevs' ] );
+
+		$backend->expects( $this->any() )
+			->method( 'getLatestRevisionFromTitle' )
+			->willReturn( $this->getRevisionMock( $lingoPageText, $lingoPageRevision, $lingoPageContent ) );
+
+		$backend->expects( $this->any() )
+			->method( 'getApprovedRevisionFromTitle' )
+			->willReturn( $this->getRevisionMock( $lingoApprovedText ) );
+
+		return $backend;
+	}
+
+	/**
+	 * @param $lingoPageText
+	 * @param $lingoPageRevision
+	 * @param $lingoPageContent
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
+		if ( $lingoPageRevision === false ) {
+
+			if ( $lingoPageContent === false ) {
+				$lingoPageContent = $this->getMockBuilder( 'TextContent' )
+					->disableOriginalConstructor()
+					->getMock();
+				$lingoPageContent->expects( $this->any() )
+					->method( 'getNativeData' )
+					->willReturn( $lingoPageText );
+			}
+
+			$lingoPageRevision = $this->getMockBuilder( 'Revision' )
+				->disableOriginalConstructor()
+				->getMock();
+			$lingoPageRevision->expects( $this->any() )
+				->method( 'getContent' )
+				->willReturn( $lingoPageContent );
+			return $lingoPageRevision;
+		}
+		return $lingoPageRevision;
 	}
 
 }

@@ -33,6 +33,7 @@ use Hooks;
 use Parser;
 use ParserOptions;
 use Revision;
+use TextContent;
 use Title;
 use User;
 use WikiPage;
@@ -64,14 +65,6 @@ class BasicBackend extends Backend {
 	}
 
 	/**
-	 * @return string
-	 */
-	private function getLingoPage() {
-		global $wgexLingoPage;
-		return $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
-	}
-
-	/**
 	 * This function returns the next element. The element is an array of four
 	 * strings: Term, Definition, Link, Source. For the Lingo\BasicBackend Link
 	 * and Source are set to null. If there is no next element the function
@@ -85,33 +78,18 @@ class BasicBackend extends Backend {
 		static $definitions = array();
 		static $ret = array();
 
-		$this->setArticleLines();
+		$this->collectDictionaryLines();
 
-		// find next valid line (yes, the assignation is intended)
-		while ( ( count( $ret ) == 0 ) && ( $entry = each( $this->mArticleLines ) ) ) {
+		// loop backwards: accumulate definitions until term found
+		while ( ( count( $ret ) === 0 ) && ( $this->mArticleLines ) ) {
 
-			if ( empty( $entry[ 1 ] ) || ( $entry[ 1 ][ 0 ] !== ';' && $entry[ 1 ][ 0 ] !== ':' ) ) {
+			$line = array_pop( $this->mArticleLines );
+
+			if ( empty( $line ) || ( $line[ 0 ] !== ';' && $line[ 0 ] !== ':' ) ) {
 				continue;
 			}
 
-			$chunks = explode( ':', $entry[ 1 ], 2 );
-
-			// found a new definition?
-			if ( count( $chunks ) == 2 ) {
-
-				// wipe the data if its a totaly new term definition
-				if ( !empty( $term ) && count( $definitions ) > 0 ) {
-					$definitions = array();
-					$term = null;
-				}
-
-				$definitions[] = trim( $chunks[ 1 ] );
-			}
-
-			// found a new term?
-			if ( count( $chunks ) >= 1 && strlen( $chunks[ 0 ] ) >= 1 ) {
-				$term = trim( substr( $chunks[ 0 ], 1 ) );
-			}
+			$this->queueNextLine( $line, $term, $definitions );
 
 			if ( $term !== null ) {
 				foreach ( $definitions as $definition ) {
@@ -129,25 +107,132 @@ class BasicBackend extends Backend {
 	}
 
 	/**
+	 * @throws \MWException
+	 */
+	protected function collectDictionaryLines() {
+
+		if ( $this->mArticleLines !== null ) {
+			return;
+		}
+
+		// Get Terminology page
+		$dictionaryPageName = $this->getLingoPageName();
+		$dictionaryTitle = $this->getTitleFromText( $dictionaryPageName );
+
+		if ( $dictionaryTitle->getInterwiki() !== '' ) {
+			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $dictionaryPageName )->inContentLanguage()->text() );
+			return;
+		}
+
+		$rawContent = $this->getRawDictionaryContent( $dictionaryTitle );
+
+		// Expand templates and variables in the text, producing valid, static
+		// wikitext. Have to use a new anonymous user to avoid any leakage as
+		// Lingo is caching only one user-independent glossary
+		$parser = new Parser;
+		$content = $parser->preprocess( $rawContent, $dictionaryTitle, new ParserOptions( new User() ) );
+
+		$this->mArticleLines = explode( "\n", $content );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getLingoPageName() {
+		global $wgexLingoPage;
+		return $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
+	}
+
+	/**
+	 * @param Title $dictionaryTitle
+	 * @return null|string
+	 * @throws \MWException
+	 */
+	protected function getRawDictionaryContent( Title $dictionaryTitle ) {
+
+		global $wgRequest;
+
+		// This is a hack special-casing the submitting of the terminology page
+		// itself. In this case the Revision is not up to date when we get here,
+		// i.e. $rev->getText() would return outdated Text. This hack takes the
+		// text directly out of the data from the web request.
+		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit' &&
+			$this->getTitleFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $dictionaryTitle->getArticleID()
+		) {
+
+			return $wgRequest->getVal( 'wpTextbox1' );
+		}
+
+		$rev = $this->getRevisionFromTitle( $dictionaryTitle );
+
+		if ( $rev !== null ) {
+
+			$content = $rev->getContent();
+
+			if ( is_null( $content ) ) {
+				return '';
+			}
+
+			if ( $content instanceof TextContent ) {
+				return $content->getNativeData();
+			}
+
+			$this->getMessageLog()->addError( wfMessage( 'lingo-notatextpage', $dictionaryTitle->getFullText() )->inContentLanguage()->text() );
+
+		} else {
+
+			$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $dictionaryTitle->getFullText() )->inContentLanguage()->text() );
+		}
+
+		return '';
+	}
+
+	/**
 	 * Returns revision of the terms page.
 	 *
 	 * @param Title $title
-	 * @return Revision
+	 * @return null|Revision
 	 */
-	public function getRevision( $title ) {
+	protected function getRevisionFromTitle( Title $title ) {
 		global $wgexLingoEnableApprovedRevs;
 
 		if ( $wgexLingoEnableApprovedRevs ) {
 
 			if ( defined( 'APPROVED_REVS_VERSION' ) ) {
-				$rev_id = ApprovedRevs::getApprovedRevID( $title );
-				return Revision::newFromId( $rev_id );
-			} else {
-				wfDebug( 'Support for ApprovedRevs is enabled in Lingo. But ApprovedRevs was not found.\n' );
+				return $this->getApprovedRevisionFromTitle( $title );
 			}
+
+			$this->getMessageLog()->addWarning( wfMessage( 'lingo-noapprovedrevs' )->inContentLanguage()->text() );
 		}
 
-		return Revision::newFromTitle( $title );
+		return $this->getLatestRevisionFromTitle( $title );
+	}
+
+	/**
+	 * @param string $line
+	 * @param string $term
+	 * @param string[] $definitions
+	 */
+	protected function queueNextLine( $line, &$term, &$definitions ) {
+
+		$chunks = explode( ':', $line, 2 );
+
+		// found a new definition?
+		if ( count( $chunks ) === 2 ) {
+
+			// wipe the data if it's a totally new term definition
+			if ( !empty( $term ) && count( $definitions ) > 0 ) {
+				$definitions = array();
+				$term = null;
+			}
+
+			$definitions[] = trim( $chunks[ 1 ] );
+		}
+
+		// found a new term?
+		if ( count( $chunks ) >= 1 && strlen( $chunks[ 0 ] ) > 0 ) {
+			$term = trim( substr( $chunks[ 0 ], 1 ) );
+		}
 	}
 
 	/**
@@ -158,9 +243,7 @@ class BasicBackend extends Backend {
 	 */
 	public function purgeCache( WikiPage &$wikipage ) {
 
-		$page = $this->getLingoPage();
-
-		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $page ) ) {
+		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $this->getLingoPageName() ) ) {
 
 			$this->getLingoParser()->purgeGlossaryFromCache();
 		}
@@ -181,51 +264,29 @@ class BasicBackend extends Backend {
 	}
 
 	/**
-	 * @throws \MWException
+	 * @codeCoverageIgnore
+	 * @param $dictionaryPage
+	 * @return null|Title
 	 */
-	private function setArticleLines() {
-		global $wgRequest;
+	protected function getTitleFromText( $dictionaryPage ) {
+		return Title::newFromText( $dictionaryPage );
+	}
 
-		if ( $this->mArticleLines !== null ) {
-			return;
-		}
+	/**
+	 * @codeCoverageIgnore
+	 * @param Title $title
+	 * @return null|Revision
+	 */
+	protected function getApprovedRevisionFromTitle( Title $title ) {
+		return Revision::newFromId( ApprovedRevs::getApprovedRevID( $title ) );
+	}
 
-		$page = $this->getLingoPage();
-
-		// Get Terminology page
-		$title = Title::newFromText( $page );
-		if ( $title->getInterwiki() ) {
-			$this->getMessageLog()->addError( wfMessage( 'lingo-terminologypagenotlocal', $page )->inContentLanguage()->text() );
-			return;
-		}
-
-		// This is a hack special-casing the submitting of the terminology
-		// page itself. In this case the Revision is not up to date when we get
-		// here, i.e. $rev->getText() would return outdated Text.
-		// This hack takes the text directly out of the data from the web request.
-		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit'
-			&& Title::newFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $title->getArticleID()
-		) {
-
-			$content = $wgRequest->getVal( 'wpTextbox1' );
-
-		} else {
-			$rev = $this->getRevision( $title );
-			if ( !$rev ) {
-				$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $page )->inContentLanguage()->text() );
-				return;
-			}
-
-			$content = ContentHandler::getContentText( $rev->getContent() );
-
-		}
-
-		$parser = new Parser;
-		// expand templates and variables in the text, producing valid, static
-		// wikitext have to use a new anonymous user to avoid any leakage as
-		// Lingo is caching only one user-independent glossary
-		$content = $parser->preprocess( $content, $title, new ParserOptions( new User() ) );
-
-		$this->mArticleLines = array_reverse( explode( "\n", $content ) );
+	/**
+	 * @codeCoverageIgnore
+	 * @param Title $title
+	 * @return null|Revision
+	 */
+	protected function getLatestRevisionFromTitle( Title $title ) {
+		return Revision::newFromTitle( $title );
 	}
 }
