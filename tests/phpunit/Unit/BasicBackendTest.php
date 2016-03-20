@@ -270,7 +270,7 @@ TESTTEXT
 			array(
 <<<'TESTTEXT'
 ;CIP:Common image point
-;CMP:Common midpoint
+; CMP : Common midpoint
 
 ;DIMO
 ;DMO

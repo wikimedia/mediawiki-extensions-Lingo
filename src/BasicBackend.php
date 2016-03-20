@@ -28,7 +28,6 @@
 namespace Lingo;
 
 use ApprovedRevs;
-use ContentHandler;
 use Hooks;
 use Parser;
 use ParserOptions;
@@ -230,7 +229,7 @@ class BasicBackend extends Backend {
 		}
 
 		// found a new term?
-		if ( count( $chunks ) >= 1 && strlen( $chunks[ 0 ] ) > 0 ) {
+		if ( strlen( trim( $chunks[ 0 ] ) ) > 1 ) {
 			$term = trim( substr( $chunks[ 0 ], 1 ) );
 		}
 	}
@@ -266,10 +265,10 @@ class BasicBackend extends Backend {
 	/**
 	 * @codeCoverageIgnore
 	 * @param $dictionaryPage
-	 * @return null|Title
+	 * @return Title
 	 */
 	protected function getTitleFromText( $dictionaryPage ) {
-		return Title::newFromText( $dictionaryPage );
+		return Title::newFromTextThrow( $dictionaryPage );
 	}
 
 	/**
