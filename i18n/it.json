@@ -6,6 +6,8 @@
 	},
 	"lingo-desc": "Fornisce suggerimenti al passaggio del mouse per le parole definite alla pagina [[$1]]",
 	"lingo-terminologypagename": "Terminologia",
-	"lingo-noterminologypage": "La pagina \"$1\" non esiste.",
-	"lingo-terminologypagenotlocal": "La pagina \"$1\" non è una pagina locale."
+	"lingo-noterminologypage": "La pagina di terminologia \"$1\" non esiste.",
+	"lingo-notatextpage": "La pagina di terminologia \"$1\" non è una pagina di testo.",
+	"lingo-terminologypagenotlocal": "La pagina \"$1\" non è una pagina locale.",
+	"lingo-noapprovedrevs": "Supporto per ApprovedRevs è attivato in Lingo. Ma ApprovedRevs non è stato trovato."
 }

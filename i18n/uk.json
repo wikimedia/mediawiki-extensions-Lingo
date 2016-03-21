@@ -3,11 +3,14 @@
 		"authors": [
 			"Base",
 			"Steve.rusyn",
-			"SteveR"
+			"SteveR",
+			"Piramidion"
 		]
 	},
 	"lingo-desc": "Показує вспливаючі підказки при наведенні на слова, що вказані на сторінці [[$1]]",
 	"lingo-terminologypagename": "Термінологія",
-	"lingo-noterminologypage": "Сторінка «$1» не існує.",
-	"lingo-terminologypagenotlocal": "Сторінка «$1» не є локальною."
+	"lingo-noterminologypage": "Сторінка термінології «$1» не існує.",
+	"lingo-notatextpage": "Сторінка термінології «$1» не є текстовою сторінкою.",
+	"lingo-terminologypagenotlocal": "Сторінка «$1» не є локальною.",
+	"lingo-noapprovedrevs": "Підтримка для ApprovedRevs увімкнена в Lingo. Але ApprovedRevs не знайдено."
 }
