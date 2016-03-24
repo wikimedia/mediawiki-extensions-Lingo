@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Cainamarques"
+			"Cainamarques",
+			"Luk3"
 		]
 	},
 	"lingo-desc": "Fornece a exibição de legendas na passagem do cursor sobre palavras definidas na página [[$1]]",
 	"lingo-terminologypagename": "Terminologia",
-	"lingo-noterminologypage": "Página \"$1\" não existe.",
+	"lingo-noterminologypage": "A página de terminologia \"$1\" não existe.",
+	"lingo-notatextpage": "A página de terminologia \"$1\" não é uma página de texto.",
 	"lingo-terminologypagenotlocal": "A página \"$1\" não é uma página local."
 }
