@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Азат Хәлилов"
+			"Азат Хәлилов",
+			"Айсар"
 		]
 	},
-	"lingo-noterminologypage": "«$1» терминологияһының бите юҡ."
+	"lingo-noterminologypage": "«$1» терминологияһының бите юҡ.",
+	"lingo-notatextpage": "«$1» терминологик битендә текст юҡ."
 }

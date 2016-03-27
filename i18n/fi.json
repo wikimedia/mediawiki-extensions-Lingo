@@ -2,10 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Nedergard",
-			"Nike"
+			"Nike",
+			"Mikahama"
 		]
 	},
 	"lingo-terminologypagename": "Sanasto",
-	"lingo-noterminologypage": "Sivua ”$1” ei ole.",
+	"lingo-noterminologypage": "Terminologiasivua ”$1” ei ole.",
+	"lingo-notatextpage": "Terminologiasivu \"$1\" ei ole tekstisivu.",
 	"lingo-terminologypagenotlocal": "Sivu ”$1” ei ole paikallinen sivu."
 }

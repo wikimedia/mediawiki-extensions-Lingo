@@ -11,5 +11,7 @@
 	"lingo-desc": "Показывает всплывающую подсказку при наведении на слово, присутствующее на странице [[$1]]",
 	"lingo-terminologypagename": "Терминология",
 	"lingo-noterminologypage": "Страница терминологии «$1» не существует.",
-	"lingo-terminologypagenotlocal": "Страница «$1» — не локальная."
+	"lingo-notatextpage": "Терминологическая страница «$1» не является текстовой страницей.",
+	"lingo-terminologypagenotlocal": "Страница «$1» — не локальная.",
+	"lingo-noapprovedrevs": "Поддержка ApprovedRevs включена в Lingo. Однако ApprovedRevs не найдено."
 }
