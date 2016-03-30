@@ -84,25 +84,67 @@ class BasicBackend extends Backend {
 
 			$line = array_pop( $this->mArticleLines );
 
-			if ( empty( $line ) || ( $line[ 0 ] !== ';' && $line[ 0 ] !== ':' ) ) {
-				continue;
-			}
+			if ( $this->isValidGlossaryLine( $line ) ) {
 
-			$this->queueNextLine( $line, $term, $definitions );
+				list( $term, $definitions ) = $this->processNextGlossaryLine( $line, $term, $definitions );
 
-			if ( $term !== null ) {
-				foreach ( $definitions as $definition ) {
-					$ret[] = array(
-						Element::ELEMENT_TERM       => $term,
-						Element::ELEMENT_DEFINITION => $definition,
-						Element::ELEMENT_LINK       => null,
-						Element::ELEMENT_SOURCE     => null
-					);
+				if ( $term !== null ) {
+					$ret = $this->queueDefinitions( $definitions, $term );
 				}
 			}
 		}
 
 		return array_pop( $ret );
+	}
+
+	/**
+	 * @param string $line
+	 * @param string $term
+	 * @param string[] $definitions
+	 * @return array
+	 */
+	protected function processNextGlossaryLine( $line, $term, $definitions ) {
+
+		$chunks = explode( ':', $line, 2 );
+
+		// found a new definition?
+		if ( count( $chunks ) === 2 ) {
+
+			// wipe the data if it's a totally new term definition
+			if ( !empty( $term ) && count( $definitions ) > 0 ) {
+				$definitions = array();
+				$term = null;
+			}
+
+			$definitions[] = trim( $chunks[ 1 ] );
+		}
+
+		// found a new term?
+		if ( strlen( trim( $chunks[ 0 ] ) ) > 1 ) {
+			$term = trim( substr( $chunks[ 0 ], 1 ) );
+		}
+
+		return array( $term, $definitions );
+	}
+
+	/**
+	 * @param $definitions
+	 * @param $term
+	 * @return array
+	 */
+	protected function queueDefinitions( $definitions, $term ) {
+		$ret = array();
+
+		foreach ( $definitions as $definition ) {
+			$ret[] = array(
+				Element::ELEMENT_TERM       => $term,
+				Element::ELEMENT_DEFINITION => $definition,
+				Element::ELEMENT_LINK       => null,
+				Element::ELEMENT_SOURCE     => null
+			);
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -208,33 +250,6 @@ class BasicBackend extends Backend {
 	}
 
 	/**
-	 * @param string $line
-	 * @param string $term
-	 * @param string[] $definitions
-	 */
-	protected function queueNextLine( $line, &$term, &$definitions ) {
-
-		$chunks = explode( ':', $line, 2 );
-
-		// found a new definition?
-		if ( count( $chunks ) === 2 ) {
-
-			// wipe the data if it's a totally new term definition
-			if ( !empty( $term ) && count( $definitions ) > 0 ) {
-				$definitions = array();
-				$term = null;
-			}
-
-			$definitions[] = trim( $chunks[ 1 ] );
-		}
-
-		// found a new term?
-		if ( strlen( trim( $chunks[ 0 ] ) ) > 1 ) {
-			$term = trim( substr( $chunks[ 0 ], 1 ) );
-		}
-	}
-
-	/**
 	 * Initiates the purging of the cache when the Terminology page was saved or purged.
 	 *
 	 * @param WikiPage $wikipage
@@ -288,4 +303,13 @@ class BasicBackend extends Backend {
 	protected function getLatestRevisionFromTitle( Title $title ) {
 		return Revision::newFromTitle( $title );
 	}
+
+	/**
+	 * @param $line
+	 * @return bool
+	 */
+	protected function isValidGlossaryLine( $line ) {
+		return !empty( $line ) && ( $line[ 0 ] === ';' || $line[ 0 ] === ':' );
+	}
+
 }
