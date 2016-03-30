@@ -11,5 +11,6 @@
 	"lingo-noterminologypage": "Used as warning message. Parameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}\nSee also:\n* {{msg-mw|lingo-terminologypagenotlocal}}",
 	"lingo-notatextpage": "Used as error message. Parameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}\nSee also:\n* {{msg-mw|lingo-noterminologypage}}",
 	"lingo-terminologypagenotlocal": "Used as error message. Parameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}\nSee also:\n* {{msg-mw|lingo-noterminologypage}}",
-	"lingo-noapprovedrevs": "Used as warning message when the ApprovedRevs extension is not installed."
+	"lingo-noapprovedrevs": "Used as warning message when the ApprovedRevs extension is not installed.",
+	"lingo-invalidlinktarget" : "Used as error message when the link target $2 is not a valid wiki page name."
 }

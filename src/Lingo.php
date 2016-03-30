@@ -31,7 +31,7 @@ use MagicWord;
  * Class Lingo
  *
  * @package Lingo
- * @ingroup Skins
+ * @ingroup Lingo
  */
 class Lingo {
 

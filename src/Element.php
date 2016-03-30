@@ -28,11 +28,10 @@
  */
 
 namespace Lingo;
-use DOMDocument;
+
 use DOMElement;
 use DOMNode;
 use DOMText;
-use MWException;
 use Title;
 
 /**
@@ -49,7 +48,9 @@ class Element {
 	const ELEMENT_STYLE = 4;
 
 	const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
-	static private $mLinkTemplate = null;
+
+	const LINK_TEMPLATE_ID = 'LingoLink';
+
 	private $mFullDefinition = null;
 	private $mDefinitions = array();
 	private $mTerm = null;
@@ -77,10 +78,10 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param StashingDOMDocument $doc
 	 * @return DOMNode|DOMText
 	 */
-	public function getFullDefinition( DOMDocument &$doc ) {
+	public function getFullDefinition( StashingDOMDocument &$doc ) {
 
 		global $wgexLingoDisplayOnce;
 
@@ -95,10 +96,9 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
-	 * @return DOMDocument
+	 * @param StashingDOMDocument $doc
 	 */
-	private function buildFullDefinition( DOMDocument &$doc ) {
+	private function buildFullDefinition( StashingDOMDocument &$doc ) {
 
 		// only create if not yet created
 		if ( $this->mFullDefinition === null || $this->mFullDefinition->ownerDocument !== $doc ) {
@@ -121,21 +121,29 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
-	 *
+	 * @param StashingDOMDocument $doc
 	 * @return DOMElement
-	 * @throws MWException
+	 * @throws \MWException
 	 */
-	protected function getFullDefinitionAsLink( DOMDocument &$doc ) {
+	protected function getFullDefinitionAsLink( StashingDOMDocument &$doc ) {
 
 		// create Title object for target page
 		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
+
+		if ( !$target instanceof Title ) {
+			$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )->text();
+			$errorDefinition = array( self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' );
+			$this->addDefinition( $errorDefinition );
+			return $this->getFullDefinitionAsTooltip( $doc );
+		}
 
 		// create link element
 		$link = $doc->createElement( 'a', $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] );
 
 		// set the link target
 		$link->setAttribute( 'href', $target->getLinkUrl() );
+
+
 		$link = $this->addClassAttributeToLink( $target, $link );
 		$link = $this->addTitleAttributeToLink( $target, $link );
 
@@ -145,6 +153,7 @@ class Element {
 	/**
 	 * @param $target
 	 * @param $link
+	 * @return mixed
 	 */
 	protected function &addClassAttributeToLink( $target, &$link ) {
 
@@ -152,18 +161,19 @@ class Element {
 		// Cleanest would probably be to use Linker::link and parse it
 		// back into a DOMElement, but we are in a somewhat time-critical
 		// part here.
-		$classes = '';
+
+		// set style
+		$classes = string( $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 
 		if ( !$target->isKnown() ) {
-			$classes .= 'new ';
+			$classes .= ' new';
 		}
 
 		if ( $target->isExternal() ) {
-			$classes .= 'extiw ';
+			$classes .= ' extiw';
 		}
 
-		// set style
-		$classes .= $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
+		$classes = trim( $classes );
 
 		if ( $classes !== '' ) {
 			$link->setAttribute( 'class', $classes );
@@ -175,6 +185,7 @@ class Element {
 	/**
 	 * @param $target
 	 * @param $link
+	 * @return mixed
 	 */
 	protected function &addTitleAttributeToLink( $target, &$link ) {
 
@@ -191,12 +202,11 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
-	 *
+	 * @param StashingDOMDocument $doc
 	 * @return string
-	 * @throws MWException
+	 * @throws \MWException
 	 */
-	protected function getFullDefinitionAsTooltip( DOMDocument &$doc ) {
+	protected function getFullDefinitionAsTooltip( StashingDOMDocument &$doc ) {
 
 		// Wrap term and definition in <span> tags
 		$span = $doc->createElement( 'span' );
@@ -238,22 +248,27 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param StashingDOMDocument $doc
 	 * @return DOMNode
 	 */
-	private function getLinkTemplate( DOMDocument &$doc ) {
+	private function getLinkTemplate( StashingDOMDocument &$doc ) {
+
+		$mLinkTemplate = $doc->stashGet( self::LINK_TEMPLATE_ID );
+
 		// create template if it does not yet exist
-		if ( !self::$mLinkTemplate || ( self::$mLinkTemplate->ownerDocument !== $doc ) ) {
+		if ( $mLinkTemplate === null ) {
 			global $wgScriptPath;
 
 			$linkimage = $doc->createElement( 'img' );
 			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/Lingo/styles/linkicon.png' );
 
-			self::$mLinkTemplate = $doc->createElement( 'a' );
-			self::$mLinkTemplate->appendChild( $linkimage );
+			$mLinkTemplate = $doc->createElement( 'a' );
+			$mLinkTemplate->appendChild( $linkimage );
+
+			$doc->stashSet( $mLinkTemplate, self::LINK_TEMPLATE_ID );
 		}
 
-		return self::$mLinkTemplate->cloneNode( true );
+		return $mLinkTemplate->cloneNode( true );
 	}
 
 	/**

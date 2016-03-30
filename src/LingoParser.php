@@ -230,7 +230,7 @@ class LingoParser {
 		// Parse HTML from page
 		\MediaWiki\suppressWarnings();
 
-		$doc = new DOMDocument( '1.0', 'utf-8' );
+		$doc = new StashingDOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
 		\MediaWiki\restoreWarnings();
