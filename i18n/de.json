@@ -10,5 +10,6 @@
 	"lingo-noterminologypage": "Die Terminologieseite „$1“ ist nicht vorhanden.",
 	"lingo-notatextpage": "Die Terminologieseite „$1“ ist keine Textseite.",
 	"lingo-terminologypagenotlocal": "Seite „$1“ befindet sich nicht auf diesem Wiki.",
-	"lingo-noapprovedrevs": "Unterstützung für ApprovedRevs ist in Lingo aktiviert, aber ApprovedRevs wurde nicht gefunden."
+	"lingo-noapprovedrevs": "Unterstützung für ApprovedRevs ist in Lingo aktiviert, aber ApprovedRevs wurde nicht gefunden.",
+	"lingo-invalidlinktarget": "Ungültiges Linkziel für den Begriff „$1“: $2"
 }

@@ -10,5 +10,6 @@
 	"lingo-noterminologypage": "La page de terminologie « $1 » n’existe pas.",
 	"lingo-notatextpage": "La page de terminologie « $1 » n’est pas une page de texte.",
 	"lingo-terminologypagenotlocal": "Page « $1 » n'est pas une page locale.",
-	"lingo-noapprovedrevs": "Le support de ApprovedRevs est activé dans Lingo. Mais ApprovedRevs n’a pas été trouvé."
+	"lingo-noapprovedrevs": "Le support de ApprovedRevs est activé dans Lingo. Mais ApprovedRevs n’a pas été trouvé.",
+	"lingo-invalidlinktarget": "Cible de lien non valide pour le terme « $1 » : $2"
 }

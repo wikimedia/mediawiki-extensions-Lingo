@@ -10,5 +10,6 @@
 	"lingo-noterminologypage": "A páxina de terminoloxía \"$1\" non existe.",
 	"lingo-notatextpage": "A páxina de terminoloxía \"$1\" non é unha páxina de texto.",
 	"lingo-terminologypagenotlocal": "A páxina \"$1\" non é unha páxina local.",
-	"lingo-noapprovedrevs": "O soporte para ApprovedRevs está activado en Lingo. Pero non se atopou ApprovedRevs."
+	"lingo-noapprovedrevs": "O soporte para ApprovedRevs está activado en Lingo. Pero non se atopou ApprovedRevs.",
+	"lingo-invalidlinktarget": "Obxectivo de ligazón incorrecto para o termo \"$1\": $2"
 }
