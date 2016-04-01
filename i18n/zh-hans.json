@@ -10,5 +10,6 @@
 	"lingo-noterminologypage": "术语页面“$1”不存在。",
 	"lingo-notatextpage": "术语页面“$1”不是一个文本页面。",
 	"lingo-terminologypagenotlocal": "“$1”不是本地页面。",
-	"lingo-noapprovedrevs": "对ApprovedRevs的支持已在Lingo中启用。但找不到ApprovedRevs。"
+	"lingo-noapprovedrevs": "对ApprovedRevs的支持已在Lingo中启用。但找不到ApprovedRevs。",
+	"lingo-invalidlinktarget": "用于术语“$1”的链接目标无效：$2"
 }
