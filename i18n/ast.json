@@ -6,6 +6,9 @@
 	},
 	"lingo-desc": "Ufre gabitos nes páxines al pasar el mur per riba de les pallabres definíes na páxina [[$1]]",
 	"lingo-terminologypagename": "Terminoloxía",
-	"lingo-noterminologypage": "La páxina «$1» nun esiste.",
-	"lingo-terminologypagenotlocal": "La páxina «$1» nun ye una páxina llocal."
+	"lingo-noterminologypage": "La páxina de terminoloxía «$1» nun esiste.",
+	"lingo-notatextpage": "La páxina de terminoloxía «$1» nun ye una páxina de testu.",
+	"lingo-terminologypagenotlocal": "La páxina «$1» nun ye una páxina llocal.",
+	"lingo-noapprovedrevs": "L'encontu pa ApprovedRevs ta activáu en Lingo. Pero nun s'alcontró ApprovedRevs.",
+	"lingo-invalidlinktarget": "Destín d'enllaz inválidu pal términu \"$1\": $2"
 }
