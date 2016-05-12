@@ -13,5 +13,6 @@
 	"lingo-noterminologypage": "Страница терминологии «$1» не существует.",
 	"lingo-notatextpage": "Терминологическая страница «$1» не является текстовой страницей.",
 	"lingo-terminologypagenotlocal": "Страница «$1» — не локальная.",
-	"lingo-noapprovedrevs": "Поддержка ApprovedRevs включена в Lingo. Однако ApprovedRevs не найдено."
+	"lingo-noapprovedrevs": "Поддержка ApprovedRevs включена в Lingo. Однако ApprovedRevs не найдено.",
+	"lingo-invalidlinktarget": "Неверная цель ссылки для термина «$1»: $2"
 }
