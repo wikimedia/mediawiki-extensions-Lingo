@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Avjoska"
+			"Avjoska",
+			"Pikne"
 		]
 	},
 	"lingo-terminologypagename": "Terminoloogia",
-	"lingo-noterminologypage": "Lehekülge \"$1\" ei ole."
+	"lingo-noterminologypage": "Terminoloogia lehekülge \"$1\" ei ole."
 }
