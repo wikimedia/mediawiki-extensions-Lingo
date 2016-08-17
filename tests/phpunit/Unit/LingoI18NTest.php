@@ -26,8 +26,6 @@
 
 namespace Lingo\Tests\Unit;
 
-use JsonSchema\RefResolver;
-use JsonSchema\Uri\UriRetriever;
 use JsonSchema\Validator;
 
 /**
@@ -53,14 +51,9 @@ class LingoI18NTest extends \PHPUnit_Framework_TestCase {
 
 		$data = json_decode( json_encode( $defined_vars[ 'magicWords' ] ) );
 
-		$retriever = new UriRetriever;
-		$schema = $retriever->retrieve( 'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) );
-
-		$refResolver = new RefResolver( $retriever );
-		$refResolver->resolve( $schema, 'file://' . realpath( __DIR__ . '/../Fixture/' ) );
-
 		$validator = new Validator();
-		$validator->check( $data, $schema );
+		$validator->check( $data, (object) [ '$ref' =>
+			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ] );
 
 		// format error message
 		$errors = implode( '', array_map(
