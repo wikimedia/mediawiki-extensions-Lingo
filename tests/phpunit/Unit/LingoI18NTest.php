@@ -52,8 +52,8 @@ class LingoI18NTest extends \PHPUnit_Framework_TestCase {
 		$data = json_decode( json_encode( $defined_vars[ 'magicWords' ] ) );
 
 		$validator = new Validator();
-		$validator->check( $data, (object) [ '$ref' =>
-			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ] );
+		$validator->check( $data, (object) array( '$ref' =>
+			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ) );
 
 		// format error message
 		$errors = implode( '', array_map(
