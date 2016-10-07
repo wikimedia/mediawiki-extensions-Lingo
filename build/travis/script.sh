@@ -85,7 +85,8 @@ function installMediaWiki {
 
 function installExtensionViaComposerOnMediaWikiRoot {
 
-	composer require --prefer-source --dev --update-with-dependencies "phpunit/phpunit:~4.0" "mediawiki/lingo:dev-master"
+	# fix setup for older MW versions and install extension
+	composer require --prefer-source --dev --update-with-dependencies "phpunit/phpunit:~4.0" "justinrainbow/json-schema:~3.0" "mediawiki/lingo:dev-master"
 
 	cd extensions/Lingo
 
