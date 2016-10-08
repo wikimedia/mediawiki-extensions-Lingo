@@ -30,7 +30,8 @@
 			],
 			"dependencies": [
 				"ext.jquery.qtip"
-			]
+			],
+			"position": "bottom"
 		},
 		"ext.jquery.qtip": {
 			"scripts": [
