@@ -60,7 +60,7 @@ class BasicBackend extends Backend {
 
 	protected function registerHooks() {
 		Hooks::register( 'ArticlePurge', array( $this, 'purgeCache' ) );
-		Hooks::register( 'ArticleSave', array( $this, 'purgeCache' ) );
+		Hooks::register( 'PageContentSave', array( $this, 'purgeCache' ) );
 	}
 
 	/**
