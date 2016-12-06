@@ -71,7 +71,7 @@ class Lingo {
 				if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
 
 					$lingoPageName = $GLOBALS[ 'wgexLingoPage' ] ? $GLOBALS[ 'wgexLingoPage' ] : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
-					$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $lingoPageName )->text();
+					$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $lingoPageName )->inContentLanguage()->text();
 
 					break;
 				}
