@@ -42,10 +42,9 @@
 	"suggest": {
 		"mediawiki/semantic-glossary": "Alternative back-end that retrieves terms and definitions from a Semantic MediaWiki store"
 	},
-    "extra": {
-        "branch-alias": {
-            "dev-master": "2.x-dev"
-
-        }
-    }
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.x-dev"
+		}
+	}
 }
