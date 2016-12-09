@@ -64,8 +64,6 @@ class Lingo {
 				return true;
 			} );
 
-			MagicWord::$mDoubleUnderscoreIDs[] = 'noglossary';
-
 			foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
 
 				if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
@@ -80,5 +78,12 @@ class Lingo {
 		};
 	}
 
-
+	/**
+	 * Hook: GetDoubleUnderscoreIDs
+	 *
+	 * @param array $doubleUnderscoreIDs
+	 */
+	public static function onGetDoubleUnderscoreIDs( array &$doubleUnderscoreIDs ) {
+		$doubleUnderscoreIDs[] = 'noglossary';
+	}
 }
