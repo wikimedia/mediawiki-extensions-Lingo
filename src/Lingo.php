@@ -56,7 +56,7 @@ class Lingo {
 
 			\Hooks::register( 'ParserFirstCallInit', function ( \Parser $parser ) {
 
-				$parser->setHook( 'noglossary', function ( $input, array $args, Parser $parser, PPFrame $frame ) {
+				$parser->setHook( 'noglossary', function ( $input, array $args, \Parser $parser, \PPFrame $frame ) {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
 				} );
