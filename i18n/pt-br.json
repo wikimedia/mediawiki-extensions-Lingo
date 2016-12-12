@@ -2,12 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Cainamarques",
-			"Luk3"
+			"Luk3",
+			"!Silent"
 		]
 	},
 	"lingo-desc": "Fornece a exibição de legendas na passagem do cursor sobre palavras definidas na página [[$1]]",
 	"lingo-terminologypagename": "Terminologia",
 	"lingo-noterminologypage": "A página de terminologia \"$1\" não existe.",
 	"lingo-notatextpage": "A página de terminologia \"$1\" não é uma página de texto.",
-	"lingo-terminologypagenotlocal": "A página \"$1\" não é uma página local."
+	"lingo-terminologypagenotlocal": "A página \"$1\" não é uma página local.",
+	"lingo-noapprovedrevs": "O suporte à extensão ApprovedRevs está ativado no Lingo. Mas a extensão ApprovedRevs não foi encontrada.",
+	"lingo-invalidlinktarget": "Destino de <i>link</i> inválido para o termo \"$1\": $2"
 }
