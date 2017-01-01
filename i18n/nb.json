@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jon Harald Søby"
+		]
+	},
+	"lingo-desc": "Gir svevende hjelpebobler på sider med ord definert på siden [[$1]]",
+	"lingo-terminologypagename": "Terminologi",
+	"lingo-noterminologypage": "Terminologisiden «$1» finnes ikke.",
+	"lingo-notatextpage": "Terminologisiden «$1» er ikke en tekstside.",
+	"lingo-terminologypagenotlocal": "Siden «$1» er ikke en lokal side.",
+	"lingo-noapprovedrevs": "Støtte for ApprovedRevs er slått på i Lingo. Med ApprovedRevs ble ikke funnet.",
+	"lingo-invalidlinktarget": "Ugyldig lenkemål for begrepet «$1»: $2"
+}
