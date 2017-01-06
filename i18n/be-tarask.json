@@ -10,5 +10,7 @@
 	"lingo-terminologypagename": "Тэрміналёгія",
 	"lingo-noterminologypage": "Старонка тэрміналёгіі «$1» не існуе.",
 	"lingo-notatextpage": "Тэрміналягічная старонка «$1» не зьяўляецца тэкставай старонкай.",
-	"lingo-terminologypagenotlocal": "Старонка «$1» не зьяўляецца лякальнай."
+	"lingo-terminologypagenotlocal": "Старонка «$1» не зьяўляецца лякальнай.",
+	"lingo-noapprovedrevs": "Падтрымка ApprovedRevs актываваная ў Lingo. Але ApprovedRevs ня знойдзена.",
+	"lingo-invalidlinktarget": "Няслушная мэта спасылкі для тэрміну «$1»: $2"
 }
