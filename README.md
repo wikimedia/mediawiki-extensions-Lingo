@@ -45,20 +45,28 @@ directory.
 
 ## Customization
 
-The following settings may be used:
+Add the following to `LocalSettings.php` and uncomment/modify as needed:
 
-* `$wgexLingoPage` to specify the name of the terminology page
-  Example: `$wgexLingoPage = 'Glossary'`;
+```php
+$wgHooks['SetupAfterCache'][] = function() {
 
-* `$wgexLingoDisplayOnce` to specify that each term should be annotated only
-  once per page
-  Example: `$wgexLingoDisplayOnce = true`;
+    // specify a different name for the terminology page (Default: 'Terminology' (or localised version). See MediaWiki:Lingo-terminologypagename.)
+    //$GLOBALS['wgexLingoPage'] = 'Terminology';
 
-* `$wgexLingoUseNamespaces` to specify what namespaces should or should not be
-  used
-  Example: `$wgexLingoUseNamespaces[NS_TALK] = false`;
+    // specify that each term should be annotated only once per page (Default: false)
+    //$GLOBALS['wgexLingoDisplayOnce'] = false;
 
-If you want to use these settings, just include them in LocalSettings.php.
+    // specify what namespaces should or should not be used (Default: Empty, i.e. use all namespaces)
+    //$GLOBALS['wgexLingoUseNamespaces'][NS_SPECIAL] = false;
+
+    // set default cache type (Default: null, i.e. use main cache)
+    //$GLOBALS['wgexLingoCacheType'] = CACHE_NONE;
+
+    // use ApprovedRevs extension on the Terminology page (Default: false)
+    //$GLOBALS['wgexLingoEnableApprovedRevs'] = true;
+
+};
+```
 
 ## Usage
 
