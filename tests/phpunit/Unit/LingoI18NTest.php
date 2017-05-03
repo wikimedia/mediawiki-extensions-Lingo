@@ -26,8 +26,6 @@
 
 namespace Lingo\Tests\Unit;
 
-use JsonSchema\Validator;
-
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
@@ -37,6 +35,11 @@ use JsonSchema\Validator;
  * @ingroup Test
  */
 class LingoI18NTest extends \PHPUnit_Framework_TestCase {
+
+	public function testJsonSchemaValidatorExists(){
+		$this->assertTrue( class_exists( '\JsonSchema\Validator' ) );
+		$this->assertTrue( method_exists('\JsonSchema\Validator', 'check' ) );
+	}
 
 	public function testMagicWordsLoaded() {
 
@@ -51,7 +54,7 @@ class LingoI18NTest extends \PHPUnit_Framework_TestCase {
 
 		$data = json_decode( json_encode( $defined_vars[ 'magicWords' ] ) );
 
-		$validator = new Validator();
+		$validator = new \JsonSchema\Validator();
 		$validator->check( $data, (object) array( '$ref' =>
 			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ) );
 

@@ -299,7 +299,6 @@ TESTTEXT
 	 */
 	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
 		$messageLog = $this->getMock( 'Lingo\MessageLog' );
-		$messageLogRef =& $messageLog;
 
 		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
 			->disableOriginalConstructor()
@@ -312,7 +311,7 @@ TESTTEXT
 
 		$reflected = new \ReflectionClass( '\Lingo\BasicBackend' );
 		$constructor = $reflected->getConstructor();
-		$constructor->invoke( $backend, $messageLogRef );
+		$constructor->invokeArgs( $backend, array( &$messageLog ) );
 
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 

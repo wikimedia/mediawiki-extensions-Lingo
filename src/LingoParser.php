@@ -28,7 +28,6 @@
  */
 namespace Lingo;
 
-use DOMDocument;
 use DOMXPath;
 use Parser;
 

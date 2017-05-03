@@ -25,7 +25,6 @@
  */
 
 namespace Lingo;
-use MagicWord;
 
 /**
  * Class Lingo

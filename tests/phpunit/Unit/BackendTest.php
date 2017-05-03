@@ -47,7 +47,6 @@ class BackendTest extends \PHPUnit_Framework_TestCase {
 	public function testGetMessageLog_withLogGivenToConstructor() {
 
 		$log = $this->getMock( '\Lingo\MessageLog' );
-		$logRef = &$log;
 
 		$stub = $this->getMockBuilder( '\Lingo\Backend' )
 			->disableOriginalConstructor()
@@ -55,7 +54,7 @@ class BackendTest extends \PHPUnit_Framework_TestCase {
 
 		$reflected = new \ReflectionClass( '\Lingo\Backend' );
 		$constructor = $reflected->getConstructor();
-		$constructor->invoke( $stub, $logRef );
+		$constructor->invokeArgs( $stub, array( &$log ) );
 
 		$this->assertEquals( $log, $stub->getMessageLog() );
 	}
