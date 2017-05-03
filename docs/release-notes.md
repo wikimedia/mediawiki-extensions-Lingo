@@ -2,13 +2,21 @@
 
 ### Lingo 2.0.2
 
-Released on tbd
+Released on 3-May-2017
 
 Changes:
-
+* Update Readme for changes in customization procedure
+* Removed usage of deprecated MediaWiki features
+* Fix and add more tests
+* Some reworking of BasicBackend and LingoParser
+* Use PageContentSave hook for cache purging (instead of ArticleSave)
+* Use GetDoubleUnderscoreIDs hook
 
 Fixes:
-
+* Add page position 'bottom' for loading of ext.Lingo.Scripts module
+* Replace unsupported function calls in ArticleAnnotationTest
+* Fixed noglossary tag hook
+* Fixed language of extension description in Special:Version
 
 ### Lingo 2.0.1
 
