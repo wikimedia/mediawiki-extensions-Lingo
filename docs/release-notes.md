@@ -1,8 +1,17 @@
 ## Release Notes
 
+### Lingo 2.0.3
+
+Released on tbd
+
+Changes:
+
+Fixes:
+
+
 ### Lingo 2.0.2
 
-Released on 3-May-2017
+Released on 03-May-2017
 
 Changes:
 * Update Readme for changes in customization procedure
