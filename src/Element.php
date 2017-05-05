@@ -141,7 +141,7 @@ class Element {
 		$link = $doc->createElement( 'a', $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] );
 
 		// set the link target
-		$link->setAttribute( 'href', $target->getLinkUrl() );
+		$link->setAttribute( 'href', $target->getLinkURL() );
 
 
 		$link = $this->addClassAttributeToLink( $target, $link );
@@ -151,9 +151,9 @@ class Element {
 	}
 
 	/**
-	 * @param $target
-	 * @param $link
-	 * @return mixed
+	 * @param Title $target
+	 * @param DOMElement $link
+	 * @return DOMElement
 	 */
 	protected function &addClassAttributeToLink( $target, &$link ) {
 
@@ -163,28 +163,30 @@ class Element {
 		// part here.
 
 		// set style
-		$classes = string( $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+		$classes = array();
+
+		if ( $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] !== null ) {
+			$classes[] = $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
+		}
 
 		if ( !$target->isKnown() ) {
-			$classes .= ' new';
+			$classes[] = 'new';
 		}
 
 		if ( $target->isExternal() ) {
-			$classes .= ' extiw';
+			$classes[] = 'extiw';
 		}
 
-		$classes = trim( $classes );
-
-		if ( $classes !== '' ) {
-			$link->setAttribute( 'class', $classes );
+		if ( count($classes) > 0 ) {
+			$link->setAttribute( 'class', join(' ', $classes ) );
 		}
 
 		return $link;
 	}
 
 	/**
-	 * @param $target
-	 * @param $link
+	 * @param Title $target
+	 * @param DOMElement $link
 	 * @return mixed
 	 */
 	protected function &addTitleAttributeToLink( $target, &$link ) {
@@ -203,7 +205,7 @@ class Element {
 
 	/**
 	 * @param StashingDOMDocument $doc
-	 * @return string
+	 * @return DOMElement
 	 * @throws \MWException
 	 */
 	protected function getFullDefinitionAsTooltip( StashingDOMDocument &$doc ) {
