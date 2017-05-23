@@ -53,6 +53,11 @@ class Lingo {
 
 			\Hooks::register( 'ParserAfterParse', array( $parser, 'parse' ) );
 
+			\Hooks::register('GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
+				$doubleUnderscoreIDs[] = 'noglossary';
+				return true;
+			} );
+
 			\Hooks::register( 'ParserFirstCallInit', function ( \Parser $parser ) {
 
 				$parser->setHook( 'noglossary', function ( $input, array $args, \Parser $parser, \PPFrame $frame ) {
@@ -73,16 +78,9 @@ class Lingo {
 					}
 				}
 
+				return true;
 			} );
 		};
 	}
 
-	/**
-	 * Hook: GetDoubleUnderscoreIDs
-	 *
-	 * @param array $doubleUnderscoreIDs
-	 */
-	public static function onGetDoubleUnderscoreIDs( array &$doubleUnderscoreIDs ) {
-		$doubleUnderscoreIDs[] = 'noglossary';
-	}
 }

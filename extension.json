@@ -60,9 +60,6 @@
 	"ExtensionMessagesFiles": {
 		"LingoMagic": "src/Lingo.i18n.magic.php"
 	},
-	"Hooks": {
-		"GetDoubleUnderscoreIDs": "Lingo\\Lingo::onGetDoubleUnderscoreIDs"
-	},
 	"AutoloadClasses": {
 		"Lingo\\Lingo": "/src/Lingo.php",
 		"Lingo\\LingoParser": "/src/LingoParser.php",
