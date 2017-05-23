@@ -2,11 +2,12 @@
 
 ### Lingo 2.0.3
 
-Released on tbd
-
-Changes:
+Released on 24-May-2017
 
 Fixes:
+* Fix Fatal error: Call to undefined function Lingo\string()
+* Fixed broken Special:Preferences
+* Fixed missing link icon
 
 
 ### Lingo 2.0.2
