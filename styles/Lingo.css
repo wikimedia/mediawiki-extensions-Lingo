@@ -3,7 +3,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2017, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -77,4 +77,9 @@
 	padding:   5px 9px;
 	z-index:   15000;
 	font-size: smaller;
+}
+
+.mw-lingo-tooltip-link:before {
+	content: url(linkicon.png);
+	margin-left: .5em;
 }

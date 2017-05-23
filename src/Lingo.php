@@ -4,7 +4,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2017, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -63,17 +63,17 @@ class Lingo {
 				return true;
 			} );
 
-			foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
+			\Hooks::register( 'SpecialPageBeforeExecute', function ( \SpecialPage $specialPage, $subPage ) {
 
-				if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
-
-					$lingoPageName = $GLOBALS[ 'wgexLingoPage' ] ? $GLOBALS[ 'wgexLingoPage' ] : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
-					$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $lingoPageName )->inContentLanguage()->text();
-
-					break;
+				if ( $specialPage instanceof \SpecialVersion ) {
+					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
+						if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
+							$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $GLOBALS[ 'wgexLingoPage' ] ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
+						}
+					}
 				}
 
-			}
+			} );
 		};
 	}
 

@@ -235,7 +235,7 @@ class LingoParser {
 		\MediaWiki\restoreWarnings();
 
 		// Find all text in HTML.
-		$xpath = new DOMXpath( $doc );
+		$xpath = new DOMXPath( $doc );
 		$elements = $xpath->query(
 			"//*[not(ancestor-or-self::*[@class='noglossary'] or ancestor-or-self::a)][text()!=' ']/text()"
 		);

@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2017, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -187,7 +187,7 @@ class Element {
 	/**
 	 * @param Title $target
 	 * @param DOMElement $link
-	 * @return mixed
+	 * @return DOMElement
 	 */
 	protected function &addTitleAttributeToLink( $target, &$link ) {
 
@@ -259,13 +259,9 @@ class Element {
 
 		// create template if it does not yet exist
 		if ( $mLinkTemplate === null ) {
-			global $wgScriptPath;
-
-			$linkimage = $doc->createElement( 'img' );
-			$linkimage->setAttribute( 'src', $wgScriptPath . '/extensions/Lingo/styles/linkicon.png' );
 
 			$mLinkTemplate = $doc->createElement( 'a' );
-			$mLinkTemplate->appendChild( $linkimage );
+			$mLinkTemplate->setAttribute( 'class', 'mw-lingo-tooltip-link');
 
 			$doc->stashSet( $mLinkTemplate, self::LINK_TEMPLATE_ID );
 		}
