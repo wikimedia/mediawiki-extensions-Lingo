@@ -6,6 +6,9 @@
 	},
 	"lingo-desc": "Dèje le suggereminde sus a le pàggene da le parole definite sus a [[$1]] pàgene",
 	"lingo-terminologypagename": "Terminologgije",
-	"lingo-noterminologypage": "Pàgene \"$1\" non g'esiste.",
-	"lingo-terminologypagenotlocal": "Pàgene \"$1\" non g'è 'na pàgene locale."
+	"lingo-noterminologypage": "'A pàgene de terminologgije \"$1\" non g'esiste.",
+	"lingo-notatextpage": "'A pàgene de terminologgije \"$1\" non g'è 'na pàgene de teste.",
+	"lingo-terminologypagenotlocal": "Pàgene \"$1\" non g'è 'na pàgene locale.",
+	"lingo-noapprovedrevs": "Supporte pe ApprovedRevs jè attive jndr'à Lingo. Ma ApprovedRevs non g'ha state acchiate.",
+	"lingo-invalidlinktarget": "Collegamende d'a destinazione invalide pu termine \"$1\": $2"
 }
