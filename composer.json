@@ -1,21 +1,21 @@
 {
-	"name"       : "mediawiki/lingo",
-	"type"       : "mediawiki-extension",
+	"name": "mediawiki/lingo",
+	"type": "mediawiki-extension",
 	"description": "Provides hover-over tool tips on wiki pages from terms defined on a wiki page",
-	"keywords"   : [
+	"keywords": [
 		"wiki",
 		"MediaWiki",
 		"extension",
 		"glossary",
 		"terminology"
 	],
-	"homepage"   : "https://www.mediawiki.org/wiki/Extension:Lingo",
-	"license"    : "GPL-2.0+",
-	"authors"    : [
+	"homepage": "https://www.mediawiki.org/wiki/Extension:Lingo",
+	"license": "GPL-2.0+",
+	"authors": [
 		{
-			"name" : "Stephan Gambke",
+			"name": "Stephan Gambke",
 			"email": "s7eph4n@gmail.com",
-			"role" : "Developer"
+			"role": "Developer"
 		}
 	],
 	"support": {
@@ -25,19 +25,24 @@
 		"issues": "https://phabricator.wikimedia.org/tag/mediawiki-extensions-lingo/",
 		"irc": "irc://irc.freenode.org/mediawiki"
 	},
-	"require"    : {
-		"php"    : ">=5.3.2",
+	"require": {
+		"php": ">=5.3.2",
 		"ext-dom": "*",
 		"composer/installers": ">1.0.12"
 	},
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "0.9.2",
 		"justinrainbow/json-schema": ">=1.0",
-		"jakub-onderka/php-console-highlighter": "0.3.2"
+		"jakub-onderka/php-console-highlighter": "0.3.2",
+		"mediawiki/minus-x": "0.2.0"
 	},
 	"scripts": {
 		"test": [
-			"parallel-lint . --exclude vendor --exclude node_modules"
+			"parallel-lint . --exclude vendor --exclude node_modules",
+			"minus-x check ."
+		],
+		"fix": [
+			"minus-x fix ."
 		]
 	},
 	"suggest": {
