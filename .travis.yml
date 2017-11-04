@@ -35,6 +35,8 @@ matrix:
       php: 5.5
     - env: DBTYPE=sqlite; MW=1.26.0
       php: 5.3
+      dist: precise
+      sudo: required
 
 script:
     - bash ./build/travis/script.sh
