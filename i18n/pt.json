@@ -11,5 +11,5 @@
 	"lingo-notatextpage": "A página de terminologia \"$1\" não é uma página de texto.",
 	"lingo-terminologypagenotlocal": "A página \"$1\" não é uma página local.",
 	"lingo-noapprovedrevs": "O suporte à extensão ApprovedRevs está ativado no Lingo. Mas a extensão ApprovedRevs não foi encontrada.",
-	"lingo-invalidlinktarget": "Destino de <i>link</i> inválido para o termo \"$1\": $2"
+	"lingo-invalidlinktarget": "Destino da hiperligação inválido para o termo \"$1\": $2"
 }
