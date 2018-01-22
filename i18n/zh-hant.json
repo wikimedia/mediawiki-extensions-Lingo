@@ -1,11 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Liuxinyu970226"
+			"Liuxinyu970226",
+			"Kly"
 		]
 	},
 	"lingo-desc": "於頁面中提供懸停工具提示，字元定位於[[$1]]頁面",
 	"lingo-terminologypagename": "術語",
-	"lingo-noterminologypage": "頁面“$1”不存在。",
-	"lingo-terminologypagenotlocal": "頁面“$1”非本地頁面。"
+	"lingo-noterminologypage": "術語頁面「$1」不存在。",
+	"lingo-notatextpage": "術語頁面「$1」不是一個文字頁面。",
+	"lingo-terminologypagenotlocal": "頁面“$1”非本地頁面。",
+	"lingo-noapprovedrevs": "在 Lingo 已啟用對於 ApprovedRevs 的支援，不過未找到 ApprovedRevs。",
+	"lingo-invalidlinktarget": "術語「$1」連結目標：$2 無效"
 }
