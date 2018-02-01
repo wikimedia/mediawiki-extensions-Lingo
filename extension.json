@@ -8,7 +8,7 @@
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Lingo",
 	"@descriptionmsg": "The description message is set by Lingo\\Hooks::setCredits().",
-	"license-name": "GPL-2.0+",
+	"license-name": "GPL-2.0-or-later",
 	"type": "parserhook",
 	"requires": {
 		"MediaWiki": "~1.26"
