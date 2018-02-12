@@ -111,7 +111,7 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 			$decoded = json_decode( $json, TRUE );
 
 			// suppress warnings for non-existant array keys
-			\MediaWiki\suppressWarnings();
+			\Wikimedia\suppressWarnings();
 
 			$testCase = array(
 				0 => substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
@@ -128,7 +128,7 @@ class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
 				$testCase[ 2 ][] = array( $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] );
 			}
 
-			\MediaWiki\restoreWarnings();
+			\Wikimedia\restoreWarnings();
 
 			$data[] = $testCase;
 		}
