@@ -38,7 +38,7 @@ namespace Lingo\Tests\Unit;
  * @ingroup Lingo
  * @ingroup Test
  */
-class BackendTest extends \PHPUnit_Framework_TestCase {
+class BackendTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 * @covers ::__construct

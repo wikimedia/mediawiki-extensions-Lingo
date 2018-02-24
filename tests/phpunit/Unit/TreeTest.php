@@ -38,7 +38,7 @@ namespace Lingo\Tests\Unit;
  * @ingroup Lingo
  * @ingroup Test
  */
-class TreeTest extends \PHPUnit_Framework_TestCase {
+class TreeTest extends \PHPUnit\Framework\TestCase {
 
 	/**
 	 */

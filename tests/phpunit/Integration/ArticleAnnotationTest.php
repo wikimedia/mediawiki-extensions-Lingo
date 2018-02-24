@@ -47,7 +47,7 @@ use ReflectionClass;
  * @since 2.0.1
  * @author Stephan Gambke
  */
-class ArticleAnnotationTest extends \PHPUnit_Framework_TestCase {
+class ArticleAnnotationTest extends \PHPUnit\Framework\TestCase {
 
 	public function setup() {
 

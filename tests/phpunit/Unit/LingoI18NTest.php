@@ -34,7 +34,7 @@ namespace Lingo\Tests\Unit;
  * @ingroup Lingo
  * @ingroup Test
  */
-class LingoI18NTest extends \PHPUnit_Framework_TestCase {
+class LingoI18NTest extends \PHPUnit\Framework\TestCase {
 
 	public function testJsonSchemaValidatorExists(){
 		$this->assertTrue( class_exists( '\JsonSchema\Validator' ) );
