@@ -79,9 +79,10 @@ class Element {
 
 	/**
 	 * @param StashingDOMDocument $doc
+	 * @param callable|null $callback
 	 * @return DOMNode|DOMText
 	 */
-	public function getFullDefinition( StashingDOMDocument &$doc ) {
+	public function getFullDefinition( StashingDOMDocument &$doc, callable $callback = null ) {
 
 		global $wgexLingoDisplayOnce;
 
@@ -89,7 +90,7 @@ class Element {
 			return $doc->createTextNode( $this->mTerm );
 		}
 
-		$this->buildFullDefinition( $doc );
+		$this->buildFullDefinition( $doc, $callback );
 		$this->mHasBeenDisplayed = true;
 
 		return $this->mFullDefinition->cloneNode( true );
@@ -97,16 +98,17 @@ class Element {
 
 	/**
 	 * @param StashingDOMDocument $doc
+	 * @param callable|null $callback
 	 */
-	private function buildFullDefinition( StashingDOMDocument &$doc ) {
+	private function buildFullDefinition( StashingDOMDocument &$doc, callable $callback = null ) {
 
 		// only create if not yet created
 		if ( $this->mFullDefinition === null || $this->mFullDefinition->ownerDocument !== $doc ) {
 
 			if ( $this->isSimpleLink() ) {
-				$this->mFullDefinition = $this->getFullDefinitionAsLink( $doc );
+				$this->mFullDefinition = $this->getFullDefinitionAsLink( $doc, $callback );
 			} else {
-				$this->mFullDefinition = $this->getFullDefinitionAsTooltip( $doc );
+				$this->mFullDefinition = $this->getFullDefinitionAsTooltip( $doc, $callback );
 			}
 		}
 	}
@@ -122,10 +124,10 @@ class Element {
 
 	/**
 	 * @param StashingDOMDocument $doc
+	 * @param callable|null $callback
 	 * @return DOMElement
-	 * @throws \MWException
 	 */
-	protected function getFullDefinitionAsLink( StashingDOMDocument &$doc ) {
+	protected function getFullDefinitionAsLink( StashingDOMDocument &$doc, callable $callback = null ) {
 
 		// create Title object for target page
 		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
@@ -134,7 +136,7 @@ class Element {
 			$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )->text();
 			$errorDefinition = array( self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' );
 			$this->addDefinition( $errorDefinition );
-			return $this->getFullDefinitionAsTooltip( $doc );
+			return $this->getFullDefinitionAsTooltip( $doc, $callback );
 		}
 
 		// create link element
@@ -205,10 +207,14 @@ class Element {
 
 	/**
 	 * @param StashingDOMDocument $doc
+	 * @param callable|null $callback
 	 * @return DOMElement
-	 * @throws \MWException
 	 */
-	protected function getFullDefinitionAsTooltip( StashingDOMDocument &$doc ) {
+	protected function getFullDefinitionAsTooltip( StashingDOMDocument &$doc, callable $callback = null ) {
+
+		if ( $callback === null ) {
+			$callback = function( $text ){ return htmlentities( $text, ENT_COMPAT, 'UTF-8' ); };
+		}
 
 		// Wrap term and definition in <span> tags
 		$span = $doc->createElement( 'span' );
@@ -228,9 +234,17 @@ class Element {
 		foreach ( $this->mDefinitions as $definition ) {
 
 			\MediaWiki\suppressWarnings();
-			$element = $doc->createElement( 'span', htmlentities( $definition[ self::ELEMENT_DEFINITION ], ENT_COMPAT, 'UTF-8' ) );
+			$element = $doc->createElement( 'div' );
 			$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 			\MediaWiki\restoreWarnings();
+
+			$content = call_user_func( $callback, $definition[ self::ELEMENT_DEFINITION ] );
+
+			if ( is_string( $content ) ) {
+				$element->nodeValue = $content;
+			} else {
+				$element->appendChild( $content );
+			}
 
 			if ( $definition[ self::ELEMENT_LINK ] ) {
 				$linkedTitle = Title::newFromText( $definition[ self::ELEMENT_LINK ] );

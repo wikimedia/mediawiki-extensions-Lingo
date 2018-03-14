@@ -63,7 +63,15 @@
 
 .mw-lingo-tooltip-definition {
 	display: block;
-	padding: .5ex 0;
+}
+
+.mw-lingo-tooltip-definition > * {
+	float: left;
+	margin: .5ex 0;
+}
+
+.mw-lingo-tooltip-definition > a.mw-lingo-tooltip-link {
+	float: right;
 }
 
 /* Style for JS disabled browsers*/

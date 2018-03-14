@@ -200,7 +200,7 @@ class LingoParser {
 	 *
 	 * This method currently only recognizes terms consisting of max one word
 	 *
-	 * @param $parser
+	 * @param Parser $parser
 	 * @param $text
 	 * @return Boolean
 	 */
@@ -269,7 +269,14 @@ class LingoParser {
 			$index = 0;
 			$changedElem = false;
 
+			$parseCB = function( $text ) use ( $parser, $doc ){
+				$fragment = $doc->createDocumentFragment();
+				$fragment->appendXML( $parser->recursiveTagParseFully( $text ) );
+				return $fragment;
+			};
+
 			while ( $index < $countLexemes ) {
+				/** @var \Lingo\Element $definition */
 				list( $skipped, $used, $definition ) =
 					$glossary->findNextTerm( $lexemes, $index, $countLexemes );
 
@@ -285,7 +292,7 @@ class LingoParser {
 						);
 					}
 
-					$parent->insertBefore( $definition->getFullDefinition( $doc ), $el );
+					$parent->insertBefore( $definition->getFullDefinition( $doc, $parseCB ), $el );
 
 					$changedElem = true;
 				} else { // did not find term, just use the rest of the text
