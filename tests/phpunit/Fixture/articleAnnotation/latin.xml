@@ -55,29 +55,39 @@ alii soluta.
 	</text>
 	<expected>
 <![CDATA[
-Lorem <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ipsum</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ipsum-def</span></span></span> dolor sit amet, pri admodum alienum at, decore facete ei cum,
-discere admodum dissentias quo et. Ex iusto antiopam sed, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span> eu stet periculis
-complectitur. Quas apeirian complectitur nec no. Nam <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">omnes</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">omnes-def</span></span></span> nullam ex. Ne sed
+Lorem <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ipsum</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ipsum-def
+</p></div></span></span> dolor sit amet, pri admodum alienum at, decore facete ei cum,
+discere admodum dissentias quo et. Ex iusto antiopam sed, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span> eu stet periculis
+complectitur. Quas apeirian complectitur nec no. Nam <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">omnes</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>omnes-def
+</p></div></span></span> nullam ex. Ne sed
 eros homero, utroque pertinacia eam eu, in est ubique latine minimum. Vel
 invidunt intellegat scripserit ei, essent dolorem prodesset eu mea.
 
-Putent nemore vituperata <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">vel</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">vel-def</span><span class="mw-lingo-tooltip-definition ">vel-def</span></span></span> an, ut iuvaret delicata quaerendum est. Quas
+Putent nemore vituperata <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">vel</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>vel-def
+</p></div><div class="mw-lingo-tooltip-definition "><p>vel-def
+</p></div></span></span> an, ut iuvaret delicata quaerendum est. Quas
 viderer civibus an cum. Vidisse efficiantur nam ut. Id sed aeque similique
-definitionem, in fugit partem copiosae eum. Sit diceret repudiare ne, ea <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span>
+definitionem, in fugit partem copiosae eum. Sit diceret repudiare ne, ea <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span>
 alii laboramus.
 
-Brute viris propriae vis ad. Cu <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">modus</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">modus-def</span></span></span> pericula eum. Qui ne quot recusabo
+Brute viris propriae vis ad. Cu <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">modus</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>modus-def
+</p></div></span></span> pericula eum. Qui ne quot recusabo
 eloquentiam, ex quod hinc veritus per, vix at putent molestie consequuntur. His
-in <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">omnes</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">omnes-def</span></span></span> gloriatur, propriae posidonium duo ne. Convenire consulatu definitiones
+in <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">omnes</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>omnes-def
+</p></div></span></span> gloriatur, propriae posidonium duo ne. Convenire consulatu definitiones
 et quo, mea autem fabulas epicuri ne. Erant percipit petentium ne qui, ad
 volumus facilisi mei.
 
-Epicurei <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">mandamus</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">mandamus-def</span></span></span> te mei. Pri ea nisl stet fugit. Eum eu novum omnesque, porro
+Epicurei <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">mandamus</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>mandamus-def
+</p></div></span></span> te mei. Pri ea nisl stet fugit. Eum eu novum omnesque, porro
 scriptorem reprehendunt qui ad. Dicat nostrud oportere vix no. Cu falli
 philosophia pri.
 
 Equidem consequuntur eu sed, ne justo partiendo sea, facilis apeirian eos te. Et
-fabellas rationibus nam. Nullam offendit eam et. Ea nostrum assueverit <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span>,
+fabellas rationibus nam. Nullam offendit eam et. Ea nostrum assueverit <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span>,
 copiosae tincidunt ullamcorper quo eu.
 
 Ex vocent molestiae nam, in usu aliquip assentior. Sensibus dissentiunt
@@ -85,24 +95,31 @@ intellegebat in mea. Cum id iudico integre. An per solet viderer dolorem.
 
 Te per laudem graecis conclusionemque. No mel lorem eligendi appellantur. Ut usu
 duis legendos hendrerit. Oportere liberavisse duo te. Eum et quis ullum
-scaevola, nam duis voluptua et, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">vel</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">vel-def</span><span class="mw-lingo-tooltip-definition ">vel-def</span></span></span> ei nostrud veritus. Eam ut erat integre,
+scaevola, nam duis voluptua et, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">vel</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>vel-def
+</p></div><div class="mw-lingo-tooltip-definition "><p>vel-def
+</p></div></span></span> ei nostrud veritus. Eam ut erat integre,
 rebum accusam noluisse ne vis.
 
-Oblique feugiat rationibus sit te, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span> erat facilisi accusamus ei. Eu eum noster
+Oblique feugiat rationibus sit te, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span> erat facilisi accusamus ei. Eu eum noster
 nostro. Detracto argumentum te pri. His meis periculis vituperata te, vix ei
 etiam omittam reformidans. Usu ex dolores erroribus abhorreant. Ea vidit atqui
-philosophia duo, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span> ad vide tritani appareat. Enim timeam nonumes <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span> no.
+philosophia duo, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span> ad vide tritani appareat. Enim timeam nonumes <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span> no.
 
 No prima audire quo, ei ubique mucius scribentur eos, cu duis harum philosophia
 usu. Detracto recusabo antiopam cu mea. An petentium appellantur vix, te eum
 elitr quidam doctus, et errem malorum omnesque sed. Nam cu errem dictas
 concludaturque, quo illud dolores ut. Has te nibh velit concludaturque, quod
-erant iuvaret est an, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ius-def</span></span></span> ex lorem molestie pertinax.
+erant iuvaret est an, <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ius</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ius-def
+</p></div></span></span> ex lorem molestie pertinax.
 
 Ius at sonet incorrupte. Ei sea honestatis complectitur, ei vim quando persius
 epicuri. Mei duis percipit no, postea pericula prodesset mel ex. Ea vix nostrud
 officiis similique, ad est civibus nominati. Pro suas principes at, ea mea
-audire corpora explicari, etiam nihil perfecto sit ut. His id fugit zril, no <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">has</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">has-def</span></span></span>
+audire corpora explicari, etiam nihil perfecto sit ut. His id fugit zril, no <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">has</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>has-def
+</p></div></span></span>
 alii soluta.
 ]]>
 	</expected>

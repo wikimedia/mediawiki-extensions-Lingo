@@ -10,9 +10,13 @@
 	</text>
 	<expected>
 <![CDATA[
-Эю элььэефэнд <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">торквюатоз</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">торквюатоз-def</span></span></span> хёз, нэ шэа щольыат рэгяонэ, ан кюм лорэм тамквюам. Прё
-фырре долорэм факилиз <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">но</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">но-def</span></span></span>. Ед <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">декам</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">декам-def</span></span></span> консэквюат дэчырюёжжэ мэль. Квуй ат ыррор
-емпэтюсъ зигнёфэрумквюы, шэа квюод аффэрт альяквюам эи. Мэя <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">мёнём</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">мёнём-def</span></span></span> заэпы вокябюч
+Эю элььэефэнд <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">торквюатоз</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>торквюатоз-def
+</p></div></span></span> хёз, нэ шэа щольыат рэгяонэ, ан кюм лорэм тамквюам. Прё
+фырре долорэм факилиз <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">но</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>но-def
+</p></div></span></span>. Ед <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">декам</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>декам-def
+</p></div></span></span> консэквюат дэчырюёжжэ мэль. Квуй ат ыррор
+емпэтюсъ зигнёфэрумквюы, шэа квюод аффэрт альяквюам эи. Мэя <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">мёнём</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>мёнём-def
+</p></div></span></span> заэпы вокябюч
 эа. Примич пыртенакж вяш эи.
 ]]>
 	</expected>

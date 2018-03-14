@@ -13,13 +13,18 @@ dolor sit amet
 	</text>
 	<expected>
 <![CDATA[
-<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">lorem</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">lorem-def</span></span></span>
+<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">lorem</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>lorem-def
+</p></div></span></span>
 Lorem
-<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ips&uuml;m</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">ips&uuml;m-def</span></span></span>
-<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">dolor sit</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">dolor sit-def</span></span></span> amet
-<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">हीकम</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">हीकम-def</span></span></span>
+<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">ips&uuml;m</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>ipsüm-def
+</p></div></span></span>
+<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">dolor sit</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>dolor sit-def
+</p></div></span></span> amet
+<span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">हीकम</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>हीकम-def
+</p></div></span></span>
 請保持導言的中立性，勿只敍述美譽。
-+HE <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">d4 t3xt</span><span class="mw-lingo-tooltip-tip "><span class="mw-lingo-tooltip-definition ">d4 t3xt-def</span></span></span>
++HE <span class="mw-lingo-tooltip "><span class="mw-lingo-tooltip-abbr">d4 t3xt</span><span class="mw-lingo-tooltip-tip "><div class="mw-lingo-tooltip-definition "><p>d4 t3xt-def
+</p></div></span></span>
 ]]>
 	</expected>
 	<glossary-entry>
