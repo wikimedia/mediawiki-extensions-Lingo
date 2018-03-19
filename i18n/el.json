@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nikosgranturismogt"
+		]
+	},
+	"lingo-terminologypagename": "Ορολογία",
+	"lingo-noterminologypage": "Η σελίδα ορολογίας \"$1\" δεν υπάρχει.",
+	"lingo-notatextpage": "Η σελίδα ορολογίας \"$1\" δεν είναι σελίδα κειμένου.",
+	"lingo-terminologypagenotlocal": "Η σελίδα \"$1\" δεν είναι μια τοπική σελίδα."
+}
