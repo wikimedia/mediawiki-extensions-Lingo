@@ -4,7 +4,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2017, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			\Hooks::register( 'ParserAfterParse', array( $parser, 'parse' ) );
+            \Hooks::register( 'ParserBeforeTidy', [ $parser, 'parse' ] );
 
 			\Hooks::register('GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';

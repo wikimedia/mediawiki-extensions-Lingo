@@ -1,7 +1,7 @@
 #####
 # This file is part of the MediaWiki extension Lingo.
 #
-# @copyright 2011 - 2016, Stephan Gambke
+# @copyright 2011 - 2018, Stephan Gambke
 # @license   GNU General Public License, version 2 (or any later version)
 #
 # The Lingo extension is free software: you can redistribute it and/or modify
@@ -30,10 +30,10 @@ matrix:
     - env: DBTYPE=mysql; MW=master
       php: 7.0
     - env: DBTYPE=mysql; MW=1.30.0
-      php: 7.0
+      php: 7.2
     - env: DBTYPE=mysql; MW=1.28.0
       php: 5.6
-    - env: DBTYPE=postgres; MW=1.26.2
+    - env: DBTYPE=postgres; MW=1.27.0
       php: 5.5
 
 script:

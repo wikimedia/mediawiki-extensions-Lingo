@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ use ParserOptions;
  */
 class MessageLog {
 
-	private $mMessages = array();
+	private $mMessages = [];
 	private $mParser = null;
 
 	const MESSAGE_ERROR = 1;
@@ -53,7 +53,7 @@ class MessageLog {
 	 * @param int $severity
 	 */
 	public function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
-		$this->mMessages[] = array( $message, $severity );
+		$this->mMessages[] = [ $message, $severity ];
 
 		// log errors and warnings in debug log
 		if ( $severity == self::MESSAGE_WARNING ||
@@ -67,7 +67,7 @@ class MessageLog {
 	 * @param $message
 	 */
 	public function addError( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_ERROR );
+		$this->mMessages[] = [ $message, self::MESSAGE_ERROR ];
 		wfDebug( "Error: $message\n" );
 	}
 
@@ -75,7 +75,7 @@ class MessageLog {
 	 * @param $message
 	 */
 	public function addWarning( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_WARNING );
+		$this->mMessages[] = [ $message, self::MESSAGE_WARNING ];
 		wfDebug( "Warning: $message\n" );
 	}
 
@@ -83,7 +83,7 @@ class MessageLog {
 	 * @param $message
 	 */
 	public function addNotice( $message ) {
-		$this->mMessages[] = array( $message, self::MESSAGE_NOTICE );
+		$this->mMessages[] = [ $message, self::MESSAGE_NOTICE ];
 	}
 
 	/**
@@ -110,10 +110,10 @@ class MessageLog {
 			if ( $header == null ) {
 				$header = '';
 			} elseif ( $header != '' ) {
-				$header = Html::rawElement( 'div', array( 'class' => 'heading' ), $header );
+				$header = Html::rawElement( 'div', [ 'class' => 'heading' ], $header );
 			}
 
-			$ret = Html::rawElement( 'div', array( 'class' => 'messages' ),
+			$ret = Html::rawElement( 'div', [ 'class' => 'messages' ],
 				$header . "\n" .
 				$ret
 			);

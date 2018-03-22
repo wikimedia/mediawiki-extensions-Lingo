@@ -3,7 +3,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2017, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -61,17 +61,24 @@
 	border-radius:         5px;
 }
 
-.mw-lingo-tooltip-definition {
-	display: block;
+.mw-lingo-tooltip-definition:not(:last-child) {
+	margin-bottom: 0.5em;
+}
+.mw-lingo-tooltip-text {
+	display: inline-block;
 }
 
-.mw-lingo-tooltip-definition > * {
-	float: left;
-	margin: .5ex 0;
+.mw-lingo-tooltip-text p {
+	margin: 0;
 }
 
-.mw-lingo-tooltip-definition > a.mw-lingo-tooltip-link {
-	float: right;
+.mw-lingo-tooltip-link {
+	display: inline-block;
+}
+
+.mw-lingo-tooltip-link > a:before {
+	content: url(linkicon.png);
+	margin-left: .5em;
 }
 
 /* Style for JS disabled browsers*/
@@ -85,9 +92,4 @@
 	padding:   5px 9px;
 	z-index:   15000;
 	font-size: smaller;
-}
-
-.mw-lingo-tooltip-link:before {
-	content: url(linkicon.png);
-	margin-left: .5em;
 }

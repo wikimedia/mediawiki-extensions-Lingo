@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2017, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@
 
 namespace Lingo;
 
+use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMText;
@@ -51,13 +52,17 @@ class Element {
 
 	const LINK_TEMPLATE_ID = 'LingoLink';
 
-	private $mFullDefinition = null;
-	private $mDefinitions = array();
+	private $formattedTerm = null;
+	private $formattedDefinitions = null;
+
+	private $mDefinitions = [];
 	private $mTerm = null;
-	private $mHasBeenDisplayed = false;
+
+	private $hasBeenDisplayed = false;
 
 	/**
 	 * Lingo\Element constructor.
+	 *
 	 * @param $term
 	 * @param $definition
 	 */
@@ -71,44 +76,44 @@ class Element {
 	}
 
 	/**
-	 * @param $definition
+	 * @param array $definition
 	 */
 	public function addDefinition( &$definition ) {
 		$this->mDefinitions[] = array_pad( $definition, self::ELEMENT_FIELDCOUNT, null );
 	}
 
 	/**
-	 * @param StashingDOMDocument $doc
-	 * @param callable|null $callback
+	 * @param DOMDocument $doc
+	 *
 	 * @return DOMNode|DOMText
 	 */
-	public function getFullDefinition( StashingDOMDocument &$doc, callable $callback = null ) {
+	public function getFormattedTerm( DOMDocument &$doc ) {
 
 		global $wgexLingoDisplayOnce;
 
-		if ( $wgexLingoDisplayOnce && $this->mHasBeenDisplayed ) {
+		if ( $wgexLingoDisplayOnce && $this->hasBeenDisplayed ) {
 			return $doc->createTextNode( $this->mTerm );
 		}
 
-		$this->buildFullDefinition( $doc, $callback );
-		$this->mHasBeenDisplayed = true;
+		$this->hasBeenDisplayed = true;
 
-		return $this->mFullDefinition->cloneNode( true );
+		$this->buildFormattedTerm( $doc );
+
+		return $this->formattedTerm->cloneNode( true );
 	}
 
 	/**
-	 * @param StashingDOMDocument $doc
-	 * @param callable|null $callback
+	 * @param DOMDocument $doc
 	 */
-	private function buildFullDefinition( StashingDOMDocument &$doc, callable $callback = null ) {
+	private function buildFormattedTerm( DOMDocument &$doc ) {
 
 		// only create if not yet created
-		if ( $this->mFullDefinition === null || $this->mFullDefinition->ownerDocument !== $doc ) {
+		if ( $this->formattedTerm === null || $this->formattedTerm->ownerDocument !== $doc ) {
 
 			if ( $this->isSimpleLink() ) {
-				$this->mFullDefinition = $this->getFullDefinitionAsLink( $doc, $callback );
+				$this->formattedTerm = $this->buildFormattedTermAsLink( $doc );
 			} else {
-				$this->mFullDefinition = $this->getFullDefinitionAsTooltip( $doc, $callback );
+				$this->formattedTerm = $this->buildFormattedTermAsTooltip( $doc );
 			}
 		}
 	}
@@ -123,20 +128,19 @@ class Element {
 	}
 
 	/**
-	 * @param StashingDOMDocument $doc
-	 * @param callable|null $callback
+	 * @param DOMDocument $doc
 	 * @return DOMElement
 	 */
-	protected function getFullDefinitionAsLink( StashingDOMDocument &$doc, callable $callback = null ) {
+	protected function buildFormattedTermAsLink( DOMDocument &$doc ) {
 
 		// create Title object for target page
 		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
 
 		if ( !$target instanceof Title ) {
 			$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )->text();
-			$errorDefinition = array( self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' );
+			$errorDefinition = [ self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' ];
 			$this->addDefinition( $errorDefinition );
-			return $this->getFullDefinitionAsTooltip( $doc, $callback );
+			return $this->buildFormattedTermAsTooltip( $doc );
 		}
 
 		// create link element
@@ -153,8 +157,45 @@ class Element {
 	}
 
 	/**
-	 * @param Title $target
+	 * @param DOMDocument $doc
+	 *
+	 * @return DOMElement
+	 */
+	protected function buildFormattedTermAsTooltip( DOMDocument &$doc ) {
+
+		// Wrap term and definition in <span> tags
+		$span = $doc->createElement( 'span' );
+		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+		$span->setAttribute( 'data-lingo-term-id', $this->getId() );
+
+		$spanTerm = $this->buildTerm( $doc );
+
+		// insert term and definition
+		$span->appendChild( $spanTerm );
+		return $span;
+	}
+
+	/**
+	 * @param DOMDocument $doc
+	 *
+	 * @return DOMElement
+	 */
+	protected function buildTerm( DOMDocument &$doc ) {
+
+		// Wrap term in <span> tag, hidden
+		\MediaWiki\suppressWarnings();
+		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+		\MediaWiki\restoreWarnings();
+
+		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
+
+		return $spanTerm;
+	}
+
+	/**
+	 * @param Title      $target
 	 * @param DOMElement $link
+	 *
 	 * @return DOMElement
 	 */
 	protected function &addClassAttributeToLink( $target, &$link ) {
@@ -165,7 +206,7 @@ class Element {
 		// part here.
 
 		// set style
-		$classes = array();
+		$classes = [];
 
 		if ( $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] !== null ) {
 			$classes[] = $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
@@ -179,16 +220,17 @@ class Element {
 			$classes[] = 'extiw';
 		}
 
-		if ( count($classes) > 0 ) {
-			$link->setAttribute( 'class', join(' ', $classes ) );
+		if ( count( $classes ) > 0 ) {
+			$link->setAttribute( 'class', join( ' ', $classes ) );
 		}
 
 		return $link;
 	}
 
 	/**
-	 * @param Title $target
+	 * @param Title      $target
 	 * @param DOMElement $link
+	 *
 	 * @return DOMElement
 	 */
 	protected function &addTitleAttributeToLink( $target, &$link ) {
@@ -206,81 +248,59 @@ class Element {
 	}
 
 	/**
-	 * @param StashingDOMDocument $doc
-	 * @param callable|null $callback
-	 * @return DOMElement
+	 * @return string[]
 	 */
-	protected function getFullDefinitionAsTooltip( StashingDOMDocument &$doc, callable $callback = null ) {
+	public function getFormattedDefinitions() {
 
-		if ( $callback === null ) {
-			$callback = function( $text ){ return htmlentities( $text, ENT_COMPAT, 'UTF-8' ); };
+		if ( $this->formattedDefinitions === null ) {
+			$this->buildFormattedDefinitions();
 		}
 
-		// Wrap term and definition in <span> tags
-		$span = $doc->createElement( 'span' );
-		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-
-		// Wrap term in <span> tag, hidden
-		\MediaWiki\suppressWarnings();
-		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
-		\MediaWiki\restoreWarnings();
-
-		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
-
-		// Wrap definition in a <span> tag
-		$spanDefinition = $doc->createElement( 'span' );
-		$spanDefinition->setAttribute( 'class', 'mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-
-		foreach ( $this->mDefinitions as $definition ) {
-
-			\MediaWiki\suppressWarnings();
-			$element = $doc->createElement( 'div' );
-			$element->setAttribute( 'class', 'mw-lingo-tooltip-definition ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
-			\MediaWiki\restoreWarnings();
-
-			$content = call_user_func( $callback, $definition[ self::ELEMENT_DEFINITION ] );
-
-			if ( is_string( $content ) ) {
-				$element->nodeValue = $content;
-			} else {
-				$element->appendChild( $content );
-			}
-
-			if ( $definition[ self::ELEMENT_LINK ] ) {
-				$linkedTitle = Title::newFromText( $definition[ self::ELEMENT_LINK ] );
-				if ( $linkedTitle ) {
-					$link = $this->getLinkTemplate( $doc );
-					$link->setAttribute( 'href', $linkedTitle->getFullURL() );
-					$element->appendChild( $link );
-				}
-			}
-			$spanDefinition->appendChild( $element );
-		}
-
-		// insert term and definition
-		$span->appendChild( $spanTerm );
-		$span->appendChild( $spanDefinition );
-		return $span;
+		return $this->formattedDefinitions;
 	}
 
 	/**
-	 * @param StashingDOMDocument $doc
-	 * @return DOMNode
 	 */
-	private function getLinkTemplate( StashingDOMDocument &$doc ) {
+	protected function buildFormattedDefinitions() {
 
-		$mLinkTemplate = $doc->stashGet( self::LINK_TEMPLATE_ID );
+		// Wrap definition in a <div> tag
+		$divDefinitions = [];
+		$divDefinitions[] = '<div class="mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . '" id="' . $this->getId() . '" >';
 
-		// create template if it does not yet exist
-		if ( $mLinkTemplate === null ) {
+		foreach ( $this->mDefinitions as $definition ) {
 
-			$mLinkTemplate = $doc->createElement( 'a' );
-			$mLinkTemplate->setAttribute( 'class', 'mw-lingo-tooltip-link');
+			$divDefinitions[] = '<div class="mw-lingo-tooltip-definition">';
 
-			$doc->stashSet( $mLinkTemplate, self::LINK_TEMPLATE_ID );
+			$divDefinitions[] = '<div class="mw-lingo-tooltip-text ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . "\">\n";
+			$divDefinitions[] = $definition[ self::ELEMENT_DEFINITION ];
+			$divDefinitions[] = "\n" . '</div>';
+
+			if ( $definition[ self::ELEMENT_LINK ] ) {
+
+				if ( wfParseUrl( $definition[ self::ELEMENT_LINK ] ) !== false ) {
+					$url = $definition[ self::ELEMENT_LINK ];
+				} else {
+					$url = Title::newFromText( $definition[ self::ELEMENT_LINK ] )->getFullURL();
+				}
+
+				if ( $url !== null ) {
+					$divDefinitions[] = '<div class="mw-lingo-tooltip-link">[' . $url . ' <nowiki/>]</div>';
+				}
+			}
+
+			$divDefinitions[] = '</div>';
 		}
 
-		return $mLinkTemplate->cloneNode( true );
+		$divDefinitions[] = "\n" . '</div>';
+
+		$this->formattedDefinitions = join( $divDefinitions );
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getId() {
+		return md5( $this->mTerm );
 	}
 
 	/**
@@ -292,6 +312,7 @@ class Element {
 
 	/**
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public function getTerm( $key ) {
@@ -300,6 +321,7 @@ class Element {
 
 	/**
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public function getSource( &$key ) {
@@ -308,6 +330,7 @@ class Element {
 
 	/**
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public function getDefinition( &$key ) {
@@ -316,6 +339,7 @@ class Element {
 
 	/**
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public function getLink( &$key ) {
@@ -324,6 +348,7 @@ class Element {
 
 	/**
 	 * @param $key
+	 *
 	 * @return mixed
 	 */
 	public function getStyle( &$key ) {
