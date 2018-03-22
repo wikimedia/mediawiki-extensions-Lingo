@@ -3,7 +3,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -35,7 +35,9 @@
 
 		$( '.mw-lingo-tooltip' ).each( function ( index ) {
 
-			var tooltip = $( this ).find( '.mw-lingo-tooltip-tip' );
+			var termId = $(this).attr( 'data-lingo-term-id');
+
+			var tooltip = $( '#' + termId );
 
 			$( this ).qtip( {
 				content : tooltip.html(),
@@ -53,8 +55,6 @@
 				}
 
 			} );
-
-			tooltip.remove();
 
 		} );
 

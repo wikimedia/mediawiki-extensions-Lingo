@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -59,8 +59,8 @@ class BasicBackend extends Backend {
 	}
 
 	protected function registerHooks() {
-		Hooks::register( 'ArticlePurge', array( $this, 'purgeCache' ) );
-		Hooks::register( 'PageContentSave', array( $this, 'purgeCache' ) );
+		Hooks::register( 'ArticlePurge', [ $this, 'purgeCache' ] );
+		Hooks::register( 'PageContentSave', [ $this, 'purgeCache' ] );
 	}
 
 	/**
@@ -69,13 +69,14 @@ class BasicBackend extends Backend {
 	 * and Source are set to null. If there is no next element the function
 	 * returns null.
 	 *
-	 * @return Array | null
+	 * @return array | null
+	 * @throws \MWException
 	 */
 	public function next() {
 
 		static $term = null;
-		static $definitions = array();
-		static $ret = array();
+		static $definitions = [];
+		static $ret = [];
 
 		$this->collectDictionaryLines();
 
@@ -112,7 +113,7 @@ class BasicBackend extends Backend {
 
 			// wipe the data if it's a totally new term definition
 			if ( !empty( $term ) && count( $definitions ) > 0 ) {
-				$definitions = array();
+				$definitions = [];
 				$term = null;
 			}
 
@@ -124,7 +125,7 @@ class BasicBackend extends Backend {
 			$term = trim( substr( $chunks[ 0 ], 1 ) );
 		}
 
-		return array( $term, $definitions );
+		return [ $term, $definitions ];
 	}
 
 	/**
@@ -133,15 +134,15 @@ class BasicBackend extends Backend {
 	 * @return array
 	 */
 	protected function queueDefinitions( $definitions, $term ) {
-		$ret = array();
+		$ret = [];
 
 		foreach ( $definitions as $definition ) {
-			$ret[] = array(
+			$ret[] = [
 				Element::ELEMENT_TERM       => $term,
 				Element::ELEMENT_DEFINITION => $definition,
 				Element::ELEMENT_LINK       => null,
 				Element::ELEMENT_SOURCE     => null
-			);
+			];
 		}
 
 		return $ret;
@@ -186,8 +187,8 @@ class BasicBackend extends Backend {
 
 	/**
 	 * @param Title $dictionaryTitle
+	 *
 	 * @return null|string
-	 * @throws \MWException
 	 */
 	protected function getRawDictionaryContent( Title $dictionaryTitle ) {
 
@@ -195,7 +196,7 @@ class BasicBackend extends Backend {
 
 		// This is a hack special-casing the submitting of the terminology page
 		// itself. In this case the Revision is not up to date when we get here,
-		// i.e. $rev->getText() would return outdated Text. This hack takes the
+		// i.e. $revision->getText() would return outdated Text. This hack takes the
 		// text directly out of the data from the web request.
 		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit' &&
 			$this->getTitleFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $dictionaryTitle->getArticleID()
@@ -204,11 +205,11 @@ class BasicBackend extends Backend {
 			return $wgRequest->getVal( 'wpTextbox1' );
 		}
 
-		$rev = $this->getRevisionFromTitle( $dictionaryTitle );
+		$revision = $this->getRevisionFromTitle( $dictionaryTitle );
 
-		if ( $rev !== null ) {
+		if ( $revision !== null ) {
 
-			$content = $rev->getContent();
+			$content = $revision->getContent();
 
 			if ( is_null( $content ) ) {
 				return '';

@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -28,7 +28,9 @@
  */
 namespace Lingo;
 
+use DOMDocument;
 use DOMXPath;
+use ObjectCache;
 use Parser;
 
 /**
@@ -40,6 +42,9 @@ use Parser;
  * @ingroup Lingo
  */
 class LingoParser {
+
+    const WORD_VALUE = 0;
+    const WORD_OFFSET = 1;
 
 	private $mLingoTree = null;
 
@@ -99,8 +104,9 @@ class LingoParser {
 	/**
 	 * @return string
 	 */
-	private static function getCacheKey() {
-		return wfMemcKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( self::getInstance()->getBackend() ) );
+	private function getCacheKey() {
+		// FIXME: If Lingo ever stores the glossary tree per user, then the cache key also needs to include the user id (see T163608)
+		return ObjectCache::getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( self::getInstance()->getBackend() ) );
 	}
 
 	/**
@@ -119,12 +125,12 @@ class LingoParser {
 	/**
 	 * Returns the list of terms in the glossary
 	 *
-	 * @return Array an array mapping terms (keys) to descriptions (values)
+	 * @return array an array mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoArray() {
 
 		// build glossary array only once per request
-		if ( !$this->mLingoTree ) {
+		if ( $this->mLingoTree === null ) {
 			$this->buildLingo();
 		}
 
@@ -229,105 +235,118 @@ class LingoParser {
 		// Parse HTML from page
 		\MediaWiki\suppressWarnings();
 
-		$doc = new StashingDOMDocument( '1.0', 'utf-8' );
+		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
 		\MediaWiki\restoreWarnings();
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
-		$elements = $xpath->query(
+		$textElements = $xpath->query(
 			"//*[not(ancestor-or-self::*[@class='noglossary'] or ancestor-or-self::a)][text()!=' ']/text()"
 		);
 
 		// Iterate all HTML text matches
-		$nb = $elements->length;
+        $numberOfTextElements = $textElements->length;
 		$changedDoc = false;
 
-		for ( $pos = 0; $pos < $nb; $pos++ ) {
-			$el = $elements->item( $pos );
+		$definitions = [];
 
-			if ( strlen( $el->nodeValue ) < $glossary->getMinTermLength() ) {
+		for ( $textElementIndex = 0; $textElementIndex < $numberOfTextElements; $textElementIndex++ ) {
+			$textElement = $textElements->item( $textElementIndex );
+
+			if ( strlen( $textElement->nodeValue ) < $glossary->getMinTermLength() ) {
 				continue;
 			}
 
-			$matches = array();
+			$matches = [];
 			preg_match_all(
 				$this->regex,
-				$el->nodeValue,
+				$textElement->nodeValue,
 				$matches,
 				PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER
 			);
 
-			if ( count( $matches ) == 0 || count( $matches[ 0 ] ) == 0 ) {
+			if ( count( $matches ) === 0 || count( $matches[ 0 ] ) === 0 ) {
 				continue;
 			}
 
-			$lexemes = &$matches[ 0 ];
-			$countLexemes = count( $lexemes );
-			$parent = &$el->parentNode;
-			$index = 0;
+			$wordDescriptors = &$matches[ 0 ];  // See __construct() for definition of "word"
+			$numberOfWordDescriptors = count( $wordDescriptors );
+
+			$parentNode = &$textElement->parentNode;
+
+			$wordDescriptorIndex = 0;
 			$changedElem = false;
 
-			$parseCB = function( $text ) use ( $parser, $doc ){
-				$fragment = $doc->createDocumentFragment();
-				$fragment->appendXML( $parser->recursiveTagParseFully( $text ) );
-				return $fragment;
-			};
+			while ( $wordDescriptorIndex < $numberOfWordDescriptors ) {
 
-			while ( $index < $countLexemes ) {
 				/** @var \Lingo\Element $definition */
-				list( $skipped, $used, $definition ) =
-					$glossary->findNextTerm( $lexemes, $index, $countLexemes );
+				list( $skippedWords, $usedWords, $definition ) =
+					$glossary->findNextTerm( $wordDescriptors, $wordDescriptorIndex, $numberOfWordDescriptors );
 
-				if ( $used > 0 ) { // found a term
-					if ( $skipped > 0 ) { // skipped some text, insert it as is
-						$parent->insertBefore(
+				if ( $usedWords > 0 ) { // found a term
+
+					if ( $skippedWords > 0 ) { // skipped some text, insert it as is
+
+                        $start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
+                        $length = $wordDescriptors[$wordDescriptorIndex + $skippedWords][self::WORD_OFFSET] - $start;
+
+                        $parentNode->insertBefore(
 							$doc->createTextNode(
-								substr( $el->nodeValue,
-									$currLexIndex = $lexemes[ $index ][ 1 ],
-									$lexemes[ $index + $skipped ][ 1 ] - $currLexIndex )
+								substr( $textElement->nodeValue, $start, $length)
 							),
-							$el
+							$textElement
 						);
 					}
 
-					$parent->insertBefore( $definition->getFullDefinition( $doc, $parseCB ), $el );
+					// TODO: insert only Glossary Term, add Glossary Definition to a list to be inserted at the end
+					$parentNode->insertBefore( $definition->getFormattedTerm( $doc ), $textElement );
+					$definitions[ $definition->getId() ] = $definition->getFormattedDefinitions();
 
 					$changedElem = true;
-				} else { // did not find term, just use the rest of the text
+
+				} else { // did not find any term, just use the rest of the text
+
 					// If we found no term now and no term before, there was no
 					// term in the whole element. Might as well not change the
 					// element at all.
+
 					// Only change element if found term before
-					if ( $changedElem ) {
-						$parent->insertBefore(
+					if ( $changedElem === true ) {
+
+                        $start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
+
+                        $parentNode->insertBefore(
 							$doc->createTextNode(
-								substr( $el->nodeValue, $lexemes[ $index ][ 1 ] )
+								substr( $textElement->nodeValue, $start)
 							),
-							$el
+							$textElement
 						);
-					} else {
-						// In principle superfluous, the loop would run out
-						// anyway. Might save a bit of time.
-						break;
+
 					}
+
+                    // In principle superfluous, the loop would run out anyway. Might save a bit of time.
+                    break;
 				}
 
-				$index += $used + $skipped;
+				$wordDescriptorIndex += $usedWords + $skippedWords;
 			}
 
 			if ( $changedElem ) {
-				$parent->removeChild( $el );
+				$parentNode->removeChild( $textElement );
 				$changedDoc = true;
 			}
 		}
 
 		if ( $changedDoc ) {
+
 			$this->loadModules( $parser );
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
+
+			$text .= $parser->recursiveTagParseFully( join( $definitions ) );
 		}
 
 		return true;
@@ -337,7 +356,7 @@ class LingoParser {
 	 * @param Parser $parser
 	 */
 	protected function loadModules( &$parser ) {
-		global $wgOut, $wgScriptPath;
+		global $wgOut;
 
 		$parserOutput = $parser->getOutput();
 
@@ -375,7 +394,7 @@ class LingoParser {
 
 		global $wgexLingoCacheType;
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
-		$cache->delete( self::getCacheKey() );
+		$cache->delete( $this->getCacheKey() );
 	}
 
 	/**

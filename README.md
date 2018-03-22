@@ -14,8 +14,8 @@ See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 
 ## Requirements
 
-- PHP 5.3.3 or later
-- MediaWiki 1.26 or later
+- PHP 5.5 or later
+- MediaWiki 1.27 or later
 
 ## Installation & Activation
 
@@ -25,7 +25,7 @@ The recommended way to install this extension is by using [Composer][composer].
  ```json
  {
  	"require": {
- 		"mediawiki/lingo": "~2.0"
+ 		"mediawiki/lingo": "~3.0"
  	}
  }
  ```
@@ -87,6 +87,13 @@ the following syntax:
 ;AFAIK:As Far As I Know
 ;AWGTHTGTATA:Are We Going To Have To Go Through All This Again
 ;HTTP:HyperText Transfer Protocol
+
+## Running tests
+
+From the `Lingo` directory run
+```bash
+php ../../tests/phpunit/phpunit.php  --group extensions-lingo -c phpunit.xml.dist
+```
 
 ## Reporting bugs
 

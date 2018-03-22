@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -52,13 +52,15 @@ class Tree {
 
 	const TREE_VERSION = 2;
 
-	private $mTree = array();
-	private $mList = array();
+	private $mTree = [];
+	private $mList = [];
 	private $mMinLength = 1000;
 
 	/**
 	 * Adds a string to the Lingo Tree
-	 * @param String $term
+	 *
+	 * @param string $term
+	 * @param array $definition
 	 */
 	public function addTerm( &$term, $definition ) {
 		if ( !$term ) {
@@ -69,13 +71,13 @@ class Tree {
 			$this->mList[ $term ]->addDefinition( $definition );
 		} else {
 
-			$matches = array();
+			$matches = [];
 			preg_match_all( LingoParser::getInstance()->regex, $term, $matches );
 
-			$elt = $this->addElement( $matches[ 0 ], $term, $definition );
-			$this->mList[ $term ] = &$elt[ -1 ];
+			$element = $this->addElement( $matches[ 0 ], $term, $definition );
+			$this->mList[ $term ] = &$element[ -1 ];
 
-			$this->mMinLength = min( array( $this->mMinLength, strlen( $term ) ) );
+			$this->mMinLength = min( [ $this->mMinLength, strlen( $term ) ] );
 		}
 	}
 
@@ -84,10 +86,10 @@ class Tree {
 	 *
 	 * @param array $path An array containing the constituing lexemes of the term
 	 * @param String $term
-	 * @param String $definition
-	 * @return Array the tree node the element was stored in
+	 * @param array $definition
+	 * @return array the tree node the element was stored in
 	 */
-	protected function &addElement( Array &$path, &$term, &$definition ) {
+	protected function &addElement( array &$path, &$term, &$definition ) {
 
 		$tree = &$this->mTree;
 
@@ -95,7 +97,7 @@ class Tree {
 		while ( ( $step = array_shift( $path ) ) !== null ) {
 
 			if ( !isset( $tree[ $step ] ) ) {
-				$tree[ $step ] = array();
+				$tree[ $step ] = [];
 			}
 
 			$tree = &$tree[ $step ];
@@ -110,14 +112,27 @@ class Tree {
 		return $tree;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getMinTermLength() {
 		return $this->mMinLength;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getTermList() {
 		return $this->mList;
 	}
 
+	/**
+	 * @param $lexemes
+	 * @param int $index
+	 * @param int $countLexemes
+	 *
+	 * @return array
+	 */
 	public function findNextTerm( &$lexemes, $index, $countLexemes ) {
 
 		$start = $lastindex = $index;
@@ -138,18 +153,26 @@ class Tree {
 		}
 
 		if ( $definition ) {
-			return array( $index - $start - 1, $lastindex - $index + 2, $definition );
+			return [ $index - $start - 1, $lastindex - $index + 2, $definition ];
 		} else {
-			return array( $index - $start, 0, null );
+			return [ $index - $start, 0, null ];
 		}
 	}
 
-	public function findNextTermNoSkip( Array &$tree, &$lexemes, $index, $countLexemes ) {
+	/**
+	 * @param array $tree
+	 * @param       $lexemes
+	 * @param       $index
+	 * @param       $countLexemes
+	 *
+	 * @return array
+	 */
+	public function findNextTermNoSkip( array &$tree, &$lexemes, $index, $countLexemes ) {
 
 		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[ $index + 1 ][ 0 ], $tree ) ) {
 			$ret = $this->findNextTermNoSkip( $tree[ $currLex ], $lexemes, $index + 1, $countLexemes );
 		} else {
-			$ret = array( $index, &$tree[ -1 ] );
+			$ret = [ $index, &$tree[ -1 ] ];
 		}
 
 		return $ret;

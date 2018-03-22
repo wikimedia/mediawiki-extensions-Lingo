@@ -1,5 +1,18 @@
 ## Release Notes
 
+### Lingo 3.0.0
+
+Released on ????-2018
+
+Changes:
+* Raised minimum versions:
+  * Mediawiki: 1.27
+  * PHP: 5.5
+* Allow HTML-formatted glossary entries
+
+Fixes:
+* 
+
 ### Lingo 2.0.3
 
 Released on 24-May-2017
@@ -8,7 +21,6 @@ Fixes:
 * Fix Fatal error: Call to undefined function Lingo\string()
 * Fixed broken Special:Preferences
 * Fixed missing link icon
-
 
 ### Lingo 2.0.2
 
