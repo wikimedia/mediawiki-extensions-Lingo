@@ -20,7 +20,7 @@
 	"ResourceModules": {
 		"ext.Lingo.Styles": {
 			"styles": [
-				"styles/Lingo.css"
+				"styles/Lingo.less"
 			]
 		},
 		"ext.Lingo.Scripts": {

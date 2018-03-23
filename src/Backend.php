@@ -5,7 +5,7 @@
  *
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -92,10 +92,11 @@ abstract class Backend {
 
 	/**
 	 * This function returns the next element. The element is an array of four
-	 * strings: Term, Definition, Link, Source. If there is no next element the
-	 * function returns null.
+	 * strings: Term, Definition (as wikitext), Link (as URL or Article title), Source (unused).
 	 *
-	 * @return Element | null
+	 * If there is no next element the function returns null.
+	 *
+	 * @return array | null
 	 */
 	abstract public function next();
 }

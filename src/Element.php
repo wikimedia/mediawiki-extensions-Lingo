@@ -164,32 +164,11 @@ class Element {
 	protected function buildFormattedTermAsTooltip( DOMDocument &$doc ) {
 
 		// Wrap term and definition in <span> tags
-		$span = $doc->createElement( 'span' );
-		$span->setAttribute( 'class', 'mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+		$span = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
+		$span->setAttribute( 'class', 'mw-lingo-term ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
 		$span->setAttribute( 'data-lingo-term-id', $this->getId() );
 
-		$spanTerm = $this->buildTerm( $doc );
-
-		// insert term and definition
-		$span->appendChild( $spanTerm );
 		return $span;
-	}
-
-	/**
-	 * @param DOMDocument $doc
-	 *
-	 * @return DOMElement
-	 */
-	protected function buildTerm( DOMDocument &$doc ) {
-
-		// Wrap term in <span> tag, hidden
-		\MediaWiki\suppressWarnings();
-		$spanTerm = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
-		\MediaWiki\restoreWarnings();
-
-		$spanTerm->setAttribute( 'class', 'mw-lingo-tooltip-abbr' );
-
-		return $spanTerm;
 	}
 
 	/**
@@ -265,13 +244,13 @@ class Element {
 
 		// Wrap definition in a <div> tag
 		$divDefinitions = [];
-		$divDefinitions[] = '<div class="mw-lingo-tooltip-tip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . '" id="' . $this->getId() . '" >';
+		$divDefinitions[] = '<div class="mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . '" id="' . $this->getId() . '" >';
 
 		foreach ( $this->mDefinitions as $definition ) {
 
-			$divDefinitions[] = '<div class="mw-lingo-tooltip-definition">';
+			$divDefinitions[] = '<div class="mw-lingo-definition">';
 
-			$divDefinitions[] = '<div class="mw-lingo-tooltip-text ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . "\">\n";
+			$divDefinitions[] = '<div class="mw-lingo-definition-text ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . "\">\n";
 			$divDefinitions[] = $definition[ self::ELEMENT_DEFINITION ];
 			$divDefinitions[] = "\n" . '</div>';
 
@@ -284,7 +263,7 @@ class Element {
 				}
 
 				if ( $url !== null ) {
-					$divDefinitions[] = '<div class="mw-lingo-tooltip-link">[' . $url . ' <nowiki/>]</div>';
+					$divDefinitions[] = '<div class="mw-lingo-definition-link">[' . $url . ' <nowiki/>]</div>';
 				}
 			}
 

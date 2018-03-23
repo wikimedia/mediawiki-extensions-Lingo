@@ -32,6 +32,7 @@ use DOMDocument;
 use DOMXPath;
 use ObjectCache;
 use Parser;
+use Title;
 
 /**
  * This class parses the given text and enriches it with definitions for defined
@@ -69,20 +70,19 @@ class LingoParser {
 
 	/**
 	 *
-	 * @param Parser $parser
-	 * @param string $text
+	 * @param \AbstractContent $content
+	 * @param \Title $title
+	 * @param \ParserOutput $po
+	 *
 	 * @return Boolean
 	 */
-	public function parse( Parser &$parser, &$text ) {
+	public function parse( $content, $title, $po ) {
 
-		// parse if
+		/** @var \Parser $parser */
+		$parser = $GLOBALS[ 'wgParser' ];
+
 		if ( $this->shouldParse( $parser ) ) {
-
-			// unstrip strip items of the 'general' group
-			// this will be done again by parse when this hook returns, but it should not hurt to do this twice
-			// Only problem is with other hook handlers that might not expect strip items to be unstripped already
-			$text = $parser->mStripState->unstripGeneral( $text );
-			$this->realParse( $parser, $text );
+			$this->realParse( $parser );
 		}
 
 		return true;
@@ -128,13 +128,7 @@ class LingoParser {
 	 * @return array an array mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoArray() {
-
-		// build glossary array only once per request
-		if ( $this->mLingoTree === null ) {
-			$this->buildLingo();
-		}
-
-		return $this->mLingoTree->getTermList();
+		return $this->getLingoTree()->getTermList();
 	}
 
 	/**
@@ -207,21 +201,14 @@ class LingoParser {
 	 * This method currently only recognizes terms consisting of max one word
 	 *
 	 * @param Parser $parser
-	 * @param $text
+	 *
 	 * @return Boolean
 	 */
-	protected function realParse( &$parser, &$text ) {
-		global $wgRequest;
+	protected function realParse( &$parser ) {
 
-		$action = $wgRequest->getVal( 'action', 'view' );
+		$text = $parser->getOutput()->getText();
 
-		if ( $text === null ||
-			$text === '' ||
-			$action === 'edit' ||
-			$action === 'ajax' ||
-			isset( $_POST[ 'wpPreview' ] )
-		) {
-
+		if ( $text === null || $text === '' ) {
 			return true;
 		}
 
@@ -248,7 +235,6 @@ class LingoParser {
 
 		// Iterate all HTML text matches
 		$numberOfTextElements = $textElements->length;
-		$changedDoc = false;
 
 		$definitions = [];
 
@@ -300,8 +286,8 @@ class LingoParser {
 						);
 					}
 
-					// TODO: insert only Glossary Term, add Glossary Definition to a list to be inserted at the end
 					$parentNode->insertBefore( $definition->getFormattedTerm( $doc ), $textElement );
+
 					$definitions[ $definition->getId() ] = $definition->getFormattedDefinitions();
 
 					$changedElem = true;
@@ -335,18 +321,18 @@ class LingoParser {
 
 			if ( $changedElem ) {
 				$parentNode->removeChild( $textElement );
-				$changedDoc = true;
 			}
 		}
 
-		if ( $changedDoc ) {
+		if ( count( $definitions ) > 0 ) {
 
 			$this->loadModules( $parser );
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
-
 			$text .= $parser->recursiveTagParseFully( join( $definitions ) );
+
+			$parser->getOutput()->setText( $text );
 		}
 
 		return true;
@@ -410,18 +396,30 @@ class LingoParser {
 	 * @param Parser $parser
 	 * @return bool
 	 */
-	protected function shouldParse( Parser &$parser ) {
+	protected function shouldParse( &$parser ) {
 		global $wgexLingoUseNamespaces;
 
+		if ( !( $parser instanceof Parser ) ) {
+			return false;
+		}
+
+		if ( isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) ) { // __NOGLOSSARY__ found in wikitext
+			return false;
+		}
+
 		$title = $parser->getTitle();
+
+		if ( !( $title instanceof Title ) ) {
+			return false;
+		}
+
 		$namespace = $title->getNamespace();
 
-		return !isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) && // __NOGLOSSARY__ not present and
-		(
-			!$title || // title not set (i.e. when text is outside the page content) or
-			!isset( $wgexLingoUseNamespaces[ $namespace ] ) || // namespace not explicitly forbidden (i.e. not in list of namespaces and set to false) or
-			$wgexLingoUseNamespaces[ $namespace ] // namespace explicitly allowed
-		);
+		if ( isset( $wgexLingoUseNamespaces[ $namespace ] ) && $wgexLingoUseNamespaces[ $namespace ] === false ) {
+			return false;
+		};
+
+		return true;
 	}
 }
 

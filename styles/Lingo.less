@@ -25,35 +25,32 @@
  * @ingroup Lingo
  */
 
+@media screen {
+
+	.mw-lingo-term {
+
+		border-bottom: 1px dotted #bbbbff;
+		cursor: default;
+
+		&:hover {
+			background-color: rgba( 0, 0, 0, 0.1 );
+		}
+	}
+}
+
 .mw-lingo-tooltip {
-	position: relative;
-}
 
-.mw-lingo-tooltip-abbr {
-	border-bottom: 1px dotted #bbbbff;
-	cursor:        default;
-}
-
-.mw-lingo-tooltip-abbr:hover {
-	background-color: rgba(0, 0, 0, 0.1);
-}
-
-.mw-lingo-tooltip-tip {
 	display:               none;
 
-	/* qtip-default */
-	border-width:          1px;
-	border-style:          solid;
+	/* qtip light */
+	color:                 #454545;
+	background-color:      white;
+	border:                1px solid #e2e2e2;
 
 	/* qtip shadow */
-	-webkit-box-shadow:    1px 1px 3px 1px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow:       1px 1px 3px 1px rgba(0, 0, 0, 0.15);
-	box-shadow:            1px 1px 3px 1px rgba(0, 0, 0, 0.15);
-
-	/* qtip light */
-	background-color:      white;
-	border-color:          #e2e2e2;
-	color:                 #454545;
+	-webkit-box-shadow:    1px 1px 3px 1px rgba( 0, 0, 0, 0.15 );
+	-moz-box-shadow:       1px 1px 3px 1px rgba( 0, 0, 0, 0.15 );
+	box-shadow:            1px 1px 3px 1px rgba( 0, 0, 0, 0.15 );
 
 	/* qtip rounded */
 	-moz-border-radius:    5px;
@@ -61,35 +58,25 @@
 	border-radius:         5px;
 }
 
-.mw-lingo-tooltip-definition:not(:last-child) {
+.mw-lingo-definition:not( :last-child ) {
 	margin-bottom: 0.5em;
 }
-.mw-lingo-tooltip-text {
+
+.mw-lingo-definition-text {
+
 	display: inline-block;
+
+	p, ul {
+		margin: 0;
+	}
 }
 
-.mw-lingo-tooltip-text p {
-	margin: 0;
-}
+.mw-lingo-definition-link {
 
-.mw-lingo-tooltip-link {
-	display: inline-block;
-}
+	float: right;
 
-.mw-lingo-tooltip-link > a:before {
-	content: url(linkicon.png);
-	margin-left: .5em;
-}
-
-/* Style for JS disabled browsers*/
-.mw-lingo-tooltip:hover .mw-lingo-tooltip-tip {
-	display:   block;
-
-	position:  absolute;
-	top:       1.5em;
-	left:      0;
-
-	padding:   5px 9px;
-	z-index:   15000;
-	font-size: smaller;
+	& > a:before {
+		content: /*@embed*/ url( linkicon.png );
+		margin-left: 1em;
+	}
 }

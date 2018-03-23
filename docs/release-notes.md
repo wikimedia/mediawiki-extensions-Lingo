@@ -8,10 +8,16 @@ Changes:
 * Raised minimum versions:
   * Mediawiki: 1.27
   * PHP: 5.5
-* Allow HTML-formatted glossary entries
+* Allow HTML-formatted definitions for glossary entries (for supporting backends)
+* Allow external link targets for glossary entries (for supporting backends)
+* Disable tooltips for non-JavaScript browsers
+* Disable tooltips outside the main content (including all Special pages)
+* Rework of layout of HTML elements and associated styles
 
 Fixes:
-* 
+* [T68915](https://phabricator.wikimedia.org/T68915) Text resulting from tag extensions is properly annotated
+* [T180746](https://phabricator.wikimedia.org/T180746) Tooltips are now disabled for the Special namespace.
+* [T182261](https://phabricator.wikimedia.org/T182261) Section heads on Category pages are properly annotated
 
 ### Lingo 2.0.3
 

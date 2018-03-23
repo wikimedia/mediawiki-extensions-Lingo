@@ -51,7 +51,7 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			\Hooks::register( 'ParserBeforeTidy', [ $parser, 'parse' ] );
+			\Hooks::register( 'ContentAlterParserOutput', [ $parser, 'parse' ] );
 
 			\Hooks::register('GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
