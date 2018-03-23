@@ -43,8 +43,8 @@ use Parser;
  */
 class LingoParser {
 
-    const WORD_VALUE = 0;
-    const WORD_OFFSET = 1;
+	const WORD_VALUE = 0;
+	const WORD_OFFSET = 1;
 
 	private $mLingoTree = null;
 
@@ -247,7 +247,7 @@ class LingoParser {
 		);
 
 		// Iterate all HTML text matches
-        $numberOfTextElements = $textElements->length;
+		$numberOfTextElements = $textElements->length;
 		$changedDoc = false;
 
 		$definitions = [];
@@ -289,10 +289,10 @@ class LingoParser {
 
 					if ( $skippedWords > 0 ) { // skipped some text, insert it as is
 
-                        $start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
-                        $length = $wordDescriptors[$wordDescriptorIndex + $skippedWords][self::WORD_OFFSET] - $start;
+						$start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
+						$length = $wordDescriptors[$wordDescriptorIndex + $skippedWords][self::WORD_OFFSET] - $start;
 
-                        $parentNode->insertBefore(
+						$parentNode->insertBefore(
 							$doc->createTextNode(
 								substr( $textElement->nodeValue, $start, $length)
 							),
@@ -315,9 +315,9 @@ class LingoParser {
 					// Only change element if found term before
 					if ( $changedElem === true ) {
 
-                        $start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
+						$start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
 
-                        $parentNode->insertBefore(
+						$parentNode->insertBefore(
 							$doc->createTextNode(
 								substr( $textElement->nodeValue, $start)
 							),
@@ -326,8 +326,8 @@ class LingoParser {
 
 					}
 
-                    // In principle superfluous, the loop would run out anyway. Might save a bit of time.
-                    break;
+					// In principle superfluous, the loop would run out anyway. Might save a bit of time.
+					break;
 				}
 
 				$wordDescriptorIndex += $usedWords + $skippedWords;

@@ -193,7 +193,7 @@ class Element {
 	}
 
 	/**
-	 * @param Title      $target
+	 * @param Title $target
 	 * @param DOMElement $link
 	 *
 	 * @return DOMElement
@@ -228,7 +228,7 @@ class Element {
 	}
 
 	/**
-	 * @param Title      $target
+	 * @param Title $target
 	 * @param DOMElement $link
 	 *
 	 * @return DOMElement

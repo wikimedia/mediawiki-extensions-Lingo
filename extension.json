@@ -65,7 +65,6 @@
 		"Lingo\\Backend": "/src/Backend.php",
 		"Lingo\\BasicBackend": "/src/BasicBackend.php",
 		"Lingo\\MessageLog": "/src/MessageLog.php",
-		"Lingo\\StashingDOMDocument": "/src/StashingDOMDocument.php",
 		"Lingo\\Tests\\Util\\XmlFileProvider": "/tests/phpunit/Util/XmlFileProvider.php"
 	},
 	"callback": "Lingo\\Lingo::initExtension",
