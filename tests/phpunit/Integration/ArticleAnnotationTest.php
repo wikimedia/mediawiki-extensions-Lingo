@@ -31,7 +31,6 @@ use Lingo\Tests\Util\XmlFileProvider;
 use Parser;
 use ParserOptions;
 use PHPUnit\Framework\TestCase;
-use User;
 
 use PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls;
 use ReflectionClass;
@@ -89,7 +88,7 @@ class ArticleAnnotationTest extends TestCase {
 
 		$lingoParser->parse();
 
-		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText( [ 'unwrap' => true ] ) ) );
+		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText() ) );
 
 	}
 

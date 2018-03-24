@@ -27,13 +27,13 @@ language: php
 
 matrix:
   include:
-    - env: DBTYPE=mysql; MW=master
+    - env: DBTYPE=mysql; MW=master; GROUP=extensions-lingo
       php: 7.0
-    - env: DBTYPE=mysql; MW=1.30.0
+    - env: DBTYPE=mysql; MW=1.30.0; GROUP=extensions-lingo
       php: 7.2
-    - env: DBTYPE=mysql; MW=1.28.0
+    - env: DBTYPE=mysql; MW=1.28.0; GROUP=extensions-lingo-unit
       php: 5.6
-    - env: DBTYPE=postgres; MW=1.27.0
+    - env: DBTYPE=postgres; MW=1.27.0; GROUP=extensions-lingo-unit
       php: 5.5
 
 script:
