@@ -89,7 +89,7 @@ class ArticleAnnotationTest extends TestCase {
 
 		$lingoParser->parse();
 
-		$this->assertEquals( $expected, $parser->getOutput()->getText() );
+		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText( [ 'unwrap' => true ] ) ) );
 
 	}
 

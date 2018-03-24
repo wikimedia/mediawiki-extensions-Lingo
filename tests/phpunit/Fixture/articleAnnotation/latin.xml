@@ -55,7 +55,7 @@ alii soluta.
 	</text>
 	<expected>
 <![CDATA[
-<div class="mw-parser-output"><p>Lorem <span class="mw-lingo-term " data-lingo-term-id="e78f5438b48b39bcbdea61b73679449d">ipsum</span> dolor sit amet, pri admodum alienum at, decore facete ei cum,
+<p>Lorem <span class="mw-lingo-term " data-lingo-term-id="e78f5438b48b39bcbdea61b73679449d">ipsum</span> dolor sit amet, pri admodum alienum at, decore facete ei cum,
 discere admodum dissentias quo et. Ex iusto antiopam sed, <span class="mw-lingo-term " data-lingo-term-id="689c4f6017e042e16a6315622d4fc11d">ius</span> eu stet periculis
 complectitur. Quas apeirian complectitur nec no. Nam <span class="mw-lingo-term " data-lingo-term-id="5ebcdbfc8779f1ac8898f70672713e85">omnes</span> nullam ex. Ne sed
 eros homero, utroque pertinacia eam eu, in est ubique latine minimum. Vel
@@ -126,7 +126,6 @@ alii soluta.
 <p>has-def
 </p>
 </div></div>
-</div>
 ]]>
 	</expected>
 	<glossary-entry>

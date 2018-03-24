@@ -16,9 +16,9 @@ Changes:
 
 Fixes:
 * [T68915](https://phabricator.wikimedia.org/T68915) Text resulting from tag extensions is properly annotated
-* [T180746](https://phabricator.wikimedia.org/T180746) Tooltips are now disabled for the Special namespace.
+* [T180746](https://phabricator.wikimedia.org/T180746), [T147522](https://phabricator.wikimedia.org/T147522) Tooltips are now disabled for the Special namespace
 * [T182261](https://phabricator.wikimedia.org/T182261) Section heads on Category pages are properly annotated
-
+* [T123969](https://phabricator.wikimedia.org/T123969) Styles for printing fixed
 ### Lingo 2.0.3
 
 Released on 24-May-2017
