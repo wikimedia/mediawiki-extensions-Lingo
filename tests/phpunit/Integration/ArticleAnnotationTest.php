@@ -30,6 +30,7 @@ use Lingo\Tests\Util\XmlFileProvider;
 
 use Parser;
 use ParserOptions;
+use PHPUnit\Framework\TestCase;
 use User;
 
 use PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls;
@@ -47,7 +48,7 @@ use ReflectionClass;
  * @since 2.0.1
  * @author Stephan Gambke
  */
-class ArticleAnnotationTest extends \PHPUnit\Framework\TestCase {
+class ArticleAnnotationTest extends TestCase {
 
 	public function setup() {
 
@@ -74,12 +75,8 @@ class ArticleAnnotationTest extends \PHPUnit\Framework\TestCase {
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
 
 		$parser = new Parser();
-		$parser->startExternalParse(
-			/* Title         */	null,
-			/* ParserOptions */	ParserOptions::newFromUser( new User() ),
-			/* $outputType = */	Parser::OT_HTML,
-			/* $clearState = */	true
-		);
+		$parser->parse( $text, \Title::newFromText( 'Foo' ), new ParserOptions() );
+		$GLOBALS[ 'wgParser' ] = $parser;
 
 		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );
 		$backend->expects( $this->any() )
@@ -90,16 +87,15 @@ class ArticleAnnotationTest extends \PHPUnit\Framework\TestCase {
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );
 
-		$lingoParser->parse( $parser, $text );
+		$lingoParser->parse();
 
-		$this->assertEquals( $expected, $text );
-
+		$this->assertEquals( $expected, $parser->getOutput()->getText() );
 
 	}
 
 	public function provideData() {
 
-		$data = array();
+		$data = [];
 
 		$xmlFileProvider = new XmlFileProvider( __DIR__ . '/../Fixture/articleAnnotation' );
 		$files = $xmlFileProvider->getFiles();
@@ -113,19 +109,19 @@ class ArticleAnnotationTest extends \PHPUnit\Framework\TestCase {
 			// suppress warnings for non-existant array keys
 			\MediaWiki\suppressWarnings();
 
-			$testCase = array(
+			$testCase = [
 				0 => substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
-				1 => $decoded[ 'text' ],
-				2 => array(),
-				3 => $decoded[ 'expected' ],
-			);
+				1 => trim( $decoded[ 'text' ] ),
+				2 => [],
+				3 => trim( $decoded[ 'expected' ] ) . "\n",
+			];
 
 			if ( array_key_exists( 'term', $decoded[ 'glossary-entry' ] ) ) {
-				$decoded[ 'glossary-entry' ] = array( $decoded[ 'glossary-entry' ] );
+				$decoded[ 'glossary-entry' ] = [ $decoded[ 'glossary-entry' ] ];
 			}
 
 			foreach ( $decoded[ 'glossary-entry' ] as $entry ) {
-				$testCase[ 2 ][] = array( $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] );
+				$testCase[ 2 ][] = [ $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] ];
 			}
 
 			\MediaWiki\restoreWarnings();

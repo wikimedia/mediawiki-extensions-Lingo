@@ -69,14 +69,9 @@ class LingoParser {
 	}
 
 	/**
-	 *
-	 * @param \AbstractContent $content
-	 * @param \Title $title
-	 * @param \ParserOutput $po
-	 *
 	 * @return Boolean
 	 */
-	public function parse( $content, $title, $po ) {
+	public function parse( /*$content, $title, $po */ ) {
 
 		/** @var \Parser $parser */
 		$parser = $GLOBALS[ 'wgParser' ];
