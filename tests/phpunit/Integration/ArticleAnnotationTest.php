@@ -103,7 +103,7 @@ class ArticleAnnotationTest extends TestCase {
 
 			$xml = simplexml_load_file( $file, "SimpleXMLElement", LIBXML_NOCDATA );
 			$json = json_encode( $xml );
-			$decoded = json_decode( $json, TRUE );
+			$decoded = json_decode( $json, true );
 
 			// suppress warnings for non-existant array keys
 			\MediaWiki\suppressWarnings();

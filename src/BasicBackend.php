@@ -129,8 +129,8 @@ class BasicBackend extends Backend {
 	}
 
 	/**
-	 * @param $definitions
-	 * @param $term
+	 * @param string[] $definitions
+	 * @param string $term
 	 * @return array
 	 */
 	protected function queueDefinitions( $definitions, $term ) {

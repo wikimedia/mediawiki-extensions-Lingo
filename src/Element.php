@@ -63,29 +63,26 @@ class Element {
 	/**
 	 * Lingo\Element constructor.
 	 *
-	 * @param $term
-	 * @param $definition
+	 * @param string $term
+	 * @param string[] $definition
 	 */
-	public function __construct( &$term, &$definition = null ) {
+	public function __construct( &$term, &$definition ) {
 
 		$this->mTerm = $term;
-
-		if ( $definition ) {
-			$this->addDefinition( $definition );
-		}
+		$this->addDefinition( $definition );
 	}
 
 	/**
 	 * @param array $definition
 	 */
 	public function addDefinition( &$definition ) {
-		$this->mDefinitions[] = array_pad( $definition, self::ELEMENT_FIELDCOUNT, null );
+		$this->mDefinitions[] = $definition + array_fill( 0, self::ELEMENT_FIELDCOUNT, null ) ;
 	}
 
 	/**
 	 * @param DOMDocument $doc
 	 *
-	 * @return DOMNode|DOMText
+	 * @return DOMElement|DOMText
 	 */
 	public function getFormattedTerm( DOMDocument &$doc ) {
 
@@ -133,25 +130,26 @@ class Element {
 	 */
 	protected function buildFormattedTermAsLink( DOMDocument &$doc ) {
 
-		// create Title object for target page
-		$target = Title::newFromText( $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] );
+		$linkTarget = $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ];
+		$descriptor = $this->getDescriptorFromLinkTarget( $linkTarget );
 
-		if ( !$target instanceof Title ) {
-			$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ] )->text();
-			$errorDefinition = [ self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' ];
-			$this->addDefinition( $errorDefinition );
+		if ( $descriptor === null ) {
+			$this->mDefinitions = [];
+			$this->addErrorMessageForInvalidLink( $linkTarget );
 			return $this->buildFormattedTermAsTooltip( $doc );
 		}
 
 		// create link element
-		$link = $doc->createElement( 'a', $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] );
+		$link = $doc->createElement( 'a', htmlentities( $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] ) );
 
 		// set the link target
-		$link->setAttribute( 'href', $target->getLinkURL() );
+		$link->setAttribute( 'href', $descriptor[ 'url' ] );
+		$link->setAttribute( 'class', join( ' ', $this->getClassesForLink( $descriptor ) ) );
 
-
-		$link = $this->addClassAttributeToLink( $target, $link );
-		$link = $this->addTitleAttributeToLink( $target, $link );
+		$title = $this->getTitleForLink( $descriptor );
+		if ( $title !== null ) {
+			$link->setAttribute( 'title', $title );
+		}
 
 		return $link;
 	}
@@ -164,66 +162,71 @@ class Element {
 	protected function buildFormattedTermAsTooltip( DOMDocument &$doc ) {
 
 		// Wrap term and definition in <span> tags
-		$span = $doc->createElement( 'span', htmlentities( $this->mTerm, ENT_COMPAT, 'UTF-8' ) );
-		$span->setAttribute( 'class', 'mw-lingo-term ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] );
+		$span = $doc->createElement( 'span', htmlentities( $this->mTerm ) );
+		$span->setAttribute( 'class', 'mw-lingo-term' );
 		$span->setAttribute( 'data-lingo-term-id', $this->getId() );
 
 		return $span;
 	}
 
 	/**
-	 * @param Title $target
-	 * @param DOMElement $link
+	 * @param $descriptor
 	 *
-	 * @return DOMElement
+	 * @return string[]
 	 */
-	protected function &addClassAttributeToLink( $target, &$link ) {
+	protected function getClassesForLink( $descriptor ) {
 
-		// TODO: should this be more elaborate? See Linker::linkAttribs
+		// TODO: should this be more elaborate?
 		// Cleanest would probably be to use Linker::link and parse it
 		// back into a DOMElement, but we are in a somewhat time-critical
 		// part here.
 
 		// set style
-		$classes = [];
+		$classes = [ 'mw-lingo-term' ];
 
-		if ( $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] !== null ) {
-			$classes[] = $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
+		$classes[] = $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ];
+
+		if ( array_key_exists( 'title', $descriptor ) && $descriptor[ 'title' ] instanceof Title ) {
+
+			if ( !$descriptor['title']->isKnown() ) {
+				$classes[] = 'new';
+			}
+
+			if ( $descriptor['title']->isExternal() ) {
+				$classes[] = 'extiw';
+			}
+
+		} else {
+			$classes[] = 'ext';
 		}
 
-		if ( !$target->isKnown() ) {
-			$classes[] = 'new';
-		}
-
-		if ( $target->isExternal() ) {
-			$classes[] = 'extiw';
-		}
-
-		if ( count( $classes ) > 0 ) {
-			$link->setAttribute( 'class', join( ' ', $classes ) );
-		}
-
-		return $link;
+		return array_filter( $classes );
 	}
 
 	/**
 	 * @param Title $target
 	 * @param DOMElement $link
 	 *
-	 * @return DOMElement
+	 * @return string
 	 */
-	protected function &addTitleAttributeToLink( $target, &$link ) {
+	protected function getTitleForLink( $descriptor ) {
 
-		if ( $target->getPrefixedText() === '' ) {
-			// A link like [[#Foo]].  This used to mean an empty title
-			// attribute, but that's silly.  Just don't output a title.
-		} elseif ( $target->isKnown() ) {
-			$link->setAttribute( 'title', $target->getPrefixedText() );
-		} else {
-			$link->setAttribute( 'title', wfMessage( 'red-link-title', $target->getPrefixedText() )->text() );
+		/** @var \Title $target */
+		$target = $descriptor[ 'title' ];
+
+		if ( is_string( $target ) ) {
+			return $target;
 		}
 
-		return $link;
+		if ( $target->getPrefixedText() === '' ) {
+			return null;
+		}
+
+		if ( $target->isKnown() ) {
+			return $target->getPrefixedText();
+		}
+
+		return wfMessage( 'red-link-title', $target->getPrefixedText() )->text();
 	}
 
 	/**
@@ -242,37 +245,41 @@ class Element {
 	 */
 	protected function buildFormattedDefinitions() {
 
-		// Wrap definition in a <div> tag
-		$divDefinitions = [];
-		$divDefinitions[] = '<div class="mw-lingo-tooltip ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . '" id="' . $this->getId() . '" >';
+		if ( $this->isSimpleLink() ) {
+			$this->formattedDefinitions = '';
+			return;
+		}
 
-		foreach ( $this->mDefinitions as $definition ) {
+		$divDefinitions = "<div class='mw-lingo-tooltip' id='{$this->getId()}'>";
 
-			$divDefinitions[] = '<div class="mw-lingo-definition">';
+		$definition = reset( $this->mDefinitions );
+		while ( $definition !== false ) {
 
-			$divDefinitions[] = '<div class="mw-lingo-definition-text ' . $this->mDefinitions[ 0 ][ self::ELEMENT_STYLE ] . "\">\n";
-			$divDefinitions[] = $definition[ self::ELEMENT_DEFINITION ];
-			$divDefinitions[] = "\n" . '</div>';
+			$text = $definition[ self::ELEMENT_DEFINITION ];
+			$link = $definition[ self::ELEMENT_LINK ];
+			$style = $definition[ self::ELEMENT_STYLE ];
 
-			if ( $definition[ self::ELEMENT_LINK ] ) {
+			$divDefinitions .= "<div class='mw-lingo-definition {$style}'><div class='mw-lingo-definition-text'>\n{$text}\n</div>";
 
-				if ( wfParseUrl( $definition[ self::ELEMENT_LINK ] ) !== false ) {
-					$url = $definition[ self::ELEMENT_LINK ];
+			if ( $link !== null ) {
+
+				$descriptor = $this->getDescriptorFromLinkTarget( $link );
+
+				if ( $descriptor === null ) {
+					$this->addErrorMessageForInvalidLink( $link );
 				} else {
-					$url = Title::newFromText( $definition[ self::ELEMENT_LINK ] )->getFullURL();
-				}
-
-				if ( $url !== null ) {
-					$divDefinitions[] = '<div class="mw-lingo-definition-link">[' . $url . ' <nowiki/>]</div>';
+					$divDefinitions .= "<div class='mw-lingo-definition-link'>[{$descriptor[ 'url' ]} <nowiki/>]</div>";
 				}
 			}
 
-			$divDefinitions[] = '</div>';
+			$divDefinitions .= "</div>";
+
+			$definition = next( $this->mDefinitions );
 		}
 
-		$divDefinitions[] = "\n" . '</div>';
+		$divDefinitions .= "\n</div>";
 
-		$this->formattedDefinitions = join( $divDefinitions );
+		$this->formattedDefinitions = $divDefinitions;
 	}
 
 	/**
@@ -283,59 +290,42 @@ class Element {
 	}
 
 	/**
-	 * @return mixed
+	 * @param string $linkTarget
+	 *
+	 * @return string[]
 	 */
-	public function getCurrentKey() {
-		return key( $this->mDefinitions );
+	protected function getDescriptorFromLinkTarget( $linkTarget ) {
+
+		if ( $this->isValidLinkTarget( $linkTarget ) ) {
+			return [ 'url' => $linkTarget, 'title' => $this->mTerm ];
+		}
+
+		$title = Title::newFromText( $linkTarget );
+
+		if ( $title !== null ) {
+			return [ 'url' => $title->getFullURL(), 'title' => $title ];
+		}
+
+		return null;
 	}
 
 	/**
-	 * @param $key
+	 * @param string $linkTarget
 	 *
-	 * @return mixed
+	 * @return bool
 	 */
-	public function getTerm( $key ) {
-		return $this->mDefinitions[ $key ][ self::ELEMENT_TERM ];
+	protected function isValidLinkTarget( $linkTarget ) {
+		return wfParseUrl( $linkTarget ) !== false;
 	}
 
 	/**
-	 * @param $key
-	 *
-	 * @return mixed
+	 * @param $link
 	 */
-	public function getSource( &$key ) {
-		return $this->mDefinitions[ $key ][ self::ELEMENT_SOURCE ];
-	}
+	protected function addErrorMessageForInvalidLink( $link ) {
+		$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $link )->text();
+		$errorDefinition = [ self::ELEMENT_DEFINITION => $errorMessage, self::ELEMENT_STYLE => 'invalid-link-target' ];
 
-	/**
-	 * @param $key
-	 *
-	 * @return mixed
-	 */
-	public function getDefinition( &$key ) {
-		return $this->mDefinitions[ $key ][ self::ELEMENT_DEFINITION ];
-	}
-
-	/**
-	 * @param $key
-	 *
-	 * @return mixed
-	 */
-	public function getLink( &$key ) {
-		return $this->mDefinitions[ $key ][ self::ELEMENT_LINK ];
-	}
-
-	/**
-	 * @param $key
-	 *
-	 * @return mixed
-	 */
-	public function getStyle( &$key ) {
-		return $this->mDefinitions[ $key ][ self::ELEMENT_STYLE ];
-	}
-
-	public function next() {
-		next( $this->mDefinitions );
+		$this->addDefinition( $errorDefinition );
 	}
 
 }

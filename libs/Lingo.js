@@ -33,7 +33,7 @@
 
 	$( function ( $ ) {
 
-		$( '.mw-lingo-term' ).each( function ( index ) {
+		$( 'span.mw-lingo-term' ).each( function ( index ) {
 
 			var termId = $(this).attr( 'data-lingo-term-id');
 

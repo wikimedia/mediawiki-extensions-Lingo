@@ -252,7 +252,7 @@ class LingoParser {
 				continue;
 			}
 
-			$wordDescriptors = &$matches[ 0 ];  // See __construct() for definition of "word"
+			$wordDescriptors = &$matches[ 0 ]; // See __construct() for definition of "word"
 			$numberOfWordDescriptors = count( $wordDescriptors );
 
 			$parentNode = &$textElement->parentNode;
@@ -270,12 +270,12 @@ class LingoParser {
 
 					if ( $skippedWords > 0 ) { // skipped some text, insert it as is
 
-						$start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
-						$length = $wordDescriptors[$wordDescriptorIndex + $skippedWords][self::WORD_OFFSET] - $start;
+						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
+						$length = $wordDescriptors[ $wordDescriptorIndex + $skippedWords ][ self::WORD_OFFSET ] - $start;
 
 						$parentNode->insertBefore(
 							$doc->createTextNode(
-								substr( $textElement->nodeValue, $start, $length)
+								substr( $textElement->nodeValue, $start, $length )
 							),
 							$textElement
 						);
@@ -296,11 +296,11 @@ class LingoParser {
 					// Only change element if found term before
 					if ( $changedElem === true ) {
 
-						$start = $wordDescriptors[$wordDescriptorIndex][self::WORD_OFFSET];
+						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
 
 						$parentNode->insertBefore(
 							$doc->createTextNode(
-								substr( $textElement->nodeValue, $start)
+								substr( $textElement->nodeValue, $start )
 							),
 							$textElement
 						);
