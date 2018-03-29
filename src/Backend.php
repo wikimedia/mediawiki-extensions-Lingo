@@ -43,7 +43,6 @@ abstract class Backend {
 	 * @param MessageLog|null $messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
-
 		$this->mMessageLog = $messages;
 	}
 
@@ -51,7 +50,6 @@ abstract class Backend {
 	 * @return MessageLog
 	 */
 	public function getMessageLog() {
-
 		if ( !$this->mMessageLog ) {
 			$this->mMessageLog = new MessageLog();
 		}
@@ -63,7 +61,6 @@ abstract class Backend {
 	 * @return LingoParser
 	 */
 	public function getLingoParser() {
-
 		if ( !$this->mLingoParser ) {
 			$this->mLingoParser = LingoParser::getInstance();
 		}
@@ -84,7 +81,7 @@ abstract class Backend {
 	 * Actual caching is done by the parser, but to be cache-enabled the backend
 	 * has to call Lingo\LingoParser::purgeCache when necessary.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function useCache() {
 		return false;
@@ -100,4 +97,3 @@ abstract class Backend {
 	 */
 	abstract public function next();
 }
-

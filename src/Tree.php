@@ -90,7 +90,6 @@ class Tree {
 	 * @return array the tree node the element was stored in
 	 */
 	protected function &addElement( array &$path, &$term, &$definition ) {
-
 		$tree = &$this->mTree;
 
 		// end of path, store description; end of recursion
@@ -134,7 +133,6 @@ class Tree {
 	 * @return array
 	 */
 	public function findNextTerm( &$lexemes, $index, $countLexemes ) {
-
 		$start = $lastindex = $index;
 		$definition = null;
 
@@ -168,7 +166,6 @@ class Tree {
 	 * @return array
 	 */
 	public function findNextTermNoSkip( array &$tree, &$lexemes, $index, $countLexemes ) {
-
 		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[ $index + 1 ][ 0 ], $tree ) ) {
 			$ret = $this->findNextTermNoSkip( $tree[ $currLex ], $lexemes, $index + 1, $countLexemes );
 		} else {

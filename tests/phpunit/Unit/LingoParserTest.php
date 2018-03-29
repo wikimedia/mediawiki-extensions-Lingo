@@ -44,7 +44,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::__construct
 	 */
 	public function testCanConstruct() {
-
 		$this->assertInstanceOf(
 			'\Lingo\LingoParser',
 			new \Lingo\LingoParser()

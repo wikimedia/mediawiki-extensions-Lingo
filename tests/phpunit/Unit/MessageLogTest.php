@@ -43,7 +43,6 @@ class MessageLogTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 */
 	public function testCanConstruct() {
-
 		$this->assertInstanceOf(
 			'\Lingo\MessageLog',
 			new \Lingo\MessageLog()

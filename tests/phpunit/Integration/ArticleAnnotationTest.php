@@ -50,9 +50,7 @@ use ReflectionClass;
 class ArticleAnnotationTest extends TestCase {
 
 	public function setup() {
-
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
-
 	}
 
 	public function tearDown() {
@@ -72,7 +70,6 @@ class ArticleAnnotationTest extends TestCase {
 	 * @param $expected
 	 */
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
-
 		$parser = new Parser();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), new ParserOptions() );
 		$GLOBALS[ 'wgParser' ] = $parser;
@@ -82,18 +79,15 @@ class ArticleAnnotationTest extends TestCase {
 			->method( 'next' )
 			->will( new PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls( $glossaryEntries ) );
 
-
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );
 
 		$lingoParser->parse();
 
 		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText() ) );
-
 	}
 
 	public function provideData() {
-
 		$data = [];
 
 		$xmlFileProvider = new XmlFileProvider( __DIR__ . '/../Fixture/articleAnnotation' );

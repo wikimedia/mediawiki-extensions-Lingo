@@ -42,7 +42,6 @@ function registerAutoloaderPath( $identifier, $path ) {
  * @return string
  */
 function getDirectory() {
-
 	$directory = $GLOBALS[ 'argv' ][ 0 ];
 
 	if ( $directory[ 0 ] !== DIRECTORY_SEPARATOR ) {
@@ -55,7 +54,6 @@ function getDirectory() {
 }
 
 function runTestAutoLoader( $autoLoader = null ) {
-
 	$directory = getDirectory();
 
 	$mwVendorPath = $directory . '/../../vendor/autoload.php';
@@ -64,7 +62,7 @@ function runTestAutoLoader( $autoLoader = null ) {
 	if ( is_readable( $localVendorPath ) ) {
 		$autoLoader = registerAutoloaderPath( 'local', $localVendorPath );
 	} elseif ( is_readable( $mwVendorPath ) ) {
-		$autoLoader = registerAutoloaderPath( 'MediaWiki', $mwVendorPath  );
+		$autoLoader = registerAutoloaderPath( 'MediaWiki', $mwVendorPath );
 	}
 
 	if ( !$autoLoader instanceof \Composer\Autoload\ClassLoader ) {

@@ -38,7 +38,6 @@ if ( php_sapi_name() !== 'cli' ) {
 print( "\nMediaWiki phpunit runnner ... \n" );
 
 function isReadablePath( $path ) {
-
 	if ( is_readable( $path ) ) {
 		return $path;
 	}
@@ -47,7 +46,6 @@ function isReadablePath( $path ) {
 }
 
 function addArguments( $args ) {
-
 	array_shift( $args );
 	return $args;
 }
@@ -56,7 +54,6 @@ function addArguments( $args ) {
  * @return string
  */
 function getDirectory() {
-
 	$directory = $GLOBALS[ 'argv' ][ 0 ];
 
 	if ( $directory[ 0 ] !== DIRECTORY_SEPARATOR ) {
@@ -68,7 +65,7 @@ function getDirectory() {
 	return $directory;
 }
 
-$extDirectory = dirname ( getDirectory() );
+$extDirectory = dirname( getDirectory() );
 
 $config = isReadablePath( "$extDirectory/phpunit.xml.dist" );
 $mw = isReadablePath( dirname( dirname( $extDirectory ) ) . "/tests/phpunit/phpunit.php" );

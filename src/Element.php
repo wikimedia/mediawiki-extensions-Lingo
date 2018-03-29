@@ -31,7 +31,6 @@ namespace Lingo;
 
 use DOMDocument;
 use DOMElement;
-use DOMNode;
 use DOMText;
 use Title;
 
@@ -67,7 +66,6 @@ class Element {
 	 * @param string[] $definition
 	 */
 	public function __construct( &$term, &$definition ) {
-
 		$this->mTerm = $term;
 		$this->addDefinition( $definition );
 	}
@@ -76,7 +74,7 @@ class Element {
 	 * @param array $definition
 	 */
 	public function addDefinition( &$definition ) {
-		$this->mDefinitions[] = $definition + array_fill( 0, self::ELEMENT_FIELDCOUNT, null ) ;
+		$this->mDefinitions[] = $definition + array_fill( 0, self::ELEMENT_FIELDCOUNT, null );
 	}
 
 	/**
@@ -85,7 +83,6 @@ class Element {
 	 * @return DOMElement|DOMText
 	 */
 	public function getFormattedTerm( DOMDocument &$doc ) {
-
 		global $wgexLingoDisplayOnce;
 
 		if ( $wgexLingoDisplayOnce && $this->hasBeenDisplayed ) {
@@ -103,7 +100,6 @@ class Element {
 	 * @param DOMDocument $doc
 	 */
 	private function buildFormattedTerm( DOMDocument &$doc ) {
-
 		// only create if not yet created
 		if ( $this->formattedTerm === null || $this->formattedTerm->ownerDocument !== $doc ) {
 
@@ -129,7 +125,6 @@ class Element {
 	 * @return DOMElement
 	 */
 	protected function buildFormattedTermAsLink( DOMDocument &$doc ) {
-
 		$linkTarget = $this->mDefinitions[ 0 ][ self::ELEMENT_LINK ];
 		$descriptor = $this->getDescriptorFromLinkTarget( $linkTarget );
 
@@ -144,7 +139,7 @@ class Element {
 
 		// set the link target
 		$link->setAttribute( 'href', $descriptor[ 'url' ] );
-		$link->setAttribute( 'class', join( ' ', $this->getClassesForLink( $descriptor ) ) );
+		$link->setAttribute( 'class', implode( ' ', $this->getClassesForLink( $descriptor ) ) );
 
 		$title = $this->getTitleForLink( $descriptor );
 		if ( $title !== null ) {
@@ -160,7 +155,6 @@ class Element {
 	 * @return DOMElement
 	 */
 	protected function buildFormattedTermAsTooltip( DOMDocument &$doc ) {
-
 		// Wrap term and definition in <span> tags
 		$span = $doc->createElement( 'span', htmlentities( $this->mTerm ) );
 		$span->setAttribute( 'class', 'mw-lingo-term' );
@@ -175,7 +169,6 @@ class Element {
 	 * @return string[]
 	 */
 	protected function getClassesForLink( $descriptor ) {
-
 		// TODO: should this be more elaborate?
 		// Cleanest would probably be to use Linker::link and parse it
 		// back into a DOMElement, but we are in a somewhat time-critical
@@ -210,7 +203,6 @@ class Element {
 	 * @return string
 	 */
 	protected function getTitleForLink( $descriptor ) {
-
 		/** @var \Title $target */
 		$target = $descriptor[ 'title' ];
 
@@ -233,7 +225,6 @@ class Element {
 	 * @return string[]
 	 */
 	public function getFormattedDefinitions() {
-
 		if ( $this->formattedDefinitions === null ) {
 			$this->buildFormattedDefinitions();
 		}
@@ -244,7 +235,6 @@ class Element {
 	/**
 	 */
 	protected function buildFormattedDefinitions() {
-
 		if ( $this->isSimpleLink() ) {
 			$this->formattedDefinitions = '';
 			return;
@@ -295,7 +285,6 @@ class Element {
 	 * @return string[]
 	 */
 	protected function getDescriptorFromLinkTarget( $linkTarget ) {
-
 		if ( $this->isValidLinkTarget( $linkTarget ) ) {
 			return [ 'url' => $linkTarget, 'title' => $this->mTerm ];
 		}

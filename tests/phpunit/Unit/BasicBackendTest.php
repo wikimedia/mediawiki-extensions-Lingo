@@ -46,7 +46,6 @@ class BasicBackendTest extends BackendTest {
 	 * @covers ::__construct
 	 */
 	public function testCanConstruct() {
-
 		$this->assertInstanceOf(
 			'\Lingo\BasicBackend',
 			new \Lingo\BasicBackend()
@@ -57,7 +56,6 @@ class BasicBackendTest extends BackendTest {
 	 * @covers ::purgeCache
 	 */
 	public function testPurgeCache() {
-
 		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
 
 		$title = $this->getMock( 'Title' );
@@ -69,9 +67,8 @@ class BasicBackendTest extends BackendTest {
 		$lingoParser = $this->getMock( 'Lingo\LingoParser' );
 
 		$testObject = $this->getMockBuilder( 'Lingo\BasicBackend' )
-			->setMethods( array( 'getLingoParser' ) )
+			->setMethods( [ 'getLingoParser' ] )
 			->getMock();
-
 
 		// Assert that the wikipage is tested against the wgexLingoPage, i.e.
 		// that $wikipage->getTitle()->getText() === $page is tested
@@ -87,7 +84,6 @@ class BasicBackendTest extends BackendTest {
 		// Assert that purgeGlossaryFromCache is called
 		$lingoParser->expects( $this->once() )
 			->method( 'purgeGlossaryFromCache' );
-
 
 		$testObject->expects( $this->once() )
 			->method( 'getLingoParser' )
@@ -109,7 +105,6 @@ class BasicBackendTest extends BackendTest {
 	 * @dataProvider provideForTestNext
 	 */
 	public function testNext( $lingoPageText, $expectedResults ) {
-
 		$backend = $this->getTestObject( $lingoPageText );
 		foreach ( $expectedResults as $expected ) {
 			$this->assertEquals( $expected, $backend->next() );
@@ -117,7 +112,6 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_LingoPageIsInterwiki() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', 'someInterwiki' );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addError' )
@@ -127,13 +121,11 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_LingoPageWasJustEdited() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'submit' );
-		$this->assertEquals( array( 'JST', 'Just saved text', null, null ), $backend->next() );
+		$this->assertEquals( [ 'JST', 'Just saved text', null, null ], $backend->next() );
 	}
 
 	public function testNext_LingoPageDoesNotExist() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', null, false );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addWarning' )
@@ -143,13 +135,11 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_LingoPageNotAccessible() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, null );
 		$this->assertEquals( null, $backend->next() );
 	}
 
 	public function testNext_LingoPageIsNotATextPage() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, 'This is not a TextContent object' );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addError' )
@@ -159,7 +149,6 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_ApprovedRevsEnabledButNotInstalled() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addWarning' )
@@ -167,47 +156,45 @@ class BasicBackendTest extends BackendTest {
 
 		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
 
-		$this->assertEquals( array( 'SOT', 'Some old text', null, null ), $backend->next() );
+		$this->assertEquals( [ 'SOT', 'Some old text', null, null ], $backend->next() );
 	}
 
 	public function testNext_ApprovedRevsEnabledAndInstalled() {
-
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
 
 		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
 		define( 'APPROVED_REVS_VERSION', '42' );
 
-		$this->assertEquals( array( 'SAT', 'Some approved text', null, null ), $backend->next() );
+		$this->assertEquals( [ 'SAT', 'Some approved text', null, null ], $backend->next() );
 	}
-
 
 	/**
 	 * @return array
 	 */
 	public function provideForTestNext() {
-		return array(
+		return [
 
 			// Empty page
-			array(
+			[
 				'',
-				array( null )
-			),
+				[ null ]
+			],
 
 			// Simple entries
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP:Common image point
 ;CMP:Common midpoint
 TESTTEXT
 			,
-				array(
-					array( 'CMP', 'Common midpoint', null, null ),
-					array( 'CIP', 'Common image point', null, null ),
-				),
-			),
+				[
+					[ 'CMP', 'Common midpoint', null, null ],
+					[ 'CIP', 'Common image point', null, null ],
+				],
+			],
 
 			// Simple entries with line break
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP
 :Common image point
@@ -215,42 +202,42 @@ TESTTEXT
 :Common midpoint
 TESTTEXT
 			,
-				array(
-					array( 'CMP', 'Common midpoint', null, null ),
-					array( 'CIP', 'Common image point', null, null ),
-				),
-			),
+				[
+					[ 'CMP', 'Common midpoint', null, null ],
+					[ 'CIP', 'Common image point', null, null ],
+				],
+			],
 
 			// Two terms having the same definition
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP
 ;CMP
 :Common midpoint
 TESTTEXT
 			,
-				array(
-					array( 'CMP', 'Common midpoint', null, null ),
-					array( 'CIP', 'Common midpoint', null, null ),
-				),
-			),
+				[
+					[ 'CMP', 'Common midpoint', null, null ],
+					[ 'CIP', 'Common midpoint', null, null ],
+				],
+			],
 
 			// One term having two definitions
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP
 :Common image point
 :Common midpoint
 TESTTEXT
 			,
-				array(
-					array( 'CIP', 'Common image point', null, null ),
-					array( 'CIP', 'Common midpoint', null, null ),
-				),
-			),
+				[
+					[ 'CIP', 'Common image point', null, null ],
+					[ 'CIP', 'Common midpoint', null, null ],
+				],
+			],
 
 			// Two terms sharing two definitions
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP
 ;CMP
@@ -258,16 +245,16 @@ TESTTEXT
 :Common midpoint
 TESTTEXT
 			,
-				array(
-					array( 'CMP', 'Common image point', null, null ),
-					array( 'CMP', 'Common midpoint', null, null ),
-					array( 'CIP', 'Common image point', null, null ),
-					array( 'CIP', 'Common midpoint', null, null ),
-				),
-			),
+				[
+					[ 'CMP', 'Common image point', null, null ],
+					[ 'CMP', 'Common midpoint', null, null ],
+					[ 'CIP', 'Common image point', null, null ],
+					[ 'CIP', 'Common midpoint', null, null ],
+				],
+			],
 
 			// Mixed entries and noise
-			array(
+			[
 <<<'TESTTEXT'
 ;CIP:Common image point
 ; CMP : Common midpoint
@@ -282,16 +269,16 @@ Sed ut perspiciatis unde; omnis iste natus error: sit voluptatem accusantium...
 ;NMO:Normal move-out
 TESTTEXT
 			,
-				array(
-					array( 'NMO', 'Normal move-out', null, null ),
-					array( 'DMO', 'Dip move-out', null, null ),
-					array( 'DIMO', 'Dip move-out', null, null ),
-					array( 'CMP', 'Common midpoint', null, null ),
-					array( 'CIP', 'Common image point', null, null ),
-				),
-			),
+				[
+					[ 'NMO', 'Normal move-out', null, null ],
+					[ 'DMO', 'Dip move-out', null, null ],
+					[ 'DIMO', 'Dip move-out', null, null ],
+					[ 'CMP', 'Common midpoint', null, null ],
+					[ 'CIP', 'Common image point', null, null ],
+				],
+			],
 
-		);
+		];
 	}
 
 	/**
@@ -302,16 +289,16 @@ TESTTEXT
 
 		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
 			->disableOriginalConstructor()
-			->setMethods( array(
+			->setMethods( [
 				'getLatestRevisionFromTitle',
 				'getApprovedRevisionFromTitle',
 				'getTitleFromText',
-			) )
+			] )
 			->getMock();
 
 		$reflected = new \ReflectionClass( '\Lingo\BasicBackend' );
 		$constructor = $reflected->getConstructor();
-		$constructor->invokeArgs( $backend, array( &$messageLog ) );
+		$constructor->invokeArgs( $backend, [ &$messageLog ] );
 
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 
@@ -330,11 +317,11 @@ TESTTEXT
 		$request = $this->getMock( 'FauxRequest' );
 		$request->expects( $this->any() )
 			->method( 'getVal' )
-			->willReturnMap( array(
-				array( 'action', 'view', $action ), // action = submit
-				array( 'title', null, $lingoPageTitle ), // title = $lingoPageTitle
-				array( 'wpTextbox1', null, ';JST:Just saved text' )
-			) );
+			->willReturnMap( [
+				[ 'action', 'view', $action ], // action = submit
+				[ 'title', null, $lingoPageTitle ], // title = $lingoPageTitle
+				[ 'wpTextbox1', null, ';JST:Just saved text' ]
+			] );
 
 		$GLOBALS[ 'wgRequest' ] = $request;
 

@@ -43,7 +43,6 @@ class TreeTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 */
 	public function testCanConstruct() {
-
 		$this->assertInstanceOf(
 			'\Lingo\Tree',
 			new \Lingo\Tree()

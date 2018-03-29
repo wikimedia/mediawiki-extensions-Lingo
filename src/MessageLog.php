@@ -28,6 +28,7 @@
  */
 
 namespace Lingo;
+
 use Html;
 use Parser;
 use ParserOptions;
@@ -130,4 +131,3 @@ class MessageLog {
 	}
 
 }
-

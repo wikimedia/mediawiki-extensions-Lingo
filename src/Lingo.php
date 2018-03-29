@@ -42,9 +42,7 @@ class Lingo {
 	 * @since 2.0.2
 	 */
 	public static function initExtension() {
-
 		$GLOBALS[ 'wgExtensionFunctions' ][] = function () {
-
 			$parser = LingoParser::getInstance();
 
 			$backend = new $GLOBALS[ 'wgexLingoBackend' ]();
@@ -53,13 +51,12 @@ class Lingo {
 
 			\Hooks::register( 'ContentAlterParserOutput', [ $parser, 'parse' ] );
 
-			\Hooks::register('GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
+			\Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
 				return true;
 			} );
 
 			\Hooks::register( 'ParserFirstCallInit', function ( \Parser $parser ) {
-
 				$parser->setHook( 'noglossary', function ( $input, array $args, \Parser $parser, \PPFrame $frame ) {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
@@ -69,7 +66,6 @@ class Lingo {
 			} );
 
 			\Hooks::register( 'SpecialPageBeforeExecute', function ( \SpecialPage $specialPage, $subPage ) {
-
 				if ( $specialPage instanceof \SpecialVersion ) {
 					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
 						if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {

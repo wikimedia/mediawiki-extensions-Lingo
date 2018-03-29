@@ -45,7 +45,6 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::getMessageLog
 	 */
 	public function testGetMessageLog_withLogGivenToConstructor() {
-
 		$log = $this->getMock( '\Lingo\MessageLog' );
 
 		$stub = $this->getMockBuilder( '\Lingo\Backend' )
@@ -54,7 +53,7 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 
 		$reflected = new \ReflectionClass( '\Lingo\Backend' );
 		$constructor = $reflected->getConstructor();
-		$constructor->invokeArgs( $stub, array( &$log ) );
+		$constructor->invokeArgs( $stub, [ &$log ] );
 
 		$this->assertEquals( $log, $stub->getMessageLog() );
 	}
@@ -64,7 +63,6 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::getMessageLog
 	 */
 	public function testGetMessageLog_withoutLogGivenToConstructor() {
-
 		$stub = $this->getMockBuilder( '\Lingo\Backend' )
 			->disableOriginalConstructor()
 			->getMockForAbstractClass();
@@ -80,7 +78,6 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::useCache
 	 */
 	public function testUseCache() {
-
 		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
 
 		$this->assertFalse( $stub->useCache() );

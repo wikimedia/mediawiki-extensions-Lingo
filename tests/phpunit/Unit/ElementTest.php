@@ -25,6 +25,7 @@
  */
 
 namespace Lingo\Tests\Unit;
+
 use Lingo\Element;
 
 /**
@@ -51,7 +52,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::__construct
 	 */
 	public function testCanConstruct() {
-
 		$term = 'someTerm';
 		$definition = [];
 		$element = new Element( $term, $definition );
@@ -64,7 +64,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if $wgexLingoDisplayOnce = false, the first and second occurrence of a term is correctly marked up as tooltip anchor
 	 */
 	public function testGetFormattedTerm_1() {
-
 		// Setup
 		$term = 'someTerm';
 		$definition = [
@@ -78,7 +77,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 
-		$expectedAttributes = ['class' => [ 'mw-lingo-term' ], 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
+		$expectedAttributes = [ 'class' => [ 'mw-lingo-term' ], 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -99,7 +98,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if $wgexLingoDisplayOnce = true, the second occurrence of a term is not marked up
 	 */
 	public function testGetFormattedTerm_2() {
-
 		// Setup
 		$term = 'someTerm';
 		$definition = [];
@@ -107,7 +105,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = true;
 
-		$expectedAttributes = ['class' => 'mw-lingo-term', 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
+		$expectedAttributes = [ 'class' => 'mw-lingo-term', 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -121,7 +119,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 		// Check
 		$this->assertInstanceOf( 'DOMText', $node );
 		$this->assertEquals( $term, $node->wholeText );
-
 	}
 
 	/**
@@ -131,7 +128,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if $wgexLingoDisplayOnce = false, the first and second occurrence of of term are marked up as link
 	 */
 	public function testGetFormattedTerm_3() {
-
 		// Setup
 		$term = 'someTerm';
 		$title = uniqid();
@@ -146,7 +142,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		$element = new Element( $term, $definition );
 
-		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'new' ],  'title' => wfMessage( 'red-link-title', $title )->text()];
+		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'new' ],  'title' => wfMessage( 'red-link-title', $title )->text() ];
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 
@@ -168,7 +164,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if the link is not a URL and points to an existing page, the term is marked up with that title
 	 */
 	public function testGetFormattedTerm_4() {
-
 		// Setup
 		$term = 'someTerm';
 		$title = 'Main Page';
@@ -202,7 +197,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if the link is a valid URL, the term is marked up as external link
 	 */
 	public function testGetFormattedTerm_5() {
-
 		// Setup
 		$term = 'someTerm';
 
@@ -240,7 +234,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if the term contains HTML-special characters, it is handled without raising an exception
 	 */
 	public function testGetFormattedTerm_6() {
-
 		// Setup
 		$term = 'some&Term';
 
@@ -263,7 +256,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		// Check
 		$this->checkTermIsDomElement( $node, 'span', $term, $expectedAttributes );
-
 	}
 
 	/**
@@ -271,7 +263,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if there is only one definition and its text is empty and it has an anchor link, the term is marked up as link without title attribute
 	 */
 	public function testGetFormattedTerm_7() {
-
 		// Setup
 		$term = 'some&Term';
 
@@ -295,7 +286,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		// Check
 		$this->checkTermIsDomElement( $node, 'a', $term, $expectedAttributes, $unexpectedAttributes );
-
 	}
 
 	/**
@@ -305,7 +295,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - user-defined class is applied to definition
 	 */
 	public function testGetFormattedDefinitions_1() {
-
 		// Setup
 		$term = 'some&Term';
 
@@ -365,7 +354,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if there is an invalid link, an error message is attached to the list of definitions and the link is omitted
 	 */
 	public function testGetFormattedDefinitions_2() {
-
 		// Setup
 		$term = 'some&Term';
 
@@ -377,7 +365,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 			Element::ELEMENT_STYLE      => null,
 		];
 
-		//$url1 = \Title::newFromText( $definition1[ Element::ELEMENT_LINK ] )->getFullURL();
+		// $url1 = \Title::newFromText( $definition1[ Element::ELEMENT_LINK ] )->getFullURL();
 
 		$definition2 = [
 			Element::ELEMENT_TERM       => $term,
@@ -387,7 +375,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 			Element::ELEMENT_STYLE      => 'some-style-2',
 		];
 
-		//$url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
+		// $url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 
@@ -423,7 +411,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if there is only one definition and its text is empty and it has a link, no definitions are produced
 	 */
 	public function testGetFormattedDefinitions_3() {
-
 		// Setup
 		$term = 'someTerm';
 
@@ -453,7 +440,6 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	 * - if the term contains HTML-special characters, it is handled without raising an exception
 	 */
 	public function testGetFormattedDefinitions_4() {
-
 		// Setup
 		$term = 'some&Term';
 
@@ -501,8 +487,8 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 			$classes = array_flip( array_filter( explode( ' ', $node->getAttribute( 'class' ) ) ) );
 
-			foreach ( (array) $expectedAttributes[ 'class' ] as $expectedClass ) {
-				$this->assertTrue( array_key_exists( $expectedClass , $classes ) );
+			foreach ( (array)$expectedAttributes[ 'class' ] as $expectedClass ) {
+				$this->assertTrue( array_key_exists( $expectedClass, $classes ) );
 			}
 
 			unset( $expectedAttributes[ 'class' ] );
@@ -515,6 +501,5 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 		foreach ( $unexpectedAttributes as $attribute ) {
 			$this->assertFalse( $node->hasAttribute( $attribute ) );
 		}
-
 	}
 }

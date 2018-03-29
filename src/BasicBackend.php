@@ -51,11 +51,9 @@ class BasicBackend extends Backend {
 	 * @param MessageLog|null $messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
-
 		parent::__construct( $messages );
 
 		$this->registerHooks();
-
 	}
 
 	protected function registerHooks() {
@@ -73,7 +71,6 @@ class BasicBackend extends Backend {
 	 * @throws \MWException
 	 */
 	public function next() {
-
 		static $term = null;
 		static $definitions = [];
 		static $ret = [];
@@ -105,7 +102,6 @@ class BasicBackend extends Backend {
 	 * @return array
 	 */
 	protected function processNextGlossaryLine( $line, $term, $definitions ) {
-
 		$chunks = explode( ':', $line, 2 );
 
 		// found a new definition?
@@ -152,7 +148,6 @@ class BasicBackend extends Backend {
 	 * @throws \MWException
 	 */
 	protected function collectDictionaryLines() {
-
 		if ( $this->mArticleLines !== null ) {
 			return;
 		}
@@ -191,7 +186,6 @@ class BasicBackend extends Backend {
 	 * @return null|string
 	 */
 	protected function getRawDictionaryContent( Title $dictionaryTitle ) {
-
 		global $wgRequest;
 
 		// This is a hack special-casing the submitting of the terminology page
@@ -257,7 +251,6 @@ class BasicBackend extends Backend {
 	 * @return Bool
 	 */
 	public function purgeCache( WikiPage &$wikipage ) {
-
 		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $this->getLingoPageName() ) ) {
 
 			$this->getLingoParser()->purgeGlossaryFromCache();
@@ -272,7 +265,7 @@ class BasicBackend extends Backend {
 	 * Actual caching is done by the parser, the backend just calls
 	 * Lingo\LingoParser::purgeCache when necessary.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function useCache() {
 		return true;

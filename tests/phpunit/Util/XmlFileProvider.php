@@ -61,8 +61,7 @@ class XmlFileProvider {
 	 * @return string
 	 */
 	protected function readDirectory( $path ) {
-
-		$path = str_replace( array( '\\', '/' ), DIRECTORY_SEPARATOR, $path );
+		$path = str_replace( [ '\\', '/' ], DIRECTORY_SEPARATOR, $path );
 
 		if ( is_readable( $path ) ) {
 			return $path;
@@ -76,12 +75,11 @@ class XmlFileProvider {
 	 * @return string[]
 	 */
 	protected function loadXmlFiles( $path ) {
-
 		$directoryIterator = new \RecursiveDirectoryIterator( $path );
-		$iteratorIterator = new \RecursiveIteratorIterator($directoryIterator);
-		$regexIterator = new \RegexIterator($iteratorIterator, '/^.+\.xml$/i', \RecursiveRegexIterator::GET_MATCH);
+		$iteratorIterator = new \RecursiveIteratorIterator( $directoryIterator );
+		$regexIterator = new \RegexIterator( $iteratorIterator, '/^.+\.xml$/i', \RecursiveRegexIterator::GET_MATCH );
 
-		$files = call_user_func_array('array_merge', iterator_to_array( $regexIterator ) );
+		$files = call_user_func_array( 'array_merge', iterator_to_array( $regexIterator ) );
 
 		return $files;
 	}

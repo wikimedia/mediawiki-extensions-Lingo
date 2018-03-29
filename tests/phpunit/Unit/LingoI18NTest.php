@@ -36,13 +36,12 @@ namespace Lingo\Tests\Unit;
  */
 class LingoI18NTest extends \PHPUnit\Framework\TestCase {
 
-	public function testJsonSchemaValidatorExists(){
+	public function testJsonSchemaValidatorExists() {
 		$this->assertTrue( class_exists( '\JsonSchema\Validator' ) );
-		$this->assertTrue( method_exists('\JsonSchema\Validator', 'check' ) );
+		$this->assertTrue( method_exists( '\JsonSchema\Validator', 'check' ) );
 	}
 
 	public function testMagicWordsLoaded() {
-
 		// load magic words
 		require __DIR__ . '/../../../src/Lingo.i18n.magic.php';
 
@@ -55,8 +54,8 @@ class LingoI18NTest extends \PHPUnit\Framework\TestCase {
 		$data = json_decode( json_encode( $defined_vars[ 'magicWords' ] ) );
 
 		$validator = new \JsonSchema\Validator();
-		$validator->check( $data, (object) array( '$ref' =>
-			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ) );
+		$validator->check( $data, (object)[ '$ref' =>
+			'file://' . realpath( __DIR__ . '/../Fixture/magicWordsSchema.json' ) ] );
 
 		// format error message
 		$errors = implode( '', array_map(
