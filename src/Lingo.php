@@ -49,7 +49,9 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			\Hooks::register( 'ContentAlterParserOutput', [ $parser, 'parse' ] );
+			\Hooks::register( 'ContentAlterParserOutput', function() use ($parser){
+				$parser->parse( $GLOBALS[ 'wgParser' ] );
+			} );
 
 			\Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';

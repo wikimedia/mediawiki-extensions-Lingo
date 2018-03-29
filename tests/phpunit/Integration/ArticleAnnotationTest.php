@@ -2,7 +2,7 @@
 /**
  * This file is part of the MediaWiki extension Lingo.
  *
- * @copyright 2011 - 2016, Stephan Gambke
+ * @copyright 2011 - 2018, Stephan Gambke
  * @license   GNU General Public License, version 2 (or any later version)
  *
  * The Lingo extension is free software: you can redistribute it and/or modify
@@ -72,7 +72,6 @@ class ArticleAnnotationTest extends TestCase {
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
 		$parser = new Parser();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), new ParserOptions() );
-		$GLOBALS[ 'wgParser' ] = $parser;
 
 		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );
 		$backend->expects( $this->any() )
@@ -82,7 +81,7 @@ class ArticleAnnotationTest extends TestCase {
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );
 
-		$lingoParser->parse();
+		$lingoParser->parse( $parser );
 
 		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText() ) );
 	}

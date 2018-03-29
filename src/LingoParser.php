@@ -69,14 +69,14 @@ class LingoParser {
 	}
 
 	/**
+	 * @param Parser $mwParser
+	 *
 	 * @return Boolean
 	 */
-	public function parse( /*$content, $title, $po */ ) {
-		/** @var \Parser $parser */
-		$parser = $GLOBALS[ 'wgParser' ];
+	public function parse( $mwParser ) {
 
-		if ( $this->shouldParse( $parser ) ) {
-			$this->realParse( $parser );
+		if ( $this->shouldParse( $mwParser ) ) {
+			$this->realParse( $mwParser );
 		}
 
 		return true;
@@ -100,7 +100,7 @@ class LingoParser {
 	 */
 	private function getCacheKey() {
 		// FIXME: If Lingo ever stores the glossary tree per user, then the cache key also needs to include the user id (see T163608)
-		return ObjectCache::getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( self::getInstance()->getBackend() ) );
+		return ObjectCache::getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( $this->getBackend() ) );
 	}
 
 	/**
@@ -108,6 +108,7 @@ class LingoParser {
 	 * @throws \MWException
 	 */
 	public function getBackend() {
+
 		if ( $this->mLingoBackend === null ) {
 			throw new \MWException( 'No Lingo backend available!' );
 		}
@@ -130,11 +131,12 @@ class LingoParser {
 	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoTree() {
+
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
 
 			// use cache if enabled
-			if ( $this->mLingoBackend->useCache() ) {
+			if ( $this->getBackend()->useCache() ) {
 
 				// Try cache first
 				global $wgexLingoCacheType;
@@ -175,6 +177,7 @@ class LingoParser {
 	 * @return Tree
 	 */
 	protected function &buildLingo() {
+
 		$lingoTree = new Tree();
 		$backend = &$this->mLingoBackend;
 
@@ -196,6 +199,7 @@ class LingoParser {
 	 * @return Boolean
 	 */
 	protected function realParse( &$parser ) {
+
 		$text = $parser->getOutput()->getText();
 
 		if ( $text === null || $text === '' ) {
@@ -320,7 +324,7 @@ class LingoParser {
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
-			$text .= $parser->recursiveTagParseFully( implode( $definitions ) );
+			$text .= $parser->recursiveTagParseFully( join( $definitions ) );
 
 			$parser->getOutput()->setText( $text );
 		}
@@ -357,6 +361,7 @@ class LingoParser {
 	 * @deprecated 2.0.2
 	 */
 	public static function purgeCache() {
+
 		self::getInstance()->purgeGlossaryFromCache();
 	}
 
@@ -366,6 +371,7 @@ class LingoParser {
 	 * @since 2.0.2
 	 */
 	public function purgeGlossaryFromCache() {
+
 		global $wgexLingoCacheType;
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 		$cache->delete( $this->getCacheKey() );
@@ -410,3 +416,4 @@ class LingoParser {
 		return true;
 	}
 }
+
