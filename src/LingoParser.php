@@ -74,7 +74,6 @@ class LingoParser {
 	 * @return Boolean
 	 */
 	public function parse( $mwParser ) {
-
 		if ( $this->shouldParse( $mwParser ) ) {
 			$this->realParse( $mwParser );
 		}
@@ -108,7 +107,6 @@ class LingoParser {
 	 * @throws \MWException
 	 */
 	public function getBackend() {
-
 		if ( $this->mLingoBackend === null ) {
 			throw new \MWException( 'No Lingo backend available!' );
 		}
@@ -131,7 +129,6 @@ class LingoParser {
 	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
 	public function getLingoTree() {
-
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
 
@@ -177,7 +174,6 @@ class LingoParser {
 	 * @return Tree
 	 */
 	protected function &buildLingo() {
-
 		$lingoTree = new Tree();
 		$backend = &$this->mLingoBackend;
 
@@ -199,7 +195,6 @@ class LingoParser {
 	 * @return Boolean
 	 */
 	protected function realParse( &$parser ) {
-
 		$text = $parser->getOutput()->getText();
 
 		if ( $text === null || $text === '' ) {
@@ -324,7 +319,7 @@ class LingoParser {
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
-			$text .= $parser->recursiveTagParseFully( join( $definitions ) );
+			$text .= $parser->recursiveTagParseFully( implode( $definitions ) );
 
 			$parser->getOutput()->setText( $text );
 		}
@@ -361,7 +356,6 @@ class LingoParser {
 	 * @deprecated 2.0.2
 	 */
 	public static function purgeCache() {
-
 		self::getInstance()->purgeGlossaryFromCache();
 	}
 
@@ -371,7 +365,6 @@ class LingoParser {
 	 * @since 2.0.2
 	 */
 	public function purgeGlossaryFromCache() {
-
 		global $wgexLingoCacheType;
 		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
 		$cache->delete( $this->getCacheKey() );
@@ -416,4 +409,3 @@ class LingoParser {
 		return true;
 	}
 }
-

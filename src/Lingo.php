@@ -49,7 +49,7 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			\Hooks::register( 'ContentAlterParserOutput', function() use ($parser){
+			\Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
 				$parser->parse( $GLOBALS[ 'wgParser' ] );
 			} );
 

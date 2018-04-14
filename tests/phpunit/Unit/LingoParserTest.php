@@ -25,6 +25,7 @@
  */
 
 namespace Lingo\Tests\Unit;
+
 use Lingo\LingoParser;
 
 /**
@@ -70,7 +71,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider parseProvider
 	 */
 	public function testParse( $config ) {
-
 		// Setup
 		$mwParser = $this->getParserMock( $config );
 		$parser = new LingoParser();
@@ -138,7 +138,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getParserMock( $config = [] ) {
-
 		$config += self::$defaultParserConfig;
 
 		if ( array_key_exists( 'mwParser', $config ) ) {
@@ -155,16 +154,15 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-
-		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ]?:$this->any() )
+		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?: $this->any() )
 			->method( 'getText' )
 			->willReturn( $config[ 'text' ] );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetTitle' ]?:$this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetTitle' ] ?: $this->any() )
 			->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ]?:$this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?: $this->any() )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 
@@ -183,7 +181,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getTitleMock( $config ) {
-
 		if ( array_key_exists( 'mwTitle', $config ) ) {
 			return $config[ 'mwTitle' ];
 		}
