@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"محمد أحمد عبد الفتاح"
+			"محمد أحمد عبد الفتاح",
+			"ديفيد"
 		]
 	},
+	"lingo-desc": "يوفر تلميحات حول أداة التنقل على الصفحات من الكلمات المحددة في صفحة [[$1]]",
+	"lingo-terminologypagename": "المصطلح",
 	"lingo-noterminologypage": "صفحة الاصطلاح \"$1\" غير موجودة.",
-	"lingo-notatextpage": "صفحة الاصطلاح \"$1\" ليست صفحة نصية."
+	"lingo-notatextpage": "صفحة الاصطلاح \"$1\" ليست صفحة نصية.",
+	"lingo-terminologypagenotlocal": "الصفحة \"$1\" ليست صفحة محلية.",
+	"lingo-noapprovedrevs": "يتم تمكين دعم ApprovedRevs في لغة Lingo، ولكن لم يتم العثور على ApprovedRevs.",
+	"lingo-invalidlinktarget": "هدف رابط غير صالح للمصطلح \"$1\": $2"
 }
