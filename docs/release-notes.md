@@ -2,7 +2,7 @@
 
 ### Lingo 3.0.0
 
-Released on ????-2018
+Released on 06-May-2018
 
 Changes:
 * Raised minimum versions:
