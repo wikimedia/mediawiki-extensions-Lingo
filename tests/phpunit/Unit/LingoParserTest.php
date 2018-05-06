@@ -34,13 +34,15 @@ use Lingo\LingoParser;
  * @group mediawiki-databaseless
  *
  * @coversDefaultClass \Lingo\LingoParser
+ * @covers ::<private>
+ * @covers ::<protected>
  *
  * @ingroup Lingo
  * @ingroup Test
  */
 class LingoParserTest extends \PHPUnit\Framework\TestCase {
 
-	private static $defaultParserConfig = [
+	private static $defaultTestConfig = [
 		'mwParserExpectsGetOutput' => null,
 		'mwParserExpectsGetTitle' => null,
 		'mwTitleExpectsGetNamespace' => null,
@@ -52,6 +54,7 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 		'text' => null,
 
 		'wgexLingoUseNamespaces' => [],
+		'wgexLingoBackend' => 'Lingo\\BasicBackend',
 	];
 
 	/**
@@ -65,15 +68,44 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
+	 * This will NOT test the execution path in LingoParser::getInstance where the singleton is actually created as that
+	 * path is executed during the initialisation of MW. It will test however that the singleton is of the correct class
+	 * and that once created subsequent calls to LingoParser::getInstance will return the same object.
+	 *
+	 * @covers ::getInstance
+	 */
+	public function testGetInstance() {
+		$singleton = LingoParser::getInstance();
+
+		$this->assertInstanceOf(
+			'\Lingo\LingoParser',
+			$singleton
+		);
+
+		$this->assertEquals( $singleton, LingoParser::getInstance() );
+
+	}
+
+	/**
 	 * Tests
 	 *
 	 *
+	 * @covers ::parse
 	 * @dataProvider parseProvider
 	 */
 	public function testParse( $config ) {
+
 		// Setup
+		$config += self::$defaultTestConfig;
+
 		$mwParser = $this->getParserMock( $config );
+		$backend = $this->getBackendMock();
+
 		$parser = new LingoParser();
+		$parser->setBackend( $backend );
+
+		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
+		$GLOBALS[ 'wgexLingoUseNamespaces' ] = $config[ 'wgexLingoUseNamespaces' ];
 
 		// Run
 		$ret = $parser->parse( $mwParser );
@@ -125,10 +157,9 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 				'wgexLingoUseNamespaces' => [ 101 => false ],
 			] ],
 
-			// parser output returns null text
-			// TODO
+			// Not a real test. Just make sure that it does not break right away.
 			[ [
-
+				'text' => 'foo',
 			] ],
 
 		];
@@ -138,7 +169,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getParserMock( $config = [] ) {
-		$config += self::$defaultParserConfig;
 
 		if ( array_key_exists( 'mwParser', $config ) ) {
 			return $config[ 'mwParser' ];
@@ -170,8 +200,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			$mwParser->$propName = $propValue;
 		}
 
-		$GLOBALS[ 'wgexLingoUseNamespaces' ] = $config[ 'wgexLingoUseNamespaces' ];
-
 		return $mwParser;
 	}
 
@@ -194,6 +222,34 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			->willReturn( $config[ 'namespace' ] );
 
 		return $mwTitle;
+	}
+
+	/**
+	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected function getBackendMock() {
+		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
+			->disableOriginalConstructor()
+			->setMethods( [
+				'getLatestRevisionFromTitle',
+				'getApprovedRevisionFromTitle',
+				'getTitleFromText',
+			] )
+			->getMock();
+
+		$lingoPageTitle = $this->getMock( 'Title' );
+		$lingoPageTitle->expects( $this->any() )
+			->method( 'getInterwiki' )
+			->willReturn( '' );
+		$lingoPageTitle->expects( $this->any() )
+			->method( 'getArticleID' )
+			->willReturn( 'Foom' );
+
+		$backend->expects( $this->any() )
+			->method( 'getTitleFromText' )
+			->willReturn( $lingoPageTitle );
+
+		return $backend;
 	}
 
 }
