@@ -3,7 +3,7 @@
  *
  * @copyright 2011 - 2016, Stephan Gambke, mwjames
  *
- * @license   GNU General Public License, version 2 (or any later version)
+ * @license GPL-2.0-or-later
  *
  * This file is part of the MediaWiki extension Lingo.
  * The Lingo extension is free software: you can redistribute it and/or modify
