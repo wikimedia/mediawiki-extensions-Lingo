@@ -83,7 +83,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 		);
 
 		$this->assertEquals( $singleton, LingoParser::getInstance() );
-
 	}
 
 	/**
@@ -94,7 +93,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @dataProvider parseProvider
 	 */
 	public function testParse( $config ) {
-
 		// Setup
 		$config += self::$defaultTestConfig;
 
@@ -169,7 +167,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getParserMock( $config = [] ) {
-
 		if ( array_key_exists( 'mwParser', $config ) ) {
 			return $config[ 'mwParser' ];
 		}
