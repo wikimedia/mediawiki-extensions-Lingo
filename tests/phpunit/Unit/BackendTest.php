@@ -45,7 +45,8 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 	 * @covers ::getMessageLog
 	 */
 	public function testGetMessageLog_withLogGivenToConstructor() {
-		$log = $this->getMock( '\Lingo\MessageLog' );
+		$log = $this->getMockBuilder( '\Lingo\MessageLog' )
+			->getMock();
 
 		$stub = $this->getMockBuilder( '\Lingo\Backend' )
 			->disableOriginalConstructor()
@@ -89,7 +90,8 @@ class BackendTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public function testSetGetLingoParser() {
 		$stub = $this->getMockForAbstractClass( '\Lingo\Backend' );
-		$parserMock = $this->getMock( '\Lingo\LingoParser' );
+		$parserMock = $this->getMockBuilder( '\Lingo\LingoParser' )
+			->getMock();
 
 		$stub->setLingoParser( $parserMock );
 		$this->assertEquals( $parserMock, $stub->getLingoParser() );
