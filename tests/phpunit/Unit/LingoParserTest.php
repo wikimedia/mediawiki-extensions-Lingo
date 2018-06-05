@@ -234,7 +234,8 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			] )
 			->getMock();
 
-		$lingoPageTitle = $this->getMock( 'Title' );
+		$lingoPageTitle = $this->getMockBuilder( 'Title' )
+			->getMock();
 		$lingoPageTitle->expects( $this->any() )
 			->method( 'getInterwiki' )
 			->willReturn( '' );

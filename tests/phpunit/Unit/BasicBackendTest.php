@@ -58,13 +58,15 @@ class BasicBackendTest extends BackendTest {
 	public function testPurgeCache() {
 		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
 
-		$title = $this->getMock( 'Title' );
+		$title = $this->getMockBuilder( 'Title' )
+			->getMock();
 
 		$wikiPage = $this->getMockBuilder( 'WikiPage' )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$lingoParser = $this->getMock( 'Lingo\LingoParser' );
+		$lingoParser = $this->getMockBuilder( 'Lingo\LingoParser' )
+			->getMock();
 
 		$testObject = $this->getMockBuilder( 'Lingo\BasicBackend' )
 			->setMethods( [ 'getLingoParser' ] )
@@ -285,7 +287,8 @@ TESTTEXT
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
-		$messageLog = $this->getMock( 'Lingo\MessageLog' );
+		$messageLog = $this->getMockBuilder( 'Lingo\MessageLog' )
+			->getMock();
 
 		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
 			->disableOriginalConstructor()
@@ -302,7 +305,8 @@ TESTTEXT
 
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 
-		$lingoPageTitle = $this->getMock( 'Title' );
+		$lingoPageTitle = $this->getMockBuilder( 'Title' )
+			->getMock();
 		$lingoPageTitle->expects( $this->once() )
 			->method( 'getInterwiki' )
 			->willReturn( $interwiki );
@@ -314,7 +318,8 @@ TESTTEXT
 			->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
-		$request = $this->getMock( 'FauxRequest' );
+		$request = $this->getMockBuilder( 'FauxRequest' )
+			->getMock();
 		$request->expects( $this->any() )
 			->method( 'getVal' )
 			->willReturnMap( [
