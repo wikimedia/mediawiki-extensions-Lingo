@@ -166,12 +166,15 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	public function testGetFormattedTerm_4() {
 		// Setup
 		$term = 'someTerm';
-		$title = 'Main Page';
+
+		$page = \Title::newFromId( 1 );
+		$this->assertTrue( $page->exists() );
+		$title = $page->getText();
 
 		$definition = [
 			Element::ELEMENT_TERM       => $term,
 			Element::ELEMENT_DEFINITION => null,
-			Element::ELEMENT_LINK       => $title, // just some fake page name that does not exist on the wiki
+			Element::ELEMENT_LINK       => $title,
 			Element::ELEMENT_SOURCE     => null,
 			Element::ELEMENT_STYLE      => null,
 		];
