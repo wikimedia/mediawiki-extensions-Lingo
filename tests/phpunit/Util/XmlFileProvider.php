@@ -30,9 +30,6 @@ namespace Lingo\Tests\Util;
 use RuntimeException;
 
 /**
- * @group extensions-lingo
- * @group mediawiki-databaseless
- *
  * @since 2.0.1
  * @author mwjames, Stephan Gambke
  * @ingroup Lingo
