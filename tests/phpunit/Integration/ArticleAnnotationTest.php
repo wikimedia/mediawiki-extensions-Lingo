@@ -102,7 +102,7 @@ class ArticleAnnotationTest extends TestCase {
 			$decoded = json_decode( $json, true );
 
 			// suppress warnings for non-existant array keys
-			\MediaWiki\suppressWarnings();
+			\Wikimedia\suppressWarnings();
 
 			$testCase = [
 				0 => substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
@@ -119,7 +119,7 @@ class ArticleAnnotationTest extends TestCase {
 				$testCase[ 2 ][] = [ $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] ];
 			}
 
-			\MediaWiki\restoreWarnings();
+			\Wikimedia\restoreWarnings();
 
 			$data[] = $testCase;
 		}
