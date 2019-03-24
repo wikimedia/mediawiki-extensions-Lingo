@@ -209,12 +209,12 @@ class LingoParser {
 		}
 
 		// Parse HTML from page
-		\Wikimedia\suppressWarnings();
+		\MediaWiki\suppressWarnings();
 
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
-		\Wikimedia\restoreWarnings();
+		\MediaWiki\restoreWarnings();
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
