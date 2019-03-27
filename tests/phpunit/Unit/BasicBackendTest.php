@@ -357,7 +357,7 @@ TESTTEXT
 					->disableOriginalConstructor()
 					->getMock();
 				$lingoPageContent->expects( $this->any() )
-					->method( 'getNativeData' )
+					->method( 'getText' )
 					->willReturn( $lingoPageText );
 			}
 

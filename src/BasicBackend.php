@@ -210,7 +210,7 @@ class BasicBackend extends Backend {
 			}
 
 			if ( $content instanceof TextContent ) {
-				return $content->getNativeData();
+				return $content->getText();
 			}
 
 			$this->getMessageLog()->addError( wfMessage( 'lingo-notatextpage', $dictionaryTitle->getFullText() )->inContentLanguage()->text() );
