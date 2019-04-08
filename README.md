@@ -10,7 +10,7 @@ Lingo is a glossary extension to MediaWiki, that lets you define abbreviations
 and their definitions on a wiki page. It displays these definitions whenever an
 abbreviation is hovered over in an article.
 
-See http://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
+See https://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 
 ## Requirements
 
