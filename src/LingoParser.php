@@ -55,6 +55,9 @@ class LingoParser {
 	private $mLingoBackend = null;
 	private static $parserSingleton = null;
 
+	// Api params passed in from ApiMakeParserOptions Hook
+	private $mApiParams = null;
+
 	// The RegEx to split a chunk of text into words
 	public $regex = null;
 
@@ -195,7 +198,14 @@ class LingoParser {
 	 * @return Boolean
 	 */
 	protected function realParse( &$parser ) {
-		$text = $parser->getOutput()->getText();
+		// Parse text identical to options used in includes/api/ApiParse.php
+		$params = $this->mApiParams;
+		$text = is_null( $params ) ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
+			'allowTOC' => !$params['disabletoc'],
+			'enableSectionEditLinks' => !$params['disableeditsection'],
+			'wrapperDivClass' => $params['wrapoutputclass'],
+			'deduplicateStyles' => !$params['disablestylededuplication'],
+		] );
 
 		if ( $text === null || $text === '' ) {
 			return true;
@@ -377,6 +387,15 @@ class LingoParser {
 	public function setBackend( Backend $backend ) {
 		$this->mLingoBackend = $backend;
 		$backend->setLingoParser( $this );
+	}
+
+	/**
+	 * Set parser options from API
+	 *
+	 * @param array $params
+	 */
+	public function setApiParams( array $params ) {
+		$this->mApiParams = $params;
 	}
 
 	/**

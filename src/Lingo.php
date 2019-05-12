@@ -53,6 +53,10 @@ class Lingo {
 				$parser->parse( $GLOBALS[ 'wgParser' ] );
 			} );
 
+			\Hooks::register( 'ApiMakeParserOptions', function ( \ParserOptions $popts, \Title $title, array $params ) use ( $parser ){
+				$parser->setApiParams( $params );
+			} );
+
 			\Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
 				return true;
