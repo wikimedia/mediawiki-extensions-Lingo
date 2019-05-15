@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Stelistcristi"
+			"Stelistcristi",
+			"Andrei Stroe"
 		]
 	},
 	"lingo-terminologypagename": "Terminologie",
-	"lingo-noterminologypage": "Pagina „$1” nu există.",
+	"lingo-noterminologypage": "Pagina de terminologie „$1” nu există.",
 	"lingo-terminologypagenotlocal": "Pagina „$1” nu este o pagină locală."
 }
