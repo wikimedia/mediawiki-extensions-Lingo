@@ -1,5 +1,13 @@
 ## Release Notes
 
+### Lingo 3.0.1
+
+Released on TBD
+
+Fixes:
+* [[#50 (SG)](https://github.com/SemanticMediaWiki/SemanticGlossary/issues/50)] Accept StubObject for MW Parser
+
+
 ### Lingo 3.0.0
 
 Released on 06-May-2018
@@ -20,6 +28,7 @@ Fixes:
 * [T180746](https://phabricator.wikimedia.org/T180746), [T147522](https://phabricator.wikimedia.org/T147522) Tooltips are now disabled for the Special namespace
 * [T182261](https://phabricator.wikimedia.org/T182261) Section heads on Category pages are properly annotated
 * [T123969](https://phabricator.wikimedia.org/T123969) Styles for printing fixed
+
 
 ### Lingo 2.0.3
 

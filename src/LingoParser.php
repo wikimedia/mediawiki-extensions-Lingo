@@ -32,6 +32,7 @@ use DOMDocument;
 use DOMXPath;
 use ObjectCache;
 use Parser;
+use StubObject;
 use Title;
 
 /**
@@ -405,7 +406,7 @@ class LingoParser {
 	protected function shouldParse( &$parser ) {
 		global $wgexLingoUseNamespaces;
 
-		if ( !( $parser instanceof Parser ) ) {
+		if ( !( $parser instanceof Parser || $parser instanceof StubObject) ) {
 			return false;
 		}
 
