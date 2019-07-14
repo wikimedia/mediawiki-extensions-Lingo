@@ -406,7 +406,7 @@ class LingoParser {
 	protected function shouldParse( &$parser ) {
 		global $wgexLingoUseNamespaces;
 
-		if ( !( $parser instanceof Parser || $parser instanceof StubObject) ) {
+		if ( !( $parser instanceof Parser || $parser instanceof StubObject ) ) {
 			return false;
 		}
 
