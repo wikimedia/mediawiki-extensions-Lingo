@@ -34,6 +34,7 @@ use ObjectCache;
 use Parser;
 use StubObject;
 use Title;
+use Wikimedia\AtEase\AtEase;
 
 /**
  * This class parses the given text and enriches it with definitions for defined
@@ -220,12 +221,25 @@ class LingoParser {
 		}
 
 		// Parse HTML from page
-		\Wikimedia\suppressWarnings();
+
+		// TODO: Remove call to \MediaWiki\suppressWarnings() for MW 1.34+.
+		// \Wikimedia\AtEase\AtEase::suppressWarnings() is available from MW 1.34.
+		if (method_exists( AtEase::class, 'suppressWarnings' ) ) {
+			\Wikimedia\AtEase\AtEase::suppressWarnings();
+		} else {
+			\MediaWiki\suppressWarnings();
+		}
 
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
-		\Wikimedia\restoreWarnings();
+		// TODO: Remove call to \MediaWiki\restoreWarnings() for MW 1.34+.
+		// \Wikimedia\AtEase\AtEase::restoreWarnings() is available from MW 1.34.
+		if (method_exists( AtEase::class, 'suppressWarnings' ) ) {
+			\Wikimedia\AtEase\AtEase::restoreWarnings();
+		} else {
+			\MediaWiki\restoreWarnings();
+		}
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
@@ -347,17 +361,10 @@ class LingoParser {
 		$parserOutput = $parser->getOutput();
 
 		// load scripts
-		$parserOutput->addModules( 'ext.Lingo.Scripts' );
+		$parserOutput->addModules( 'ext.Lingo' );
 
 		if ( !$wgOut->isArticle() ) {
-			$wgOut->addModules( 'ext.Lingo.Scripts' );
-		}
-
-		// load styles
-		$parserOutput->addModuleStyles( 'ext.Lingo.Styles' );
-
-		if ( !$wgOut->isArticle() ) {
-			$wgOut->addModuleStyles( 'ext.Lingo.Styles' );
+			$wgOut->addModules( 'ext.Lingo' );
 		}
 	}
 
