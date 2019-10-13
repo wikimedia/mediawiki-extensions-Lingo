@@ -23,16 +23,18 @@
 				"libs/Lingo.js"
 			],
 			"styles": [
-				"styles/Lingo.less",
-				"styles/jquery.qtip.css"
+				"styles/Lingo.less"
 			],
 			"dependencies": [
-				"ext.jquery.qtip.script"
+				"ext.Lingo.jquery.qtip"
 			]
 		},
-		"ext.jquery.qtip.script": {
+		"ext.Lingo.jquery.qtip": {
 			"scripts": [
 				"libs/jquery.qtip.js"
+			],
+			"styles": [
+				"styles/jquery.qtip.css"
 			]
 		}
 	},
