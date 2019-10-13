@@ -1,6 +1,6 @@
 {
 	"name": "Lingo",
-	"version": "3.0.0",
+	"version": "3.1.0-dev",
 	"author": [
 		"Barry Coughlan",
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
@@ -18,25 +18,21 @@
 		"remoteExtPath": "Lingo"
 	},
 	"ResourceModules": {
-		"ext.Lingo.Styles": {
-			"styles": [
-				"styles/Lingo.less"
-			]
-		},
-		"ext.Lingo.Scripts": {
+		"ext.Lingo": {
 			"scripts": [
 				"libs/Lingo.js"
 			],
+			"styles": [
+				"styles/Lingo.less",
+				"styles/jquery.qtip.css"
+			],
 			"dependencies": [
-				"ext.jquery.qtip"
+				"ext.jquery.qtip.script"
 			]
 		},
-		"ext.jquery.qtip": {
+		"ext.jquery.qtip.script": {
 			"scripts": [
 				"libs/jquery.qtip.js"
-			],
-			"styles": [
-				"styles/jquery.qtip.css"
 			]
 		}
 	},
