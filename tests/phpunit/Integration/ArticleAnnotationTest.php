@@ -31,8 +31,6 @@ use Lingo\Tests\Util\XmlFileProvider;
 use Parser;
 use ParserOptions;
 use PHPUnit\Framework\TestCase;
-
-use PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls;
 use ReflectionClass;
 
 /**
@@ -79,7 +77,7 @@ class ArticleAnnotationTest extends TestCase {
 		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );
 		$backend->expects( $this->any() )
 			->method( 'next' )
-			->will( new PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls( $glossaryEntries ) );
+			->will( self::onConsecutiveCalls( ...$glossaryEntries ) );
 
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );

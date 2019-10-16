@@ -27,6 +27,7 @@
 namespace Lingo\Tests\Unit;
 
 use Lingo\LingoParser;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo
@@ -164,7 +165,7 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getParserMock( $config = [] ) {
 		if ( array_key_exists( 'mwParser', $config ) ) {
@@ -203,7 +204,7 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	/**
 	 * @param $config
 	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getTitleMock( $config ) {
 		if ( array_key_exists( 'mwTitle', $config ) ) {
@@ -222,7 +223,7 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	/**
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getBackendMock() {
 		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
