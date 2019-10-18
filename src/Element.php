@@ -249,7 +249,9 @@ class Element {
 			$link = $definition[ self::ELEMENT_LINK ];
 			$style = $definition[ self::ELEMENT_STYLE ];
 
-			$divDefinitions .= "<div class='mw-lingo-definition {$style}'><div class='mw-lingo-definition-text'>\n{$text}\n</div>";
+			// navigation-not-searchable removes definition from CirrusSearch index
+			$divDefinitions .= "<div class='mw-lingo-definition navigation-not-searchable {$style}'>"
+				. "<div class='mw-lingo-definition-text'>\n{$text}\n</div>";
 
 			if ( $link !== null ) {
 
