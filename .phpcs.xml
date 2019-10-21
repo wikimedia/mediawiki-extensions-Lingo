@@ -15,6 +15,7 @@
 		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgTitle" />
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.passthru" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+		<exclude name="PSR12.Properties.ConstantVisibility.NotFound" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php,php5,inc"/>

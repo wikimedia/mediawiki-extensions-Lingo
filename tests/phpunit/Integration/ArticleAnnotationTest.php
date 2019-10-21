@@ -53,7 +53,7 @@ class ArticleAnnotationTest extends TestCase {
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 	}
 
-	public function tearDown() {
+	public function tearDown() : void {
 		// reset LingoParser singleton
 		$lingoParser = LingoParser::getInstance();
 		$reflection = new ReflectionClass( $lingoParser );
