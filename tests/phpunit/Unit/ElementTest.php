@@ -44,7 +44,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 	protected $element;
 	protected $doc;
 
-	protected function setUp() : void {
+	protected function setUp() {
 		$this->doc = new \DOMDocument();
 	}
 
