@@ -27,6 +27,7 @@
 namespace Lingo\Tests\Unit;
 
 use Lingo\BasicBackend;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo
@@ -284,7 +285,7 @@ TESTTEXT
 	}
 
 	/**
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
 		$messageLog = $this->getMockBuilder( 'Lingo\MessageLog' )
@@ -347,7 +348,7 @@ TESTTEXT
 	 * @param $lingoPageText
 	 * @param $lingoPageRevision
 	 * @param $lingoPageContent
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
 		if ( $lingoPageRevision === false ) {
