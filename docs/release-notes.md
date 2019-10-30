@@ -1,11 +1,17 @@
 ## Release Notes
 
-### Lingo 3.0.1
+### Lingo 3.1.0
 
-Released on TBD
+Released on 30-Oct-2019
+
+Changes:
+* Add support for text transformation API parser options (by Tam-edwin-microsoft)
+* Lingo definitions will not show up in search results anymore (by Juan Osorio, Microsoft)
 
 Fixes:
 * [[#50 (SG)](https://github.com/SemanticMediaWiki/SemanticGlossary/issues/50)] Accept StubObject for MW Parser
+* Avoid already taken module name, use Lingo-specific name instead
+* Compatibility fixes for newer versions of MediaWiki
 
 
 ### Lingo 3.0.0
@@ -120,15 +126,14 @@ Released on 02-Mar-2014
 From here on this extension will use [Semantic Versioning](http://semver.org).
 
 Changes:
-* features introduced during the [Google Summer of Code 2013]
-  (https://www.mediawiki.org/wiki/Google_Summer_of_Code_2013) by Yevheniy
-  Vlasenko:
-** ability to turn off the recognition of glossary terms by using
+* features introduced during the 
+  [Google Summer of Code 2013](https://www.mediawiki.org/wiki/Google_Summer_of_Code_2013) 
+  by Yevheniy Vlasenko:
+  * ability to turn off the recognition of glossary terms by using
    `<noglossary></noglossary>` tags
-** ability to use multiple definitions per term
-** support the [ApprovedRevs]
-   (https://www.mediawiki.org/wiki/Extension:ApprovedRevs) extension for the
-   Terminology page
+  * ability to use multiple definitions per term
+  * support the [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:ApprovedRevs) 
+  extension for the Terminology page
 * introduce the [qTip2 library](http://qtip2.com) for the tooltips (and abandon
   the home-grown tooltips)
 * enable transclusion of other pages on the Terminology page
@@ -218,9 +223,9 @@ Changes:
   should be annotated only once per page
 * provides a config setting $wgexLingoUseNamespaces to specify what namespaces
   should be used
-** to exclude e.g. namespace NS_TALK from marking up you have to set
+  * to exclude e.g. namespace NS_TALK from marking up you have to set
    `$wgexLingoUseNamespaces[NS_TALK]=false;`
-** everything not explicitly set to false will be marked up
+  * everything not explicitly set to false will be marked up
 * provides internationalization (e.g. for the default name of the Terminology
   page)
 * ignores any element (e.g. div or table) with `class='noglossary'` (*not*
@@ -232,9 +237,8 @@ Changes:
 
 Released on 26-May-2011
 
-Maintenance taken over by [Stephan Gambke]
-(https://www.mediawiki.org/wiki/User:F.trott) and committed to the Wikimedia
-repository
+Maintenance taken over by [Stephan Gambke](https://www.mediawiki.org/wiki/User:F.trott) 
+and committed to the Wikimedia repository
 
 ### Lingo 0.14b
 
