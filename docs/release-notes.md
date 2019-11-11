@@ -1,11 +1,12 @@
 ## Release Notes
 
-### Lingo 3.1.0
+### Lingo 3.1.1
 
-Released on tbd
+Released on 11-Nov-2019
 
 Fixes:
-* 
+* [[T237806](https://phabricator.wikimedia.org/T237806)] Reintroduce deprecated function call for older MW
+
 
 ### Lingo 3.1.0
 
