@@ -357,6 +357,12 @@ TESTTEXT
 				$lingoPageContent = $this->getMockBuilder( 'TextContent' )
 					->disableOriginalConstructor()
 					->getMock();
+
+				// FIXME: getNativeData() is deprecated for MW 1.33+.
+				$lingoPageContent->expects( $this->any() )
+					->method( 'getNativeData' )
+					->willReturn( $lingoPageText );
+
 				$lingoPageContent->expects( $this->any() )
 					->method( 'getText' )
 					->willReturn( $lingoPageText );
@@ -365,9 +371,11 @@ TESTTEXT
 			$lingoPageRevision = $this->getMockBuilder( 'Revision' )
 				->disableOriginalConstructor()
 				->getMock();
+
 			$lingoPageRevision->expects( $this->any() )
 				->method( 'getContent' )
 				->willReturn( $lingoPageContent );
+
 			return $lingoPageRevision;
 		}
 		return $lingoPageRevision;

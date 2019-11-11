@@ -210,6 +210,12 @@ class BasicBackend extends Backend {
 			}
 
 			if ( $content instanceof TextContent ) {
+
+				// FIXME: getNativeData() is deprecated for MW 1.33+. Use getText().
+				if ( ! method_exists( $content, 'getText')) {
+					return $content->getNativeData();
+				}
+
 				return $content->getText();
 			}
 
