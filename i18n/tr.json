@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hbseren"
+			"Hbseren",
+			"BaRaN6161 TURK"
 		]
 	},
+	"lingo-desc": "[[$1]] sayfasında tanımlanan kelimelerin sayfalarında gezdirme araç ipuçlarını sağlar",
+	"lingo-terminologypagename": "Terminoloji",
+	"lingo-noterminologypage": "\"$1\" terminoloji sayfası mevcut değil.",
+	"lingo-notatextpage": "\"$1\" terminoloji sayfası bir metin sayfası değil.",
+	"lingo-terminologypagenotlocal": "\"$1\" sayfası yerel bir sayfa değil.",
+	"lingo-noapprovedrevs": "ApprovedRevs için destek Lingo'da etkindir. Ancak ApprovedRevs bulunamadı.",
 	"lingo-invalidlinktarget": "\"$1\" $2 terimi için geçersiz bağlantı hedefi"
 }
