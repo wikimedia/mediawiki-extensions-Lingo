@@ -120,8 +120,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public function parseProvider() {
 		return [
-			// trivial case where $wgParser being unset should at least not raise any exceptions
-			[ [ 'mwParser' => null ] ],
 
 			// Lingo parser does not start parsing (i.e. accesses parser output) when __NOGLOSSARY__ is set
 			[ [

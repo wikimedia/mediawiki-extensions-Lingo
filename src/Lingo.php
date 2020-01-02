@@ -25,7 +25,7 @@
  */
 
 namespace Lingo;
-
+use MediaWiki\MediaWikiServices;
 /**
  * Class Lingo
  *
@@ -50,7 +50,7 @@ class Lingo {
 			$parser->setBackend( $backend );
 
 			\Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
-				$parser->parse( $GLOBALS[ 'wgParser' ] );
+				$parser->parse( MediaWikiServices::getInstance()->getParser() );
 			} );
 
 			\Hooks::register( 'ApiMakeParserOptions', function ( \ParserOptions $popts, \Title $title, array $params ) use ( $parser ){
