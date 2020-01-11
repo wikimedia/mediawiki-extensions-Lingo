@@ -50,7 +50,7 @@ class MessageLog {
 	const MESSAGE_NOTICE = 3;
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 * @param int $severity
 	 */
 	public function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
@@ -65,7 +65,7 @@ class MessageLog {
 	}
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 */
 	public function addError( $message ) {
 		$this->mMessages[] = [ $message, self::MESSAGE_ERROR ];
@@ -73,7 +73,7 @@ class MessageLog {
 	}
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 */
 	public function addWarning( $message ) {
 		$this->mMessages[] = [ $message, self::MESSAGE_WARNING ];
@@ -81,7 +81,7 @@ class MessageLog {
 	}
 
 	/**
-	 * @param $message
+	 * @param string $message
 	 */
 	public function addNotice( $message ) {
 		$this->mMessages[] = [ $message, self::MESSAGE_NOTICE ];

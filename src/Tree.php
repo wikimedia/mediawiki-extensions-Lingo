@@ -59,7 +59,7 @@ class Tree {
 	/**
 	 * Adds a string to the Lingo Tree
 	 *
-	 * @param string $term
+	 * @param string &$term
 	 * @param array $definition
 	 */
 	public function addTerm( &$term, $definition ) {
@@ -84,9 +84,9 @@ class Tree {
 	/**
 	 * Adds an element to the Lingo Tree
 	 *
-	 * @param array $path An array containing the constituing lexemes of the term
-	 * @param String $term
-	 * @param array $definition
+	 * @param array &$path An array containing the constituing lexemes of the term
+	 * @param String &$term
+	 * @param array &$definition
 	 * @return array the tree node the element was stored in
 	 */
 	protected function &addElement( array &$path, &$term, &$definition ) {
@@ -126,7 +126,7 @@ class Tree {
 	}
 
 	/**
-	 * @param $lexemes
+	 * @param array &$lexemes
 	 * @param int $index
 	 * @param int $countLexemes
 	 *
@@ -158,10 +158,10 @@ class Tree {
 	}
 
 	/**
-	 * @param array $tree
-	 * @param       $lexemes
-	 * @param       $index
-	 * @param       $countLexemes
+	 * @param array &$tree
+	 * @param array &$lexemes
+	 * @param int $index
+	 * @param int $countLexemes
 	 *
 	 * @return array
 	 */

@@ -62,8 +62,8 @@ class Element {
 	/**
 	 * Lingo\Element constructor.
 	 *
-	 * @param string $term
-	 * @param string[] $definition
+	 * @param string &$term
+	 * @param string[] &$definition
 	 */
 	public function __construct( &$term, &$definition ) {
 		$this->mTerm = $term;
@@ -71,14 +71,14 @@ class Element {
 	}
 
 	/**
-	 * @param array $definition
+	 * @param array &$definition
 	 */
 	public function addDefinition( &$definition ) {
 		$this->mDefinitions[] = $definition + array_fill( 0, self::ELEMENT_FIELDCOUNT, null );
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param DOMDocument &$doc
 	 *
 	 * @return DOMElement|DOMText
 	 */
@@ -97,7 +97,7 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param DOMDocument &$doc
 	 */
 	private function buildFormattedTerm( DOMDocument &$doc ) {
 		// only create if not yet created
@@ -121,7 +121,7 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param DOMDocument &$doc
 	 * @return DOMElement
 	 */
 	protected function buildFormattedTermAsLink( DOMDocument &$doc ) {
@@ -150,7 +150,7 @@ class Element {
 	}
 
 	/**
-	 * @param DOMDocument $doc
+	 * @param DOMDocument &$doc
 	 *
 	 * @return DOMElement
 	 */
@@ -164,7 +164,7 @@ class Element {
 	}
 
 	/**
-	 * @param $descriptor
+	 * @param array $descriptor
 	 *
 	 * @return string[]
 	 */
@@ -197,9 +197,7 @@ class Element {
 	}
 
 	/**
-	 * @param Title $target
-	 * @param DOMElement $link
-	 *
+	 * @param array $descriptor
 	 * @return string
 	 */
 	protected function getTitleForLink( $descriptor ) {
@@ -310,7 +308,7 @@ class Element {
 	}
 
 	/**
-	 * @param $link
+	 * @param string $link
 	 */
 	protected function addErrorMessageForInvalidLink( $link ) {
 		$errorMessage = wfMessage( 'lingo-invalidlinktarget', $this->mTerm, $link )->text();

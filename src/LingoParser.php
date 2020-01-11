@@ -65,7 +65,7 @@ class LingoParser {
 
 	/**
 	 * Lingo\LingoParser constructor.
-	 * @param MessageLog|null $messages
+	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 		// The RegEx to split a chunk of text into words
@@ -76,7 +76,7 @@ class LingoParser {
 	/**
 	 * @param Parser $mwParser
 	 *
-	 * @return Boolean
+	 * @return bool
 	 */
 	public function parse( $mwParser ) {
 		if ( $this->shouldParse( $mwParser ) ) {
@@ -195,9 +195,9 @@ class LingoParser {
 	 *
 	 * This method currently only recognizes terms consisting of max one word
 	 *
-	 * @param Parser $parser
+	 * @param Parser &$parser
 	 *
-	 * @return Boolean
+	 * @return bool
 	 */
 	protected function realParse( &$parser ) {
 		// Parse text identical to options used in includes/api/ApiParse.php
@@ -224,7 +224,7 @@ class LingoParser {
 
 		// TODO: Remove call to \MediaWiki\suppressWarnings() for MW 1.34+.
 		// \Wikimedia\AtEase\AtEase::suppressWarnings() is available from MW 1.34.
-		if (method_exists( AtEase::class, 'suppressWarnings' ) ) {
+		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
 			\Wikimedia\AtEase\AtEase::suppressWarnings();
 		} else {
 			\MediaWiki\suppressWarnings();
@@ -235,7 +235,7 @@ class LingoParser {
 
 		// TODO: Remove call to \MediaWiki\restoreWarnings() for MW 1.34+.
 		// \Wikimedia\AtEase\AtEase::restoreWarnings() is available from MW 1.34.
-		if (method_exists( AtEase::class, 'suppressWarnings' ) ) {
+		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
 			\Wikimedia\AtEase\AtEase::restoreWarnings();
 		} else {
 			\MediaWiki\restoreWarnings();
@@ -353,7 +353,7 @@ class LingoParser {
 	}
 
 	/**
-	 * @param Parser $parser
+	 * @param Parser &$parser
 	 */
 	protected function loadModules( &$parser ) {
 		global $wgOut;
@@ -407,7 +407,7 @@ class LingoParser {
 	}
 
 	/**
-	 * @param Parser $parser
+	 * @param Parser &$parser
 	 * @return bool
 	 */
 	protected function shouldParse( &$parser ) {

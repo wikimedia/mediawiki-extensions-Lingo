@@ -48,7 +48,7 @@ class BasicBackend extends Backend {
 
 	/**
 	 * Lingo\BasicBackend constructor.
-	 * @param MessageLog|null $messages
+	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 		parent::__construct( $messages );
@@ -67,7 +67,7 @@ class BasicBackend extends Backend {
 	 * and Source are set to null. If there is no next element the function
 	 * returns null.
 	 *
-	 * @return array | null
+	 * @return array|null
 	 * @throws \MWException
 	 */
 	public function next() {
@@ -212,7 +212,7 @@ class BasicBackend extends Backend {
 			if ( $content instanceof TextContent ) {
 
 				// FIXME: getNativeData() is deprecated for MW 1.33+. Use getText().
-				if ( ! method_exists( $content, 'getText')) {
+				if ( !method_exists( $content, 'getText' ) ) {
 					return $content->getNativeData();
 				}
 
@@ -253,7 +253,7 @@ class BasicBackend extends Backend {
 	/**
 	 * Initiates the purging of the cache when the Terminology page was saved or purged.
 	 *
-	 * @param WikiPage $wikipage
+	 * @param WikiPage &$wikipage
 	 * @return Bool
 	 */
 	public function purgeCache( WikiPage &$wikipage ) {
@@ -279,7 +279,7 @@ class BasicBackend extends Backend {
 
 	/**
 	 * @codeCoverageIgnore
-	 * @param $dictionaryPage
+	 * @param string $dictionaryPage
 	 * @return Title
 	 */
 	protected function getTitleFromText( $dictionaryPage ) {
@@ -305,7 +305,7 @@ class BasicBackend extends Backend {
 	}
 
 	/**
-	 * @param $line
+	 * @param string $line
 	 * @return bool
 	 */
 	protected function isValidGlossaryLine( $line ) {

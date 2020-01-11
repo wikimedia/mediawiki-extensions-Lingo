@@ -40,7 +40,7 @@ abstract class Backend {
 
 	/**
 	 * Lingo\Backend constructor.
-	 * @param MessageLog|null $messages
+	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
 		$this->mMessageLog = $messages;

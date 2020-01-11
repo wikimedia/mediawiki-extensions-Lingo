@@ -25,7 +25,9 @@
  */
 
 namespace Lingo;
+
 use MediaWiki\MediaWikiServices;
+
 /**
  * Class Lingo
  *
