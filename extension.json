@@ -38,14 +38,26 @@
 			]
 		}
 	},
+	"config_prefix": "wgex",
 	"config": {
-		"_prefix": "wgex",
-		"LingoBackend": "Lingo\\BasicBackend",
-		"LingoPage": null,
-		"LingoDisplayOnce": false,
-		"LingoCacheType": null,
-		"LingoEnableApprovedRevs": false,
-		"LingoUseNamespaces": []
+		"LingoBackend": {
+			"value": "Lingo\\BasicBackend"
+		},
+		"LingoPage": {
+			"value": null
+		},
+		"LingoDisplayOnce": {
+			"value": false
+		},
+		"LingoCacheType": {
+			"value": null
+		},
+		"LingoEnableApprovedRevs": {
+			"value": false
+		},
+		"LingoUseNamespaces": {
+			"value": []
+		}
 	},
 	"MessagesDirs": {
 		"Lingo": [
@@ -66,5 +78,5 @@
 		"Lingo\\Tests\\Util\\XmlFileProvider": "/tests/phpunit/Util/XmlFileProvider.php"
 	},
 	"callback": "Lingo\\Lingo::initExtension",
-	"manifest_version": 1
+	"manifest_version": 2
 }
