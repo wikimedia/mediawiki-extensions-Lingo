@@ -33,8 +33,8 @@
 	"require-dev": {
 		"jakub-onderka/php-parallel-lint": "1.0.0",
 		"justinrainbow/json-schema": ">=1.0",
-		"jakub-onderka/php-console-highlighter": "0.3.2",
-		"mediawiki/minus-x": "0.3.2",
+		"jakub-onderka/php-console-highlighter": "0.4.0",
+		"mediawiki/minus-x": "1.0.0",
 		"mediawiki/mediawiki-codesniffer": "26.0.0"
 	},
 	"scripts": {
