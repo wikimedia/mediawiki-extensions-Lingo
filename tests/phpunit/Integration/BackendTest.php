@@ -26,6 +26,8 @@
 
 namespace Lingo\Tests\Unit;
 
+use MediaWikiIntegrationTestCase;
+
 /**
  * @group extensions-lingo
  * @group extensions-lingo-unit
@@ -38,7 +40,7 @@ namespace Lingo\Tests\Unit;
  * @ingroup Lingo
  * @ingroup Test
  */
-class BackendTest extends \PHPUnit\Framework\TestCase {
+class BackendTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @covers ::__construct

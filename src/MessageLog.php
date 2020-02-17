@@ -30,7 +30,7 @@
 namespace Lingo;
 
 use Html;
-use Parser;
+use MediaWiki\MediaWikiServices;
 use ParserOptions;
 
 /**
@@ -105,7 +105,7 @@ class MessageLog {
 
 		if ( $ret != '' ) {
 			if ( !$this->mParser ) {
-				$parser = new Parser();
+				$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
 			}
 
 			if ( $header == null ) {

@@ -28,6 +28,7 @@ namespace Lingo\Tests\Unit;
 
 use Lingo\LingoParser;
 use PHPUnit\Framework\MockObject\MockObject;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group extensions-lingo
@@ -41,7 +42,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  * @ingroup Lingo
  * @ingroup Test
  */
-class LingoParserTest extends \PHPUnit\Framework\TestCase {
+class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 	private static $defaultTestConfig = [
 		'mwParserExpectsGetOutput' => null,
@@ -127,12 +128,6 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 				'mwParserProperties' => [ 'mDoubleUnderscores' => [ 'noglossary' => true ] ],
 			] ],
 
-			// Lingo parser does not start parsing (i.e. accesses parser output) when parsed Page is unknown
-			[ [
-				'mwParserExpectsGetOutput' => $this->never(),
-				'mwTitle' => null
-			] ],
-
 			// Lingo parser does not start parsing (i.e. accesses parser output) when parsed Page is in explicitly forbidden namespace
 			[ [
 				'mwParserExpectsGetOutput' => $this->never(),
@@ -180,15 +175,15 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?: $this->any() )
+		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?? $this->any() )
 			->method( 'getText' )
 			->willReturn( $config[ 'text' ] );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetTitle' ] ?: $this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetTitle' ] ?? $this->any() )
 			->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?: $this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->any() )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 
@@ -234,6 +229,7 @@ class LingoParserTest extends \PHPUnit\Framework\TestCase {
 			->getMock();
 
 		$lingoPageTitle = $this->getMockBuilder( 'Title' )
+		  ->disableOriginalConstructor()
 			->getMock();
 		$lingoPageTitle->expects( $this->any() )
 			->method( 'getInterwiki' )

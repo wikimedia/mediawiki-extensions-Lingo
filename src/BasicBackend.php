@@ -28,8 +28,8 @@
 namespace Lingo;
 
 use ApprovedRevs;
+use MediaWiki\MediaWikiServices;
 use Hooks;
-use Parser;
 use ParserOptions;
 use Revision;
 use TextContent;
@@ -166,7 +166,7 @@ class BasicBackend extends Backend {
 		// Expand templates and variables in the text, producing valid, static
 		// wikitext. Have to use a new anonymous user to avoid any leakage as
 		// Lingo is caching only one user-independent glossary
-		$parser = new Parser;
+		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
 		$content = $parser->preprocess( $rawContent, $dictionaryTitle, new ParserOptions( new User() ) );
 
 		$this->mArticleLines = explode( "\n", $content );
