@@ -1,11 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Sherbrooke",
 			"Gomoko",
-			"Wladek92",
+			"Sherbrooke",
+			"Thibaut120094",
 			"Verdy p",
-			"Thibaut120094"
+			"Wladek92"
 		]
 	},
 	"lingo-desc": "Dans les pages, affiche une info-bulle si le mot est défini dans la page de [[$1]].",

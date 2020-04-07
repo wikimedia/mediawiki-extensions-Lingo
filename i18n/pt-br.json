@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"!Silent",
 			"Cainamarques",
-			"Luk3",
-			"!Silent"
+			"Luk3"
 		]
 	},
 	"lingo-desc": "Fornece a exibição de legendas na passagem do cursor sobre palavras definidas na página [[$1]]",

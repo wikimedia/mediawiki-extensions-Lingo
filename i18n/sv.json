@@ -1,8 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"WikiPhoenix",
-			"Ainali"
+			"Ainali",
+			"WikiPhoenix"
 		]
 	},
 	"lingo-desc": "Tillhandahåller verktygstips på sidor när muspekaren förs över ord definierade på sidan [[$1]].",

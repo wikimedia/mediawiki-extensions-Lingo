@@ -1,8 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Toliño",
-			"Elisardojm"
+			"Elisardojm",
+			"Toliño"
 		]
 	},
 	"lingo-desc": "Proporciona consellos nas páxinas ao pasar o rato por riba das palabras definidas na páxina \"[[$1]]\"",

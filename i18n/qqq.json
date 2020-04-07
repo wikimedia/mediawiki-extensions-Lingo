@@ -1,9 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"Liuxinyu970226",
 			"Shirayuki",
-			"Umherirrender",
-			"Liuxinyu970226"
+			"Umherirrender"
 		]
 	},
 	"lingo-desc": "{{desc|name=Lingo|url=https://www.mediawiki.org/wiki/Extension:Lingo}}\nParameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|Lingo-terminologypagename}}",
