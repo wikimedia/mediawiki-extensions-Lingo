@@ -60,6 +60,7 @@ class BasicBackendTest extends BackendTest {
 		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
 
 		$title = $this->getMockBuilder( 'Title' )
+			->disableOriginalConstructor()
 			->getMock();
 
 		$wikiPage = $this->getMockBuilder( 'WikiPage' )
@@ -307,6 +308,7 @@ TESTTEXT
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 
 		$lingoPageTitle = $this->getMockBuilder( 'Title' )
+		  ->disableOriginalConstructor()
 			->getMock();
 		$lingoPageTitle->expects( $this->once() )
 			->method( 'getInterwiki' )

@@ -26,9 +26,9 @@
 namespace Lingo\Tests\Integration;
 
 use Lingo\LingoParser;
+use MediaWiki\MediaWikiServices;
 use Lingo\Tests\Util\XmlFileProvider;
 
-use Parser;
 use ParserOptions;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -47,11 +47,11 @@ use ReflectionClass;
  */
 class ArticleAnnotationTest extends TestCase {
 
-	public function setUp() {
+	public function setUp() : void {
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 	}
 
-	public function tearDown() {
+	public function tearDown(): void {
 		// reset LingoParser singleton
 		$lingoParser = LingoParser::getInstance();
 		$reflection = new ReflectionClass( $lingoParser );
@@ -71,7 +71,7 @@ class ArticleAnnotationTest extends TestCase {
 	 * @group Broken
 	 */
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
-		$parser = new Parser();
+		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), new ParserOptions() );
 
 		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );

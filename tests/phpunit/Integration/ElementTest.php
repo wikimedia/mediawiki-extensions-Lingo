@@ -27,6 +27,7 @@
 namespace Lingo\Tests\Unit;
 
 use Lingo\Element;
+use MediaWikiIntegrationTestCase;
 
 /**
  * @group extensions-lingo
@@ -38,13 +39,14 @@ use Lingo\Element;
  * @ingroup Lingo
  * @ingroup Test
  */
-class ElementTest extends \PHPUnit\Framework\TestCase {
+class ElementTest extends MediaWikiIntegrationTestCase {
 
 	/** @var Element */
 	protected $element;
 	protected $doc;
 
-	protected function setUp() {
+	public function setUp() : void {
+		parent::setUp();
 		$this->doc = new \DOMDocument();
 	}
 
@@ -329,17 +331,16 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		// Run
 		$definitions = $element->getFormattedDefinitions();
-
 		$this->assertEquals(
 			"<div class='mw-lingo-tooltip' id='a8057b0494da505d2f7ac2e96e17083f'>" .
-			"<div class='mw-lingo-definition '>" .
+			"<div class='mw-lingo-definition navigation-not-searchable '>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"someDefinition1\n" .
 			"</div>" .
 			"<div class='mw-lingo-definition-link'>" .
 			"[" . $url1 . " <nowiki/>]" .
 			"</div></div>" .
-			"<div class='mw-lingo-definition some-style-2'>" .
+			"<div class='mw-lingo-definition navigation-not-searchable some-style-2'>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"someDefinition2\n" .
 			"</div>" .
@@ -388,19 +389,18 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		// Run
 		$definitions = $element->getFormattedDefinitions();
-
 		$this->assertEquals(
 			"<div class='mw-lingo-tooltip' id='a8057b0494da505d2f7ac2e96e17083f'>" .
-			"<div class='mw-lingo-definition '>" .
+			"<div class='mw-lingo-definition navigation-not-searchable '>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"someDefinition1\n" .
 			"</div>" .
 			"</div>" .
-			"<div class='mw-lingo-definition some-style-2'>" .
+			"<div class='mw-lingo-definition navigation-not-searchable some-style-2'>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"someDefinition2\n" .
 			"</div></div>" .
-			"<div class='mw-lingo-definition invalid-link-target'>" .
+			"<div class='mw-lingo-definition navigation-not-searchable invalid-link-target'>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"Invalid link target for term \"some&Term\": some[]InvalidLink2\n" .
 			"</div></div>\n" .
@@ -464,7 +464,7 @@ class ElementTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertEquals(
 			"<div class='mw-lingo-tooltip' id='a8057b0494da505d2f7ac2e96e17083f'>" .
-			"<div class='mw-lingo-definition invalid-link-target'>" .
+			"<div class='mw-lingo-definition navigation-not-searchable invalid-link-target'>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"Invalid link target for term \"some&Term\": foo[]bar\n" .
 			"</div></div>\n</div>",

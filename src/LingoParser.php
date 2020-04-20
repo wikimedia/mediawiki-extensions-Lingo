@@ -431,7 +431,7 @@ class LingoParser {
 
 		if ( isset( $wgexLingoUseNamespaces[ $namespace ] ) && $wgexLingoUseNamespaces[ $namespace ] === false ) {
 			return false;
-		};
+		}
 
 		return true;
 	}
