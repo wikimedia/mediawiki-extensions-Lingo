@@ -29,9 +29,9 @@ namespace Lingo;
 
 use ApprovedRevs;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\RevisionRecord;
 use Hooks;
 use ParserOptions;
-use Revision;
 use TextContent;
 use Title;
 use User;
@@ -233,7 +233,7 @@ class BasicBackend extends Backend {
 	 * Returns revision of the terms page.
 	 *
 	 * @param Title $title
-	 * @return null|Revision
+	 * @return null|RevisionRecord
 	 */
 	protected function getRevisionFromTitle( Title $title ) {
 		global $wgexLingoEnableApprovedRevs;
@@ -289,19 +289,21 @@ class BasicBackend extends Backend {
 	/**
 	 * @codeCoverageIgnore
 	 * @param Title $title
-	 * @return null|Revision
+	 * @return null|RevisionRecord
 	 */
 	protected function getApprovedRevisionFromTitle( Title $title ) {
-		return Revision::newFromId( ApprovedRevs::getApprovedRevID( $title ) );
+		return MediaWikiServices::getInstance()->getRevisionLookup()
+			->getRevisionById( ApprovedRevs::getApprovedRevID( $title ) );
 	}
 
 	/**
 	 * @codeCoverageIgnore
 	 * @param Title $title
-	 * @return null|Revision
+	 * @return null|RevisionRecord
 	 */
 	protected function getLatestRevisionFromTitle( Title $title ) {
-		return Revision::newFromTitle( $title );
+		return MediaWikiServices::getInstance()->getRevisionLookup()
+			->getRevisionByTitle( $title );
 	}
 
 	/**
