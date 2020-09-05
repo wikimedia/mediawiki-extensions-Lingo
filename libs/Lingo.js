@@ -25,8 +25,6 @@
  * @ingroup Lingo
  */
 
-/*global confirm */
-
 ( function ( $ ) {
 
 	'use strict';
@@ -35,23 +33,23 @@
 
 		$( 'span.mw-lingo-term' ).each( function () {
 
-			var termId = $(this).attr( 'data-lingo-term-id');
+			var termId = $( this ).attr( 'data-lingo-term-id' ),
 
-			var tooltip = $( '#' + termId );
+				tooltip = $( '#' + termId );
 
 			$( this ).qtip( {
-				content : tooltip.html(),
+				content: tooltip.html(),
 				position: {
-					my: 'top left',  // Position tooltip's top left...
+					my: 'top left', // Position tooltip's top left...
 					at: 'bottom left' // at the bottom left of target
 				},
-				hide    : {
+				hide: {
 					fixed: true,
 					delay: 300
 				},
-				style   : {
+				style: {
 					classes: tooltip.attr( 'class' ) + ' qtip-shadow',
-					def    : false
+					def: false
 				}
 
 			} );
