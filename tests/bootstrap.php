@@ -25,7 +25,7 @@
  * @ingroup Lingo
  */
 
-if ( php_sapi_name() !== 'cli' ) {
+if ( PHP_SAPI !== 'cli' ) {
 	die( 'Not an entry point' );
 }
 
@@ -33,6 +33,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'MediaWiki is not available for the test environment' );
 }
 
+/**
+ * @param string $identifier
+ * @param string $path
+ *
+ * @return \Composer\Autoload\ClassLoader
+ */
 function registerAutoloaderPath( $identifier, $path ) {
 	print( "\nUsing the {$identifier} vendor autoloader ...\n\n" );
 	return require $path;
@@ -53,7 +59,11 @@ function getDirectory() {
 	return $directory;
 }
 
-function runTestAutoLoader( $autoLoader = null ) {
+/**
+ * @return bool
+ */
+function runTestAutoLoader() {
+	$autoLoader = null;
 	$directory = getDirectory();
 
 	$mwVendorPath = $directory . '/../../vendor/autoload.php';

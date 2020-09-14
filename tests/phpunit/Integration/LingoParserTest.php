@@ -27,8 +27,8 @@
 namespace Lingo\Tests\Unit;
 
 use Lingo\LingoParser;
-use PHPUnit\Framework\MockObject\MockObject;
 use MediaWikiIntegrationTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo

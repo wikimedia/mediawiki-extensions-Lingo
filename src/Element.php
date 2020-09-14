@@ -220,7 +220,7 @@ class Element {
 	}
 
 	/**
-	 * @return string[]
+	 * @return string
 	 */
 	public function getFormattedDefinitions() {
 		if ( $this->formattedDefinitions === null ) {
@@ -230,8 +230,6 @@ class Element {
 		return $this->formattedDefinitions;
 	}
 
-	/**
-	 */
 	protected function buildFormattedDefinitions() {
 		if ( $this->isSimpleLink() ) {
 			$this->formattedDefinitions = '';

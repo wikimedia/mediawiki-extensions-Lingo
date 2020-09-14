@@ -31,12 +31,17 @@
  *   php mw-phpunit-runner.php [options]
  */
 
-if ( php_sapi_name() !== 'cli' ) {
+if ( PHP_SAPI !== 'cli' ) {
 	die( 'Not an entry point' );
 }
 
 print( "\nMediaWiki phpunit runnner ... \n" );
 
+/**
+ * @param string $path
+ *
+ * @return string
+ */
 function isReadablePath( $path ) {
 	if ( is_readable( $path ) ) {
 		return $path;
@@ -45,6 +50,11 @@ function isReadablePath( $path ) {
 	throw new RuntimeException( "Expected an accessible {$path} path" );
 }
 
+/**
+ * @param string[] $args
+ *
+ * @return string[]
+ */
 function addArguments( $args ) {
 	array_shift( $args );
 	return $args;

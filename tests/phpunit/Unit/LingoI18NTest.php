@@ -31,6 +31,8 @@ namespace Lingo\Tests\Unit;
  * @group extensions-lingo-unit
  * @group mediawiki-databaseless
  *
+ * @coversNothing
+ *
  * @ingroup Lingo
  * @ingroup Test
  */

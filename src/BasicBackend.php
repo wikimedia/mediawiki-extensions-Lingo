@@ -28,9 +28,9 @@
 namespace Lingo;
 
 use ApprovedRevs;
+use Hooks;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
-use Hooks;
 use ParserOptions;
 use TextContent;
 use Title;
@@ -205,7 +205,7 @@ class BasicBackend extends Backend {
 
 			$content = $revision->getContent();
 
-			if ( is_null( $content ) ) {
+			if ( $content === null ) {
 				return '';
 			}
 
@@ -257,7 +257,7 @@ class BasicBackend extends Backend {
 	 * @return Bool
 	 */
 	public function purgeCache( WikiPage &$wikipage ) {
-		if ( !is_null( $wikipage ) && ( $wikipage->getTitle()->getText() === $this->getLingoPageName() ) ) {
+		if ( $wikipage !== null && $wikipage->getTitle()->getText() === $this->getLingoPageName() ) {
 
 			$this->getLingoParser()->purgeGlossaryFromCache();
 		}

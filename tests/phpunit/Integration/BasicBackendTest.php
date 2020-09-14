@@ -135,12 +135,12 @@ class BasicBackendTest extends BackendTest {
 			->method( 'addWarning' )
 			->willReturn( null );
 
-		$this->assertEquals( null, $backend->next() );
+		$this->assertNull( $backend->next() );
 	}
 
 	public function testNext_LingoPageNotAccessible() {
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, null );
-		$this->assertEquals( null, $backend->next() );
+		$this->assertNull( $backend->next() );
 	}
 
 	public function testNext_LingoPageIsNotATextPage() {
@@ -149,7 +149,7 @@ class BasicBackendTest extends BackendTest {
 			->method( 'addError' )
 			->willReturn( null );
 
-		$this->assertEquals( null, $backend->next() );
+		$this->assertNull( $backend->next() );
 	}
 
 	public function testNext_ApprovedRevsEnabledButNotInstalled() {

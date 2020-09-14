@@ -64,6 +64,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * Tests
 	 * - if $wgexLingoDisplayOnce = false, the first and second occurrence of a term is correctly marked up as tooltip anchor
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_1() {
 		// Setup
@@ -98,6 +100,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * Tests
 	 * - if $wgexLingoDisplayOnce = true, the first occurrence of a term is correctly marked up as tooltip anchor
 	 * - if $wgexLingoDisplayOnce = true, the second occurrence of a term is not marked up
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_2() {
 		// Setup
@@ -128,6 +132,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * - if there is only one definition and its text is empty and it has a link, the term is marked up as link
 	 * - if the link is not a URL and does not point to an existing page, the term is marked up as "new" link
 	 * - if $wgexLingoDisplayOnce = false, the first and second occurrence of of term are marked up as link
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_3() {
 		// Setup
@@ -164,6 +170,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * Tests
 	 * - if the link is not a URL and points to an existing page, the term is marked up with that title
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_4() {
 		// Setup
@@ -200,6 +208,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * - if there is only one definition and its text is empty and it has a link and $wgexLingoDisplayOnce = true, the second occurrence of a term is not marked up
 	 * - if a style is set in the definition, the link is marked up with that style
 	 * - if the link is a valid URL, the term is marked up as external link
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_5() {
 		// Setup
@@ -237,6 +247,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * Tests
 	 * - if there is only one definition and its text is empty and it has an invalid link, the term is marked up as tooltip
 	 * - if the term contains HTML-special characters, it is handled without raising an exception
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_6() {
 		// Setup
@@ -266,6 +278,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * Tests
 	 * - if there is only one definition and its text is empty and it has an anchor link, the term is marked up as link without title attribute
+	 *
+	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_7() {
 		// Setup
@@ -298,6 +312,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * - correct html is produced
 	 * - correct order of definitions
 	 * - user-defined class is applied to definition
+	 *
+	 * @covers ::getFormattedDefinitions
 	 */
 	public function testGetFormattedDefinitions_1() {
 		// Setup
@@ -356,6 +372,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * Tests
 	 * - if there is no link defined, no link is added to the list of definitions
 	 * - if there is an invalid link, an error message is attached to the list of definitions and the link is omitted
+	 *
+	 * @covers ::getFormattedDefinitions
 	 */
 	public function testGetFormattedDefinitions_2() {
 		// Setup
@@ -412,6 +430,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * Tests
 	 * - if there is only one definition and its text is empty and it has a link, no definitions are produced
+	 *
+	 * @covers ::getFormattedDefinitions
 	 */
 	public function testGetFormattedDefinitions_3() {
 		// Setup
@@ -433,7 +453,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		// Run
 		$definitions = $element->getFormattedDefinitions();
 
-		$this->assertEquals( '', $definitions );
+		$this->assertSame( '', $definitions );
 	}
 
 	/**
@@ -441,6 +461,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * - if there is only one definition and its text is empty and it has an invalid link, the error message shows as tooltip
 	 * - class 'invalid-link-target' is correctly applied to error message
 	 * - if the term contains HTML-special characters, it is handled without raising an exception
+	 *
+	 * @covers ::getFormattedDefinitions
 	 */
 	public function testGetFormattedDefinitions_4() {
 		// Setup

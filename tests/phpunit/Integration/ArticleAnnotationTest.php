@@ -26,9 +26,8 @@
 namespace Lingo\Tests\Integration;
 
 use Lingo\LingoParser;
-use MediaWiki\MediaWikiServices;
 use Lingo\Tests\Util\XmlFileProvider;
-
+use MediaWiki\MediaWikiServices;
 use ParserOptions;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
