@@ -85,7 +85,7 @@ class Tree {
 	 * Adds an element to the Lingo Tree
 	 *
 	 * @param array &$path An array containing the constituing lexemes of the term
-	 * @param String &$term
+	 * @param string &$term
 	 * @param array &$definition
 	 * @return array the tree node the element was stored in
 	 */

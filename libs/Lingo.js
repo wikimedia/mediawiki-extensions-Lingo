@@ -47,6 +47,7 @@
 					fixed: true,
 					delay: 300
 				},
+				// eslint-disable-next-line mediawiki/class-doc
 				style: {
 					classes: tooltip.attr( 'class' ) + ' qtip-shadow',
 					def: false

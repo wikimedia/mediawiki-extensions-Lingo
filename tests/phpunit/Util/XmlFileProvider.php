@@ -54,7 +54,7 @@ class XmlFileProvider {
 	}
 
 	/**
-	 * @param String $path
+	 * @param string $path
 	 * @return string
 	 */
 	protected function readDirectory( $path ) {
@@ -68,7 +68,7 @@ class XmlFileProvider {
 	}
 
 	/**
-	 * @param String $path
+	 * @param string $path
 	 * @return string[]
 	 */
 	protected function loadXmlFiles( $path ) {
