@@ -26,7 +26,14 @@
 
 namespace Lingo;
 
+use Hooks;
 use MediaWiki\MediaWikiServices;
+use Parser;
+use ParserOptions;
+use PPFrame;
+use SpecialPage;
+use SpecialVersion;
+use Title;
 
 /**
  * Class Lingo
@@ -51,21 +58,21 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			\Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
+			Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
 				$parser->parse( MediaWikiServices::getInstance()->getParser() );
 			} );
 
-			\Hooks::register( 'ApiMakeParserOptions', function ( \ParserOptions $popts, \Title $title, array $params ) use ( $parser ){
+			Hooks::register( 'ApiMakeParserOptions', function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
 				$parser->setApiParams( $params );
 			} );
 
-			\Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
+			Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
 				return true;
 			} );
 
-			\Hooks::register( 'ParserFirstCallInit', function ( \Parser $parser ) {
-				$parser->setHook( 'noglossary', function ( $input, array $args, \Parser $parser, \PPFrame $frame ) {
+			Hooks::register( 'ParserFirstCallInit', function ( Parser $parser ) {
+				$parser->setHook( 'noglossary', function ( $input, array $args, Parser $parser, PPFrame $frame ) {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
 				} );
@@ -73,8 +80,8 @@ class Lingo {
 				return true;
 			} );
 
-			\Hooks::register( 'SpecialPageBeforeExecute', function ( \SpecialPage $specialPage, $subPage ) {
-				if ( $specialPage instanceof \SpecialVersion ) {
+			Hooks::register( 'SpecialPageBeforeExecute', function ( SpecialPage $specialPage, $subPage ) {
+				if ( $specialPage instanceof SpecialVersion ) {
 					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
 						if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
 							$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $GLOBALS[ 'wgexLingoPage' ] ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
