@@ -58,6 +58,10 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
+			Hooks::register( 'SimpleMathJaxAttributes', function ( array &$attributes, string $tex ) {
+				$attributes['class'] = ( $attributes['class'] ?? '' ) . " noglossary";
+			} );
+
 			Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
 				$parser->parse( MediaWikiServices::getInstance()->getParser() );
 			} );
