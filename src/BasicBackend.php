@@ -34,7 +34,6 @@ use MediaWiki\Revision\RevisionRecord;
 use ParserOptions;
 use TextContent;
 use Title;
-use User;
 use WikiPage;
 
 /**
@@ -167,7 +166,7 @@ class BasicBackend extends Backend {
 		// wikitext. Have to use a new anonymous user to avoid any leakage as
 		// Lingo is caching only one user-independent glossary
 		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
-		$content = $parser->preprocess( $rawContent, $dictionaryTitle, new ParserOptions( new User() ) );
+		$content = $parser->preprocess( $rawContent, $dictionaryTitle, ParserOptions::newFromAnon() );
 
 		$this->mArticleLines = explode( "\n", $content );
 	}

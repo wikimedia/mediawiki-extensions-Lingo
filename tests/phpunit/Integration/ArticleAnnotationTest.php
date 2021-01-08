@@ -71,7 +71,7 @@ class ArticleAnnotationTest extends TestCase {
 	 */
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
 		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
-		$parser->parse( $text, \Title::newFromText( 'Foo' ), new ParserOptions() );
+		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
 		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );
 		$backend->expects( $this->any() )
