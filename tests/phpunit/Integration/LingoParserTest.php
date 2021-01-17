@@ -44,6 +44,7 @@ use PHPUnit\Framework\MockObject\MockObject;
  */
 class LingoParserTest extends MediaWikiIntegrationTestCase {
 
+	/** @var array */
 	private static $defaultTestConfig = [
 		'mwParserExpectsGetOutput' => null,
 		'mwParserExpectsGetTitle' => null,
@@ -56,7 +57,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		'text' => null,
 
 		'wgexLingoUseNamespaces' => [],
-		'wgexLingoBackend' => 'Lingo\\BasicBackend',
+		'wgexLingoBackend' => \Lingo\BasicBackend::class,
 	];
 
 	/**
@@ -158,6 +159,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
+	 * @param array $config
 	 * @return MockObject
 	 */
 	protected function getParserMock( $config = [] ) {
@@ -195,7 +197,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @param $config
+	 * @param array $config
 	 *
 	 * @return MockObject
 	 */

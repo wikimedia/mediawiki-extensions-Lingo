@@ -35,11 +35,12 @@ namespace Lingo;
  */
 abstract class Backend {
 
+	/** @var MessageLog|null */
 	protected $mMessageLog;
+	/** @var LingoParser|null */
 	protected $mLingoParser;
 
 	/**
-	 * Lingo\Backend constructor.
 	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {
@@ -93,7 +94,7 @@ abstract class Backend {
 	 *
 	 * If there is no next element the function returns null.
 	 *
-	 * @return array | null
+	 * @return array|null
 	 */
 	abstract public function next();
 }

@@ -62,9 +62,6 @@ class ArticleAnnotationTest extends TestCase {
 
 	/**
 	 * @dataProvider provideData
-	 * @param $text
-	 * @param $glossaryEntries
-	 * @param $expected
 	 *
 	 * Tests fail when run via MediaWiki extensions testsuite T196456
 	 * @group Broken

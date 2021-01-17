@@ -43,6 +43,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 	/** @var Element */
 	protected $element;
+	/** @var \DOMDocument */
 	protected $doc;
 
 	public function setUp() : void {

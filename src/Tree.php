@@ -52,8 +52,11 @@ class Tree {
 
 	const TREE_VERSION = 2;
 
+	/** @var array */
 	private $mTree = [];
+	/** @var array */
 	private $mList = [];
+	/** @var int */
 	private $mMinLength = 1000;
 
 	/**

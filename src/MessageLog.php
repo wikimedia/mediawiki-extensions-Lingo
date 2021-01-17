@@ -42,7 +42,9 @@ use ParserOptions;
  */
 class MessageLog {
 
+	/** @var array[] */
 	private $mMessages = [];
+	/** @var \Parser */
 	private $mParser = null;
 
 	const MESSAGE_ERROR = 1;

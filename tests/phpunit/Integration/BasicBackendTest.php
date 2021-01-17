@@ -27,7 +27,6 @@
 namespace Lingo\Tests\Unit;
 
 use Lingo\BasicBackend;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo
@@ -59,18 +58,18 @@ class BasicBackendTest extends BackendTest {
 	public function testPurgeCache() {
 		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
 
-		$title = $this->getMockBuilder( 'Title' )
+		$title = $this->getMockBuilder( \Title::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$wikiPage = $this->getMockBuilder( 'WikiPage' )
+		$wikiPage = $this->getMockBuilder( \WikiPage::class )
 			->disableOriginalConstructor()
 			->getMock();
 
-		$lingoParser = $this->getMockBuilder( 'Lingo\LingoParser' )
+		$lingoParser = $this->getMockBuilder( \Lingo\LingoParser::class )
 			->getMock();
 
-		$testObject = $this->getMockBuilder( 'Lingo\BasicBackend' )
+		$testObject = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->setMethods( [ 'getLingoParser' ] )
 			->getMock();
 
@@ -286,13 +285,19 @@ TESTTEXT
 	}
 
 	/**
-	 * @return MockObject
+	 * @param string $lingoPageText
+	 * @param string $action
+	 * @param string $interwiki
+	 * @param Revision|false $lingoPageRevision
+	 * @param string|false $lingoPageContent
+	 * @param string $lingoApprovedText
+	 * @return \Lingo\BasicBackend
 	 */
 	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
-		$messageLog = $this->getMockBuilder( 'Lingo\MessageLog' )
+		$messageLog = $this->getMockBuilder( \Lingo\MessageLog::class )
 			->getMock();
 
-		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
+		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->disableOriginalConstructor()
 			->setMethods( [
 				'getLatestRevisionFromTitle',
@@ -301,13 +306,13 @@ TESTTEXT
 			] )
 			->getMock();
 
-		$reflected = new \ReflectionClass( '\Lingo\BasicBackend' );
+		$reflected = new \ReflectionClass( \Lingo\BasicBackend::class );
 		$constructor = $reflected->getConstructor();
 		$constructor->invokeArgs( $backend, [ &$messageLog ] );
 
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 
-		$lingoPageTitle = $this->getMockBuilder( 'Title' )
+		$lingoPageTitle = $this->getMockBuilder( \Title::class )
 		  ->disableOriginalConstructor()
 			->getMock();
 		$lingoPageTitle->expects( $this->once() )
@@ -321,7 +326,7 @@ TESTTEXT
 			->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
-		$request = $this->getMockBuilder( 'FauxRequest' )
+		$request = $this->getMockBuilder( \FauxRequest::class )
 			->getMock();
 		$request->expects( $this->any() )
 			->method( 'getVal' )
@@ -347,16 +352,16 @@ TESTTEXT
 	}
 
 	/**
-	 * @param $lingoPageText
-	 * @param $lingoPageRevision
-	 * @param $lingoPageContent
-	 * @return MockObject
+	 * @param string $lingoPageText
+	 * @param Revision|false $lingoPageRevision
+	 * @param string|false $lingoPageContent
+	 * @return Revision
 	 */
 	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
 		if ( $lingoPageRevision === false ) {
 
 			if ( $lingoPageContent === false ) {
-				$lingoPageContent = $this->getMockBuilder( 'TextContent' )
+				$lingoPageContent = $this->getMockBuilder( \TextContent::class )
 					->disableOriginalConstructor()
 					->getMock();
 
@@ -370,7 +375,7 @@ TESTTEXT
 					->willReturn( $lingoPageText );
 			}
 
-			$lingoPageRevision = $this->getMockBuilder( 'Revision' )
+			$lingoPageRevision = $this->getMockBuilder( \Revision::class )
 				->disableOriginalConstructor()
 				->getMock();
 

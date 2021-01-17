@@ -43,10 +43,10 @@ use WikiPage;
  */
 class BasicBackend extends Backend {
 
+	/** @var string[]|null */
 	protected $mArticleLines = null;
 
 	/**
-	 * Lingo\BasicBackend constructor.
 	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {

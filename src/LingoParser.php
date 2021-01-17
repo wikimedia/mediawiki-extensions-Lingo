@@ -49,22 +49,23 @@ class LingoParser {
 	const WORD_VALUE = 0;
 	const WORD_OFFSET = 1;
 
+	/** @var Tree|null */
 	private $mLingoTree = null;
 
 	/**
-	 * @var Backend
+	 * @var Backend|null
 	 */
 	private $mLingoBackend = null;
+	/** @var LingoParser|null */
 	private static $parserSingleton = null;
 
-	// Api params passed in from ApiMakeParserOptions Hook
+	/** @var array|null Api params passed in from ApiMakeParserOptions Hook */
 	private $mApiParams = null;
 
-	// The RegEx to split a chunk of text into words
+	/** @var string|null The RegEx to split a chunk of text into words */
 	public $regex = null;
 
 	/**
-	 * Lingo\LingoParser constructor.
 	 * @param MessageLog|null &$messages
 	 */
 	public function __construct( MessageLog &$messages = null ) {

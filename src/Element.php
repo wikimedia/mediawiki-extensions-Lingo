@@ -51,17 +51,20 @@ class Element {
 
 	const LINK_TEMPLATE_ID = 'LingoLink';
 
+	/** @var string|null */
 	private $formattedTerm = null;
+	/** @var string|null */
 	private $formattedDefinitions = null;
 
+	/** @var string[] */
 	private $mDefinitions = [];
+	/** @var string */
 	private $mTerm = null;
 
+	/** @var bool */
 	private $hasBeenDisplayed = false;
 
 	/**
-	 * Lingo\Element constructor.
-	 *
 	 * @param string &$term
 	 * @param string[] &$definition
 	 */

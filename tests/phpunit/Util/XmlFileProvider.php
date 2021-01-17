@@ -37,6 +37,7 @@ use RuntimeException;
  */
 class XmlFileProvider {
 
+	/** @var string */
 	protected $path = null;
 
 	/**
