@@ -514,7 +514,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			$classes = array_flip( array_filter( explode( ' ', $node->getAttribute( 'class' ) ) ) );
 
 			foreach ( (array)$expectedAttributes[ 'class' ] as $expectedClass ) {
-				$this->assertTrue( array_key_exists( $expectedClass, $classes ) );
+				$this->assertArrayHasKey( $expectedClass, $classes );
 			}
 
 			unset( $expectedAttributes[ 'class' ] );

@@ -8,5 +8,5 @@
 	"lingo-notatextpage": "The terminology page \"$1\" is not a text page.",
 	"lingo-terminologypagenotlocal": "Page \"$1\" is not a local page.",
 	"lingo-noapprovedrevs": "Support for ApprovedRevs is enabled in Lingo. But ApprovedRevs was not found.",
-	"lingo-invalidlinktarget" : "Invalid link target for term \"$1\": $2"
+	"lingo-invalidlinktarget": "Invalid link target for term \"$1\": $2"
 }
