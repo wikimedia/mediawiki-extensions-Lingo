@@ -173,7 +173,7 @@ class Element {
 	 */
 	protected function getClassesForLink( $descriptor ) {
 		// TODO: should this be more elaborate?
-		// Cleanest would probably be to use Linker::link and parse it
+		// Cleanest would probably be to use LinkRenderer and parse it
 		// back into a DOMElement, but we are in a somewhat time-critical
 		// part here.
 
