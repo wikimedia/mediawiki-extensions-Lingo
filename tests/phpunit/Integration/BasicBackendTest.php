@@ -70,7 +70,7 @@ class BasicBackendTest extends BackendTest {
 			->getMock();
 
 		$testObject = $this->getMockBuilder( \Lingo\BasicBackend::class )
-			->setMethods( [ 'getLingoParser' ] )
+			->onlyMethods( [ 'getLingoParser' ] )
 			->getMock();
 
 		// Assert that the wikipage is tested against the wgexLingoPage, i.e.
@@ -299,7 +299,7 @@ TESTTEXT
 
 		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->disableOriginalConstructor()
-			->setMethods( [
+			->onlyMethods( [
 				'getLatestRevisionFromTitle',
 				'getApprovedRevisionFromTitle',
 				'getTitleFromText',

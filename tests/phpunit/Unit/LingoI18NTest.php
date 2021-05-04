@@ -61,7 +61,7 @@ class LingoI18NTest extends \PHPUnit\Framework\TestCase {
 
 		// format error message
 		$errors = implode( '', array_map(
-			function ( $error ) {
+			static function ( $error ) {
 				return "* [{$error[ 'property' ]}] {$error[ 'message' ]}\n";
 			},
 			$validator->getErrors()

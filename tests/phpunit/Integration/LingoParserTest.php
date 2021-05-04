@@ -223,7 +223,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	protected function getBackendMock() {
 		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
 			->disableOriginalConstructor()
-			->setMethods( [
+			->onlyMethods( [
 				'getLatestRevisionFromTitle',
 				'getApprovedRevisionFromTitle',
 				'getTitleFromText',

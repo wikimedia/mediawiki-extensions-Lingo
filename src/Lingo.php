@@ -51,32 +51,32 @@ class Lingo {
 	 * @since 2.0.2
 	 */
 	public static function initExtension() {
-		$GLOBALS[ 'wgExtensionFunctions' ][] = function () {
+		$GLOBALS[ 'wgExtensionFunctions' ][] = static function () {
 			$parser = LingoParser::getInstance();
 
 			$backend = new $GLOBALS[ 'wgexLingoBackend' ]();
 
 			$parser->setBackend( $backend );
 
-			Hooks::register( 'SimpleMathJaxAttributes', function ( array &$attributes, string $tex ) {
+			Hooks::register( 'SimpleMathJaxAttributes', static function ( array &$attributes, string $tex ) {
 				$attributes['class'] = ( $attributes['class'] ?? '' ) . " noglossary";
 			} );
 
-			Hooks::register( 'ContentAlterParserOutput', function () use ( $parser ){
+			Hooks::register( 'ContentAlterParserOutput', static function () use ( $parser ){
 				$parser->parse( MediaWikiServices::getInstance()->getParser() );
 			} );
 
-			Hooks::register( 'ApiMakeParserOptions', function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
+			Hooks::register( 'ApiMakeParserOptions', static function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
 				$parser->setApiParams( $params );
 			} );
 
-			Hooks::register( 'GetDoubleUnderscoreIDs', function ( array &$doubleUnderscoreIDs ) {
+			Hooks::register( 'GetDoubleUnderscoreIDs', static function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
 				return true;
 			} );
 
-			Hooks::register( 'ParserFirstCallInit', function ( Parser $parser ) {
-				$parser->setHook( 'noglossary', function ( $input, array $args, Parser $parser, PPFrame $frame ) {
+			Hooks::register( 'ParserFirstCallInit', static function ( Parser $parser ) {
+				$parser->setHook( 'noglossary', static function ( $input, array $args, Parser $parser, PPFrame $frame ) {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
 				} );
@@ -84,7 +84,7 @@ class Lingo {
 				return true;
 			} );
 
-			Hooks::register( 'SpecialPageBeforeExecute', function ( SpecialPage $specialPage, $subPage ) {
+			Hooks::register( 'SpecialPageBeforeExecute', static function ( SpecialPage $specialPage, $subPage ) {
 				if ( $specialPage instanceof SpecialVersion ) {
 					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
 						if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
