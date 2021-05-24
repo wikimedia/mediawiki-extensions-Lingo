@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
+			"Jmarchn",
 			"Pitort"
 		]
 	},
 	"lingo-terminologypagename": "Terminologia",
-	"lingo-noterminologypage": "La pàgina \"$1\" no existeix."
+	"lingo-noterminologypage": "La pàgina de terminologia \"$1\" no existeix."
 }
