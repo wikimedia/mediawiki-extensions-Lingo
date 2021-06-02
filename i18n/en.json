@@ -2,7 +2,7 @@
 	"@metadata": {
 		"authors": []
 	},
-	"lingo-desc": "Provides hover-over tool tips on pages from words defined on the [[$1]] page",
+	"lingo-desc": "Provides hover-over tool tips on pages from words defined on a wiki page",
 	"lingo-terminologypagename": "Terminology",
 	"lingo-noterminologypage": "The terminology page \"$1\" does not exist.",
 	"lingo-notatextpage": "The terminology page \"$1\" is not a text page.",

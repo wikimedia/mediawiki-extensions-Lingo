@@ -6,7 +6,7 @@
 			"Umherirrender"
 		]
 	},
-	"lingo-desc": "{{desc|name=Lingo|url=https://www.mediawiki.org/wiki/Extension:Lingo}}\nParameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|Lingo-terminologypagename}}",
+	"lingo-desc": "{{desc|name=Lingo|url=https://www.mediawiki.org/wiki/Extension:Lingo}}",
 	"lingo-terminologypagename": "Name of the page where the terms and definitions of the glossary are stored\n{{Identical|Terminology}}",
 	"lingo-noterminologypage": "Used as warning message. Parameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}\nSee also:\n* {{msg-mw|lingo-terminologypagenotlocal}}",
 	"lingo-notatextpage": "Used as error message. Parameters:\n* $1 - terminology page title (value of <code>$wgexLingoPage</code>), or {{msg-mw|lingo-terminologypagename}}\nSee also:\n* {{msg-mw|lingo-noterminologypage}}",

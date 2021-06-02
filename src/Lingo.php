@@ -31,8 +31,6 @@ use MediaWiki\MediaWikiServices;
 use Parser;
 use ParserOptions;
 use PPFrame;
-use SpecialPage;
-use SpecialVersion;
 use Title;
 
 /**
@@ -46,7 +44,6 @@ class Lingo {
 	/**
 	 * Deferred settings
 	 * - registration of _NOGLOSSARY_ magic word
-	 * - extension description shown on Special:Version
 	 *
 	 * @since 2.0.2
 	 */
@@ -80,21 +77,6 @@ class Lingo {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
 				} );
-
-				return true;
-			} );
-
-			Hooks::register( 'SpecialPageBeforeExecute', static function ( SpecialPage $specialPage, $subPage ) {
-				if ( $specialPage instanceof SpecialVersion ) {
-					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as &$description ) {
-						if ( $description[ 'name' ] === 'Lingo' ) {
-							$description[ 'description' ] = wfMessage(
-								'lingo-desc',
-								$GLOBALS[ 'wgexLingoPage' ] ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text()
-							)->text();
-						}
-					}
-				}
 
 				return true;
 			} );
