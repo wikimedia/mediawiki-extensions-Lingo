@@ -31,6 +31,7 @@ use ApprovedRevs;
 use Hooks;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Revision\SlotRecord;
 use ParserOptions;
 use TextContent;
 use Title;
@@ -202,19 +203,13 @@ class BasicBackend extends Backend {
 
 		if ( $revision !== null ) {
 
-			$content = $revision->getContent();
+			$content = $revision->getContent( SlotRecord::MAIN );
 
 			if ( $content === null ) {
 				return '';
 			}
 
 			if ( $content instanceof TextContent ) {
-
-				// FIXME: getNativeData() is deprecated for MW 1.33+. Use getText().
-				if ( !method_exists( $content, 'getText' ) ) {
-					return $content->getNativeData();
-				}
-
 				return $content->getText();
 			}
 
