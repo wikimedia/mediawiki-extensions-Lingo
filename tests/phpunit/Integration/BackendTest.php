@@ -24,7 +24,7 @@
  * @ingroup Lingo
  */
 
-namespace Lingo\Tests\Unit;
+namespace Lingo\Tests\Integration;
 
 use MediaWikiIntegrationTestCase;
 

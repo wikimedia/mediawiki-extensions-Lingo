@@ -24,9 +24,10 @@
  * @ingroup Lingo
  */
 
-namespace Lingo\Tests\Unit;
+namespace Lingo\Tests\Integration;
 
 use Lingo\BasicBackend;
+use MediaWiki\Revision\RevisionRecord;
 
 /**
  * @group extensions-lingo
@@ -353,9 +354,9 @@ TESTTEXT
 
 	/**
 	 * @param string $lingoPageText
-	 * @param Revision|false $lingoPageRevision
+	 * @param RevisionRecord|false $lingoPageRevision
 	 * @param string|false $lingoPageContent
-	 * @return Revision
+	 * @return RevisionRecord
 	 */
 	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
 		if ( $lingoPageRevision === false ) {
@@ -365,19 +366,12 @@ TESTTEXT
 					->disableOriginalConstructor()
 					->getMock();
 
-				// FIXME: getNativeData() is deprecated for MW 1.33+.
-				$lingoPageContent->expects( $this->any() )
-					->method( 'getNativeData' )
-					->willReturn( $lingoPageText );
-
 				$lingoPageContent->expects( $this->any() )
 					->method( 'getText' )
 					->willReturn( $lingoPageText );
 			}
 
-			$lingoPageRevision = $this->getMockBuilder( \Revision::class )
-				->disableOriginalConstructor()
-				->getMock();
+			$lingoPageRevision = $this->createMock( RevisionRecord::class );
 
 			$lingoPageRevision->expects( $this->any() )
 				->method( 'getContent' )
