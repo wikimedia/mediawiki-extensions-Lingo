@@ -39,8 +39,8 @@ namespace Lingo\Tests\Unit;
 class LingoI18NTest extends \PHPUnit\Framework\TestCase {
 
 	public function testJsonSchemaValidatorExists() {
-		$this->assertTrue( class_exists( '\JsonSchema\Validator' ) );
-		$this->assertTrue( method_exists( '\JsonSchema\Validator', 'check' ) );
+		$this->assertTrue( class_exists( \JsonSchema\Validator::class ) );
+		$this->assertTrue( method_exists( \JsonSchema\Validator::class, 'check' ) );
 	}
 
 	public function testMagicWordsLoaded() {

@@ -40,11 +40,9 @@ namespace Lingo\Tests\Unit;
  */
 class TreeTest extends \PHPUnit\Framework\TestCase {
 
-	/**
-	 */
 	public function testCanConstruct() {
 		$this->assertInstanceOf(
-			'\Lingo\Tree',
+			\Lingo\Tree::class,
 			new \Lingo\Tree()
 		);
 	}

@@ -50,7 +50,7 @@ namespace Lingo;
  */
 class Tree {
 
-	const TREE_VERSION = 2;
+	public const TREE_VERSION = 2;
 
 	/** @var array */
 	private $mTree = [];

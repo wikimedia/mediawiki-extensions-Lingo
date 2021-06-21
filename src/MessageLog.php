@@ -47,9 +47,9 @@ class MessageLog {
 	/** @var \Parser */
 	private $mParser = null;
 
-	const MESSAGE_ERROR = 1;
-	const MESSAGE_WARNING = 2;
-	const MESSAGE_NOTICE = 3;
+	private const MESSAGE_ERROR = 1;
+	private const MESSAGE_WARNING = 2;
+	private const MESSAGE_NOTICE = 3;
 
 	/**
 	 * @param string $message

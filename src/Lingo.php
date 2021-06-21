@@ -86,9 +86,12 @@ class Lingo {
 
 			Hooks::register( 'SpecialPageBeforeExecute', static function ( SpecialPage $specialPage, $subPage ) {
 				if ( $specialPage instanceof SpecialVersion ) {
-					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as $index => $description ) {
-						if ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'name' ] === 'Lingo' ) {
-							$GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ][ $index ][ 'description' ] = wfMessage( 'lingo-desc', $GLOBALS[ 'wgexLingoPage' ] ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text() )->text();
+					foreach ( $GLOBALS[ 'wgExtensionCredits' ][ 'parserhook' ] as &$description ) {
+						if ( $description[ 'name' ] === 'Lingo' ) {
+							$description[ 'description' ] = wfMessage(
+								'lingo-desc',
+								$GLOBALS[ 'wgexLingoPage' ] ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text()
+							)->text();
 						}
 					}
 				}

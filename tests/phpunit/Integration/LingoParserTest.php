@@ -65,7 +65,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testCanConstruct() {
 		$this->assertInstanceOf(
-			'\Lingo\LingoParser',
+			\Lingo\LingoParser::class,
 			new \Lingo\LingoParser()
 		);
 	}
@@ -81,7 +81,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$singleton = LingoParser::getInstance();
 
 		$this->assertInstanceOf(
-			'\Lingo\LingoParser',
+			\Lingo\LingoParser::class,
 			$singleton
 		);
 
@@ -169,13 +169,9 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 		$mwTitle = $this->getTitleMock( $config );
 
-		$mwParserOutput = $this->getMockBuilder( '\ParserOutput' )
-			->disableOriginalConstructor()
-			->getMock();
+		$mwParserOutput = $this->createMock( \ParserOutput::class );
 
-		$mwParser = $this->getMockBuilder( '\Parser' )
-			->disableOriginalConstructor()
-			->getMock();
+		$mwParser = $this->createMock( \Parser::class );
 
 		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?? $this->any() )
 			->method( 'getText' )
@@ -206,9 +202,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			return $config[ 'mwTitle' ];
 		}
 
-		$mwTitle = $this->getMockBuilder( '\Title' )
-			->disableOriginalConstructor()
-			->getMock();
+		$mwTitle = $this->createMock( \Title::class );
 
 		$mwTitle->expects( $config[ 'mwTitleExpectsGetNamespace' ] ?: $this->any() )
 			->method( 'getNamespace' )
@@ -221,7 +215,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 * @return MockObject
 	 */
 	protected function getBackendMock() {
-		$backend = $this->getMockBuilder( 'Lingo\BasicBackend' )
+		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
 				'getLatestRevisionFromTitle',
@@ -230,9 +224,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			] )
 			->getMock();
 
-		$lingoPageTitle = $this->getMockBuilder( 'Title' )
-		  ->disableOriginalConstructor()
-			->getMock();
+		$lingoPageTitle = $this->createMock( \Title::class );
 		$lingoPageTitle->expects( $this->any() )
 			->method( 'getInterwiki' )
 			->willReturn( '' );

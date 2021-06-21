@@ -59,7 +59,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$definition = [];
 		$element = new Element( $term, $definition );
 
-		$this->assertInstanceOf( '\Lingo\Element', $element );
+		$this->assertInstanceOf( \Lingo\Element::class, $element );
 	}
 
 	/**
@@ -205,8 +205,10 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * Tests
-	 * - if there is only one definition and its text is empty and it has a link and $wgexLingoDisplayOnce = true, the first occurrence of a term is correctly marked up as link
-	 * - if there is only one definition and its text is empty and it has a link and $wgexLingoDisplayOnce = true, the second occurrence of a term is not marked up
+	 * - if there is only one definition and its text is empty and it has a link and
+	 *   $wgexLingoDisplayOnce = true, the first occurrence of a term is correctly marked up as link
+	 * - if there is only one definition and its text is empty and it has a link and
+	 *   $wgexLingoDisplayOnce = true, the second occurrence of a term is not marked up
 	 * - if a style is set in the definition, the link is marked up with that style
 	 * - if the link is a valid URL, the term is marked up as external link
 	 *

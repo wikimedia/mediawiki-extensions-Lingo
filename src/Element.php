@@ -41,15 +41,13 @@ use Title;
  * @ingroup Lingo
  */
 class Element {
-	const ELEMENT_TERM = 0;
-	const ELEMENT_DEFINITION = 1;
-	const ELEMENT_SOURCE = 2;
-	const ELEMENT_LINK = 3;
-	const ELEMENT_STYLE = 4;
+	public const ELEMENT_TERM = 0;
+	public const ELEMENT_DEFINITION = 1;
+	public const ELEMENT_SOURCE = 2;
+	public const ELEMENT_LINK = 3;
+	public const ELEMENT_STYLE = 4;
 
-	const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
-
-	const LINK_TEMPLATE_ID = 'LingoLink';
+	public const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
 
 	/** @var string|null */
 	private $formattedTerm = null;

@@ -40,11 +40,9 @@ namespace Lingo\Tests\Unit;
  */
 class MessageLogTest extends \PHPUnit\Framework\TestCase {
 
-	/**
-	 */
 	public function testCanConstruct() {
 		$this->assertInstanceOf(
-			'\Lingo\MessageLog',
+			\Lingo\MessageLog::class,
 			new \Lingo\MessageLog()
 		);
 	}

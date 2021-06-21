@@ -46,8 +46,7 @@ use Wikimedia\AtEase\AtEase;
  */
 class LingoParser {
 
-	const WORD_VALUE = 0;
-	const WORD_OFFSET = 1;
+	private const WORD_OFFSET = 1;
 
 	/** @var Tree|null */
 	private $mLingoTree = null;

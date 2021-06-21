@@ -48,7 +48,7 @@ class BasicBackendTest extends BackendTest {
 	 */
 	public function testCanConstruct() {
 		$this->assertInstanceOf(
-			'\Lingo\BasicBackend',
+			\Lingo\BasicBackend::class,
 			new \Lingo\BasicBackend()
 		);
 	}
@@ -59,16 +59,11 @@ class BasicBackendTest extends BackendTest {
 	public function testPurgeCache() {
 		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
 
-		$title = $this->getMockBuilder( \Title::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$title = $this->createMock( \Title::class );
 
-		$wikiPage = $this->getMockBuilder( \WikiPage::class )
-			->disableOriginalConstructor()
-			->getMock();
+		$wikiPage = $this->createMock( \WikiPage::class );
 
-		$lingoParser = $this->getMockBuilder( \Lingo\LingoParser::class )
-			->getMock();
+		$lingoParser = $this->createMock( \Lingo\LingoParser::class );
 
 		$testObject = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->onlyMethods( [ 'getLingoParser' ] )
@@ -289,14 +284,20 @@ TESTTEXT
 	 * @param string $lingoPageText
 	 * @param string $action
 	 * @param string $interwiki
-	 * @param Revision|false $lingoPageRevision
+	 * @param RevisionRecord|false $lingoPageRevision
 	 * @param string|false $lingoPageContent
 	 * @param string $lingoApprovedText
 	 * @return \Lingo\BasicBackend
 	 */
-	protected function getTestObject( $lingoPageText = '', $action = 'view', $interwiki = '', $lingoPageRevision = false, $lingoPageContent = false, $lingoApprovedText = '' ) {
-		$messageLog = $this->getMockBuilder( \Lingo\MessageLog::class )
-			->getMock();
+	private function getTestObject(
+		$lingoPageText,
+		$action = 'view',
+		$interwiki = '',
+		$lingoPageRevision = false,
+		$lingoPageContent = false,
+		$lingoApprovedText = ''
+	) {
+		$messageLog = $this->createMock( \Lingo\MessageLog::class );
 
 		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->disableOriginalConstructor()
@@ -313,9 +314,7 @@ TESTTEXT
 
 		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
 
-		$lingoPageTitle = $this->getMockBuilder( \Title::class )
-		  ->disableOriginalConstructor()
-			->getMock();
+		$lingoPageTitle = $this->createMock( \Title::class );
 		$lingoPageTitle->expects( $this->once() )
 			->method( 'getInterwiki' )
 			->willReturn( $interwiki );
@@ -327,8 +326,7 @@ TESTTEXT
 			->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
-		$request = $this->getMockBuilder( \FauxRequest::class )
-			->getMock();
+		$request = $this->createMock( \FauxRequest::class );
 		$request->expects( $this->any() )
 			->method( 'getVal' )
 			->willReturnMap( [
@@ -362,9 +360,7 @@ TESTTEXT
 		if ( $lingoPageRevision === false ) {
 
 			if ( $lingoPageContent === false ) {
-				$lingoPageContent = $this->getMockBuilder( \TextContent::class )
-					->disableOriginalConstructor()
-					->getMock();
+				$lingoPageContent = $this->createMock( \TextContent::class );
 
 				$lingoPageContent->expects( $this->any() )
 					->method( 'getText' )

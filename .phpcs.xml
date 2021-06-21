@@ -5,12 +5,11 @@
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.CamelCase" />
 		<exclude name="MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgTitle" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
-		<exclude name="PSR12.Properties.ConstantVisibility.NotFound" />
 	</rule>
 
 	<rule ref="Generic.Files.LineLength">
 		<properties>
-			<property name="lineLimit" value="242" />
+			<property name="lineLimit" value="160" />
 		</properties>
 	</rule>
 	<rule ref="MediaWiki.NamingConventions.PrefixedGlobalFunctions.wfPrefix">

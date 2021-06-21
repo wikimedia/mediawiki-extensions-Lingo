@@ -70,7 +70,7 @@ class ArticleAnnotationTest extends TestCase {
 		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
-		$backend = $this->getMockForAbstractClass( '\Lingo\Backend' );
+		$backend = $this->getMockForAbstractClass( \Lingo\Backend::class );
 		$backend->expects( $this->any() )
 			->method( 'next' )
 			->will( self::onConsecutiveCalls( ...$glossaryEntries ) );
