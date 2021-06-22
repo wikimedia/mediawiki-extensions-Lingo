@@ -64,10 +64,7 @@ class LingoParser {
 	/** @var string|null The RegEx to split a chunk of text into words */
 	public $regex = null;
 
-	/**
-	 * @param MessageLog|null &$messages
-	 */
-	public function __construct( MessageLog &$messages = null ) {
+	public function __construct() {
 		// The RegEx to split a chunk of text into words
 		// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
 		$this->regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
@@ -117,15 +114,6 @@ class LingoParser {
 		}
 
 		return $this->mLingoBackend;
-	}
-
-	/**
-	 * Returns the list of terms in the glossary
-	 *
-	 * @return array an array mapping terms (keys) to descriptions (values)
-	 */
-	public function getLingoArray() {
-		return $this->getLingoTree()->getTermList();
 	}
 
 	/**
@@ -196,8 +184,6 @@ class LingoParser {
 	 * This method currently only recognizes terms consisting of max one word
 	 *
 	 * @param Parser &$parser
-	 *
-	 * @return bool
 	 */
 	protected function realParse( &$parser ) {
 		// Parse text identical to options used in includes/api/ApiParse.php
@@ -210,14 +196,14 @@ class LingoParser {
 		] );
 
 		if ( $text === null || $text === '' ) {
-			return true;
+			return;
 		}
 
 		// Get array of terms
 		$glossary = $this->getLingoTree();
 
 		if ( $glossary == null ) {
-			return true;
+			return;
 		}
 
 		// Parse HTML from page
@@ -348,8 +334,6 @@ class LingoParser {
 
 			$parser->getOutput()->setText( $text );
 		}
-
-		return true;
 	}
 
 	/**

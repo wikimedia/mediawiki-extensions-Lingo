@@ -57,7 +57,7 @@ class Element {
 	/** @var string[] */
 	private $mDefinitions = [];
 	/** @var string */
-	private $mTerm = null;
+	private $mTerm;
 
 	/** @var bool */
 	private $hasBeenDisplayed = false;

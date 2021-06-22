@@ -175,7 +175,7 @@ class BasicBackend extends Backend {
 	 */
 	private function getLingoPageName() {
 		global $wgexLingoPage;
-		return $wgexLingoPage ? $wgexLingoPage : wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
+		return $wgexLingoPage ?: wfMessage( 'lingo-terminologypagename' )->inContentLanguage()->text();
 	}
 
 	/**
