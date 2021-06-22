@@ -5,7 +5,7 @@
 			"Metalhead64"
 		]
 	},
-	"lingo-desc": "Ermöglicht das Einblenden von Informationstexten, sobald die Maus über einen auf der Seite [[$1]] hinterlegten Begriff geführt wird",
+	"lingo-desc": "Bietet Tooltipps auf Seiten von Wörtern, die auf einer Wiki-Seite definiert sind",
 	"lingo-terminologypagename": "Glossar",
 	"lingo-noterminologypage": "Die Terminologieseite „$1“ ist nicht vorhanden.",
 	"lingo-notatextpage": "Die Terminologieseite „$1“ ist keine Textseite.",
