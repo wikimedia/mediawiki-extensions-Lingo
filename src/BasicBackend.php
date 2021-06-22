@@ -38,8 +38,6 @@ use Title;
 use WikiPage;
 
 /**
- * The Lingo\BasicBackend class.
- *
  * @ingroup Lingo
  */
 class BasicBackend extends Backend {

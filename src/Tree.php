@@ -29,8 +29,6 @@
 namespace Lingo;
 
 /**
- * The Lingo\Tree class.
- *
  * Vocabulary:
  * Term - The term as a normal string
  * Definition - Its definition (any object)
