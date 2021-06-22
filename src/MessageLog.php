@@ -29,10 +29,6 @@
 
 namespace Lingo;
 
-use Html;
-use MediaWiki\MediaWikiServices;
-use ParserOptions;
-
 /**
  * This class holds messages (errors, warnings, notices) for Lingo
  *
@@ -42,35 +38,10 @@ use ParserOptions;
  */
 class MessageLog {
 
-	/** @var array[] */
-	private $mMessages = [];
-	/** @var \Parser */
-	private $mParser = null;
-
-	private const MESSAGE_ERROR = 1;
-	private const MESSAGE_WARNING = 2;
-	private const MESSAGE_NOTICE = 3;
-
-	/**
-	 * @param string $message
-	 * @param int $severity
-	 */
-	public function addMessage( $message, $severity = self::MESSAGE_NOTICE ) {
-		$this->mMessages[] = [ $message, $severity ];
-
-		// log errors and warnings in debug log
-		if ( $severity == self::MESSAGE_WARNING ||
-			$severity == self::MESSAGE_ERROR
-		) {
-			wfDebug( $message );
-		}
-	}
-
 	/**
 	 * @param string $message
 	 */
 	public function addError( $message ) {
-		$this->mMessages[] = [ $message, self::MESSAGE_ERROR ];
 		wfDebug( "Error: $message\n" );
 	}
 
@@ -78,58 +49,7 @@ class MessageLog {
 	 * @param string $message
 	 */
 	public function addWarning( $message ) {
-		$this->mMessages[] = [ $message, self::MESSAGE_WARNING ];
 		wfDebug( "Warning: $message\n" );
-	}
-
-	/**
-	 * @param string $message
-	 */
-	public function addNotice( $message ) {
-		$this->mMessages[] = [ $message, self::MESSAGE_NOTICE ];
-	}
-
-	/**
-	 * @param int $severity
-	 * @param null $header
-	 * @return null|string
-	 */
-	public function getMessagesFormatted( $severity = self::MESSAGE_WARNING, $header = null ) {
-		global $wgTitle, $wgUser;
-
-		$ret = '';
-
-		foreach ( $this->mMessages as $message ) {
-			if ( $message[ 1 ] <= $severity ) {
-				$ret .= '* ' . $message[ 0 ] . "\n";
-			}
-		}
-
-		if ( $ret != '' ) {
-			if ( !$this->mParser ) {
-				$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
-			}
-
-			if ( $header == null ) {
-				$header = '';
-			} elseif ( $header != '' ) {
-				$header = Html::rawElement( 'div', [ 'class' => 'heading' ], $header );
-			}
-
-			$ret = Html::rawElement( 'div', [ 'class' => 'messages' ],
-				$header . "\n" .
-				$ret
-			);
-
-			// FIXME: Variable 'parser' might have not been defined
-			// FIXME: $parser->parse returns ParserOutput, not String
-			$ret = $parser->parse( $ret, $wgTitle, ParserOptions::newFromUser( $wgUser ) );
-		} else {
-			// FIXME: Should probably return '' (and throw an error if necessary)
-			$ret = null;
-		}
-
-		return $ret;
 	}
 
 }
