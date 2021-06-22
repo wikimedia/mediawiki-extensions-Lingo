@@ -44,16 +44,6 @@ use MediaWiki\Revision\RevisionRecord;
 class BasicBackendTest extends BackendTest {
 
 	/**
-	 * @covers ::__construct
-	 */
-	public function testCanConstruct() {
-		$this->assertInstanceOf(
-			\Lingo\BasicBackend::class,
-			new \Lingo\BasicBackend()
-		);
-	}
-
-	/**
 	 * @covers ::purgeCache
 	 */
 	public function testPurgeCache() {
@@ -92,6 +82,7 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	/**
+	 * @covers ::__construct
 	 * @covers ::useCache
 	 */
 	public function testUseCache() {

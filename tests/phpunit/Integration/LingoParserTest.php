@@ -61,16 +61,6 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	];
 
 	/**
-	 * @covers ::__construct
-	 */
-	public function testCanConstruct() {
-		$this->assertInstanceOf(
-			\Lingo\LingoParser::class,
-			new \Lingo\LingoParser()
-		);
-	}
-
-	/**
 	 * This will NOT test the execution path in LingoParser::getInstance where the singleton is actually created as that
 	 * path is executed during the initialisation of MW. It will test however that the singleton is of the correct class
 	 * and that once created subsequent calls to LingoParser::getInstance will return the same object.
@@ -89,9 +79,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * Tests
-	 *
-	 *
+	 * @covers ::__construct
 	 * @covers ::parse
 	 * @dataProvider parseProvider
 	 */

@@ -52,20 +52,10 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @covers ::__construct
-	 */
-	public function testCanConstruct() {
-		$term = 'someTerm';
-		$definition = [];
-		$element = new Element( $term, $definition );
-
-		$this->assertInstanceOf( \Lingo\Element::class, $element );
-	}
-
-	/**
 	 * Tests
 	 * - if $wgexLingoDisplayOnce = false, the first and second occurrence of a term is correctly marked up as tooltip anchor
 	 *
+	 * @covers ::__construct
 	 * @covers ::getFormattedTerm
 	 */
 	public function testGetFormattedTerm_1() {
