@@ -67,7 +67,6 @@ class Lingo {
 
 			Hooks::register( 'GetDoubleUnderscoreIDs', static function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
-				return true;
 			} );
 
 			Hooks::register( 'ParserFirstCallInit', static function ( Parser $parser ) {
@@ -75,8 +74,6 @@ class Lingo {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
 				} );
-
-				return true;
 			} );
 		};
 	}

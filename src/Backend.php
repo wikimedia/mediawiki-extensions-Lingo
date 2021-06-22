@@ -34,9 +34,9 @@ namespace Lingo;
 abstract class Backend {
 
 	/** @var MessageLog|null */
-	protected $mMessageLog;
+	private $mMessageLog;
 	/** @var LingoParser|null */
-	protected $mLingoParser;
+	private $mLingoParser;
 
 	/**
 	 * @param MessageLog|null &$messages

@@ -60,10 +60,10 @@ class Tree {
 	/**
 	 * Adds a string to the Lingo Tree
 	 *
-	 * @param string &$term
+	 * @param string $term
 	 * @param array $definition
 	 */
-	public function addTerm( &$term, $definition ) {
+	public function addTerm( $term, $definition ) {
 		if ( !$term ) {
 			return;
 		}
@@ -71,7 +71,6 @@ class Tree {
 		if ( isset( $this->mList[ $term ] ) ) { // term exists, store 2nd definition
 			$this->mList[ $term ]->addDefinition( $definition );
 		} else {
-
 			$matches = [];
 			preg_match_all( LingoParser::getInstance()->regex, $term, $matches );
 
@@ -86,16 +85,15 @@ class Tree {
 	 * Adds an element to the Lingo Tree
 	 *
 	 * @param array &$path An array containing the constituing lexemes of the term
-	 * @param string &$term
-	 * @param array &$definition
+	 * @param string $term
+	 * @param array $definition
 	 * @return array the tree node the element was stored in
 	 */
-	protected function &addElement( array &$path, &$term, &$definition ) {
+	private function &addElement( array &$path, $term, $definition ) {
 		$tree = &$this->mTree;
 
 		// end of path, store description; end of recursion
 		while ( ( $step = array_shift( $path ) ) !== null ) {
-
 			if ( !isset( $tree[ $step ] ) ) {
 				$tree[ $step ] = [];
 			}
@@ -166,7 +164,7 @@ class Tree {
 	 *
 	 * @return array
 	 */
-	public function findNextTermNoSkip( array &$tree, &$lexemes, $index, $countLexemes ) {
+	private function findNextTermNoSkip( array &$tree, &$lexemes, $index, $countLexemes ) {
 		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[ $index + 1 ][ 0 ], $tree ) ) {
 			$ret = $this->findNextTermNoSkip( $tree[ $currLex ], $lexemes, $index + 1, $countLexemes );
 		} else {

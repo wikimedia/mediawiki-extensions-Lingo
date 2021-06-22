@@ -97,12 +97,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$GLOBALS[ 'wgexLingoUseNamespaces' ] = $config[ 'wgexLingoUseNamespaces' ];
 
 		// Run
-		$ret = $parser->parse( $mwParser );
-
-		// Check
-		$this->assertTrue( $ret );
-
-		// Teardown
+		$parser->parse( $mwParser );
 	}
 
 	/**
@@ -140,6 +135,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
+				'mwOutputExpectsGetText' => $this->once(),
 				'text' => 'foo',
 			] ],
 
@@ -150,7 +146,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 * @param array $config
 	 * @return MockObject
 	 */
-	protected function getParserMock( $config = [] ) {
+	private function getParserMock( $config = [] ) {
 		if ( array_key_exists( 'mwParser', $config ) ) {
 			return $config[ 'mwParser' ];
 		}
@@ -185,7 +181,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 *
 	 * @return MockObject
 	 */
-	protected function getTitleMock( $config ) {
+	private function getTitleMock( $config ) {
 		if ( array_key_exists( 'mwTitle', $config ) ) {
 			return $config[ 'mwTitle' ];
 		}
@@ -202,7 +198,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @return MockObject
 	 */
-	protected function getBackendMock() {
+	private function getBackendMock() {
 		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
