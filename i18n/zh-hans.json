@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"GuoPC",
 			"Liuxinyu970226",
 			"Yfdyh000"
 		]
 	},
-	"lingo-desc": "在页面上悬停时显示工具提示，单词定义于[[$1]]页面",
+	"lingo-desc": "根据wiki页面上定义的单词在页面上提供悬停工具提示",
 	"lingo-terminologypagename": "术语",
 	"lingo-noterminologypage": "术语页面“$1”不存在。",
 	"lingo-notatextpage": "术语页面“$1”不是一个文本页面。",

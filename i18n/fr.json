@@ -8,7 +8,7 @@
 			"Wladek92"
 		]
 	},
-	"lingo-desc": "Dans les pages, affiche une info-bulle si le mot est défini dans la page de [[$1]].",
+	"lingo-desc": "Dans les pages, affiche une info-bulle si le mot est défini dans une page du wiki.",
 	"lingo-terminologypagename": "Terminologie",
 	"lingo-noterminologypage": "La page de terminologie « $1 » n’existe pas.",
 	"lingo-notatextpage": "La page de terminologie « $1 » n’est pas une page de texte.",
