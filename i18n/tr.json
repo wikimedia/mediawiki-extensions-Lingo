@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"BaRaN6161 TURK",
-			"Hbseren"
+			"Hbseren",
+			"SaldırganSincap"
 		]
 	},
-	"lingo-desc": "[[$1]] sayfasında tanımlanan kelimelerin sayfalarında gezdirme araç ipuçlarını sağlar",
+	"lingo-desc": "Bir viki sayfasında tanımlanan kelimelerden sayfalarda üzerine gelme aracı ipuçları sağlar",
 	"lingo-terminologypagename": "Terminoloji",
 	"lingo-noterminologypage": "\"$1\" terminoloji sayfası mevcut değil.",
 	"lingo-notatextpage": "\"$1\" terminoloji sayfası bir metin sayfası değil.",
