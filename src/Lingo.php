@@ -34,8 +34,6 @@ use PPFrame;
 use Title;
 
 /**
- * Class Lingo
- *
  * @package Lingo
  * @ingroup Lingo
  */

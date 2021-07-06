@@ -49,7 +49,7 @@ class Element {
 
 	public const ELEMENT_FIELDCOUNT = 5;  // number of fields stored for each element; (last field's index) + 1
 
-	/** @var string|null */
+	/** @var DOMElement|null */
 	private $formattedTerm = null;
 	/** @var string|null */
 	private $formattedDefinitions = null;

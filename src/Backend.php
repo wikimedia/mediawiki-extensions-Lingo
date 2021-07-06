@@ -29,8 +29,6 @@
 namespace Lingo;
 
 /**
- * The Lingo\Backend class.
- *
  * @ingroup Lingo
  */
 abstract class Backend {
