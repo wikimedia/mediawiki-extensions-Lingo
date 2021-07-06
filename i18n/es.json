@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Armando-Martin",
+			"Jackiezelaya",
 			"Macofe"
 		]
 	},
-	"lingo-desc": "Proporciona consejos en las páginas al pasar el ratón por encima de las palabras definidas en la página \"[[$1]]\"",
+	"lingo-desc": "Proporciona información sobre herramientas de desplazamiento sobre las páginas de palabras definidas en una página wiki",
 	"lingo-terminologypagename": "Terminología",
 	"lingo-noterminologypage": "La página de terminología \"$1\" no existe.",
 	"lingo-notatextpage": "La página de terminología \"$1\" no es una página de texto.",
