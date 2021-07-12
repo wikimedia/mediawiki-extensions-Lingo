@@ -28,8 +28,8 @@ namespace Lingo\Tests\Integration;
 use Lingo\LingoParser;
 use Lingo\Tests\Util\XmlFileProvider;
 use MediaWiki\MediaWikiServices;
+use MediaWikiIntegrationTestCase;
 use ParserOptions;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
@@ -44,10 +44,10 @@ use ReflectionClass;
  * @since 2.0.1
  * @author Stephan Gambke
  */
-class ArticleAnnotationTest extends TestCase {
+class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 	public function setUp(): void {
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->setMwGlobals( 'wgexLingoDisplayOnce', false );
 	}
 
 	public function tearDown(): void {
@@ -62,9 +62,6 @@ class ArticleAnnotationTest extends TestCase {
 
 	/**
 	 * @dataProvider provideData
-	 *
-	 * Tests fail when run via MediaWiki extensions testsuite T196456
-	 * @group Broken
 	 */
 	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
 		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
@@ -80,12 +77,12 @@ class ArticleAnnotationTest extends TestCase {
 
 		$lingoParser->parse( $parser );
 
-		$this->assertEquals( trim( $expected ), trim( $parser->getOutput()->getText() ) );
+		$html = $parser->getOutput()->getText();
+		$html = preg_replace( '/^<div class="mw-parser-output">(.*)<\/div>$/s', '$1', $html );
+		$this->assertEquals( trim( $expected ), $html );
 	}
 
 	public function provideData() {
-		$data = [];
-
 		$xmlFileProvider = new XmlFileProvider( __DIR__ . '/../Fixture/articleAnnotation' );
 		$files = $xmlFileProvider->getFiles();
 
@@ -95,29 +92,26 @@ class ArticleAnnotationTest extends TestCase {
 			$json = json_encode( $xml );
 			$decoded = json_decode( $json, true );
 
-			// suppress warnings for non-existant array keys
-			\Wikimedia\suppressWarnings();
-
-			$testCase = [
-				0 => substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
-				1 => trim( $decoded[ 'text' ] ),
-				2 => [],
-				3 => trim( $decoded[ 'expected' ] ) . "\n",
-			];
-
 			if ( array_key_exists( 'term', $decoded[ 'glossary-entry' ] ) ) {
 				$decoded[ 'glossary-entry' ] = [ $decoded[ 'glossary-entry' ] ];
 			}
 
+			$glossaryEntries = [];
 			foreach ( $decoded[ 'glossary-entry' ] as $entry ) {
-				$testCase[ 2 ][] = [ $entry[ 'term' ], $entry[ 'definition' ], $entry[ 'link' ], $entry[ 'style' ] ];
+				$glossaryEntries[] = [
+					$entry[ 'term' ],
+					$entry[ 'definition' ],
+					$entry[ 'link' ] ?? null,
+					$entry[ 'style' ] ?? null
+				];
 			}
 
-			\Wikimedia\restoreWarnings();
-
-			$data[] = $testCase;
+			yield [
+				substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
+				trim( $decoded[ 'text' ] ),
+				$glossaryEntries,
+				trim( $decoded[ 'expected' ] ) . "\n",
+			];
 		}
-
-		return $data;
 	}
 }
