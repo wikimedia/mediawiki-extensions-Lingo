@@ -169,7 +169,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->once() )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 
@@ -213,15 +213,10 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->getMock();
 
 		$lingoPageTitle = $this->createMock( \Title::class );
-		$lingoPageTitle->expects( $this->any() )
-			->method( 'getInterwiki' )
+		$lingoPageTitle->method( 'getInterwiki' )
 			->willReturn( '' );
-		$lingoPageTitle->expects( $this->any() )
-			->method( 'getArticleID' )
-			->willReturn( 'Foom' );
 
-		$backend->expects( $this->any() )
-			->method( 'getTitleFromText' )
+		$backend->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
 		return $backend;
