@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"McDutchie",
 			"Siebrand",
 			"Tjcool007"
 		]
 	},
-	"lingo-desc": "Zorgt voor tooltips op pagina's voor woorden gedefinieerd op [[$1]].",
+	"lingo-desc": "Biedt tooltips voor de muisaanwijzer op pagina's van woorden die zijn gedefinieerd op een wikipagina",
 	"lingo-terminologypagename": "Terminologie",
 	"lingo-noterminologypage": "De pagina \"$1\" bestaat niet.",
 	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina."
