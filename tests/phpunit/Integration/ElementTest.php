@@ -44,7 +44,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	/** @var \DOMDocument */
 	protected $doc;
 
-	public function setUp() : void {
+	public function setUp(): void {
 		parent::setUp();
 		$this->doc = new \DOMDocument();
 	}

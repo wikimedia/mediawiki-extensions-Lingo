@@ -46,7 +46,7 @@ use ReflectionClass;
  */
 class ArticleAnnotationTest extends TestCase {
 
-	public function setUp() : void {
+	public function setUp(): void {
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 	}
 
