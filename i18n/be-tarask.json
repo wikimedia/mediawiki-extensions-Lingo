@@ -3,10 +3,11 @@
 		"authors": [
 			"EugeneZelenko",
 			"Red Winged Duck",
+			"Renessaince",
 			"Wizardist"
 		]
 	},
-	"lingo-desc": "Паказвае падказкі да словаў, вызначаных на старонцы [[$1]]",
+	"lingo-desc": "Паказвае падказкі да словаў, вызначаных на старонцы вікі",
 	"lingo-terminologypagename": "Тэрміналёгія",
 	"lingo-noterminologypage": "Старонка тэрміналёгіі «$1» не існуе.",
 	"lingo-notatextpage": "Тэрміналягічная старонка «$1» не зьяўляецца тэкставай старонкай.",
