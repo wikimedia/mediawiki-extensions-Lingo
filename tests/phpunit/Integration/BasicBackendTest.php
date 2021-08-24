@@ -309,17 +309,12 @@ TESTTEXT
 		$lingoPageTitle->expects( $this->once() )
 			->method( 'getInterwiki' )
 			->willReturn( $interwiki );
-		$lingoPageTitle->expects( $this->any() )
-			->method( 'getArticleID' )
-			->willReturn( 'Foom' );
 
-		$backend->expects( $this->any() )
-			->method( 'getTitleFromText' )
+		$backend->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
 		$request = $this->createMock( \FauxRequest::class );
-		$request->expects( $this->any() )
-			->method( 'getVal' )
+		$request->method( 'getVal' )
 			->willReturnMap( [
 				[ 'action', 'view', $action ], // action = submit
 				[ 'title', null, $lingoPageTitle ], // title = $lingoPageTitle
@@ -330,12 +325,10 @@ TESTTEXT
 
 		unset( $GLOBALS[ 'wgexLingoEnableApprovedRevs' ] );
 
-		$backend->expects( $this->any() )
-			->method( 'getLatestRevisionFromTitle' )
+		$backend->method( 'getLatestRevisionFromTitle' )
 			->willReturn( $this->getRevisionMock( $lingoPageText, $lingoPageRevision, $lingoPageContent ) );
 
-		$backend->expects( $this->any() )
-			->method( 'getApprovedRevisionFromTitle' )
+		$backend->method( 'getApprovedRevisionFromTitle' )
 			->willReturn( $this->getRevisionMock( $lingoApprovedText ) );
 
 		return $backend;
@@ -353,15 +346,13 @@ TESTTEXT
 			if ( $lingoPageContent === false ) {
 				$lingoPageContent = $this->createMock( \TextContent::class );
 
-				$lingoPageContent->expects( $this->any() )
-					->method( 'getText' )
+				$lingoPageContent->method( 'getText' )
 					->willReturn( $lingoPageText );
 			}
 
 			$lingoPageRevision = $this->createMock( RevisionRecord::class );
 
-			$lingoPageRevision->expects( $this->any() )
-				->method( 'getContent' )
+			$lingoPageRevision->method( 'getContent' )
 				->willReturn( $lingoPageContent );
 
 			return $lingoPageRevision;
