@@ -41,12 +41,13 @@
 		"test": [
 			"parallel-lint . --exclude vendor --exclude node_modules",
 			"minus-x check .",
-			"phpcs -sp"
+			"@phpcs"
 		],
 		"fix": [
 			"minus-x fix .",
 			"phpcbf"
-		]
+		],
+		"phpcs": "phpcs -sp"
 	},
 	"suggest": {
 		"mediawiki/semantic-glossary": "Alternative back-end that retrieves terms and definitions from a Semantic MediaWiki store"
