@@ -123,7 +123,9 @@ class LingoParser {
 			if ( $this->getBackend()->useCache() ) {
 				// Try cache first
 				global $wgexLingoCacheType;
-				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
+				$cache = ( $wgexLingoCacheType !== null )
+					? ObjectCache::getInstance( $wgexLingoCacheType )
+					: ObjectCache::getLocalClusterInstance();
 				$cachekey = $this->getCacheKey();
 				$cachedLingoTree = $cache->get( $cachekey );
 
@@ -351,7 +353,9 @@ class LingoParser {
 	 */
 	public function purgeGlossaryFromCache() {
 		global $wgexLingoCacheType;
-		$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
+		$cache = ( $wgexLingoCacheType !== null )
+			? ObjectCache::getInstance( $wgexLingoCacheType )
+			: ObjectCache::getLocalClusterInstance();
 		$cache->delete( $this->getCacheKey() );
 	}
 
