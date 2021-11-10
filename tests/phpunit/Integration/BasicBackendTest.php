@@ -26,6 +26,8 @@
 
 namespace Lingo\Tests\Integration;
 
+use Content;
+use FallbackContent;
 use Lingo\BasicBackend;
 use MediaWiki\Revision\RevisionRecord;
 
@@ -130,7 +132,12 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_LingoPageIsNotATextPage() {
-		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, 'This is not a TextContent object' );
+		# TODO 1.36+ FallbackContent exists since 1.36; the alternative relying
+		# on string can be removed when this extension will support only MW 1.36+
+		$unknownContent = class_exists( 'FallbackContent' )
+			? new FallbackContent( 'unknown text', 'unknown type' )
+			: 'This is not a TextContent object';
+		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, $unknownContent );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addError' )
 			->willReturn( null );
@@ -276,7 +283,7 @@ TESTTEXT
 	 * @param string $action
 	 * @param string $interwiki
 	 * @param RevisionRecord|false $lingoPageRevision
-	 * @param string|false $lingoPageContent
+	 * @param Content|string|null|false $lingoPageContent
 	 * @param string $lingoApprovedText
 	 * @return \Lingo\BasicBackend
 	 */
@@ -337,7 +344,7 @@ TESTTEXT
 	/**
 	 * @param string $lingoPageText
 	 * @param RevisionRecord|false $lingoPageRevision
-	 * @param string|false $lingoPageContent
+	 * @param Content|string|null|false $lingoPageContent
 	 * @return RevisionRecord
 	 */
 	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {

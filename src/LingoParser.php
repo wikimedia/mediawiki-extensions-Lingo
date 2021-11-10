@@ -346,9 +346,11 @@ class LingoParser {
 
 		// load scripts
 		$parserOutput->addModules( 'ext.Lingo' );
+		$parserOutput->addModuleStyles( 'ext.Lingo.styles' );
 
 		if ( !$wgOut->isArticle() ) {
 			$wgOut->addModules( 'ext.Lingo' );
+			$wgOut->addModuleStyles( 'ext.Lingo.styles' );
 		}
 	}
 
