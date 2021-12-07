@@ -2,11 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Schu",
-			"Shirayuki"
+			"Shirayuki",
+			"Omotecho"
 		]
 	},
 	"lingo-desc": "[[$1]] ページに定義された用語から、ページ上にヒントを表示する hover-over ツールを提供する",
 	"lingo-terminologypagename": "Terminology",
 	"lingo-noterminologypage": "ページ「$1」は存在しません。",
-	"lingo-terminologypagenotlocal": "ページ「$1」はローカルページではありません。"
+	"lingo-notatextpage": "術語ページ「$1」は文字ページではありません。",
+	"lingo-terminologypagenotlocal": "ページ「$1」はローカルページではありません。",
+	"lingo-noapprovedrevs": "Lingo では ApprovedRevs のサポートがあります。しかしながら ApprovedRevs が見つかりませんでした。",
+	"lingo-invalidlinktarget": "術語「$1」のリンク先が無効です：$2"
 }
