@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dj"
+			"Dj",
+			"Tacsipacsi"
 		]
 	},
 	"lingo-desc": "Kis információs ablakot jelenít meg a  [[$1]] lapon definiált szavakra, amennyiben az egérrel a szó fölé állunk",
 	"lingo-terminologypagename": "Terminológia",
-	"lingo-noterminologypage": "„$1” lap nem létezik.",
-	"lingo-terminologypagenotlocal": "„$1” nem helyi lap."
+	"lingo-noterminologypage": "A(z) „$1” terminológialap nem létezik.",
+	"lingo-notatextpage": "A(z) „$1” terminológialap nem szöveges lap.",
+	"lingo-terminologypagenotlocal": "A(z) „$1” nem helyi lap."
 }
