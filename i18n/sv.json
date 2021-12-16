@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Ainali",
+			"Sabelöga",
 			"WikiPhoenix"
 		]
 	},
-	"lingo-desc": "Tillhandahåller verktygstips på sidor när muspekaren förs över ord definierade på sidan [[$1]].",
+	"lingo-desc": "Tillhandahåller verktygstips på sidor när muspekaren förs över ord definierade på en wikisida.",
 	"lingo-terminologypagename": "Terminologi",
 	"lingo-noterminologypage": "Terminologisidan \"$1\" finns inte.",
 	"lingo-notatextpage": "Terminologisidan \"$1\" är inte en textsida.",
