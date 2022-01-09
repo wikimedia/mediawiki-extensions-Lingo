@@ -22,11 +22,14 @@
 			"scripts": [
 				"libs/Lingo.js"
 			],
+			"dependencies": [
+				"ext.Lingo.jquery.qtip",
+				"ext.Lingo.styles"
+			]
+		},
+		"ext.Lingo.styles": {
 			"styles": [
 				"styles/Lingo.less"
-			],
-			"dependencies": [
-				"ext.Lingo.jquery.qtip"
 			]
 		},
 		"ext.Lingo.jquery.qtip": {
