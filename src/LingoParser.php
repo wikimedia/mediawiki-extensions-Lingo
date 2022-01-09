@@ -72,15 +72,11 @@ class LingoParser {
 
 	/**
 	 * @param Parser $mwParser
-	 *
-	 * @return bool
 	 */
 	public function parse( $mwParser ) {
 		if ( $this->shouldParse( $mwParser ) ) {
 			$this->realParse( $mwParser );
 		}
-
-		return true;
 	}
 
 	/**
@@ -90,7 +86,6 @@ class LingoParser {
 	public static function getInstance() {
 		if ( !self::$parserSingleton ) {
 			self::$parserSingleton = new LingoParser();
-
 		}
 
 		return self::$parserSingleton;
@@ -108,7 +103,7 @@ class LingoParser {
 	 * @return Backend the backend used by the parser
 	 * @throws \MWException
 	 */
-	public function getBackend() {
+	private function getBackend() {
 		if ( $this->mLingoBackend === null ) {
 			throw new \MWException( 'No Lingo backend available!' );
 		}
@@ -121,13 +116,11 @@ class LingoParser {
 	 *
 	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
-	public function getLingoTree() {
+	private function getLingoTree() {
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
-
 			// use cache if enabled
 			if ( $this->getBackend()->useCache() ) {
-
 				// Try cache first
 				global $wgexLingoCacheType;
 				$cache = ( $wgexLingoCacheType !== null ) ? wfGetCache( $wgexLingoCacheType ) : wfGetMainCache();
@@ -136,15 +129,13 @@ class LingoParser {
 
 				// cache hit?
 				if ( $cachedLingoTree !== false && $cachedLingoTree !== null ) {
-
 					wfDebug( "Cache hit: Got lingo tree from cache.\n" );
 					$this->mLingoTree = &$cachedLingoTree;
 
 					wfDebug( "Re-cached lingo tree.\n" );
 				} else {
-
 					wfDebug( "Cache miss: Lingo tree not found in cache.\n" );
-					$this->mLingoTree =& $this->buildLingo();
+					$this->mLingoTree = $this->buildLingo();
 					wfDebug( "Cached lingo tree.\n" );
 				}
 
@@ -152,12 +143,10 @@ class LingoParser {
 				// Limiting the cache validity will allow to purge stale cache
 				// entries inserted by older versions after one month
 				$cache->set( $cachekey, $this->mLingoTree, 60 * 60 * 24 * 30 );
-
 			} else {
 				wfDebug( "Caching of lingo tree disabled.\n" );
-				$this->mLingoTree =& $this->buildLingo();
+				$this->mLingoTree = $this->buildLingo();
 			}
-
 		}
 
 		return $this->mLingoTree;
@@ -166,7 +155,7 @@ class LingoParser {
 	/**
 	 * @return Tree
 	 */
-	protected function &buildLingo() {
+	private function buildLingo() {
 		$lingoTree = new Tree();
 		$backend = &$this->mLingoBackend;
 
@@ -183,9 +172,9 @@ class LingoParser {
 	 *
 	 * This method currently only recognizes terms consisting of max one word
 	 *
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 */
-	protected function realParse( &$parser ) {
+	private function realParse( $parser ) {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
 		$text = $params === null ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
@@ -266,15 +255,12 @@ class LingoParser {
 			$changedElem = false;
 
 			while ( $wordDescriptorIndex < $numberOfWordDescriptors ) {
-
 				/** @var \Lingo\Element $definition */
 				list( $skippedWords, $usedWords, $definition ) =
 					$glossary->findNextTerm( $wordDescriptors, $wordDescriptorIndex, $numberOfWordDescriptors );
 
 				if ( $usedWords > 0 ) { // found a term
-
 					if ( $skippedWords > 0 ) { // skipped some text, insert it as is
-
 						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
 						$length = $wordDescriptors[ $wordDescriptorIndex + $skippedWords ][ self::WORD_OFFSET ] - $start;
 
@@ -291,16 +277,13 @@ class LingoParser {
 					$definitions[ $definition->getId() ] = $definition->getFormattedDefinitions();
 
 					$changedElem = true;
-
 				} else { // did not find any term, just use the rest of the text
-
 					// If we found no term now and no term before, there was no
 					// term in the whole element. Might as well not change the
 					// element at all.
 
 					// Only change element if found term before
 					if ( $changedElem === true ) {
-
 						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
 
 						$parentNode->insertBefore(
@@ -309,7 +292,6 @@ class LingoParser {
 							),
 							$textElement
 						);
-
 					}
 
 					// In principle superfluous, the loop would run out anyway. Might save a bit of time.
@@ -325,7 +307,6 @@ class LingoParser {
 		}
 
 		if ( count( $definitions ) > 0 ) {
-
 			$this->loadModules( $parser );
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
@@ -337,9 +318,9 @@ class LingoParser {
 	}
 
 	/**
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 */
-	protected function loadModules( &$parser ) {
+	private function loadModules( $parser ) {
 		global $wgOut;
 
 		$parserOutput = $parser->getOutput();
@@ -391,10 +372,10 @@ class LingoParser {
 	}
 
 	/**
-	 * @param Parser &$parser
+	 * @param Parser $parser
 	 * @return bool
 	 */
-	protected function shouldParse( &$parser ) {
+	private function shouldParse( $parser ) {
 		global $wgexLingoUseNamespaces;
 
 		if ( !( $parser instanceof Parser || $parser instanceof StubObject ) ) {

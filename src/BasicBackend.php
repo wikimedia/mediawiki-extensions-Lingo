@@ -43,7 +43,7 @@ use WikiPage;
 class BasicBackend extends Backend {
 
 	/** @var string[]|null */
-	protected $mArticleLines = null;
+	private $mArticleLines = null;
 
 	/**
 	 * @param MessageLog|null &$messages
@@ -54,7 +54,7 @@ class BasicBackend extends Backend {
 		$this->registerHooks();
 	}
 
-	protected function registerHooks() {
+	private function registerHooks() {
 		Hooks::register( 'ArticlePurge', [ $this, 'purgeCache' ] );
 		Hooks::register( 'PageContentSave', [ $this, 'purgeCache' ] );
 	}
@@ -77,11 +77,9 @@ class BasicBackend extends Backend {
 
 		// loop backwards: accumulate definitions until term found
 		while ( ( count( $ret ) === 0 ) && ( $this->mArticleLines ) ) {
-
 			$line = array_pop( $this->mArticleLines );
 
 			if ( $this->isValidGlossaryLine( $line ) ) {
-
 				list( $term, $definitions ) = $this->processNextGlossaryLine( $line, $term, $definitions );
 
 				if ( $term !== null ) {
@@ -99,12 +97,11 @@ class BasicBackend extends Backend {
 	 * @param string[] $definitions
 	 * @return array
 	 */
-	protected function processNextGlossaryLine( $line, $term, $definitions ) {
+	private function processNextGlossaryLine( $line, $term, $definitions ) {
 		$chunks = explode( ':', $line, 2 );
 
 		// found a new definition?
 		if ( count( $chunks ) === 2 ) {
-
 			// wipe the data if it's a totally new term definition
 			if ( !empty( $term ) && count( $definitions ) > 0 ) {
 				$definitions = [];
@@ -127,7 +124,7 @@ class BasicBackend extends Backend {
 	 * @param string $term
 	 * @return array
 	 */
-	protected function queueDefinitions( $definitions, $term ) {
+	private function queueDefinitions( $definitions, $term ) {
 		$ret = [];
 
 		foreach ( $definitions as $definition ) {
@@ -145,7 +142,7 @@ class BasicBackend extends Backend {
 	/**
 	 * @throws \MWException
 	 */
-	protected function collectDictionaryLines() {
+	private function collectDictionaryLines() {
 		if ( $this->mArticleLines !== null ) {
 			return;
 		}
@@ -183,7 +180,7 @@ class BasicBackend extends Backend {
 	 *
 	 * @return null|string
 	 */
-	protected function getRawDictionaryContent( Title $dictionaryTitle ) {
+	private function getRawDictionaryContent( Title $dictionaryTitle ) {
 		global $wgRequest;
 
 		// This is a hack special-casing the submitting of the terminology page
@@ -193,14 +190,12 @@ class BasicBackend extends Backend {
 		if ( $wgRequest->getVal( 'action', 'view' ) === 'submit' &&
 			$this->getTitleFromText( $wgRequest->getVal( 'title' ) )->getArticleID() === $dictionaryTitle->getArticleID()
 		) {
-
 			return $wgRequest->getVal( 'wpTextbox1' );
 		}
 
 		$revision = $this->getRevisionFromTitle( $dictionaryTitle );
 
 		if ( $revision !== null ) {
-
 			$content = $revision->getContent( SlotRecord::MAIN );
 
 			if ( $content === null ) {
@@ -212,9 +207,7 @@ class BasicBackend extends Backend {
 			}
 
 			$this->getMessageLog()->addError( wfMessage( 'lingo-notatextpage', $dictionaryTitle->getFullText() )->inContentLanguage()->text() );
-
 		} else {
-
 			$this->getMessageLog()->addWarning( wfMessage( 'lingo-noterminologypage', $dictionaryTitle->getFullText() )->inContentLanguage()->text() );
 		}
 
@@ -227,11 +220,10 @@ class BasicBackend extends Backend {
 	 * @param Title $title
 	 * @return null|RevisionRecord
 	 */
-	protected function getRevisionFromTitle( Title $title ) {
+	private function getRevisionFromTitle( Title $title ) {
 		global $wgexLingoEnableApprovedRevs;
 
 		if ( $wgexLingoEnableApprovedRevs ) {
-
 			if ( defined( 'APPROVED_REVS_VERSION' ) ) {
 				return $this->getApprovedRevisionFromTitle( $title );
 			}
@@ -245,16 +237,12 @@ class BasicBackend extends Backend {
 	/**
 	 * Initiates the purging of the cache when the Terminology page was saved or purged.
 	 *
-	 * @param WikiPage &$wikipage
-	 * @return bool
+	 * @param WikiPage $wikipage
 	 */
-	public function purgeCache( WikiPage &$wikipage ) {
+	public function purgeCache( WikiPage $wikipage ) {
 		if ( $wikipage !== null && $wikipage->getTitle()->getText() === $this->getLingoPageName() ) {
-
 			$this->getLingoParser()->purgeGlossaryFromCache();
 		}
-
-		return true;
 	}
 
 	/**
@@ -302,7 +290,7 @@ class BasicBackend extends Backend {
 	 * @param string $line
 	 * @return bool
 	 */
-	protected function isValidGlossaryLine( $line ) {
+	private function isValidGlossaryLine( $line ) {
 		return !empty( $line ) && ( $line[ 0 ] === ';' || $line[ 0 ] === ':' );
 	}
 

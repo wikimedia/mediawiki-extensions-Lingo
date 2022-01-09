@@ -38,7 +38,7 @@ use RuntimeException;
 class XmlFileProvider {
 
 	/** @var string */
-	protected $path = null;
+	private $path = null;
 
 	/**
 	 * @param string $path
@@ -58,7 +58,7 @@ class XmlFileProvider {
 	 * @param string $path
 	 * @return string
 	 */
-	protected function readDirectory( $path ) {
+	private function readDirectory( $path ) {
 		$path = str_replace( [ '\\', '/' ], DIRECTORY_SEPARATOR, $path );
 
 		if ( is_readable( $path ) ) {
@@ -72,7 +72,7 @@ class XmlFileProvider {
 	 * @param string $path
 	 * @return string[]
 	 */
-	protected function loadXmlFiles( $path ) {
+	private function loadXmlFiles( $path ) {
 		$directoryIterator = new \RecursiveDirectoryIterator( $path );
 		$iteratorIterator = new \RecursiveIteratorIterator( $directoryIterator );
 		$regexIterator = new \RegexIterator( $iteratorIterator, '/^.+\.xml$/i', \RecursiveRegexIterator::GET_MATCH );

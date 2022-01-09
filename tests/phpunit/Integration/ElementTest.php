@@ -42,9 +42,9 @@ use MediaWikiIntegrationTestCase;
 class ElementTest extends MediaWikiIntegrationTestCase {
 
 	/** @var \DOMDocument */
-	protected $doc;
+	private $doc;
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		parent::setUp();
 		$this->doc = new \DOMDocument();
 	}
@@ -492,7 +492,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 	 * @param string[] $expectedAttributes
 	 * @param array $unexpectedAttributes
 	 */
-	protected function checkTermIsDomElement( $node, $tagName, $text, $expectedAttributes = [], $unexpectedAttributes = [] ) {
+	private function checkTermIsDomElement( $node, $tagName, $text, $expectedAttributes = [], $unexpectedAttributes = [] ) {
 		$nodeText = $this->doc->saveHTML( $node );
 
 		$this->assertInstanceOf( 'DOMElement', $node );
@@ -500,7 +500,6 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$this->assertEquals( $text, $node->textContent );
 
 		if ( array_key_exists( 'class', $expectedAttributes ) ) {
-
 			$classes = array_flip( array_filter( explode( ' ', $node->getAttribute( 'class' ) ) ) );
 
 			foreach ( (array)$expectedAttributes[ 'class' ] as $expectedClass ) {

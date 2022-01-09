@@ -78,7 +78,7 @@ class BasicBackendTest extends BackendTest {
 			->method( 'getLingoParser' )
 			->willReturn( $lingoParser );
 
-		$this->assertTrue( $testObject->purgeCache( $wikiPage ) );
+		$testObject->purgeCache( $wikiPage );
 	}
 
 	/**
@@ -340,9 +340,8 @@ TESTTEXT
 	 * @param string|false $lingoPageContent
 	 * @return RevisionRecord
 	 */
-	protected function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
+	private function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
 		if ( $lingoPageRevision === false ) {
-
 			if ( $lingoPageContent === false ) {
 				$lingoPageContent = $this->createMock( \TextContent::class );
 

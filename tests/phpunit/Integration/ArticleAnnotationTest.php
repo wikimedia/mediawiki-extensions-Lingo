@@ -46,11 +46,11 @@ use ReflectionClass;
  */
 class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		$this->setMwGlobals( 'wgexLingoDisplayOnce', false );
 	}
 
-	public function tearDown(): void {
+	protected function tearDown(): void {
 		// reset LingoParser singleton
 		$lingoParser = LingoParser::getInstance();
 		$reflection = new ReflectionClass( $lingoParser );
@@ -87,7 +87,6 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$files = $xmlFileProvider->getFiles();
 
 		foreach ( $files as $file ) {
-
 			$xml = simplexml_load_file( $file, "SimpleXMLElement", LIBXML_NOCDATA );
 			$json = json_encode( $xml );
 			$decoded = json_decode( $json, true );
