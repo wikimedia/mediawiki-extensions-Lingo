@@ -328,8 +328,8 @@ class LingoParser {
 		$parserOutput = $parser->getOutput();
 
 		// load scripts
-		$parserOutput->addModules( 'ext.Lingo' );
-		$parserOutput->addModuleStyles( 'ext.Lingo.styles' );
+		$parserOutput->addModules( [ 'ext.Lingo' ] );
+		$parserOutput->addModuleStyles( [ 'ext.Lingo.styles' ] );
 
 		if ( !$wgOut->isArticle() ) {
 			$wgOut->addModules( 'ext.Lingo' );
