@@ -23,7 +23,7 @@
 		"forum": "https://www.mediawiki.org/wiki/Extension_talk:Lingo",
 		"source": "https://phabricator.wikimedia.org/diffusion/ELIN",
 		"issues": "https://phabricator.wikimedia.org/tag/mediawiki-extensions-lingo/",
-		"irc": "irc://irc.freenode.org/mediawiki"
+		"irc": "irc://irc.libera.chat/mediawiki"
 	},
 	"require": {
 		"php": ">=7.0",
