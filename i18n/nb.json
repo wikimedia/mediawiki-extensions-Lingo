@@ -4,7 +4,7 @@
 			"Jon Harald Søby"
 		]
 	},
-	"lingo-desc": "Gir svevende hjelpebobler på sider med ord definert på siden [[$1]]",
+	"lingo-desc": "Gir svevende hjelpebobler på sider med ord definert på wikisiden",
 	"lingo-terminologypagename": "Terminologi",
 	"lingo-noterminologypage": "Terminologisiden «$1» finnes ikke.",
 	"lingo-notatextpage": "Terminologisiden «$1» er ikke en tekstside.",
