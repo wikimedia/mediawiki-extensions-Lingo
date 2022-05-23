@@ -20,22 +20,17 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  * @author Stephan Gambke
- *
  * @file
- * @ingroup Lingo
  */
 
 ( function ( $ ) {
-
 	'use strict';
 
+	// eslint-disable-next-line no-shadow
 	$( function ( $ ) {
-
-		$( 'span.mw-lingo-term' ).each( function () {
-
+		$( 'span.mw-lingo-term' ).each( function () { // eslint-disable-line no-jquery/no-global-selector
 			var termId = $( this ).attr( 'data-lingo-term-id' ),
-
-				tooltip = $( '#' + termId );
+				tooltip = $( '#' + termId ); // eslint-disable-line no-jquery/variable-pattern
 
 			$( this ).qtip( {
 				content: tooltip.html(),
