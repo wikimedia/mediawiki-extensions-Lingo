@@ -12,6 +12,25 @@
 		<exclude name="MediaWiki.Usage.ForbiddenFunctions.passthru" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
 		<exclude name="MediaWiki.PHP71Features.VoidReturnType.NotAllowed" />
+		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationProtected" />
+		<exclude name="MediaWiki.Commenting.PropertyDocumentation.MissingDocumentationPrivate" />
+		<exclude name="PSR12.Properties.ConstantVisibility.NotFound" />
+		<exclude name="PSR12.Functions.ReturnTypeDeclaration.SpaceBeforeColon" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.UppercasePrimitiveStringParam" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.UppercasePrimitiveBoolReturn" />
+		<exclude name="MediaWiki.Commenting.PropertyDocumentation.WrongStyle" />
+		<exclude name="MediaWiki.Usage.IsNull.IsNull" />
+		<exclude name="MediaWiki.Classes.UnsortedUseStatements.UnsortedUse" />
+		<exclude name="MediaWiki.Usage.StaticClosure.StaticClosure" />
+		<exclude name="MediaWiki.NamingConventions.PrefixedGlobalFunctions.allowedPrefix" />
+		<exclude name="MediaWiki.PHPUnit.SetMethods.SetMethods" />
+		<exclude name="MediaWiki.PHPUnit.AssertEquals.Null" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.MissingParamTag" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.ParamNameNoMatch" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.DefaultNullTypeParam" />
+		<exclude name="MediaWiki.Commenting.FunctionComment.NoParamType" />
+		<exclude name="MediaWiki.PHPUnit.AssertEquals.FalsyString" />
+		<exclude name="MediaWiki.PHPUnit.SpecificAssertions.assertArrayHasKey" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php"/>
