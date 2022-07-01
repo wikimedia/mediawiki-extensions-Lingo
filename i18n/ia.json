@@ -7,5 +7,8 @@
 	"lingo-desc": "Monstra legendas emergente al passage del mouse pro le parolas definite sur un pagina wiki",
 	"lingo-terminologypagename": "Terminologia",
 	"lingo-noterminologypage": "Le pagina de terminologia \"$1\" non existe.",
-	"lingo-terminologypagenotlocal": "Le pagina \"$1\" non es un pagina local."
+	"lingo-notatextpage": "Le pagina de terminologia \"$1\" non es un pagina de texto.",
+	"lingo-terminologypagenotlocal": "Le pagina \"$1\" non es un pagina local.",
+	"lingo-noapprovedrevs": "Le supporto de ApprovedRevs es activate in Lingo, ma ApprovedRevs non ha essite trovate.",
+	"lingo-invalidlinktarget": "Destination de ligamine non valide pro le termino \"$1\": $2"
 }
