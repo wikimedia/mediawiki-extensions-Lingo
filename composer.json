@@ -26,7 +26,6 @@
 		"irc": "irc://irc.libera.chat/mediawiki"
 	},
 	"require": {
-		"php": ">=7.0",
 		"ext-dom": "*",
 		"composer/installers": ">1.0.12"
 	},
