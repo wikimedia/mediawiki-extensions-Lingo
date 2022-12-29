@@ -320,13 +320,11 @@ TESTTEXT
 		$backend->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
-		$request = $this->createMock( \FauxRequest::class );
-		$request->method( 'getVal' )
-			->willReturnMap( [
-				[ 'action', 'view', $action ], // action = submit
-				[ 'title', null, $lingoPageTitle ], // title = $lingoPageTitle
-				[ 'wpTextbox1', null, ';JST:Just saved text' ]
-			] );
+		$request = new \FauxRequest( [
+			'action' => $action,
+			'title' => $lingoPageTitle,
+			'wpTextbox1' => ';JST:Just saved text',
+		] );
 
 		$GLOBALS[ 'wgRequest' ] = $request;
 
