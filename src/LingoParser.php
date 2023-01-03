@@ -388,7 +388,7 @@ class LingoParser {
 			return false;
 		}
 
-		if ( isset( $parser->mDoubleUnderscores[ 'noglossary' ] ) ) { // __NOGLOSSARY__ found in wikitext
+		if ( isset( $parser->getOutput()->getPageProperties()['noglossary'] ) ) { // __NOGLOSSARY__ found in wikitext
 			return false;
 		}
 
