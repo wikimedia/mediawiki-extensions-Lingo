@@ -77,7 +77,7 @@ class XmlFileProvider {
 		$iteratorIterator = new \RecursiveIteratorIterator( $directoryIterator );
 		$regexIterator = new \RegexIterator( $iteratorIterator, '/^.+\.xml$/i', \RecursiveRegexIterator::GET_MATCH );
 
-		$files = call_user_func_array( 'array_merge', iterator_to_array( $regexIterator ) );
+		$files = call_user_func_array( 'array_merge', iterator_to_array( $regexIterator, false ) );
 
 		return $files;
 	}
