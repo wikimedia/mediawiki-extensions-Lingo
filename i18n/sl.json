@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Eleassar"
+		]
+	},
+	"lingo-desc": "Prikaže oblačke z informacijami nad besedami, opredeljenimi na viki strani",
+	"lingo-terminologypagename": "Izrazje",
+	"lingo-noterminologypage": "Stran z izrajem »$1« ne obstaja.",
+	"lingo-notatextpage": "Stran z izrazjem »$1« ni besedilna stran.",
+	"lingo-terminologypagenotlocal": "Stran »$1« ni lokalna stran.",
+	"lingo-noapprovedrevs": "V Lingu je omogočena podpora za ApprovedRevs, vendar ApprovedRevs ni bilo najdeno.",
+	"lingo-invalidlinktarget": "Neveljaven cilj povezave za izraz »$1«: $2"
+}
