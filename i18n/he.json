@@ -7,9 +7,9 @@
 	},
 	"lingo-desc": "כלי לתצוגת רמזים צצים בדפים לפי מילים שמוגדרות בדף ויקי",
 	"lingo-terminologypagename": "מינוח",
-	"lingo-noterminologypage": "דף הטרמינולוגיה \"$1\" אניו קיים.",
-	"lingo-notatextpage": "דף הטרמינולוגיה \"$1\" אינו דף טקסט.",
-	"lingo-terminologypagenotlocal": "הדם \"$1\" אינו דף מקומי.",
+	"lingo-noterminologypage": "דף המונחים \"$1\" אינו קיים.",
+	"lingo-notatextpage": "דף המונחים \"$1\" אינו דף טקסט.",
+	"lingo-terminologypagenotlocal": "הדף \"$1\" אינו דף מקומי.",
 	"lingo-noapprovedrevs": "תמיכה ב־ApprovedRevs מופעלת ב־Lingo. אבל ApprovedRevs לא נמצאה.",
-	"lingo-invalidlinktarget": "יעד קישור לא חוקי למונח \"$1\"‏: $2"
+	"lingo-invalidlinktarget": "יעד קישור בלתי־תקין למונח \"$1\"‏: $2"
 }
