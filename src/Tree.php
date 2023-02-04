@@ -167,8 +167,22 @@ class Tree {
 	private function findNextTermNoSkip( array &$tree, &$lexemes, $index, $countLexemes ) {
 		if ( $index + 1 < $countLexemes && array_key_exists( $currLex = $lexemes[ $index + 1 ][ 0 ], $tree ) ) {
 			$ret = $this->findNextTermNoSkip( $tree[ $currLex ], $lexemes, $index + 1, $countLexemes );
+			if ( $ret[1] === null ) {
+				// We didn't match. Backtrack in case previous prefix matched
+				if ( isset( $tree[-1] ) ) {
+					$ret = [ $index, &$tree[-1] ];
+				} else {
+					$ret = [ $index, null ];
+				}
+			}
 		} else {
-			$ret = [ $index, &$tree[ -1 ] ];
+			if ( isset( $tree[-1] ) ) {
+				$ret = [ $index, &$tree[ -1 ] ];
+			} else {
+				// Failed to match. We need to backtrack
+				// in case a previous prefix did match.
+				$ret = [ $index, null ];
+			}
 		}
 
 		return $ret;

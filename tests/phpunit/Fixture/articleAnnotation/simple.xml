@@ -9,6 +9,7 @@ dolor sit amet
 हीकम
 請保持導言的中立性，勿只敍述美譽。
 +HE d4 t3xt
+prefix backtrack
 ]]>
 	</text>
 	<expected>
@@ -20,6 +21,7 @@ Lorem
 <span class="mw-lingo-term" data-lingo-term-id="fd57ea8a08446b14704cbbda2daf5961">हीकम</span>
 請保持導言的中立性，勿只敍述美譽。
 +HE <span class="mw-lingo-term" data-lingo-term-id="513a29a563178cfc7ffa715a224fa614">d4 t3xt</span>
+<span class="mw-lingo-term" data-lingo-term-id="851f5ac9941d720844d143ed9cfcf60a">prefix</span> backtrack
 </p></div><div class="mw-lingo-tooltip" id="d2e16e6ef52a45b7468f1da56bba1953"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
 <p>lorem-def
 </p>
@@ -38,6 +40,10 @@ Lorem
 </div></div>
 </div><div class="mw-lingo-tooltip" id="513a29a563178cfc7ffa715a224fa614"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
 <p>d4 t3xt-def
+</p>
+</div></div>
+</div><div class="mw-lingo-tooltip" id="851f5ac9941d720844d143ed9cfcf60a"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
+<p>prefix-def
 </p>
 </div></div>
 </div>
@@ -76,5 +82,15 @@ Lorem
 	<glossary-entry>
 		<term>d4</term>
 		<definition>d4-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<!-- if we match a word, and then partial match something else and then fail,
+		ensure we backtrack to the original match instead of matching nothing -->
+		<term>prefix</term>
+		<definition>prefix-def</definition>
+	</glossary-entry>
+	<glossary-entry>
+		<term>prefix somethingelse</term>
+		<definition>prefix2-def</definition>
 	</glossary-entry>
 </testcase>
