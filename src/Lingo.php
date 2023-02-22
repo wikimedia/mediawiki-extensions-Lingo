@@ -57,8 +57,20 @@ class Lingo {
 				$attributes['class'] = ( $attributes['class'] ?? '' ) . " noglossary";
 			} );
 
-			Hooks::register( 'ContentAlterParserOutput', static function () use ( $parser ){
-				$parser->parse( MediaWikiServices::getInstance()->getParser() );
+			Hooks::register( 'ContentAlterParserOutput', static function ( $title, $content, $po ) use ( $parser ){
+				// FIXME, this should use the correct instance of Parser, not a random global one.
+				// For that matter, it should not assume that there is a Parser being used at
+				// all. It should use the passed in $parserOutput exclusively, and use a fresh
+				// parser instance for its own recursive parsing combined with
+				// ParserOutput::mergeTrackingMetaDataFrom. Content handlers do not need to
+				// use the global instance of the MW parser. For that matter, they do not
+				// need to use the MediaWiki parser at all.
+
+				// Only run if the ParserOutput hasText() (i.e. fillParserOutput is set).
+				// Otherwise things like SpamBlacklist will break this.
+				if ( $po->hasText() ) {
+					$parser->parse( MediaWikiServices::getInstance()->getParser() );
+				}
 			} );
 
 			Hooks::register( 'ApiMakeParserOptions', static function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
