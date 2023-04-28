@@ -388,6 +388,10 @@ class LingoParser {
 			return false;
 		}
 
+		if ( $parser->getOutput() === null || !$parser->getOutput()->hasText() ) {
+			return false;
+		}
+
 		if ( isset( $parser->getOutput()->getPageProperties()['noglossary'] ) ) { // __NOGLOSSARY__ found in wikitext
 			return false;
 		}
