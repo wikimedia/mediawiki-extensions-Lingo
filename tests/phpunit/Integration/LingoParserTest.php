@@ -53,7 +53,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		'mwParserProperties' => [],
 
 		'namespace' => 0,
-		'text' => null,
+		'text' => 'foo',
 
 		'wgexLingoUseNamespaces' => [],
 		'wgexLingoBackend' => 'Lingo\\BasicBackend',
@@ -130,21 +130,21 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Lingo parser does not start parsing (i.e. accesses parser output) when parsed Page is in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->never(),
+				'mwParserExpectsGetOutput' => $this->exactly( 2 ),
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => false ],
 			] ],
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is in explicitly allowed namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->once(),
+				'mwParserExpectsGetOutput' => $this->exactly( 3 ),
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => true ],
 			] ],
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is not in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->once(),
+				'mwParserExpectsGetOutput' => $this->exactly( 3 ),
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 101 => false ],
 			] ],
@@ -175,6 +175,10 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
+		$mwParserOutput->expects( $this->any() )
+			->method( 'hasText' )
+			->willReturn( true );
+
 		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?? $this->any() )
 			->method( 'getText' )
 			->willReturn( $config[ 'text' ] );
@@ -183,7 +187,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->any() )
+		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->exactly( 3 ) )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 

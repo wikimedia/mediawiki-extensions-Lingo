@@ -421,6 +421,10 @@ class LingoParser {
 			return false;
 		}
 
+		if ( $parser->getOutput() === null || !$parser->getOutput()->hasText() ) {
+			return false;
+		}
+
 		$title = $parser->getTitle();
 
 		if ( !( $title instanceof Title ) ) {
