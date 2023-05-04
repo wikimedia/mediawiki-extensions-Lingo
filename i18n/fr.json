@@ -10,9 +10,9 @@
 	},
 	"lingo-desc": "Dans les pages, affiche une info-bulle si le mot est défini dans une page du wiki.",
 	"lingo-terminologypagename": "Terminologie",
-	"lingo-noterminologypage": "La page de terminologie « $1 » n’existe pas.",
-	"lingo-notatextpage": "La page de terminologie « $1 » n’est pas une page de texte.",
-	"lingo-terminologypagenotlocal": "Page « $1 » n'est pas une page locale.",
+	"lingo-noterminologypage": "La page de terminologie « $1 » n’existe pas.",
+	"lingo-notatextpage": "La page de terminologie « $1 » n’est pas une page de texte.",
+	"lingo-terminologypagenotlocal": "La page « $1 » n’est pas une page locale.",
 	"lingo-noapprovedrevs": "La prise en charge de ApprovedRevs est activée dans Lingo. Mais ApprovedRevs n’a pas été trouvé.",
-	"lingo-invalidlinktarget": "Lien destination non valide pour le terme « $1 » : $2"
+	"lingo-invalidlinktarget": "Lien cible non valide pour le terme « $1 » : $2"
 }
