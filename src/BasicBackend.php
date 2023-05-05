@@ -28,7 +28,6 @@
 namespace Lingo;
 
 use ApprovedRevs;
-use Hooks;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
@@ -55,8 +54,9 @@ class BasicBackend extends Backend {
 	}
 
 	private function registerHooks() {
-		Hooks::register( 'ArticlePurge', [ $this, 'purgeCache' ] );
-		Hooks::register( 'PageContentSave', [ $this, 'purgeCache' ] );
+		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
+		$hookContainer->register( 'ArticlePurge', [ $this, 'purgeCache' ] );
+		$hookContainer->register( 'PageContentSave', [ $this, 'purgeCache' ] );
 	}
 
 	/**
