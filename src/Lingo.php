@@ -26,7 +26,6 @@
 
 namespace Lingo;
 
-use Hooks;
 use MediaWiki\MediaWikiServices;
 use Parser;
 use ParserOptions;
@@ -53,11 +52,12 @@ class Lingo {
 
 			$parser->setBackend( $backend );
 
-			Hooks::register( 'SimpleMathJaxAttributes', static function ( array &$attributes, string $tex ) {
+			$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
+			$hookContainer->register( 'SimpleMathJaxAttributes', static function ( array &$attributes, string $tex ) {
 				$attributes['class'] = ( $attributes['class'] ?? '' ) . " noglossary";
 			} );
 
-			Hooks::register( 'ContentAlterParserOutput', static function ( $title, $content, $po ) use ( $parser ){
+			$hookContainer->register( 'ContentAlterParserOutput', static function ( $title, $content, $po ) use ( $parser ){
 				// FIXME, this should use the correct instance of Parser, not a random global one.
 				// For that matter, it should not assume that there is a Parser being used at
 				// all. It should use the passed in $parserOutput exclusively, and use a fresh
@@ -73,15 +73,15 @@ class Lingo {
 				}
 			} );
 
-			Hooks::register( 'ApiMakeParserOptions', static function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
+			$hookContainer->register( 'ApiMakeParserOptions', static function ( ParserOptions $popts, Title $title, array $params ) use ( $parser ){
 				$parser->setApiParams( $params );
 			} );
 
-			Hooks::register( 'GetDoubleUnderscoreIDs', static function ( array &$doubleUnderscoreIDs ) {
+			$hookContainer->register( 'GetDoubleUnderscoreIDs', static function ( array &$doubleUnderscoreIDs ) {
 				$doubleUnderscoreIDs[] = 'noglossary';
 			} );
 
-			Hooks::register( 'ParserFirstCallInit', static function ( Parser $parser ) {
+			$hookContainer->register( 'ParserFirstCallInit', static function ( Parser $parser ) {
 				$parser->setHook( 'noglossary', static function ( $input, array $args, Parser $parser, PPFrame $frame ) {
 					$output = $parser->recursiveTagParse( $input, $frame );
 					return '<span class="noglossary">' . $output . '</span>';
