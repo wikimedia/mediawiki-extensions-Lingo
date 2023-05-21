@@ -82,7 +82,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$this->assertEquals( trim( $expected ), $html );
 	}
 
-	public function provideData() {
+	public static function provideData() {
 		$xmlFileProvider = new XmlFileProvider( __DIR__ . '/../Fixture/articleAnnotation' );
 		$files = $xmlFileProvider->getFiles();
 

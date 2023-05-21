@@ -103,39 +103,39 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @return array
 	 */
-	public function parseProvider() {
+	public static function parseProvider() {
 		return [
 
 			// Lingo parser does not start parsing (i.e. accesses parser output) when __NOGLOSSARY__ is set
 			[ [
-				'mwParserExpectsGetOutput' => $this->exactly( 3 ),
+				'mwParserExpectsGetOutput' => 3,
 				'mwParserProperties' => [ 'mDoubleUnderscores' => [ 'noglossary' => true ] ],
 			] ],
 
 			// Lingo parser does not start parsing (i.e. accesses parser output) when parsed Page is in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->exactly( 3 ),
+				'mwParserExpectsGetOutput' => 3,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => false ],
 			] ],
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is in explicitly allowed namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->exactly( 4 ),
+				'mwParserExpectsGetOutput' => 4,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => true ],
 			] ],
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is not in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => $this->exactly( 4 ),
+				'mwParserExpectsGetOutput' => 4,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 101 => false ],
 			] ],
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
-				'mwOutputExpectsGetText' => $this->once(),
+				'mwOutputExpectsGetText' => 1,
 				'text' => 'foo',
 			] ],
 
@@ -161,7 +161,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->method( 'hasText' )
 			->willReturn( true );
 
-		$mwParserOutput->expects( $config[ 'mwOutputExpectsGetText' ] ?? $this->any() )
+		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetText' ] ) : $this->any() )
 			->method( 'getText' )
 			->willReturn( $config[ 'text' ] );
 
@@ -169,7 +169,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetOutput' ] ?? $this->exactly( 4 ) )
+		$mwParser->expects( $this->exactly( $config[ 'mwParserExpectsGetOutput' ] ?? 4 ) )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 

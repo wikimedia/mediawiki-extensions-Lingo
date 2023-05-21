@@ -168,7 +168,7 @@ class BasicBackendTest extends BackendTest {
 	/**
 	 * @return array
 	 */
-	public function provideForTestNext() {
+	public static function provideForTestNext() {
 		return [
 
 			// Empty page
