@@ -1,8 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eitvys200"
+			"Eitvys200",
+			"Nokeoo"
 		]
 	},
-	"lingo-terminologypagename": "Terminologija"
+	"lingo-desc": "Puslapiuose pateikia informaciją užvedus pelę iš žodžių, kurie apibrėžti nurodytame viki puslapyje",
+	"lingo-terminologypagename": "Terminologija",
+	"lingo-noterminologypage": "Terminologijos puslapis „$1“ neegzistuoja.",
+	"lingo-notatextpage": "Terminologijos puslapis „$1“ nėra teksto puslapis.",
+	"lingo-terminologypagenotlocal": "Puslapis „$1“ nėra vietos puslapis.",
+	"lingo-invalidlinktarget": "Negalimas nuorodos tikslas terminui „$1“: $2"
 }
