@@ -5,7 +5,7 @@
 			"Liuxinyu970226"
 		]
 	},
-	"lingo-desc": "於頁面中提供懸停工具提示，字元定位於[[$1]]頁面",
+	"lingo-desc": "依據 wiki 頁面上定義的字詞在頁面上提供懸停工具提示",
 	"lingo-terminologypagename": "術語",
 	"lingo-noterminologypage": "術語頁面「$1」不存在。",
 	"lingo-notatextpage": "術語頁面「$1」不是一個文字頁面。",
