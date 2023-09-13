@@ -5,7 +5,7 @@
 			"Toliño"
 		]
 	},
-	"lingo-desc": "Proporciona consellos nas páxinas ao pasar o rato por riba das palabras definidas na páxina \"[[$1]]\"",
+	"lingo-desc": "Proporciona consellos nas páxinas ao pasar o rato por riba das palabras definidas nunha páxina wiki",
 	"lingo-terminologypagename": "Terminoloxía",
 	"lingo-noterminologypage": "A páxina de terminoloxía \"$1\" non existe.",
 	"lingo-notatextpage": "A páxina de terminoloxía \"$1\" non é unha páxina de texto.",
