@@ -2,15 +2,16 @@
 	"@metadata": {
 		"authors": [
 			"GuoPC",
+			"LittlePaw365",
 			"Liuxinyu970226",
 			"Yfdyh000"
 		]
 	},
-	"lingo-desc": "根据wiki页面上定义的单词在页面上提供悬停工具提示",
+	"lingo-desc": "根据wiki页面上定义的单词在页面上提供鼠标悬停工具提示",
 	"lingo-terminologypagename": "术语",
 	"lingo-noterminologypage": "术语页面“$1”不存在。",
-	"lingo-notatextpage": "术语页面“$1”不是一个文本页面。",
-	"lingo-terminologypagenotlocal": "“$1”不是本地页面。",
-	"lingo-noapprovedrevs": "对ApprovedRevs的支持已在Lingo中启用。但找不到ApprovedRevs。",
-	"lingo-invalidlinktarget": "用于术语“$1”的链接目标无效：$2"
+	"lingo-notatextpage": "术语页面“$1”不是文本页面。",
+	"lingo-terminologypagenotlocal": "页面“$1”不是本地页面。",
+	"lingo-noapprovedrevs": "Lingo内已启用对ApprovedRevs的支持。但未找到ApprovedRevs。",
+	"lingo-invalidlinktarget": "术语“$1”的链接目标无效：$2"
 }
