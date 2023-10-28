@@ -73,6 +73,11 @@ $magicWords[ 'nl' ] = [
 	'noglossary' => [ 0, '___GEENWOORDENLIJST__' ],
 ];
 
+/** Serbian (Cyrillic script) (српски (ћирилица)‎) */
+$magicWords[ 'sr-ec' ] = [
+	'noglossary' => [ 0, '__БЕЗРЕЧНИКА__', '__БЕЗ_РЕЧНИКА__' ],
+];
+
 /** Serbian (Latin script) (srpski (latinica)‎) */
 $magicWords[ 'sr-el' ] = [
 	'noglossary' => [ 0, '__BEZREČNIKA__', '__BEZ_REČNIKA__' ],
