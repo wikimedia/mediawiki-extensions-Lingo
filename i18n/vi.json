@@ -1,0 +1,14 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pisceskaze"
+		]
+	},
+	"lingo-desc": "Cung cấp các mẹo công cụ di chuột qua trên các trang từ các cụm từ được xác định trên trang wiki",
+	"lingo-terminologypagename": "Thuật ngữ",
+	"lingo-noterminologypage": "Trang thuật ngữ \"$1\" không tồn tại.",
+	"lingo-notatextpage": "Trang thuật ngữ \"$1\" không phải là trang thuần văn bản.",
+	"lingo-terminologypagenotlocal": "Trang \"$1\" không phải là trang địa phương.",
+	"lingo-noapprovedrevs": "Hỗ trợ cho ApprovedRevs đã được bật cho Lingo. Nhưng ApprovedRevs không được tìm thấy.",
+	"lingo-invalidlinktarget": "Mục tiêu liên kết không hợp lệ cho cụm từ \"$1\": $2"
+}
