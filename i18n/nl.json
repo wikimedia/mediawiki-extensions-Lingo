@@ -2,11 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Siebrand",
-			"Tjcool007"
+			"Tjcool007",
+			"McDutchie"
 		]
 	},
 	"lingo-desc": "Zorgt voor tooltips op pagina's voor woorden gedefinieerd op [[$1]].",
 	"lingo-terminologypagename": "Terminologie",
 	"lingo-noterminologypage": "De pagina \"$1\" bestaat niet.",
-	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina."
+	"lingo-notatextpage": "De terminologiepagina “$1” is geen tekstpagina.",
+	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina.",
+	"lingo-noapprovedrevs": "Ondersteuning voor ApprovedRevs is ingeschakeld in Lingo, maar ApprovedRevs is niet gevonden.",
+	"lingo-invalidlinktarget": "Ongeldig koppelingsdoel voor term “$1”: $2"
 }
