@@ -9,5 +9,8 @@
 	"lingo-desc": "Biedt tooltips voor de muisaanwijzer op pagina's van woorden die zijn gedefinieerd op een wikipagina",
 	"lingo-terminologypagename": "Terminologie",
 	"lingo-noterminologypage": "De pagina \"$1\" bestaat niet.",
-	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina."
+	"lingo-notatextpage": "De terminologiepagina “$1” is geen tekstpagina.",
+	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina.",
+	"lingo-noapprovedrevs": "Ondersteuning voor ApprovedRevs is ingeschakeld in Lingo, maar ApprovedRevs is niet gevonden.",
+	"lingo-invalidlinktarget": "Ongeldig koppelingsdoel voor term “$1”: $2"
 }
