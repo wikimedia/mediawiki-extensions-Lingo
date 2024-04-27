@@ -258,7 +258,7 @@ class LingoParser {
 
 			while ( $wordDescriptorIndex < $numberOfWordDescriptors ) {
 				/** @var \Lingo\Element $definition */
-				list( $skippedWords, $usedWords, $definition ) =
+				[ $skippedWords, $usedWords, $definition ] =
 					$glossary->findNextTerm( $wordDescriptors, $wordDescriptorIndex, $numberOfWordDescriptors );
 
 				if ( $usedWords > 0 ) { // found a term

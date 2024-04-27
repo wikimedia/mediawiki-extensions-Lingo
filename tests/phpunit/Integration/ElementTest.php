@@ -138,7 +138,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$element = new Element( $term, $definition );
 
-		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'new' ],  'title' => wfMessage( 'red-link-title', $title )->text() ];
+		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'new' ], 'title' => wfMessage( 'red-link-title', $title )->text() ];
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 
@@ -179,7 +179,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$element = new Element( $term, $definition );
 
-		$expectedAttributes = [ 'class' => [ 'mw-lingo-term' ],  'title' => $title ];
+		$expectedAttributes = [ 'class' => [ 'mw-lingo-term' ], 'title' => $title ];
 
 		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
 

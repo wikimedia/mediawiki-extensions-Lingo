@@ -80,7 +80,7 @@ class BasicBackend extends Backend {
 			$line = array_pop( $this->mArticleLines );
 
 			if ( $this->isValidGlossaryLine( $line ) ) {
-				list( $term, $definitions ) = $this->processNextGlossaryLine( $line, $term, $definitions );
+				[ $term, $definitions ] = $this->processNextGlossaryLine( $line, $term, $definitions );
 
 				if ( $term !== null ) {
 					$ret = $this->queueDefinitions( $definitions, $term );

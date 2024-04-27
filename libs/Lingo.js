@@ -21,6 +21,7 @@
  *
  * @author Stephan Gambke
  * @file
+ * @param $
  */
 
 ( function ( $ ) {
