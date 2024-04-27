@@ -33,8 +33,6 @@ use MediaWiki\Revision\RevisionRecord;
 
 /**
  * @group extensions-lingo
- * @group extensions-lingo-unit
- * @group mediawiki-databaseless
  *
  * @coversDefaultClass \Lingo\BasicBackend
  * @covers ::<private>
