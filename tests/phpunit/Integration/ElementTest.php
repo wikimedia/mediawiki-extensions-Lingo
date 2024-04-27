@@ -31,8 +31,7 @@ use MediaWikiIntegrationTestCase;
 
 /**
  * @group extensions-lingo
- * @group extensions-lingo-unit
- * @group mediawiki-databaseless
+ * @group Database
  *
  * @coversDefaultClass \Lingo\Element
  *
@@ -166,7 +165,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		// Setup
 		$term = 'someTerm';
 
-		$page = \Title::newFromId( 1 );
+		$page = $this->getExistingTestPage()->getTitle();
 		$this->assertTrue( $page->exists() );
 		$title = $page->getText();
 

@@ -31,8 +31,6 @@ use MediaWikiIntegrationTestCase;
 
 /**
  * @group extensions-lingo
- * @group extensions-lingo-unit
- * @group mediawiki-databaseless
  *
  * @coversDefaultClass \Lingo\Backend
  * @covers ::<private>

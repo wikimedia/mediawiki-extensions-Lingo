@@ -32,8 +32,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo
- * @group extensions-lingo-unit
- * @group mediawiki-databaseless
  *
  * @coversDefaultClass \Lingo\LingoParser
  * @covers ::<private>

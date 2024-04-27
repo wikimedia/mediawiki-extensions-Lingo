@@ -34,8 +34,7 @@ use ReflectionClass;
 
 /**
  * @group extensions-lingo
- * @group extensions-lingo-integration
- * @group mediawiki-databaseless
+ * @group Database
  *
  * @coversNothing
  *
@@ -77,8 +76,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 		$lingoParser->parse( $parser );
 
-		$html = $parser->getOutput()->getText();
-		$html = preg_replace( '/^<div class="mw-parser-output">(.*)<\/div>$/s', '$1', $html );
+		$html = $parser->getOutput()->getText( [ 'unwrap' => true ] );
 		$this->assertEquals( trim( $expected ), $html );
 	}
 
