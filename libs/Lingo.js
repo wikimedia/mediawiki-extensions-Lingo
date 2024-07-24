@@ -27,9 +27,11 @@
 ( function ( $ ) {
 	'use strict';
 
+	var lastFocus = null;
+
 	// eslint-disable-next-line no-shadow
 	$( function ( $ ) {
-		$( 'span.mw-lingo-term' ).each( function () { // eslint-disable-line no-jquery/no-global-selector
+		$( 'a.mw-lingo-term' ).each( function () { // eslint-disable-line no-jquery/no-global-selector
 			var termId = $( this ).attr( 'data-lingo-term-id' ),
 				tooltip = $( '#' + termId ); // eslint-disable-line no-jquery/variable-pattern
 
@@ -51,6 +53,22 @@
 
 			} );
 
+			$( this ).on( 'focus', function() {
+				lastFocus = $( this );
+				$( this ).qtip( 'show' );
+			} );
+
+			$( this ).on( 'blur', function() {
+				$( this ).qtip( 'hide' );
+			} );
+
+		} );
+
+		$( document ).on( 'keydown', function( e ) {
+			if ( e.key === 'Escape' && lastFocus ) {
+				lastFocus.qtip( 'hide' );
+				lastFocus.blur();
+			}
 		} );
 
 	} );

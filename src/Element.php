@@ -155,10 +155,14 @@ class Element {
 	 * @return DOMElement
 	 */
 	private function buildFormattedTermAsTooltip( DOMDocument $doc ) {
+		$termName = htmlentities( $this->mTerm );
+
 		// Wrap term and definition in <span> tags
-		$span = $doc->createElement( 'span', htmlentities( $this->mTerm ) );
+		$span = $doc->createElement( 'a', $termName );
+		$span->setAttribute( 'href', '#' );
 		$span->setAttribute( 'class', 'mw-lingo-term' );
 		$span->setAttribute( 'data-lingo-term-id', $this->getId() );
+		$span->setAttribute( 'aria-label', wfMessage( 'lingo-element-aria-label', $termName )->text() );
 
 		return $span;
 	}
@@ -252,7 +256,9 @@ class Element {
 				if ( $descriptor === null ) {
 					$this->addErrorMessageForInvalidLink( $link );
 				} else {
-					$divDefinitions .= "<div class='mw-lingo-definition-link'>[{$descriptor[ 'url' ]} <nowiki/>]</div>";
+					$linkText = wfMessage( 'lingo-element-linktext', htmlentities( $this->mTerm ) )->text();
+					$linkContainer = "<span class='mw-lingo-definition-link-container'>{$linkText}</span>";
+					$divDefinitions .= "<div class='mw-lingo-definition-link'>[{$descriptor[ 'url' ]} {$linkContainer}]</div>";
 				}
 			}
 

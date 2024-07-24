@@ -26,9 +26,20 @@
  */
 
 @media screen {
-	span.mw-lingo-term {
-		border-bottom: 1px dotted #bbf;
+	a.mw-lingo-term {
+		color: inherit;
+		text-decoration: none !important;
 		cursor: default;
+		position: relative;
+
+		&::after {
+			content: ' ';
+			position: absolute;
+			border-bottom: 3px dotted #4545ff;
+			width: 100%;
+			left: 0;
+			bottom: -2px;
+		}
 
 		&:hover {
 			background-color: rgba( 0, 0, 0, 0.1 );
@@ -71,5 +82,9 @@
 	& > a::before {
 		content: /*@embed*/ url( linkicon.png );
 		margin-left: 1em;
+	}
+
+	span.mw-lingo-definition-link-container {6
+		text-indent: -999999px; // Visually hidden - but not for screen readers
 	}
 }
