@@ -12,5 +12,7 @@
 	"lingo-notatextpage": "De terminologiepagina “$1” is geen tekstpagina.",
 	"lingo-terminologypagenotlocal": "De pagina \"$1\" is geen lokale pagina.",
 	"lingo-noapprovedrevs": "Ondersteuning voor ApprovedRevs is ingeschakeld in Lingo, maar ApprovedRevs is niet gevonden.",
-	"lingo-invalidlinktarget": "Ongeldig koppelingsdoel voor term “$1”: $2"
+	"lingo-invalidlinktarget": "Ongeldig koppelingsdoel voor term “$1”: $2",
+	"lingo-element-aria-label": "Bekijk term: $1",
+	"lingo-element-linktext": "Ga naar de pagina met termverwijzing"
 }

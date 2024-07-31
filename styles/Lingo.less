@@ -30,16 +30,7 @@
 		color: inherit;
 		text-decoration: none !important;
 		cursor: default;
-		position: relative;
-
-		&::after {
-			content: ' ';
-			position: absolute;
-			border-bottom: 3px dotted #4545ff;
-			width: 100%;
-			left: 0;
-			bottom: -2px;
-		}
+		border-bottom: 2px dotted #4545ff;
 
 		&:hover {
 			background-color: rgba( 0, 0, 0, 0.1 );
@@ -63,12 +54,17 @@
 	border-radius: 5px;
 }
 
-.mw-lingo-definition:not( :last-child ) {
-	margin-bottom: 0.5em;
+.mw-lingo-definition {
+	position: relative;
+	&:not( :last-child ) {
+		margin-bottom: 0.5em;
+	}
 }
 
 .mw-lingo-definition-text {
 	display: inline-block;
+	font-size: 12px;
+	padding-right: 8px; // Keep space for the link icon
 
 	p,
 	ul {
@@ -77,14 +73,27 @@
 }
 
 .mw-lingo-definition-link {
-	float: right;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	transform: translateY(-100%);
+	display: inline-block;
+	font-size: 12px;
 
-	& > a::before {
+	& > a::after {
+		padding-left: 5px;
 		content: /*@embed*/ url( linkicon.png );
-		margin-left: 1em;
 	}
 
-	span.mw-lingo-definition-link-container {6
-		text-indent: -999999px; // Visually hidden - but not for screen readers
+	span.mw-lingo-definition-link-container {
+		// Visually hidden - but not for screen readers
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
 	}
 }
