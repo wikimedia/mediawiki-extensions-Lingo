@@ -46,7 +46,7 @@ use ReflectionClass;
 class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
-		$this->setMwGlobals( 'wgexLingoDisplayOnce', false );
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 	}
 
 	protected function tearDown(): void {

@@ -88,8 +88,10 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$parser = new LingoParser();
 		$parser->setBackend( $backend );
 
-		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
-		$GLOBALS[ 'wgexLingoUseNamespaces' ] = $config[ 'wgexLingoUseNamespaces' ];
+		$this->overrideConfigValues( [
+			'LingoPageName' => 'SomePage',
+			'exLingoUseNamespaces' => $config[ 'wgexLingoUseNamespaces' ],
+		] );
 
 		// Run
 		$parser->parse( $mwParser );

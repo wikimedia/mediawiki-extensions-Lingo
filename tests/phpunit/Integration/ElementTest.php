@@ -67,7 +67,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		];
 		$element = new Element( $term, $definition );
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		$expectedAttributes = [ 'class' => [ 'mw-lingo-term' ], 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
 
@@ -97,7 +97,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$definition = [];
 		$element = new Element( $term, $definition );
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = true;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', true );
 
 		$expectedAttributes = [ 'class' => 'mw-lingo-term', 'data-lingo-term-id' => '8ade40e10f35a32fbb1e06a4b54751d0' ];
 
@@ -140,7 +140,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'new' ], 'title' => wfMessage( 'red-link-title', $title )->text() ];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -181,7 +181,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$expectedAttributes = [ 'class' => [ 'mw-lingo-term' ], 'title' => $title ];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -217,7 +217,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$expectedAttributes = [ 'class' => [ 'mw-lingo-term', 'ext', 'some-style' ], 'title' => $term ];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = true;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', true );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -256,7 +256,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$expectedAttributes = [ 'class' => 'mw-lingo-term', 'data-lingo-term-id' => 'a8057b0494da505d2f7ac2e96e17083f' ];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -288,7 +288,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$expectedAttributes = [ 'class' => 'mw-lingo-term' ];
 		$unexpectedAttributes = [ 'title' ];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -329,7 +329,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		$url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		$element = new Element( $term, $definition1 );
 		$element->addDefinition( $definition2 );
@@ -389,7 +389,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 		// $url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		$element = new Element( $term, $definition1 );
 		$element->addDefinition( $definition2 );
@@ -435,7 +435,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			Element::ELEMENT_STYLE      => null,
 		];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		$element = new Element( $term, $definition );
 		$node = $element->getFormattedTerm( $this->doc );
@@ -466,7 +466,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			Element::ELEMENT_STYLE      => null,
 		];
 
-		$GLOBALS[ 'wgexLingoDisplayOnce' ] = false;
+		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
 		$element = new Element( $term, $definition );
 		$node = $element->getFormattedTerm( $this->doc );
