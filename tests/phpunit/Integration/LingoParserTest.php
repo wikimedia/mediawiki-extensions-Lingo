@@ -42,8 +42,7 @@ use MediaWikiIntegrationTestCase;
  */
 class LingoParserTest extends MediaWikiIntegrationTestCase {
 
-	/** @var array */
-	private static $defaultTestConfig = [
+	private const DEFAULT_TEST_CONFIG = [
 		'mwParserExpectsGetOutput' => 4,
 		'mwOutputExpectsGetText' => null,
 
@@ -80,7 +79,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testParse( array $config ) {
 		// Setup
-		$config += self::$defaultTestConfig;
+		$config += self::DEFAULT_TEST_CONFIG;
 
 		$mwParser = $this->getParserMock( $config );
 		$backend = $this->getBackendMock();
