@@ -130,11 +130,7 @@ class BasicBackendTest extends BackendTest {
 	}
 
 	public function testNext_LingoPageIsNotATextPage() {
-		# TODO 1.36+ FallbackContent exists since 1.36; the alternative relying
-		# on string can be removed when this extension will support only MW 1.36+
-		$unknownContent = class_exists( 'FallbackContent' )
-			? new FallbackContent( 'unknown text', 'unknown type' )
-			: 'This is not a TextContent object';
+		$unknownContent = new FallbackContent( 'unknown text', 'unknown type' );
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, $unknownContent );
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addError' )

@@ -12,11 +12,6 @@ abbreviation is hovered over in an article.
 
 See https://www.mediawiki.org/wiki/Extension:Lingo for online documentation.
 
-## Requirements
-
-- PHP 7.0 or later
-- MediaWiki 1.31 or later
-
 ## Installation & Activation
 
 The recommended way to install this extension is by using [Composer][composer].
