@@ -26,9 +26,9 @@
 
 namespace Lingo\Tests\Integration;
 
+use Lingo\Backend;
 use Lingo\LingoParser;
 use MediaWikiIntegrationTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group extensions-lingo
@@ -81,7 +81,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::parse
 	 * @dataProvider parseProvider
 	 */
-	public function testParse( $config ) {
+	public function testParse( array $config ) {
 		// Setup
 		$config += self::$defaultTestConfig;
 
@@ -142,7 +142,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @param array $config
-	 * @return MockObject
+	 * @return \Parser
 	 */
 	private function getParserMock( $config = [] ) {
 		if ( array_key_exists( 'mwParser', $config ) ) {
@@ -188,7 +188,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @param array $config
 	 *
-	 * @return MockObject
+	 * @return \Title
 	 */
 	private function getTitleMock( $config ) {
 		if ( array_key_exists( 'mwTitle', $config ) ) {
@@ -205,7 +205,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	}
 
 	/**
-	 * @return MockObject
+	 * @return Backend
 	 */
 	private function getBackendMock() {
 		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
