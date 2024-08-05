@@ -144,7 +144,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 * @param array $config
 	 * @return MockObject
 	 */
-	private function getParserMock( $config = [] ) {
+	private function getParserMock( array $config ) {
 		if ( array_key_exists( 'mwParser', $config ) ) {
 			return $config[ 'mwParser' ];
 		}

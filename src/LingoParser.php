@@ -32,8 +32,6 @@ use DOMDocument;
 use DOMXPath;
 use ObjectCache;
 use Parser;
-use StubObject;
-use Title;
 use Wikimedia\AtEase\AtEase;
 
 /**
@@ -384,11 +382,7 @@ class LingoParser {
 	private function shouldParse( $parser ) {
 		global $wgexLingoUseNamespaces;
 
-		if ( !( $parser instanceof Parser || $parser instanceof StubObject ) ) {
-			return false;
-		}
-
-		if ( $parser->getOutput() === null || !$parser->getOutput()->hasText() ) {
+		if ( !$parser->getOutput() || !$parser->getOutput()->hasText() ) {
 			return false;
 		}
 
@@ -396,18 +390,7 @@ class LingoParser {
 			return false;
 		}
 
-		$title = $parser->getTitle();
-
-		if ( !( $title instanceof Title ) ) {
-			return false;
-		}
-
-		$namespace = $title->getNamespace();
-
-		if ( isset( $wgexLingoUseNamespaces[ $namespace ] ) && $wgexLingoUseNamespaces[ $namespace ] === false ) {
-			return false;
-		}
-
-		return true;
+		$namespace = $parser->getTitle()->getNamespace();
+		return $wgexLingoUseNamespaces[$namespace] ?? true;
 	}
 }
