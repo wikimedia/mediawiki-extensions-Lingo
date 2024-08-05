@@ -62,7 +62,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @dataProvider provideData
 	 */
-	public function testArticleAnnotation( $file = null, $text = '', $glossaryEntries = null, $expected = '' ) {
+	public function testArticleAnnotation( string $file, string $text, array $glossaryEntries, string $expected ) {
 		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
@@ -77,7 +77,9 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$lingoParser->parse( $parser );
 
 		$html = $parser->getOutput()->getText( [ 'unwrap' => true ] );
-		$this->assertEquals( trim( $expected ), $html );
+		// Normalize the outer <div class="mw-parser-output"> as we don't really care about it
+		$html = preg_replace( '/(<div class=")[^"]*(mw-parser-output)[^>]*>/', '$1$2">', $html );
+		$this->assertEquals( $expected, $html );
 	}
 
 	public static function provideData() {
@@ -107,7 +109,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 				substr( $file, strlen( __DIR__ . '/../Fixture/articleAnnotation' ) ),
 				trim( $decoded[ 'text' ] ),
 				$glossaryEntries,
-				trim( $decoded[ 'expected' ] ) . "\n",
+				trim( $decoded[ 'expected' ] ),
 			];
 		}
 	}
