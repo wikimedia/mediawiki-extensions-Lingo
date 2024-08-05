@@ -198,25 +198,12 @@ class LingoParser {
 		}
 
 		// Parse HTML from page
-
-		// TODO: Remove call to \MediaWiki\suppressWarnings() for MW 1.34+.
-		// \Wikimedia\AtEase\AtEase::suppressWarnings() is available from MW 1.34.
-		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
-			\Wikimedia\AtEase\AtEase::suppressWarnings();
-		} else {
-			\MediaWiki\suppressWarnings();
-		}
+		AtEase::suppressWarnings();
 
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
-		// TODO: Remove call to \MediaWiki\restoreWarnings() for MW 1.34+.
-		// \Wikimedia\AtEase\AtEase::restoreWarnings() is available from MW 1.34.
-		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
-			\Wikimedia\AtEase\AtEase::restoreWarnings();
-		} else {
-			\MediaWiki\restoreWarnings();
-		}
+		AtEase::restoreWarnings();
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
