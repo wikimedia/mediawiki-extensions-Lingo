@@ -4,6 +4,7 @@
 	"author": [
 		"Barry Coughlan",
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
+		"[https://www.archixl.nl Youri van den Bogert]",
 		"..."
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Lingo",
@@ -30,6 +31,11 @@
 		"ext.Lingo.styles": {
 			"styles": [
 				"styles/Lingo.less"
+			]
+		},
+		"ext.Lingo.WCAG.styles": {
+			"styles": [
+				"styles/Lingo.WCAG.less"
 			]
 		},
 		"ext.Lingo.jquery.qtip": {
@@ -60,6 +66,9 @@
 		},
 		"LingoUseNamespaces": {
 			"value": []
+		},
+		"LingoWCAGStyle": {
+			"value": false
 		}
 	},
 	"MessagesDirs": {

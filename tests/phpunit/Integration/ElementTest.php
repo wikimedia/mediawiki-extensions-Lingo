@@ -75,13 +75,13 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$node = $element->getFormattedTerm( $this->doc );
 
 		// Check
-		$this->checkTermIsDomElement( $node, 'span', $term, $expectedAttributes );
+		$this->checkTermIsDomElement( $node, 'a', $term, $expectedAttributes );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
 
 		// Check
-		$this->checkTermIsDomElement( $node, 'span', $term, $expectedAttributes );
+		$this->checkTermIsDomElement( $node, 'a', $term, $expectedAttributes );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$node = $element->getFormattedTerm( $this->doc );
 
 		// Check
-		$this->checkTermIsDomElement( $node, 'span', $term, $expectedAttributes );
+		$this->checkTermIsDomElement( $node, 'a', $term, $expectedAttributes );
 
 		// Run
 		$node = $element->getFormattedTerm( $this->doc );
@@ -262,7 +262,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		$node = $element->getFormattedTerm( $this->doc );
 
 		// Check
-		$this->checkTermIsDomElement( $node, 'span', $term, $expectedAttributes );
+		$this->checkTermIsDomElement( $node, 'a', $term, $expectedAttributes );
 	}
 
 	/**
@@ -309,6 +309,8 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		// Setup
 		$term = 'some&Term';
 
+		$linkText = wfMessage( 'lingo-element-linktext', htmlentities( $term ) )->text();
+
 		$definition1 = [
 			Element::ELEMENT_TERM       => $term,
 			Element::ELEMENT_DEFINITION => 'someDefinition1',
@@ -318,6 +320,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		];
 
 		$url1 = \Title::newFromText( $definition1[ Element::ELEMENT_LINK ] )->getFullURL();
+		$url1Container = "<span class='mw-lingo-definition-link-container'>{$linkText}</span>";
 
 		$definition2 = [
 			Element::ELEMENT_TERM       => $term,
@@ -328,6 +331,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		];
 
 		$url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
+		$url2Container = "<span class='mw-lingo-definition-link-container'>{$linkText}</span>";
 
 		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 
@@ -344,14 +348,14 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			"someDefinition1\n" .
 			"</div>" .
 			"<div class='mw-lingo-definition-link'>" .
-			"[" . $url1 . " <nowiki/>]" .
+			"[" . $url1 . " " . $url1Container . "]" .
 			"</div></div>" .
 			"<div class='mw-lingo-definition navigation-not-searchable some-style-2'>" .
 			"<div class='mw-lingo-definition-text'>\n" .
 			"someDefinition2\n" .
 			"</div>" .
 			"<div class='mw-lingo-definition-link'>" .
-			"[" . $url2 . " <nowiki/>]" .
+			"[" . $url2 . " " . $url2Container . "]" .
 			"</div></div>\n" .
 			"</div>",
 			$definitions

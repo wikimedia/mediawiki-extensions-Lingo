@@ -26,12 +26,19 @@
  */
 
 @media screen {
-	span.mw-lingo-term {
-		border-bottom: 1px dotted #bbf;
+	a.mw-lingo-term {
+		/* stylelint-disable-next-line declaration-no-important */
+		color: inherit !important;
+		/* stylelint-disable-next-line declaration-no-important */
+		text-decoration: none !important;
 		cursor: default;
+		border-bottom: 1px dotted #bbf;
 
-		&:hover {
+		&:hover,
+		&:focus,
+		&:active {
 			background-color: rgba( 0, 0, 0, 0.1 );
+			text-decoration: none;
 		}
 	}
 }
@@ -52,12 +59,17 @@
 	border-radius: 5px;
 }
 
-.mw-lingo-definition:not( :last-child ) {
-	margin-bottom: 0.5em;
+.mw-lingo-definition {
+	position: relative;
+
+	&:not( :last-child ) {
+		margin-bottom: 0.5em;
+	}
 }
 
 .mw-lingo-definition-text {
 	display: inline-block;
+	padding-right: 8px; // Keep space for the link icon
 
 	p,
 	ul {
@@ -66,10 +78,26 @@
 }
 
 .mw-lingo-definition-link {
-	float: right;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	transform: translateY( -100% );
+	display: inline-block;
 
-	& > a::before {
+	& > a::after {
+		padding-left: 5px;
 		content: /*@embed*/ url( linkicon.png );
-		margin-left: 1em;
+	}
+
+	span.mw-lingo-definition-link-container {
+		// Visually hidden - but not for screen readers
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect( 0, 0, 0, 0 );
+		border: 0;
 	}
 }
