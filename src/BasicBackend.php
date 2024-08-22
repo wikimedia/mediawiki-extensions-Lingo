@@ -236,11 +236,9 @@ class BasicBackend extends Backend {
 
 	/**
 	 * Initiates the purging of the cache when the Terminology page was saved or purged.
-	 *
-	 * @param WikiPage $wikipage
 	 */
 	public function purgeCache( WikiPage $wikipage ) {
-		if ( $wikipage !== null && $wikipage->getTitle()->getText() === $this->getLingoPageName() ) {
+		if ( $wikipage->getTitle()->getText() === $this->getLingoPageName() ) {
 			$this->getLingoParser()->purgeGlossaryFromCache();
 		}
 	}
