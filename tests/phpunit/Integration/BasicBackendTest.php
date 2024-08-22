@@ -104,8 +104,7 @@ class BasicBackendTest extends BackendTest {
 	public function testNext_LingoPageIsInterwiki() {
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', 'someInterwiki' );
 		$backend->getMessageLog()->expects( $this->once() )
-			->method( 'addError' )
-			->willReturn( null );
+			->method( 'addError' );
 
 		$this->assertNull( $backend->next() );
 	}
@@ -118,8 +117,7 @@ class BasicBackendTest extends BackendTest {
 	public function testNext_LingoPageDoesNotExist() {
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', null, false );
 		$backend->getMessageLog()->expects( $this->once() )
-			->method( 'addWarning' )
-			->willReturn( null );
+			->method( 'addWarning' );
 
 		$this->assertNull( $backend->next() );
 	}
@@ -133,8 +131,7 @@ class BasicBackendTest extends BackendTest {
 		$unknownContent = new FallbackContent( 'unknown text', 'unknown type' );
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, $unknownContent );
 		$backend->getMessageLog()->expects( $this->once() )
-			->method( 'addError' )
-			->willReturn( null );
+			->method( 'addError' );
 
 		$this->assertNull( $backend->next() );
 	}
@@ -142,8 +139,7 @@ class BasicBackendTest extends BackendTest {
 	public function testNext_ApprovedRevsEnabledButNotInstalled() {
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
 		$backend->getMessageLog()->expects( $this->once() )
-			->method( 'addWarning' )
-			->willReturn( null );
+			->method( 'addWarning' );
 
 		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
 

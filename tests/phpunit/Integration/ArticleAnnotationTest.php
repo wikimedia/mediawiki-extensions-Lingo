@@ -67,9 +67,8 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
 		$backend = $this->getMockForAbstractClass( \Lingo\Backend::class );
-		$backend->expects( $this->any() )
-			->method( 'next' )
-			->will( self::onConsecutiveCalls( ...$glossaryEntries ) );
+		$backend->method( 'next' )
+			->willReturnOnConsecutiveCalls( ...$glossaryEntries );
 
 		$lingoParser = LingoParser::getInstance();
 		$lingoParser->setBackend( $backend );

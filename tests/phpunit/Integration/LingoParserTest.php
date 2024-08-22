@@ -44,9 +44,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 	/** @var array */
 	private static $defaultTestConfig = [
-		'mwParserExpectsGetOutput' => null,
-		'mwParserExpectsGetTitle' => null,
-		'mwTitleExpectsGetNamespace' => null,
+		'mwParserExpectsGetOutput' => 4,
 		'mwOutputExpectsGetText' => null,
 
 		'mwParserProperties' => [],
@@ -55,7 +53,6 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		'text' => 'foo',
 
 		'wgexLingoUseNamespaces' => [],
-		'wgexLingoBackend' => \Lingo\BasicBackend::class,
 	];
 
 	/**
@@ -119,14 +116,12 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is in explicitly allowed namespace
 			[ [
-				'mwParserExpectsGetOutput' => 4,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => true ],
 			] ],
 
 			// Lingo parser starts parsing (i.e. accesses parser output) when parsed Page is not in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => 4,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 101 => false ],
 			] ],
@@ -155,19 +150,17 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 		$mwParser = $this->createMock( \Parser::class );
 
-		$mwParserOutput->expects( $this->any() )
-			->method( 'hasText' )
+		$mwParserOutput->method( 'hasText' )
 			->willReturn( true );
 
 		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetText' ] ) : $this->any() )
 			->method( 'getText' )
 			->willReturn( $config[ 'text' ] );
 
-		$mwParser->expects( $config[ 'mwParserExpectsGetTitle' ] ?? $this->any() )
-			->method( 'getTitle' )
+		$mwParser->method( 'getTitle' )
 			->willReturn( $mwTitle );
 
-		$mwParser->expects( $this->exactly( $config[ 'mwParserExpectsGetOutput' ] ?? 4 ) )
+		$mwParser->expects( $this->exactly( $config['mwParserExpectsGetOutput'] ) )
 			->method( 'getOutput' )
 			->willReturn( $mwParserOutput );
 
@@ -197,8 +190,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 		$mwTitle = $this->createMock( \Title::class );
 
-		$mwTitle->expects( $config[ 'mwTitleExpectsGetNamespace' ] ?: $this->any() )
-			->method( 'getNamespace' )
+		$mwTitle->method( 'getNamespace' )
 			->willReturn( $config[ 'namespace' ] );
 
 		return $mwTitle;
