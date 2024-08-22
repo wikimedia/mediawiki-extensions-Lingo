@@ -47,7 +47,7 @@ class BasicBackendTest extends BackendTest {
 	 * @covers ::purgeCache
 	 */
 	public function testPurgeCache() {
-		$GLOBALS[ 'wgexLingoPage' ] = 'SomePage';
+		$this->overrideConfigValue( 'exLingoPage', 'SomePage' );
 
 		$title = $this->createMock( \Title::class );
 
@@ -141,7 +141,7 @@ class BasicBackendTest extends BackendTest {
 		$backend->getMessageLog()->expects( $this->once() )
 			->method( 'addWarning' );
 
-		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
+		$this->overrideConfigValue( 'exLingoEnableApprovedRevs', true );
 
 		$this->assertEquals( [ 'SOT', 'Some old text', null, null ], $backend->next() );
 	}
@@ -149,7 +149,7 @@ class BasicBackendTest extends BackendTest {
 	public function testNext_ApprovedRevsEnabledAndInstalled() {
 		$backend = $this->getTestObject( ';SOT:Some old text', 'view', '', false, false, ';SAT:Some approved text' );
 
-		$GLOBALS[ 'wgexLingoEnableApprovedRevs' ] = true;
+		$this->overrideConfigValue( 'exLingoEnableApprovedRevs', true );
 		define( 'APPROVED_REVS_VERSION', '42' );
 
 		$this->assertEquals( [ 'SAT', 'Some approved text', null, null ], $backend->next() );
@@ -300,7 +300,7 @@ TESTTEXT
 		$constructor = $reflected->getConstructor();
 		$constructor->invokeArgs( $backend, [ &$messageLog ] );
 
-		$GLOBALS[ 'wgLingoPageName' ] = 'SomePage';
+		$this->overrideConfigValue( 'LingoPageName', 'SomePage' );
 
 		$lingoPageTitle = $this->createMock( \Title::class );
 		$lingoPageTitle->expects( $this->once() )
