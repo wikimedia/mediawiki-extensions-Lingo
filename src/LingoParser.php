@@ -68,10 +68,7 @@ class LingoParser {
 		$this->regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 	}
 
-	/**
-	 * @param Parser $mwParser
-	 */
-	public function parse( $mwParser ) {
+	public function parse( Parser $mwParser ) {
 		if ( $this->shouldParse( $mwParser ) ) {
 			$this->realParse( $mwParser );
 		}
@@ -171,10 +168,8 @@ class LingoParser {
 	 * Parses the given text and enriches applicable terms
 	 *
 	 * This method currently only recognizes terms consisting of max one word
-	 *
-	 * @param Parser $parser
 	 */
-	private function realParse( $parser ) {
+	private function realParse( Parser $parser ): void {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
 		$text = $params === null ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
@@ -362,11 +357,7 @@ class LingoParser {
 		$this->mApiParams = $params;
 	}
 
-	/**
-	 * @param Parser $parser
-	 * @return bool
-	 */
-	private function shouldParse( $parser ) {
+	private function shouldParse( Parser $parser ): bool {
 		global $wgexLingoUseNamespaces;
 
 		if ( !$parser->getOutput() || !$parser->getOutput()->hasText() ) {
