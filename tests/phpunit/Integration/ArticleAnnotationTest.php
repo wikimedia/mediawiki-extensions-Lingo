@@ -27,7 +27,6 @@ namespace Lingo\Tests\Integration;
 
 use Lingo\LingoParser;
 use Lingo\Tests\Util\XmlFileProvider;
-use MediaWiki\MediaWikiServices;
 use MediaWikiIntegrationTestCase;
 use ParserOptions;
 use ReflectionClass;
@@ -63,7 +62,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 	 * @dataProvider provideData
 	 */
 	public function testArticleAnnotation( string $file, string $text, array $glossaryEntries, string $expected ) {
-		$parser = MediaWikiServices::getInstance()->getParserFactory()->create();
+		$parser = $this->getServiceContainer()->getParserFactory()->create();
 		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
 		$backend = $this->getMockForAbstractClass( \Lingo\Backend::class );
