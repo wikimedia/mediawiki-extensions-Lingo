@@ -111,7 +111,12 @@ class LingoParser {
 	 *
 	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
-	private function getLingoTree() {
+	private function getLingoTree( array $searchTerms ) {
+		$searchTerms = array_filter(
+			array_map( 'trim', $searchTerms ),
+			static fn ( $item ) => !empty( $item )
+		);
+
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
 			// use cache if enabled
@@ -132,7 +137,7 @@ class LingoParser {
 					wfDebug( "Re-cached lingo tree.\n" );
 				} else {
 					wfDebug( "Cache miss: Lingo tree not found in cache.\n" );
-					$this->mLingoTree = $this->buildLingo();
+					$this->mLingoTree = $this->buildLingo( $searchTerms );
 					wfDebug( "Cached lingo tree.\n" );
 				}
 
@@ -142,7 +147,7 @@ class LingoParser {
 				$cache->set( $cachekey, $this->mLingoTree, 60 * 60 * 24 * 30 );
 			} else {
 				wfDebug( "Caching of lingo tree disabled.\n" );
-				$this->mLingoTree = $this->buildLingo();
+				$this->mLingoTree = $this->buildLingo( $searchTerms );
 			}
 		}
 
@@ -152,9 +157,10 @@ class LingoParser {
 	/**
 	 * @return Tree
 	 */
-	private function buildLingo() {
+	private function buildLingo( array $searchTerms ) {
 		$lingoTree = new Tree();
-		$backend = &$this->mLingoBackend;
+		$backend = $this->mLingoBackend;
+		$backend->setSearchTerms( $searchTerms );
 
 		// assemble the result array
 		while ( $elementData = $backend->next() ) {
@@ -182,21 +188,26 @@ class LingoParser {
 		if ( $text === null || $text === '' ) {
 			return;
 		}
-
-		// Get array of terms
-		$glossary = $this->getLingoTree();
-
-		if ( $glossary == null ) {
-			return;
-		}
-
 		// Parse HTML from page
-		AtEase::suppressWarnings();
+
+		// TODO: Remove call to \MediaWiki\suppressWarnings() for MW 1.34+.
+		// \Wikimedia\AtEase\AtEase::suppressWarnings() is available from MW 1.34.
+		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
+			\Wikimedia\AtEase\AtEase::suppressWarnings();
+		} else {
+			\MediaWiki\suppressWarnings();
+		}
 
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
 
-		AtEase::restoreWarnings();
+		// TODO: Remove call to \MediaWiki\restoreWarnings() for MW 1.34+.
+		// \Wikimedia\AtEase\AtEase::restoreWarnings() is available from MW 1.34.
+		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
+			\Wikimedia\AtEase\AtEase::restoreWarnings();
+		} else {
+			\MediaWiki\restoreWarnings();
+		}
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
@@ -212,10 +223,6 @@ class LingoParser {
 		for ( $textElementIndex = 0; $textElementIndex < $numberOfTextElements; $textElementIndex++ ) {
 			$textElement = $textElements->item( $textElementIndex );
 
-			if ( strlen( $textElement->nodeValue ) < $glossary->getMinTermLength() ) {
-				continue;
-			}
-
 			$matches = [];
 			preg_match_all(
 				$this->regex,
@@ -225,6 +232,19 @@ class LingoParser {
 			);
 
 			if ( count( $matches ) === 0 || count( $matches[ 0 ] ) === 0 ) {
+				continue;
+			}
+
+			$termsInText = array_map( static fn ( $match ) => $match[0], $matches[0] );
+
+			// Get array of terms
+			$glossary = $this->getLingoTree( $termsInText );
+
+			if ( $glossary == null || count( $glossary->getTermList() ) === 0 ) {
+				continue;
+			}
+
+			if ( strlen( $textElement->nodeValue ) < $glossary->getMinTermLength() ) {
 				continue;
 			}
 
@@ -303,17 +323,24 @@ class LingoParser {
 	 * @param Parser $parser
 	 */
 	private function loadModules( $parser ) {
-		global $wgOut;
+		global $wgOut, $wgexLingoWCAGStyle;
 
 		$parserOutput = $parser->getOutput();
 
+		$modules = [ 'ext.Lingo' ];
+		$moduleStyles = [ 'ext.Lingo.styles' ];
+
+		if ( $wgexLingoWCAGStyle ) {
+			$moduleStyles[] = 'ext.Lingo.WCAG.styles';
+		}
+
 		// load scripts
-		$parserOutput->addModules( [ 'ext.Lingo' ] );
-		$parserOutput->addModuleStyles( [ 'ext.Lingo.styles' ] );
+		$parserOutput->addModules( $modules );
+		$parserOutput->addModuleStyles( $moduleStyles );
 
 		if ( !$wgOut->isArticle() ) {
-			$wgOut->addModules( 'ext.Lingo' );
-			$wgOut->addModuleStyles( 'ext.Lingo.styles' );
+			$wgOut->addModules( $modules );
+			$wgOut->addModuleStyles( $moduleStyles );
 		}
 	}
 
