@@ -11,5 +11,6 @@
 	"lingo-notatextpage": "דף המונחים \"$1\" אינו דף טקסט.",
 	"lingo-terminologypagenotlocal": "הדף \"$1\" אינו דף מקומי.",
 	"lingo-noapprovedrevs": "תמיכה ב־ApprovedRevs מופעלת ב־Lingo. אבל ApprovedRevs לא נמצאה.",
-	"lingo-invalidlinktarget": "יעד קישור בלתי־תקין למונח \"$1\"‏: $2"
+	"lingo-invalidlinktarget": "יעד קישור בלתי־תקין למונח \"$1\"‏: $2",
+	"lingo-element-linktext": "מעבר לדף עם ההגדרה של \"$1\""
 }

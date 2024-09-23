@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"AnupamM",
 			"Armando-Martin",
 			"Jackiezelaya",
 			"Macofe"
@@ -12,5 +13,6 @@
 	"lingo-notatextpage": "La página de terminología \"$1\" no es una página de texto.",
 	"lingo-terminologypagenotlocal": "La página \"$1\" no es una página local.",
 	"lingo-noapprovedrevs": "En Lingo está activado el soporte para ApprovedRevs. Pero éste no se encontró.",
-	"lingo-invalidlinktarget": "El destino de enlace no es válido para el término \"$1\": $2"
+	"lingo-invalidlinktarget": "El destino de enlace no es válido para el término \"$1\": $2",
+	"lingo-element-linktext": "Ir a la página con la definición de ' $1 '"
 }

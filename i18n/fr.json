@@ -3,6 +3,7 @@
 		"authors": [
 			"Gomoko",
 			"Sherbrooke",
+			"Terio legale",
 			"Thibaut120094",
 			"Verdy p",
 			"Wladek92"
@@ -14,5 +15,6 @@
 	"lingo-notatextpage": "La page de terminologie « $1 » n’est pas une page de texte.",
 	"lingo-terminologypagenotlocal": "La page « $1 » n’est pas une page locale.",
 	"lingo-noapprovedrevs": "La prise en charge de ApprovedRevs est activée dans Lingo. Mais ApprovedRevs n’a pas été trouvé.",
-	"lingo-invalidlinktarget": "Lien cible non valide pour le terme « $1 » : $2"
+	"lingo-invalidlinktarget": "Lien cible non valide pour le terme « $1 » : $2",
+	"lingo-element-linktext": "Accéder à la page avec la définition de ' $1 '"
 }
