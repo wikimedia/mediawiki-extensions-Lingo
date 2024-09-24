@@ -10,5 +10,6 @@
 	"lingo-notatextpage": "La pagina di terminologia \"$1\" non è una pagina di testo.",
 	"lingo-terminologypagenotlocal": "La pagina \"$1\" non è una pagina locale.",
 	"lingo-noapprovedrevs": "Supporto per ApprovedRevs è attivato in Lingo. Ma ApprovedRevs non è stato trovato.",
-	"lingo-invalidlinktarget": "Destinazione collegamento non valida per il termine \"$1\": $2"
+	"lingo-invalidlinktarget": "Destinazione collegamento non valida per il termine \"$1\": $2",
+	"lingo-element-linktext": "Vai alla pagina con la definizione di '$1'"
 }
