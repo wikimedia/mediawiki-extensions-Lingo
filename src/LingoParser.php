@@ -28,6 +28,7 @@
  */
 namespace Lingo;
 
+use BagOStuff;
 use DOMDocument;
 use DOMXPath;
 use ObjectCache;
@@ -45,6 +46,8 @@ use Wikimedia\AtEase\AtEase;
 class LingoParser {
 
 	private const WORD_OFFSET = 1;
+
+	private const CACHE_LIFE = 60 * 60 * 24 * 30; // 30 days
 
 	/** @var Tree|null */
 	private $mLingoTree = null;
@@ -117,15 +120,14 @@ class LingoParser {
 			static fn ( $item ) => !empty( $item )
 		);
 
+		$useCache = $this->getBackend()->useCache();
+
 		// build glossary array only once per request
 		if ( !$this->mLingoTree ) {
 			// use cache if enabled
-			if ( $this->getBackend()->useCache() ) {
+			if ( $useCache ) {
 				// Try cache first
-				global $wgexLingoCacheType;
-				$cache = ( $wgexLingoCacheType !== null )
-					? ObjectCache::getInstance( $wgexLingoCacheType )
-					: ObjectCache::getLocalClusterInstance();
+				$cache = $this->getCacheInstance();
 				$cachekey = $this->getCacheKey();
 				$cachedLingoTree = $cache->get( $cachekey );
 
@@ -144,10 +146,16 @@ class LingoParser {
 				// Keep for one month
 				// Limiting the cache validity will allow to purge stale cache
 				// entries inserted by older versions after one month
-				$cache->set( $cachekey, $this->mLingoTree, 60 * 60 * 24 * 30 );
+				$cache->set( $cachekey, $this->mLingoTree, self::CACHE_LIFE );
 			} else {
 				wfDebug( "Caching of lingo tree disabled.\n" );
 				$this->mLingoTree = $this->buildLingo( $searchTerms );
+			}
+		// update glossary array if search terms have changed
+		} else {
+			$this->updateLingoTree( $searchTerms );
+			if ( $useCache ) {
+				$this->getCacheInstance()->set( $this->getCacheKey(), $this->mLingoTree, self::CACHE_LIFE );
 			}
 		}
 
@@ -168,6 +176,24 @@ class LingoParser {
 		}
 
 		return $lingoTree;
+	}
+
+	/**
+	 * Updates the lingo tree with the given search terms
+	 *
+	 * @param array $searchTerms
+	 * @return void
+	 */
+	private function updateLingoTree( array $searchTerms ): void {
+		$backend = $this->mLingoBackend;
+		$backend->setSearchTerms( $searchTerms );
+
+		$lingoTree = $this->mLingoTree;
+
+		// assemble the result array
+		while ( $elementData = $backend->next() ) {
+			$lingoTree->addTerm( $elementData[ Element::ELEMENT_TERM ], $elementData );
+		}
 	}
 
 	/**
@@ -397,5 +423,12 @@ class LingoParser {
 
 		$namespace = $parser->getTitle()->getNamespace();
 		return $wgexLingoUseNamespaces[$namespace] ?? true;
+	}
+
+	private function getCacheInstance(): BagOStuff {
+		global $wgexLingoCacheType;
+		return ( $wgexLingoCacheType !== null )
+			? ObjectCache::getInstance( $wgexLingoCacheType )
+			: ObjectCache::getLocalClusterInstance();
 	}
 }
