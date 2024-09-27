@@ -11,5 +11,6 @@
 	"lingo-notatextpage": "術語頁面「$1」不是一個文字頁面。",
 	"lingo-terminologypagenotlocal": "頁面“$1”非本地頁面。",
 	"lingo-noapprovedrevs": "在 Lingo 已啟用對於 ApprovedRevs 的支援，不過未找到 ApprovedRevs。",
-	"lingo-invalidlinktarget": "術語「$1」連結目標：$2 無效"
+	"lingo-invalidlinktarget": "術語「$1」連結目標：$2 無效",
+	"lingo-element-linktext": "前往「$1」定義的頁面"
 }
