@@ -48,7 +48,7 @@ namespace Lingo;
  */
 class Tree {
 
-	public const TREE_VERSION = 2;
+	public const TREE_VERSION = 3.23;
 
 	/** @var array */
 	private $mTree = [];
