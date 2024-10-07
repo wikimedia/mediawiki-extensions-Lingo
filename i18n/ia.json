@@ -10,5 +10,6 @@
 	"lingo-notatextpage": "Le pagina de terminologia \"$1\" non es un pagina de texto.",
 	"lingo-terminologypagenotlocal": "Le pagina \"$1\" non es un pagina local.",
 	"lingo-noapprovedrevs": "Le supporto de ApprovedRevs es activate in Lingo, ma ApprovedRevs non ha essite trovate.",
-	"lingo-invalidlinktarget": "Destination de ligamine non valide pro le termino \"$1\": $2"
+	"lingo-invalidlinktarget": "Destination de ligamine non valide pro le termino \"$1\": $2",
+	"lingo-element-linktext": "Visitar le pagina con le definition de ‘$1’"
 }
