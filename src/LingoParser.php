@@ -47,7 +47,7 @@ class LingoParser {
 
 	private const WORD_OFFSET = 1;
 
-	private const CACHE_LIFE = 60 * 60 * 24 * 30; // 30 days
+	private const CACHE_LIFETIME = 60 * 60 * 24 * 30; // 30 days
 
 	/** @var Tree|null */
 	private $mLingoTree = null;
@@ -115,11 +115,6 @@ class LingoParser {
 	 * @return Tree a Lingo\Tree mapping terms (keys) to descriptions (values)
 	 */
 	private function getLingoTree( array $searchTerms ) {
-		$searchTerms = array_filter(
-			array_map( 'trim', $searchTerms ),
-			static fn ( $item ) => !empty( $item )
-		);
-
 		$useCache = $this->getBackend()->useCache();
 
 		// build glossary array only once per request
@@ -140,22 +135,17 @@ class LingoParser {
 				} else {
 					wfDebug( "Cache miss: Lingo tree not found in cache.\n" );
 					$this->mLingoTree = $this->buildLingo( $searchTerms );
+
+					// Keep for one month
+					// Limiting the cache validity will allow to purge stale cache
+					// entries inserted by older versions after one month
+					$cache->set( $cachekey, $this->mLingoTree, self::CACHE_LIFETIME );
+
 					wfDebug( "Cached lingo tree.\n" );
 				}
-
-				// Keep for one month
-				// Limiting the cache validity will allow to purge stale cache
-				// entries inserted by older versions after one month
-				$cache->set( $cachekey, $this->mLingoTree, self::CACHE_LIFE );
 			} else {
 				wfDebug( "Caching of lingo tree disabled.\n" );
 				$this->mLingoTree = $this->buildLingo( $searchTerms );
-			}
-		// update glossary array if search terms have changed
-		} else {
-			$this->updateLingoTree( $searchTerms );
-			if ( $useCache ) {
-				$this->getCacheInstance()->set( $this->getCacheKey(), $this->mLingoTree, self::CACHE_LIFE );
 			}
 		}
 
@@ -179,24 +169,6 @@ class LingoParser {
 	}
 
 	/**
-	 * Updates the lingo tree with the given search terms
-	 *
-	 * @param array $searchTerms
-	 * @return void
-	 */
-	private function updateLingoTree( array $searchTerms ): void {
-		$backend = $this->mLingoBackend;
-		$backend->setSearchTerms( $searchTerms );
-
-		$lingoTree = $this->mLingoTree;
-
-		// assemble the result array
-		while ( $elementData = $backend->next() ) {
-			$lingoTree->addTerm( $elementData[ Element::ELEMENT_TERM ], $elementData );
-		}
-	}
-
-	/**
 	 * Parses the given text and enriches applicable terms
 	 *
 	 * This method currently only recognizes terms consisting of max one word
@@ -216,24 +188,11 @@ class LingoParser {
 		}
 		// Parse HTML from page
 
-		// TODO: Remove call to \MediaWiki\suppressWarnings() for MW 1.34+.
-		// \Wikimedia\AtEase\AtEase::suppressWarnings() is available from MW 1.34.
-		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
-			\Wikimedia\AtEase\AtEase::suppressWarnings();
-		} else {
-			\MediaWiki\suppressWarnings();
-		}
-
+		// Suppress warnings during DOMDocument loading
+		AtEase::suppressWarnings();
 		$doc = new DOMDocument( '1.0', 'utf-8' );
 		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
-
-		// TODO: Remove call to \MediaWiki\restoreWarnings() for MW 1.34+.
-		// \Wikimedia\AtEase\AtEase::restoreWarnings() is available from MW 1.34.
-		if ( method_exists( AtEase::class, 'suppressWarnings' ) ) {
-			\Wikimedia\AtEase\AtEase::restoreWarnings();
-		} else {
-			\MediaWiki\restoreWarnings();
-		}
+		AtEase::restoreWarnings();
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
@@ -241,14 +200,11 @@ class LingoParser {
 			"//*[not(ancestor-or-self::*[@class='noglossary'] or ancestor-or-self::a)][text()!=' ']/text()"
 		);
 
-		// Iterate all HTML text matches
-		$numberOfTextElements = $textElements->length;
+		// Collect all terms from text elements
+		$allTermsInText = [];
 
-		$definitions = [];
-
-		for ( $textElementIndex = 0; $textElementIndex < $numberOfTextElements; $textElementIndex++ ) {
-			$textElement = $textElements->item( $textElementIndex );
-
+		// Iterate all HTML text matches to collect terms
+		foreach ( $textElements as $textElement ) {
 			$matches = [];
 			preg_match_all(
 				$this->regex,
@@ -262,11 +218,37 @@ class LingoParser {
 			}
 
 			$termsInText = array_map( static fn ( $match ) => $match[0], $matches[0] );
+			$allTermsInText = array_merge( $allTermsInText, $termsInText );
+		}
 
-			// Get array of terms
-			$glossary = $this->getLingoTree( $termsInText );
+		// Remove duplicates and empty strings
+		$allTermsInText = array_unique(
+			array_filter(
+				array_map( 'trim', $allTermsInText ),
+				static fn ( $item ) => !empty( $item )
+			)
+		);
 
-			if ( $glossary == null || count( $glossary->getTermList() ) === 0 ) {
+		// Get array of terms once
+		$glossary = $this->getLingoTree( $allTermsInText );
+
+		if ( $glossary == null || count( $glossary->getTermList() ) === 0 ) {
+			return;
+		}
+
+		// Now iterate again to process each text element using the built glossary
+		$definitions = [];
+
+		foreach ( $textElements as $textElement ) {
+			$matches = [];
+			preg_match_all(
+				$this->regex,
+				$textElement->nodeValue,
+				$matches,
+				PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER
+			);
+
+			if ( count( $matches ) === 0 || count( $matches[ 0 ] ) === 0 ) {
 				continue;
 			}
 
@@ -306,11 +288,6 @@ class LingoParser {
 
 					$changedElem = true;
 				} else { // did not find any term, just use the rest of the text
-					// If we found no term now and no term before, there was no
-					// term in the whole element. Might as well not change the
-					// element at all.
-
-					// Only change element if found term before
 					if ( $changedElem === true ) {
 						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
 
@@ -321,8 +298,6 @@ class LingoParser {
 							$textElement
 						);
 					}
-
-					// In principle superfluous, the loop would run out anyway. Might save a bit of time.
 					break;
 				}
 
