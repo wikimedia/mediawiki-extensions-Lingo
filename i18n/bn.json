@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"San1joy23"
+			"San1joy23",
+			"আফতাবুজ্জামান"
 		]
 	},
-	"lingo-element-linktext": "' $1 'সংজ্ঞা সহ পৃষ্ঠায় যান"
+	"lingo-element-linktext": "'$1'-এর সংজ্ঞাযুক্ত পৃষ্ঠায় যান"
 }
