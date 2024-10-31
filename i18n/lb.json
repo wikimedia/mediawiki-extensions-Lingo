@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"lingo-desc": "Erlaabt et 'Tool Tips' ze weisen, wann ee mat der Maus iwwer Wierder fiert déi op der [[$1]]-Säit definéiert sinn",
