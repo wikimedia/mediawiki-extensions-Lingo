@@ -42,7 +42,7 @@ abstract class Backend {
 	/**
 	 * @param MessageLog|null &$messages
 	 */
-	public function __construct( MessageLog &$messages = null ) {
+	public function __construct( ?MessageLog &$messages = null ) {
 		$this->mMessageLog = $messages;
 	}
 

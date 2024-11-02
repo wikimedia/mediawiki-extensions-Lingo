@@ -47,7 +47,7 @@ class BasicBackend extends Backend {
 	/**
 	 * @param MessageLog|null &$messages
 	 */
-	public function __construct( MessageLog &$messages = null ) {
+	public function __construct( ?MessageLog &$messages = null ) {
 		parent::__construct( $messages );
 
 		$this->registerHooks();
