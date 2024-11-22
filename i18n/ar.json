@@ -12,5 +12,6 @@
 	"lingo-notatextpage": "صفحة الاصطلاح \"$1\" ليست صفحة نصية.",
 	"lingo-terminologypagenotlocal": "الصفحة \"$1\" ليست صفحة محلية.",
 	"lingo-noapprovedrevs": "يتم تمكين دعم ApprovedRevs في لغة Lingo، ولكن لم يتم العثور على ApprovedRevs.",
-	"lingo-invalidlinktarget": "هدف رابط غير صالح للمصطلح \"$1\": $2"
+	"lingo-invalidlinktarget": "هدف رابط غير صالح للمصطلح \"$1\": $2",
+	"lingo-element-linktext": "انتقل إلى الصفحة التي تحتوي على تعريف '$1'"
 }
