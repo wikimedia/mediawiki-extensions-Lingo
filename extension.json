@@ -1,6 +1,6 @@
 {
 	"name": "Lingo",
-	"version": "3.2.3",
+	"version": "3.2.4",
 	"author": [
 		"Barry Coughlan",
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
@@ -65,7 +65,8 @@
 			"value": false
 		},
 		"LingoUseNamespaces": {
-			"value": []
+			"value": [],
+			"merge_strategy": "array_plus"
 		},
 		"LingoWCAGStyle": {
 			"value": false

@@ -1,5 +1,25 @@
 ## Release Notes
 
+### Lingo 3.2.4
+
+Released on 2024-12-09
+
+Fixes:
+* $wgexLingoUseNamespaces will no longer be clobbered by the extension loader
+* Explicitly mark method parameters as nullable to support PHP 8.4
+
+### Lingo 3.2.3
+
+Released on 2024-11-02
+
+Changes:
+* Performance improvements
+
+### Lingo 3.2.2
+
+Changes:
+* Makes Lingo WCAG complaint for better accessibility on screenreaders
+
 ### Lingo 3.1.1
 
 Released on 11-Nov-2019
