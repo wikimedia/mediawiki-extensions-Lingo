@@ -309,7 +309,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 		// Setup
 		$term = 'some&Term';
 
-		$linkText = wfMessage( 'lingo-element-linktext', htmlentities( $term ) )->text();
+		$linkText = wfMessage( 'lingo-element-linktext', htmlspecialchars( $term ) )->text();
 
 		$definition1 = [
 			Element::ELEMENT_TERM       => $term,
