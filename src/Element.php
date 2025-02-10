@@ -135,7 +135,7 @@ class Element {
 		}
 
 		// create link element
-		$link = $doc->createElement( 'a', htmlentities( $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] ) );
+		$link = $doc->createElement( 'a', htmlspecialchars( $this->mDefinitions[ 0 ][ self::ELEMENT_TERM ] ) );
 
 		// set the link target
 		$link->setAttribute( 'href', $descriptor[ 'url' ] );
@@ -155,7 +155,7 @@ class Element {
 	 * @return DOMElement
 	 */
 	private function buildFormattedTermAsTooltip( DOMDocument $doc ) {
-		$termName = htmlentities( $this->mTerm );
+		$termName = htmlspecialchars( $this->mTerm );
 
 		// Wrap term and definition in <a> tags so that they can be focused for accessibility
 		$link = $doc->createElement( 'a', $termName );
@@ -256,7 +256,7 @@ class Element {
 				if ( $descriptor === null ) {
 					$this->addErrorMessageForInvalidLink( $link );
 				} else {
-					$linkText = wfMessage( 'lingo-element-linktext', htmlentities( $this->mTerm ) )->text();
+					$linkText = wfMessage( 'lingo-element-linktext', htmlspecialchars( $this->mTerm ) )->text();
 					$linkContainer = "<span class='mw-lingo-definition-link-container'>{$linkText}</span>";
 					$divDefinitions .= "<div class='mw-lingo-definition-link'>[{$descriptor[ 'url' ]} {$linkContainer}]</div>";
 				}

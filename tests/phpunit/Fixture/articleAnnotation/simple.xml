@@ -4,7 +4,7 @@
 <![CDATA[
 lorem
 Lorem
-ipsüm
+ipsüm <&>
 dolor sit amet
 हीकम
 請保持導言的中立性，勿只敍述美譽。
@@ -16,7 +16,7 @@ prefix backtrack
 <![CDATA[
 <div class="mw-parser-output"><p><a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="d2e16e6ef52a45b7468f1da56bba1953">lorem</a>
 Lorem
-<a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="56ee8757cf2e692d2685e141c5943d6f">ips&uuml;m</a>
+<a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="2f8c739c37c17b1627a126b23385f8fc">ipsüm &lt;&amp;&gt;</a>
 <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="ee9b74ad8c537867d50ecef10d600e5e">dolor sit</a> amet
 <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="fd57ea8a08446b14704cbbda2daf5961">हीकम</a>
 請保持導言的中立性，勿只敍述美譽。
@@ -26,7 +26,7 @@ Lorem
 <p>lorem-def
 </p>
 </div></div>
-</div><div class="mw-lingo-tooltip" id="56ee8757cf2e692d2685e141c5943d6f"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
+</div><div class="mw-lingo-tooltip" id="2f8c739c37c17b1627a126b23385f8fc"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
 <p>ipsüm-def
 </p>
 </div></div>
@@ -56,7 +56,7 @@ Lorem
 	</glossary-entry>
 	<glossary-entry>
 		<!-- Mark up special characters -->
-		<term>ipsüm</term>
+		<term>ipsüm &lt;&amp;&gt;</term>
 		<definition>ipsüm-def</definition>
 	</glossary-entry>
 	<glossary-entry>
