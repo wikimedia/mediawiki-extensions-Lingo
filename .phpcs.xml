@@ -3,7 +3,6 @@
 	<rule ref="./vendor/mediawiki/mediawiki-codesniffer/MediaWiki">
 		<exclude name="Generic.CodeAnalysis.AssignmentInCondition.Found" />
 		<exclude name="Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
-		<exclude name="MediaWiki.NamingConventions.PrefixedGlobalFunctions.allowedPrefix" />
 		<exclude name="MediaWiki.NamingConventions.ValidGlobalName.CamelCase" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
 	</rule>
@@ -13,7 +12,7 @@
 			<property name="lineLimit" value="160" />
 		</properties>
 	</rule>
-	<rule ref="MediaWiki.NamingConventions.PrefixedGlobalFunctions.wfPrefix">
+	<rule ref="MediaWiki.NamingConventions.PrefixedGlobalFunctions.allowedPrefix">
 		<exclude-pattern>/tests/bootstrap.php</exclude-pattern>
 		<exclude-pattern>/tests/mw-phpunit-runner.php</exclude-pattern>
 	</rule>
