@@ -1,5 +1,14 @@
 ## Release Notes
 
+### Lingo 3.3.0
+
+Released on 2026-01-01
+
+* Replace global functions as possible.
+* Use namespaces in MediaWiki 1.45.
+* Use LIBXML_NOERROR to avoid logging warnings to the debug log when parsing with DOMDocument.
+* Use the MultiContentSave hook in place of deprecated the PageContentSave hook.
+
 ### Lingo 3.2.4
 
 Released on 2024-12-09
@@ -154,13 +163,13 @@ Released on 02-Mar-2014
 From here on this extension will use [Semantic Versioning](http://semver.org).
 
 Changes:
-* features introduced during the 
-  [Google Summer of Code 2013](https://www.mediawiki.org/wiki/Google_Summer_of_Code_2013) 
+* features introduced during the
+  [Google Summer of Code 2013](https://www.mediawiki.org/wiki/Google_Summer_of_Code_2013)
   by Yevheniy Vlasenko:
   * ability to turn off the recognition of glossary terms by using
    `<noglossary></noglossary>` tags
   * ability to use multiple definitions per term
-  * support the [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:ApprovedRevs) 
+  * support the [ApprovedRevs](https://www.mediawiki.org/wiki/Extension:ApprovedRevs)
   extension for the Terminology page
 * introduce the [qTip2 library](http://qtip2.com) for the tooltips (and abandon
   the home-grown tooltips)
@@ -265,7 +274,7 @@ Changes:
 
 Released on 26-May-2011
 
-Maintenance taken over by [Stephan Gambke](https://www.mediawiki.org/wiki/User:F.trott) 
+Maintenance taken over by [Stephan Gambke](https://www.mediawiki.org/wiki/User:F.trott)
 and committed to the Wikimedia repository
 
 ### Lingo 0.14b

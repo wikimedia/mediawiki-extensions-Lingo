@@ -28,6 +28,8 @@ namespace Lingo\Tests\Integration;
 
 use Lingo\Backend;
 use Lingo\LingoParser;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 
@@ -111,7 +113,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Lingo parser does not start parsing (i.e. accesses parser output) when parsed Page is in explicitly forbidden namespace
 			[ [
-				'mwParserExpectsGetOutput' => 3,
+				'mwParserExpectsGetOutput' => 4,
 				'namespace' => 100,
 				'wgexLingoUseNamespaces' => [ 100 => false ],
 			] ],
@@ -130,7 +132,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
-				'mwOutputExpectsGetText' => 1,
+				'mwOutputExpectsGetText' => 6,
 				'text' => 'foo',
 			] ],
 
@@ -139,7 +141,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 	/**
 	 * @param array $config
-	 * @return \Parser
+	 * @return Parser
 	 */
 	private function getParserMock( array $config ) {
 		if ( array_key_exists( 'mwParser', $config ) ) {
@@ -148,15 +150,15 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 		$mwTitle = $this->getTitleMock( $config );
 
-		$mwParserOutput = $this->createMock( \ParserOutput::class );
+		$mwParserOutput = $this->createMock( ParserOutput::class );
 
-		$mwParser = $this->createMock( \Parser::class );
+		$mwParser = $this->createMock( Parser::class );
 
 		$mwParserOutput->method( 'hasText' )
 			->willReturn( true );
 
 		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetText' ] ) : $this->any() )
-			->method( 'getText' )
+			->method( 'getContentHolderText' )
 			->willReturn( $config[ 'text' ] );
 
 		$mwParser->method( 'getTitle' )

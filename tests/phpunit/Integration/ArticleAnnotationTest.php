@@ -73,7 +73,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 		$lingoParser->parse( $parser );
 
-		$html = $parser->getOutput()->getText( [ 'unwrap' => true ] );
+		$html = $parser->getOutput()->getRawText();
 		// Normalize the outer <div class="mw-parser-output"> as we don't really care about it
 		$html = preg_replace( '/(<div class=")[^"]*(mw-parser-output)[^>]*>/', '$1$2">', $html );
 		$this->assertEquals( $expected, $html );
