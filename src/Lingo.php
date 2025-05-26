@@ -27,10 +27,10 @@
 namespace Lingo;
 
 use MediaWiki\MediaWikiServices;
-use Parser;
-use ParserOptions;
-use PPFrame;
-use Title;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\PPFrame;
+use MediaWiki\Title\Title;
 
 /**
  * @package Lingo

@@ -32,7 +32,8 @@ namespace Lingo;
 use DOMDocument;
 use DOMElement;
 use DOMText;
-use Title;
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 /**
  * This class represents a term-definition pair.
@@ -304,7 +305,7 @@ class Element {
 	 * @return bool
 	 */
 	private function isValidLinkTarget( $linkTarget ) {
-		return wfParseUrl( $linkTarget ) !== false;
+		return MediaWikiServices::getInstance()->getUrlUtils()->parse( $linkTarget );
 	}
 
 	/**

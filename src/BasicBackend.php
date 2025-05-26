@@ -28,13 +28,14 @@
 namespace Lingo;
 
 use ApprovedRevs;
+use MediaWiki\Content\TextContent;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Page\WikiPage;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Revision\RenderedRevision;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
-use ParserOptions;
-use TextContent;
-use Title;
-use WikiPage;
+use MediaWiki\Title\Title;
 
 /**
  * @ingroup Lingo
@@ -56,7 +57,7 @@ class BasicBackend extends Backend {
 	private function registerHooks() {
 		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
 		$hookContainer->register( 'ArticlePurge', [ $this, 'purgeCache' ] );
-		$hookContainer->register( 'PageContentSave', [ $this, 'purgeCache' ] );
+		$hookContainer->register( 'MultiContentSave', [ $this, 'purgeRevisionCache' ] );
 	}
 
 	/**
@@ -239,6 +240,15 @@ class BasicBackend extends Backend {
 	 */
 	public function purgeCache( WikiPage $wikipage ) {
 		if ( $wikipage->getTitle()->getText() === $this->getLingoPageName() ) {
+			$this->getLingoParser()->purgeGlossaryFromCache();
+		}
+	}
+
+	/**
+	 * Calls purgeCache when given a RenderedRevision.
+	 */
+	public function purgeRevisionCache( RenderedRevision $rev ) {
+		if ( $rev->getRevision()->getPageAsLinkTarget()->getText() === $this->getLingoPageName() ) {
 			$this->getLingoParser()->purgeGlossaryFromCache();
 		}
 	}

@@ -28,12 +28,17 @@
  */
 namespace Lingo;
 
-use BagOStuff;
 use DOMDocument;
 use DOMXPath;
-use ObjectCache;
-use Parser;
+use MediaWiki\Context\RequestContext;
+use MediaWiki\Exception\MWException;
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\Parser;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\ParserOutput;
+use MediaWiki\Parser\ParserOutputFlags;
 use Wikimedia\AtEase\AtEase;
+use Wikimedia\ObjectCache\BagOStuff;
 
 /**
  * This class parses the given text and enriches it with definitions for defined
@@ -94,7 +99,8 @@ class LingoParser {
 	 */
 	private function getCacheKey() {
 		// FIXME: If Lingo ever stores the glossary tree per user, then the cache key also needs to include the user id (see T163608)
-		return ObjectCache::getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( $this->getBackend() ) );
+		$ci = MediaWikiServices::getInstance()->getObjectCacheFactory()->getLocalClusterInstance();
+		return $ci->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( $this->getBackend() ) );
 	}
 
 	/**
@@ -103,7 +109,7 @@ class LingoParser {
 	 */
 	private function getBackend() {
 		if ( $this->mLingoBackend === null ) {
-			throw new \MWException( 'No Lingo backend available!' );
+			throw new MWException( 'No Lingo backend available!' );
 		}
 
 		return $this->mLingoBackend;
@@ -169,6 +175,32 @@ class LingoParser {
 	}
 
 	/**
+	 * Stand-in for ParserOutput->getText() from pre-1.45 MW.
+	 *
+	 * @param ParserOutput $po
+	 * @param array $options
+	 * @return string
+	 */
+	private function getTextReplacement( ParserOutput $po, $options = [] ): string {
+		$pipeline = MediaWikiServices::getInstance()->getDefaultOutputPipeline();
+		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$options += [
+			'allowClone' => true,
+			'allowTOC' => true,
+			'injectTOC' => true,
+			'enableSectionEditLinks' => !$po->getOutputFlag( ParserOutputFlags::NO_SECTION_EDIT_LINKS ),
+			'userLang' => null,
+			'skin' => null,
+			'unwrap' => false,
+			'wrapperDivClass' => $po->getWrapperDivClass(),
+			'deduplicateStyles' => true,
+			'absoluteURLs' => false,
+			'includeDebugInfo' => false,
+		];
+		return $pipeline->run( $po, $popts, $options )->getContentHolderText();
+	}
+
+	/**
 	 * Parses the given text and enriches applicable terms
 	 *
 	 * This method currently only recognizes terms consisting of max one word
@@ -176,12 +208,14 @@ class LingoParser {
 	private function realParse( Parser $parser ): void {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
-		$text = $params === null ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
-			'allowTOC' => !$params['disabletoc'],
-			'enableSectionEditLinks' => !$params['disableeditsection'],
-			'wrapperDivClass' => $params['wrapoutputclass'],
-			'deduplicateStyles' => !$params['disablestylededuplication'],
-		] );
+		$text = $params === null
+			? $this->getTextReplacement( $parser->getOutput() )
+			: $this->getTextReplacement( $parser->getOutput(), [
+				'allowTOC' => !$params['disabletoc'],
+				'enableSectionEditLinks' => !$params['disableeditsection'],
+				'wrapperDivClass' => $params['wrapoutputclass'],
+				'deduplicateStyles' => !$params['disablestylededuplication'],
+			] );
 
 		if ( $text === null || $text === '' ) {
 			return;
@@ -191,7 +225,9 @@ class LingoParser {
 		// Suppress warnings during DOMDocument loading
 		AtEase::suppressWarnings();
 		$doc = new DOMDocument( '1.0', 'utf-8' );
-		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
+		$doc->loadHTML(
+			'<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>',
+			LIBXML_NOERROR );
 		AtEase::restoreWarnings();
 
 		// Find all text in HTML.
@@ -316,7 +352,7 @@ class LingoParser {
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
 			$text .= $parser->recursiveTagParseFully( implode( $definitions ) );
 
-			$parser->getOutput()->setText( $text );
+			$parser->getOutput()->setContentHolderText( $text );
 		}
 	}
 
@@ -360,11 +396,7 @@ class LingoParser {
 	 * @since 2.0.2
 	 */
 	public function purgeGlossaryFromCache() {
-		global $wgexLingoCacheType;
-		$cache = ( $wgexLingoCacheType !== null )
-			? ObjectCache::getInstance( $wgexLingoCacheType )
-			: ObjectCache::getLocalClusterInstance();
-		$cache->delete( $this->getCacheKey() );
+		$this->getCacheInstance()->delete( $this->getCacheKey() );
 	}
 
 	/**
@@ -396,14 +428,17 @@ class LingoParser {
 			return false;
 		}
 
-		$namespace = $parser->getTitle()->getNamespace();
+		$page = $parser->getPage();
+		$namespace = $page ? $page->getNamespace() : null;
 		return $wgexLingoUseNamespaces[$namespace] ?? true;
 	}
 
 	private function getCacheInstance(): BagOStuff {
 		global $wgexLingoCacheType;
-		return ( $wgexLingoCacheType !== null )
-			? ObjectCache::getInstance( $wgexLingoCacheType )
-			: ObjectCache::getLocalClusterInstance();
+		$mwsocf = MediaWikiServices::getInstance()->getObjectCacheFactory();
+
+		return $wgexLingoCacheType !== null
+			? $mwsocf->getInstance( $wgexLingoCacheType )
+			: $mwsocf->getLocalClusterInstance();
 	}
 }

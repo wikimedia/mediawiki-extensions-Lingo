@@ -1,6 +1,6 @@
 {
 	"name": "Lingo",
-	"version": "3.2.4",
+	"version": "3.3.0",
 	"author": [
 		"Barry Coughlan",
 		"[https://www.mediawiki.org/wiki/User:F.trott Stephan Gambke]",
@@ -12,7 +12,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "parserhook",
 	"requires": {
-		"MediaWiki": ">= 1.39"
+		"MediaWiki": ">= 1.45"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
