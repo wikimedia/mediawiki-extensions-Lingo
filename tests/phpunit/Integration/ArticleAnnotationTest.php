@@ -53,9 +53,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$lingoParser = LingoParser::getInstance();
 		$reflection = new ReflectionClass( $lingoParser );
 		$instance = $reflection->getProperty( 'parserSingleton' );
-		$instance->setAccessible( true );
 		$instance->setValue( null, null );
-		$instance->setAccessible( false );
 	}
 
 	/**
