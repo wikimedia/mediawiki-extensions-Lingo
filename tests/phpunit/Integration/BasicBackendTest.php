@@ -29,7 +29,9 @@ namespace Lingo\Tests\Integration;
 use Content;
 use FallbackContent;
 use Lingo\BasicBackend;
+use MediaWiki\Request\FauxRequest;
 use MediaWiki\Revision\RevisionRecord;
+use MediaWiki\Title\Title;
 
 /**
  * @group extensions-lingo
@@ -49,7 +51,7 @@ class BasicBackendTest extends BackendTest {
 	public function testPurgeCache() {
 		$this->overrideConfigValue( 'exLingoPage', 'SomePage' );
 
-		$title = $this->createMock( \Title::class );
+		$title = $this->createMock( Title::class );
 
 		$wikiPage = $this->createMock( \WikiPage::class );
 
@@ -302,7 +304,7 @@ TESTTEXT
 
 		$this->overrideConfigValue( 'LingoPageName', 'SomePage' );
 
-		$lingoPageTitle = $this->createMock( \Title::class );
+		$lingoPageTitle = $this->createMock( Title::class );
 		$lingoPageTitle->expects( $this->once() )
 			->method( 'getInterwiki' )
 			->willReturn( $interwiki );
@@ -310,7 +312,7 @@ TESTTEXT
 		$backend->method( 'getTitleFromText' )
 			->willReturn( $lingoPageTitle );
 
-		$request = new \FauxRequest( [
+		$request = new FauxRequest( [
 			'action' => $action,
 			'title' => $lingoPageTitle,
 			'wpTextbox1' => ';JST:Just saved text',

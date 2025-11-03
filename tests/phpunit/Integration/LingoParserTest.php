@@ -28,6 +28,7 @@ namespace Lingo\Tests\Integration;
 
 use Lingo\Backend;
 use Lingo\LingoParser;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -189,7 +190,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			return $config[ 'mwTitle' ];
 		}
 
-		$mwTitle = $this->createMock( \Title::class );
+		$mwTitle = $this->createMock( Title::class );
 
 		$mwTitle->method( 'getNamespace' )
 			->willReturn( $config[ 'namespace' ] );
@@ -210,7 +211,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			] )
 			->getMock();
 
-		$lingoPageTitle = $this->createMock( \Title::class );
+		$lingoPageTitle = $this->createMock( Title::class );
 		$lingoPageTitle->method( 'getInterwiki' )
 			->willReturn( '' );
 
