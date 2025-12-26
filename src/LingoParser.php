@@ -28,17 +28,17 @@
  */
 namespace Lingo;
 
-use BagOStuff;
 use DOMDocument;
 use DOMXPath;
 use MediaWiki\Context\RequestContext;
+use MediaWiki\Exception\MWException;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOptions;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Parser\ParserOutputFlags;
-use ObjectCache;
-use Parser;
 use Wikimedia\AtEase\AtEase;
+use Wikimedia\ObjectCache\BagOStuff;
 
 /**
  * This class parses the given text and enriches it with definitions for defined
@@ -72,8 +72,13 @@ class LingoParser {
 
 	public function __construct() {
 		// The RegEx to split a chunk of text into words
-		// Words are: placeholders for stripped items, sequences of letters and numbers, single characters that are neither letter nor number
-		$this->regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' . preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
+		// Words are:
+		//       placeholders for stripped items,
+		//       sequences of letters and numbers,
+		//       single characters that are neither letter nor number
+
+		$this->regex = '/' . preg_quote( Parser::MARKER_PREFIX, '/' ) . '.*?' .
+			preg_quote( Parser::MARKER_SUFFIX, '/' ) . '|[\p{L}\p{N}]+|[^\p{L}\p{N}]/u';
 	}
 
 	public function parse( Parser $mwParser ) {
@@ -98,17 +103,20 @@ class LingoParser {
 	 * @return string
 	 */
 	private function getCacheKey() {
-		// FIXME: If Lingo ever stores the glossary tree per user, then the cache key also needs to include the user id (see T163608)
-		return ObjectCache::getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION, get_class( $this->getBackend() ) );
+		// FIXME: If Lingo ever stores the glossary tree per user, then the cache key also needs to include the user id
+		// (see T163608)
+		$ocf = MediaWikiServices::getInstance()->getObjectCacheFactory();
+		return $ocf->getLocalClusterInstance()->makeKey( 'ext', 'lingo', 'lingotree', Tree::TREE_VERSION,
+														 get_class( $this->getBackend() ) );
 	}
 
 	/**
 	 * @return Backend the backend used by the parser
-	 * @throws \MWException
+	 * @throws MWException
 	 */
 	private function getBackend() {
 		if ( $this->mLingoBackend === null ) {
-			throw new \MWException( 'No Lingo backend available!' );
+			throw new MWException( 'No Lingo backend available!' );
 		}
 
 		return $this->mLingoBackend;
@@ -224,7 +232,8 @@ class LingoParser {
 		// Suppress warnings during DOMDocument loading
 		AtEase::suppressWarnings();
 		$doc = new DOMDocument( '1.0', 'utf-8' );
-		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>' );
+		$doc->loadHTML( '<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>'
+						. $text . '</body></html>' );
 		AtEase::restoreWarnings();
 
 		// Find all text in HTML.
@@ -305,7 +314,8 @@ class LingoParser {
 				if ( $usedWords > 0 ) { // found a term
 					if ( $skippedWords > 0 ) { // skipped some text, insert it as is
 						$start = $wordDescriptors[ $wordDescriptorIndex ][ self::WORD_OFFSET ];
-						$length = $wordDescriptors[ $wordDescriptorIndex + $skippedWords ][ self::WORD_OFFSET ] - $start;
+						$length = $wordDescriptors[ $wordDescriptorIndex + $skippedWords ][ self::WORD_OFFSET ] -
+							$start;
 
 						$parentNode->insertBefore(
 							$doc->createTextNode(
@@ -394,9 +404,10 @@ class LingoParser {
 	 */
 	public function purgeGlossaryFromCache() {
 		global $wgexLingoCacheType;
+		$ocf = MediaWikiServices::getInstance()->getObjectCacheFactory();
 		$cache = ( $wgexLingoCacheType !== null )
-			? ObjectCache::getInstance( $wgexLingoCacheType )
-			: ObjectCache::getLocalClusterInstance();
+			? $ocf->getInstance( $wgexLingoCacheType )
+			: $ocf->getLocalClusterInstance();
 		$cache->delete( $this->getCacheKey() );
 	}
 
@@ -429,14 +440,15 @@ class LingoParser {
 			return false;
 		}
 
-		$namespace = $parser->getTitle()->getNamespace();
+		$namespace = $parser->getPage()->getNamespace();
 		return $wgexLingoUseNamespaces[$namespace] ?? true;
 	}
 
 	private function getCacheInstance(): BagOStuff {
 		global $wgexLingoCacheType;
+		$ocf = MediaWikiServices::getInstance()->getObjectCacheFactory();
 		return ( $wgexLingoCacheType !== null )
-			? ObjectCache::getInstance( $wgexLingoCacheType )
-			: ObjectCache::getLocalClusterInstance();
+			? $ocf->getInstance( $wgexLingoCacheType )
+			: $ocf->getLocalClusterInstance();
 	}
 }
