@@ -31,6 +31,11 @@ namespace Lingo;
 use BagOStuff;
 use DOMDocument;
 use DOMXPath;
+use MediaWiki\Context\RequestContext;
+use MediaWiki\MediaWikiServices;
+use MediaWiki\Parser\ParserOptions;
+use MediaWiki\Parser\ParserOutput;
+use MediaWiki\Parser\ParserOutputFlags;
 use ObjectCache;
 use Parser;
 use Wikimedia\AtEase\AtEase;
@@ -169,6 +174,32 @@ class LingoParser {
 	}
 
 	/**
+	 * Stand-in for ParserOutput->getText() from pre-1.45 MW.
+	 *
+	 * @param ParserOutput $po
+	 * @param array $options
+	 * @return string
+	 */
+	private function getTextReplacement( ParserOutput $po, $options = [] ): string {
+		$pipeline = MediaWikiServices::getInstance()->getDefaultOutputPipeline();
+		$popts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$options += [
+			'allowClone' => true,
+			'allowTOC' => true,
+			'injectTOC' => true,
+			'enableSectionEditLinks' => !$po->getOutputFlag( ParserOutputFlags::NO_SECTION_EDIT_LINKS ),
+			'userLang' => null,
+			'skin' => null,
+			'unwrap' => false,
+			'wrapperDivClass' => $po->getWrapperDivClass(),
+			'deduplicateStyles' => true,
+			'absoluteURLs' => false,
+			'includeDebugInfo' => false,
+		];
+		return $pipeline->run( $po, $popts, $options )->getContentHolderText();
+	}
+
+	/**
 	 * Parses the given text and enriches applicable terms
 	 *
 	 * This method currently only recognizes terms consisting of max one word
@@ -176,12 +207,14 @@ class LingoParser {
 	private function realParse( Parser $parser ): void {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
-		$text = $params === null ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
-			'allowTOC' => !$params['disabletoc'],
-			'enableSectionEditLinks' => !$params['disableeditsection'],
-			'wrapperDivClass' => $params['wrapoutputclass'],
-			'deduplicateStyles' => !$params['disablestylededuplication'],
-		] );
+		$text = $params === null
+			? $this->getTextReplacement( $parser->getOutput() )
+			: $this->getTextReplacement( $parser->getOutput(), [
+				'allowTOC' => !$params['disabletoc'],
+				'enableSectionEditLinks' => !$params['disableeditsection'],
+				'wrapperDivClass' => $params['wrapoutputclass'],
+				'deduplicateStyles' => !$params['disablestylededuplication'],
+			] );
 
 		if ( $text === null || $text === '' ) {
 			return;
