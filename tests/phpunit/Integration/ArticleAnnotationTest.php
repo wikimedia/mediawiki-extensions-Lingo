@@ -45,6 +45,7 @@ use ReflectionClass;
 class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
+		parent::setUp();
 		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 	}
 
@@ -56,6 +57,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$instance->setAccessible( true );
 		$instance->setValue( null, null );
 		$instance->setAccessible( false );
+		parent::tearDown();
 	}
 
 	/**

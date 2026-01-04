@@ -129,7 +129,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
-				'mwOutputExpectsGetText' => 1,
+				'mwOutputExpectsGetRawText' => 1,
 				'text' => 'foo',
 			] ],
 
@@ -154,8 +154,8 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$mwParserOutput->method( 'hasText' )
 			->willReturn( true );
 
-		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetText' ] ) : $this->any() )
-			->method( 'getText' )
+		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetRawText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetRawText' ] ) : $this->any() )
+			->method( 'getRawText' )
 			->willReturn( $config[ 'text' ] );
 
 		$mwParser->method( 'getTitle' )

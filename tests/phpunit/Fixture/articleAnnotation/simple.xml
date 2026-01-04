@@ -14,15 +14,15 @@ prefix backtrack
 	</text>
 	<expected>
 <![CDATA[
-<div class="mw-parser-output"><p><a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="d2e16e6ef52a45b7468f1da56bba1953">lorem</a>
+<p><a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="d2e16e6ef52a45b7468f1da56bba1953">lorem</a>
 Lorem
-<a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="56ee8757cf2e692d2685e141c5943d6f">ips&uuml;m</a>
+<a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="56ee8757cf2e692d2685e141c5943d6f">ips&#252;m</a>
 <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="ee9b74ad8c537867d50ecef10d600e5e">dolor sit</a> amet
 <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="fd57ea8a08446b14704cbbda2daf5961">हीकम</a>
 請保持導言的中立性，勿只敍述美譽。
 +HE <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="513a29a563178cfc7ffa715a224fa614">d4 t3xt</a>
 <a href="javascript:void(0);" class="mw-lingo-term" data-lingo-term-id="851f5ac9941d720844d143ed9cfcf60a">prefix</a> backtrack
-</p></div><div class="mw-lingo-tooltip" id="d2e16e6ef52a45b7468f1da56bba1953"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
+</p><div class="mw-lingo-tooltip" id="d2e16e6ef52a45b7468f1da56bba1953"><div class="mw-lingo-definition navigation-not-searchable"><div class="mw-lingo-definition-text">
 <p>lorem-def
 </p>
 </div></div>
