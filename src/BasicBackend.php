@@ -31,9 +31,9 @@ use ApprovedRevs;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Revision\SlotRecord;
+use MediaWiki\Title\Title;
 use ParserOptions;
 use TextContent;
-use Title;
 use WikiPage;
 
 /**
@@ -56,7 +56,22 @@ class BasicBackend extends Backend {
 	private function registerHooks() {
 		$hookContainer = MediaWikiServices::getInstance()->getHookContainer();
 		$hookContainer->register( 'ArticlePurge', [ $this, 'purgeCache' ] );
-		$hookContainer->register( 'PageContentSave', [ $this, 'purgeCache' ] );
+		$hookContainer->register( 'PageSaveComplete', [ $this, 'onPageSaveComplete' ] );
+	}
+
+	/**
+	 * Hook handler for PageSaveComplete — purges cache when the terminology page was saved.
+	 *
+	 * @param \MediaWiki\Page\WikiPage $wikiPage
+	 * @param \MediaWiki\User\UserIdentity $user
+	 * @param string $summary
+	 * @param int $flags
+	 * @param \MediaWiki\Revision\RevisionRecord $revisionRecord
+	 * @param \MediaWiki\Storage\EditResult $editResult
+	 * @return bool|void
+	 */
+	public function onPageSaveComplete( $wikiPage, $user, $summary, $flags, $revisionRecord, $editResult ) {
+		$this->purgeCache( $wikiPage );
 	}
 
 	/**

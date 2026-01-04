@@ -27,6 +27,7 @@ namespace Lingo\Tests\Integration;
 
 use Lingo\LingoParser;
 use Lingo\Tests\Util\XmlFileProvider;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 use ParserOptions;
 use ReflectionClass;
@@ -45,6 +46,7 @@ use ReflectionClass;
 class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
+		parent::setUp();
 		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 	}
 
@@ -56,6 +58,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$instance->setAccessible( true );
 		$instance->setValue( null, null );
 		$instance->setAccessible( false );
+		parent::tearDown();
 	}
 
 	/**
@@ -63,7 +66,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 	 */
 	public function testArticleAnnotation( string $file, string $text, array $glossaryEntries, string $expected ) {
 		$parser = $this->getServiceContainer()->getParserFactory()->create();
-		$parser->parse( $text, \Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
+		$parser->parse( $text, Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
 		$backend = $this->getMockForAbstractClass( \Lingo\Backend::class );
 		$backend->method( 'next' )
@@ -74,9 +77,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 		$lingoParser->parse( $parser );
 
-		$html = $parser->getOutput()->getText( [ 'unwrap' => true ] );
-		// Normalize the outer <div class="mw-parser-output"> as we don't really care about it
-		$html = preg_replace( '/(<div class=")[^"]*(mw-parser-output)[^>]*>/', '$1$2">', $html );
+		$html = $parser->getOutput()->getRawText();
 		$this->assertEquals( $expected, $html );
 	}
 

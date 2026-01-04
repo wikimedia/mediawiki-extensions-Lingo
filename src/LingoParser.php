@@ -176,17 +176,30 @@ class LingoParser {
 	private function realParse( Parser $parser ): void {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
-		$text = $params === null ? $parser->getOutput()->getText() : $parser->getOutput()->getText( [
-			'allowTOC' => !$params['disabletoc'],
-			'enableSectionEditLinks' => !$params['disableeditsection'],
-			'wrapperDivClass' => $params['wrapoutputclass'],
-			'deduplicateStyles' => !$params['disablestylededuplication'],
-		] );
+		$text = $params === null ? $parser->getOutput()->getRawText() : $parser->getOutput()->getText( [
+				'allowTOC' => !$params['disabletoc'],
+				'enableSectionEditLinks' => !$params['disableeditsection'],
+				'wrapperDivClass' => $params['wrapoutputclass'],
+				'deduplicateStyles' => !$params['disablestylededuplication'],
+			] );
 
 		if ( $text === null || $text === '' ) {
 			return;
 		}
 		// Parse HTML from page
+
+		// the <mw:editsection> tags are invalid, and will be stripped to
+		// become <editsection> which means we cannot round-trip this safely
+		// <mw---editsection> is also invalid, but won't be stripped
+		// make sure we don't conflict with anything already there
+		$tagPrefix = 'mw-';
+		while ( str_contains( $text, "<$tagPrefix" )
+			|| str_contains( $text, "</$tagPrefix" )
+		) {
+			$tagPrefix .= '-';
+		}
+		$text = str_replace( '<mw:', "<$tagPrefix", $text );
+		$text = str_replace( '</mw:', "</$tagPrefix", $text );
 
 		// Suppress warnings during DOMDocument loading
 		AtEase::suppressWarnings();
@@ -314,9 +327,14 @@ class LingoParser {
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
+
+			// Restore the original <mw:editsection> tags
+			$text = str_replace( "<$tagPrefix", '<mw:', $text );
+			$text = str_replace( "</$tagPrefix", '</mw:', $text );
+
 			$text .= $parser->recursiveTagParseFully( implode( $definitions ) );
 
-			$parser->getOutput()->setText( $text );
+			$parser->getOutput()->setRawText( $text );
 		}
 	}
 

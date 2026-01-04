@@ -32,7 +32,7 @@ namespace Lingo;
 use DOMDocument;
 use DOMElement;
 use DOMText;
-use Title;
+use MediaWiki\Title\Title;
 
 /**
  * This class represents a term-definition pair.

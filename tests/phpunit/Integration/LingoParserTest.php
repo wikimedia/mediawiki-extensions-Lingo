@@ -28,6 +28,7 @@ namespace Lingo\Tests\Integration;
 
 use Lingo\Backend;
 use Lingo\LingoParser;
+use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
 
 /**
@@ -129,7 +130,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
-				'mwOutputExpectsGetText' => 1,
+				'mwOutputExpectsGetRawText' => 1,
 				'text' => 'foo',
 			] ],
 
@@ -154,9 +155,9 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$mwParserOutput->method( 'hasText' )
 			->willReturn( true );
 
-		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetText' ] ) : $this->any() )
-			->method( 'getText' )
-			->willReturn( $config[ 'text' ] );
+		$mwParserOutput->expects( isset( $config[ 'mwOutputExpectsGetRawText' ] ) ? $this->exactly( $config[ 'mwOutputExpectsGetRawText' ] ) : $this->any() )
+			->method( 'getRawText' )
+			->willReturn( $config[ 'text' ] ?? '' );
 
 		$mwParser->method( 'getTitle' )
 			->willReturn( $mwTitle );
@@ -189,7 +190,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			return $config[ 'mwTitle' ];
 		}
 
-		$mwTitle = $this->createMock( \Title::class );
+		$mwTitle = $this->createMock( Title::class );
 
 		$mwTitle->method( 'getNamespace' )
 			->willReturn( $config[ 'namespace' ] );
@@ -210,7 +211,9 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 			] )
 			->getMock();
 
-		$lingoPageTitle = $this->createMock( \Title::class );
+		$lingoPageTitle = $this->getMockBuilder( Title::class )
+			->disableOriginalConstructor()
+			->getMock();
 		$lingoPageTitle->method( 'getInterwiki' )
 			->willReturn( '' );
 
