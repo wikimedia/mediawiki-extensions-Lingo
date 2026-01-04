@@ -133,7 +133,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 
 			// Not a real test. Just make sure that it does not break right away.
 			[ [
-				'mwOutputExpectsGetText' => 6,
+				'mwOutputExpectsGetText' => 1,
 				'text' => 'foo',
 			] ],
 

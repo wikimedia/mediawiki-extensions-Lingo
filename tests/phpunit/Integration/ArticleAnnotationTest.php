@@ -47,6 +47,7 @@ use ReflectionClass;
 class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
+		parent::setUp();
 		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 	}
 
@@ -56,6 +57,8 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$reflection = new ReflectionClass( $lingoParser );
 		$instance = $reflection->getProperty( 'parserSingleton' );
 		$instance->setValue( null, null );
+		$instance->setAccessible( false );
+		parent::tearDown();
 	}
 
 	/**
@@ -74,7 +77,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 
 		$lingoParser->parse( $parser );
 
-		$html = $parser->getOutput()->getRawText();
+		$html = $parser->getOutput()->getContentHolderText();
 		// Normalize the outer <div class="mw-parser-output"> as we don't really care about it
 		$html = preg_replace( '/(<div class=")[^"]*(mw-parser-output)[^>]*>/', '$1$2">', $html );
 		$this->assertEquals( $expected, $html );

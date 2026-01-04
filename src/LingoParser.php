@@ -208,7 +208,7 @@ class LingoParser {
 		// Parse text identical to options used in includes/api/ApiParse.php
 		$params = $this->mApiParams;
 		$text = $params === null
-			? $this->getTextReplacement( $parser->getOutput() )
+			? $parser->getOutput()->getContentHolderText()
 			: $this->getTextReplacement( $parser->getOutput(), [
 				'allowTOC' => !$params['disabletoc'],
 				'enableSectionEditLinks' => !$params['disableeditsection'],
@@ -220,6 +220,19 @@ class LingoParser {
 			return;
 		}
 		// Parse HTML from page
+
+		// the <mw:editsection> tags are invalid, and will be stripped to
+		// become <editsection> which means we cannot round-trip this safely
+		// <mw---editsection> is also invalid, but won't be stripped
+		// make sure we don't conflict with anything already there
+		$tagPrefix = 'mw-';
+		while ( str_contains( $text, "<$tagPrefix" )
+			|| str_contains( $text, "</$tagPrefix" )
+		) {
+			$tagPrefix .= '-';
+		}
+		$text = str_replace( '<mw:', "<$tagPrefix", $text );
+		$text = str_replace( '</mw:', "</$tagPrefix", $text );
 
 		// Suppress warnings during DOMDocument loading
 		$doc = new DOMDocument( '1.0', 'utf-8' );
@@ -348,6 +361,11 @@ class LingoParser {
 
 			// U - Ungreedy, D - dollar matches only end of string, s - dot matches newlines
 			$text = preg_replace( '%(^.*<body>)|(</body>.*$)%UDs', '', $doc->saveHTML() );
+
+			// Restore the original <mw:editsection> tags
+			$text = str_replace( "<$tagPrefix", '<mw:', $text );
+			$text = str_replace( "</$tagPrefix", '</mw:', $text );
+
 			$text .= $parser->recursiveTagParseFully( implode( $definitions ) );
 
 			$parser->getOutput()->setContentHolderText( $text );
