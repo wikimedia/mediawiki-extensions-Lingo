@@ -26,6 +26,7 @@
 
 namespace Lingo\Tests\Integration;
 
+use DOMDocument;
 use Lingo\Element;
 use MediaWiki\Title\Title;
 use MediaWikiIntegrationTestCase;
@@ -46,7 +47,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
-		$this->doc = new \DOMDocument();
+		$this->doc = new DOMDocument();
 	}
 
 	/**
@@ -382,7 +383,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			Element::ELEMENT_STYLE      => null,
 		];
 
-		// $url1 = \Title::newFromText( $definition1[ Element::ELEMENT_LINK ] )->getFullURL();
+		// $url1 = Title::newFromText( $definition1[ Element::ELEMENT_LINK ] )->getFullURL();
 
 		$definition2 = [
 			Element::ELEMENT_TERM       => $term,
@@ -392,7 +393,7 @@ class ElementTest extends MediaWikiIntegrationTestCase {
 			Element::ELEMENT_STYLE      => 'some-style-2',
 		];
 
-		// $url2 = \Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
+		// $url2 = Title::newFromText( $definition2[ Element::ELEMENT_LINK ] )->getFullURL();
 
 		$this->overrideConfigValue( 'exLingoDisplayOnce', false );
 

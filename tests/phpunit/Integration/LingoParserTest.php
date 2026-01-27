@@ -27,6 +27,7 @@
 namespace Lingo\Tests\Integration;
 
 use Lingo\Backend;
+use Lingo\BasicBackend;
 use Lingo\LingoParser;
 use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOutput;
@@ -68,7 +69,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 		$singleton = LingoParser::getInstance();
 
 		$this->assertInstanceOf(
-			\Lingo\LingoParser::class,
+			LingoParser::class,
 			$singleton
 		);
 
@@ -185,7 +186,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	/**
 	 * @param array $config
 	 *
-	 * @return \Title
+	 * @return Title
 	 */
 	private function getTitleMock( $config ) {
 		if ( array_key_exists( 'mwTitle', $config ) ) {
@@ -204,7 +205,7 @@ class LingoParserTest extends MediaWikiIntegrationTestCase {
 	 * @return Backend
 	 */
 	private function getBackendMock() {
-		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
+		$backend = $this->getMockBuilder( BasicBackend::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
 				'getLatestRevisionFromTitle',

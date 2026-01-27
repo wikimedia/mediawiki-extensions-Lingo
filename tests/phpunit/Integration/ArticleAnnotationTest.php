@@ -25,6 +25,7 @@
 
 namespace Lingo\Tests\Integration;
 
+use Lingo\Backend;
 use Lingo\LingoParser;
 use Lingo\Tests\Util\XmlFileProvider;
 use MediaWiki\Title\Title;
@@ -64,7 +65,7 @@ class ArticleAnnotationTest extends MediaWikiIntegrationTestCase {
 		$parser = $this->getServiceContainer()->getParserFactory()->create();
 		$parser->parse( $text, Title::newFromText( 'Foo' ), ParserOptions::newFromAnon() );
 
-		$backend = $this->getMockForAbstractClass( \Lingo\Backend::class );
+		$backend = $this->getMockForAbstractClass( Backend::class );
 		$backend->method( 'next' )
 			->willReturnOnConsecutiveCalls( ...$glossaryEntries );
 

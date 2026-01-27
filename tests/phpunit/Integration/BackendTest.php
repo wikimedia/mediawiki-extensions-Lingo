@@ -27,7 +27,10 @@
 namespace Lingo\Tests\Integration;
 
 use Lingo\Backend;
+use Lingo\LingoParser;
+use Lingo\MessageLog;
 use MediaWikiIntegrationTestCase;
+use ReflectionClass;
 
 /**
  * @group extensions-lingo
@@ -46,11 +49,11 @@ class BackendTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::getMessageLog
 	 */
 	public function testGetMessageLog_withLogGivenToConstructor() {
-		$log = $this->createMock( \Lingo\MessageLog::class );
+		$log = $this->createMock( MessageLog::class );
 
 		$stub = $this->getMockForAbstractClass( Backend::class );
 
-		$reflected = new \ReflectionClass( \Lingo\Backend::class );
+		$reflected = new ReflectionClass( Backend::class );
 		$constructor = $reflected->getConstructor();
 		$constructor->invokeArgs( $stub, [ &$log ] );
 
@@ -64,18 +67,18 @@ class BackendTest extends MediaWikiIntegrationTestCase {
 	public function testGetMessageLog_withoutLogGivenToConstructor() {
 		$stub = $this->getMockForAbstractClass( Backend::class );
 
-		$reflected = new \ReflectionClass( \Lingo\Backend::class );
+		$reflected = new ReflectionClass( Backend::class );
 		$constructor = $reflected->getConstructor();
 		$constructor->invoke( $stub );
 
-		$this->assertInstanceOf( \Lingo\MessageLog::class, $stub->getMessageLog() );
+		$this->assertInstanceOf( MessageLog::class, $stub->getMessageLog() );
 	}
 
 	/**
 	 * @covers ::useCache
 	 */
 	public function testUseCache() {
-		$stub = $this->getMockForAbstractClass( \Lingo\Backend::class );
+		$stub = $this->getMockForAbstractClass( Backend::class );
 
 		$this->assertFalse( $stub->useCache() );
 	}
@@ -85,8 +88,8 @@ class BackendTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::getLingoParser
 	 */
 	public function testSetGetLingoParser() {
-		$stub = $this->getMockForAbstractClass( \Lingo\Backend::class );
-		$parserMock = $this->createMock( \Lingo\LingoParser::class );
+		$stub = $this->getMockForAbstractClass( Backend::class );
+		$parserMock = $this->createMock( LingoParser::class );
 
 		$stub->setLingoParser( $parserMock );
 		$this->assertEquals( $parserMock, $stub->getLingoParser() );
@@ -97,7 +100,7 @@ class BackendTest extends MediaWikiIntegrationTestCase {
 	 * @covers ::getLingoParser
 	 */
 	public function testGetLingoParser_withoutParserGiven() {
-		$stub = $this->getMockForAbstractClass( \Lingo\Backend::class );
-		$this->assertInstanceOf( \Lingo\LingoParser::class, $stub->getLingoParser() );
+		$stub = $this->getMockForAbstractClass( Backend::class );
+		$this->assertInstanceOf( LingoParser::class, $stub->getLingoParser() );
 	}
 }

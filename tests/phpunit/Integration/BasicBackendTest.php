@@ -29,9 +29,14 @@ namespace Lingo\Tests\Integration;
 use Content;
 use FallbackContent;
 use Lingo\BasicBackend;
+use Lingo\LingoParser;
+use Lingo\MessageLog;
+use MediaWiki\Content\TextContent;
+use MediaWiki\Page\WikiPage;
 use MediaWiki\Request\FauxRequest;
 use MediaWiki\Revision\RevisionRecord;
 use MediaWiki\Title\Title;
+use ReflectionClass;
 
 /**
  * @group extensions-lingo
@@ -53,11 +58,11 @@ class BasicBackendTest extends BackendTest {
 
 		$title = $this->createMock( Title::class );
 
-		$wikiPage = $this->createMock( \WikiPage::class );
+		$wikiPage = $this->createMock( WikiPage::class );
 
-		$lingoParser = $this->createMock( \Lingo\LingoParser::class );
+		$lingoParser = $this->createMock( LingoParser::class );
 
-		$testObject = $this->getMockBuilder( \Lingo\BasicBackend::class )
+		$testObject = $this->getMockBuilder( BasicBackend::class )
 			->onlyMethods( [ 'getLingoParser' ] )
 			->getMock();
 
@@ -287,9 +292,9 @@ TESTTEXT
 		$lingoPageContent = false,
 		$lingoApprovedText = ''
 	) {
-		$messageLog = $this->createMock( \Lingo\MessageLog::class );
+		$messageLog = $this->createMock( MessageLog::class );
 
-		$backend = $this->getMockBuilder( \Lingo\BasicBackend::class )
+		$backend = $this->getMockBuilder( BasicBackend::class )
 			->disableOriginalConstructor()
 			->onlyMethods( [
 				'getLatestRevisionFromTitle',
@@ -298,7 +303,7 @@ TESTTEXT
 			] )
 			->getMock();
 
-		$reflected = new \ReflectionClass( \Lingo\BasicBackend::class );
+		$reflected = new ReflectionClass( BasicBackend::class );
 		$constructor = $reflected->getConstructor();
 		$constructor->invokeArgs( $backend, [ &$messageLog ] );
 
@@ -340,7 +345,7 @@ TESTTEXT
 	private function getRevisionMock( $lingoPageText, $lingoPageRevision = false, $lingoPageContent = false ) {
 		if ( $lingoPageRevision === false ) {
 			if ( $lingoPageContent === false ) {
-				$lingoPageContent = $this->createMock( \TextContent::class );
+				$lingoPageContent = $this->createMock( TextContent::class );
 
 				$lingoPageContent->method( 'getText' )
 					->willReturn( $lingoPageText );
