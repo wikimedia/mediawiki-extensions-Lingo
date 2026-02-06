@@ -37,7 +37,6 @@ use MediaWiki\Parser\Parser;
 use MediaWiki\Parser\ParserOptions;
 use MediaWiki\Parser\ParserOutput;
 use MediaWiki\Parser\ParserOutputFlags;
-use Wikimedia\AtEase\AtEase;
 use Wikimedia\ObjectCache\BagOStuff;
 
 /**
@@ -223,12 +222,11 @@ class LingoParser {
 		// Parse HTML from page
 
 		// Suppress warnings during DOMDocument loading
-		AtEase::suppressWarnings();
 		$doc = new DOMDocument( '1.0', 'utf-8' );
-		$doc->loadHTML(
+		// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		@$doc->loadHTML(
 			'<html><head><meta http-equiv="content-type" content="charset=utf-8"/></head><body>' . $text . '</body></html>',
 			LIBXML_NOERROR );
-		AtEase::restoreWarnings();
 
 		// Find all text in HTML.
 		$xpath = new DOMXPath( $doc );
