@@ -3,11 +3,16 @@
 		"authors": [
 			"Bluehill",
 			"MemphisA5",
-			"아라"
+			"아라",
+			"Tensama0415"
 		]
 	},
 	"lingo-desc": "위키 문서에 정의한 낱말에서 문서에 마우스 오버 도구 팁을 제공합니다",
 	"lingo-terminologypagename": "술어",
 	"lingo-noterminologypage": "\"$1\" 용어 문서가 존재하지 않습니다.",
-	"lingo-terminologypagenotlocal": "\"$1\" 문서는 로컬 문서가 아닙니다."
+	"lingo-notatextpage": "용어 문서 \"$1\"가 텍스트 문서가 아닙니다.",
+	"lingo-terminologypagenotlocal": "\"$1\" 문서는 로컬 문서가 아닙니다.",
+	"lingo-noapprovedrevs": "Lingo에서 ApprovedRevs 지원이 활성화되어 있지만 ApprovedRevs를 찾을 수 없습니다.",
+	"lingo-invalidlinktarget": "용어 \"$1\"에 대한 잘못된 링크 대상: $2",
+	"lingo-element-linktext": "'$1'의 정의가 있는 문서로 이동"
 }
