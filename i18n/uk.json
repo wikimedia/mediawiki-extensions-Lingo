@@ -4,6 +4,7 @@
 			"Base",
 			"DDPAT",
 			"Ice bulldog",
+			"Movses",
 			"Piramidion",
 			"Steve.rusyn",
 			"SteveR"
@@ -15,5 +16,6 @@
 	"lingo-notatextpage": "Сторінка термінології «$1» не є текстовою сторінкою.",
 	"lingo-terminologypagenotlocal": "Сторінка «$1» не є локальною.",
 	"lingo-noapprovedrevs": "Підтримка для ApprovedRevs увімкнена в Lingo. Але ApprovedRevs не знайдено.",
-	"lingo-invalidlinktarget": "Хибне цільове посилання для терміна «$1»: $2"
+	"lingo-invalidlinktarget": "Хибне цільове посилання для терміна «$1»: $2",
+	"lingo-element-linktext": "Перейдіть на сторінку з визначенням '$1'"
 }
