@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"lingo-desc": "Zobrazuje na stránkach bublinové popisy slov definovaných na wiki stránke",
+	"lingo-terminologypagename": "Terminológia",
+	"lingo-noterminologypage": "Stránka s terminológiou „$1“ neexistuje.",
+	"lingo-notatextpage": "Stránka s terminológiou „$1“ nie je textová stránka.",
+	"lingo-terminologypagenotlocal": "Stránka „$1“ nie je lokálna stránka.",
+	"lingo-noapprovedrevs": "V rozšírení Lingo je zapnutá podpora rozšírenia ApprovedRevs, ale ApprovedRevs sa nenašlo.",
+	"lingo-invalidlinktarget": "Neplatný cieľ odkazu pre termín „$1“: $2",
+	"lingo-element-linktext": "Prejsť na stránku s definíciou termínu „$1“"
+}
