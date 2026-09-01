@@ -1,0 +1,15 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"lingo-desc": "Waxay bixisaa tilmaamo soo baxa marka tilmaamaha jiirka lagu dul maro bogagga, kuwaas oo ka imanaya erayo lagu qeexay bog wiki ah",
+	"lingo-terminologypagename": "Eray bixin",
+	"lingo-noterminologypage": "Bogga eray-bixinta \"$1\" ma jiro.",
+	"lingo-notatextpage": "Bogga eray-bixinta \"$1\" ma aha bog qoraal ah.",
+	"lingo-terminologypagenotlocal": "Bogga \"$1\" ma aha bog maxalli ah.",
+	"lingo-noapprovedrevs": "Taageerada ApprovedRevs waa laga hawlgeliyay Lingo. Laakiin ApprovedRevs lama helin.",
+	"lingo-invalidlinktarget": "Bartilmaameedka xiriiriyaha erayga \"$1\" waa mid aan ansax ahayn: $2",
+	"lingo-element-linktext": "Aad bogga leh qeexitaanka '$1'"
+}
